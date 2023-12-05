@@ -9,8 +9,8 @@ class AutofillBlocklistAppIdPreferenceDialogFragmentCompat
 
     override fun buildSearchInfoFromString(searchInfoString: String): SearchInfo? {
         val newSearchInfo = searchInfoString
-                // remove chars not allowed in application ID
-                .replace(Regex("[^a-zA-Z0-9_.]+"), "")
+            // remove chars not allowed in application ID
+            .replace(Regex("[^a-zA-Z0-9_.]+"), "")
         return SearchInfo().apply { this.applicationId = newSearchInfo }
     }
 

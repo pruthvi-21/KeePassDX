@@ -13,21 +13,24 @@ import java.util.Date
 /**
  * Utility data class to get FileDatabaseInfo at a `t` time
  */
-data class SnapFileDatabaseInfo(var fileUri: Uri?,
-                                var exists: Boolean,
-                                var lastModification: Long?,
-                                var size: Long?): Parcelable {
+data class SnapFileDatabaseInfo(
+    var fileUri: Uri?,
+    var exists: Boolean,
+    var lastModification: Long?,
+    var size: Long?
+) : Parcelable {
 
     constructor(parcel: Parcel) : this(
-            parcel.readParcelableCompat(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readValue(Long::class.java.classLoader) as? Long,
-            parcel.readValue(Long::class.java.classLoader) as? Long) {
+        parcel.readParcelableCompat(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readValue(Long::class.java.classLoader) as? Long,
+        parcel.readValue(Long::class.java.classLoader) as? Long
+    ) {
     }
 
     fun toString(context: Context): String {
         val lastModificationString = DateFormat.getDateTimeInstance()
-                .format(Date(lastModification ?: 0))
+            .format(Date(lastModification ?: 0))
         return "$lastModificationString, " +
                 Formatter.formatFileSize(context, size ?: 0)
     }
@@ -77,7 +80,8 @@ data class SnapFileDatabaseInfo(var fileUri: Uri?,
                 fileDatabaseInfo.fileUri,
                 fileDatabaseInfo.exists,
                 fileDatabaseInfo.getLastModification(),
-                fileDatabaseInfo.getSize())
+                fileDatabaseInfo.getSize()
+            )
         }
     }
 }

@@ -45,7 +45,7 @@ object IconPackChooser {
                     Log.e(TAG, "Icon packs can't be load, retry with one by default")
                     addDefaultIconPack(context)
                 }
-                if(defaultIconSize == 0) {
+                if (defaultIconSize == 0) {
                     defaultIconSize = IconPack.defaultIconSize(context)
                 }
             }
@@ -56,7 +56,8 @@ object IconPackChooser {
      * Construct dynamically the icon pack provide by the default string resource "resource_id"
      */
     private fun addDefaultIconPack(context: Context) {
-        val resourceId = context.resources.getIdentifier("resource_id", "string", context.packageName)
+        val resourceId =
+            context.resources.getIdentifier("resource_id", "string", context.packageName)
         iconPackList.add(IconPack(context.packageName, context.resources, resourceId))
     }
 
@@ -66,12 +67,15 @@ object IconPackChooser {
     private fun addOrCatchNewIconPack(context: Context, iconPackString: String) {
         try {
             iconPackList.add(
-                IconPack(context.packageName,
-                context.resources,
-                context.resources.getIdentifier(
-                    iconPackString + "_resource_id",
-                    "string",
-                    context.packageName))
+                IconPack(
+                    context.packageName,
+                    context.resources,
+                    context.resources.getIdentifier(
+                        iconPackString + "_resource_id",
+                        "string",
+                        context.packageName
+                    )
+                )
             )
         } catch (e: Exception) {
             Log.w(TAG, "Icon pack $iconPackString can't be load")

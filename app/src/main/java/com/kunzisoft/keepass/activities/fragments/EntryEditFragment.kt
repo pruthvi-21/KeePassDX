@@ -34,7 +34,7 @@ import com.kunzisoft.keepass.viewmodels.EntryEditViewModel
 import com.tokenautocomplete.FilteredArrayAdapter
 
 
-class EntryEditFragment: DatabaseFragment() {
+class EntryEditFragment : DatabaseFragment() {
 
     private val mEntryEditViewModel: EntryEditViewModel by activityViewModels()
 
@@ -52,9 +52,11 @@ class EntryEditFragment: DatabaseFragment() {
 
     private var mIconColor: Int = 0
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
         // Retrieve the textColor to tint the icon
@@ -65,8 +67,10 @@ class EntryEditFragment: DatabaseFragment() {
         return inflater.inflate(R.layout.fragment_entry_edit, container, false)
     }
 
-    override fun onViewCreated(view: View,
-                               savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         rootView = view
@@ -209,11 +213,20 @@ class EntryEditFragment: DatabaseFragment() {
                 // Ask to replace the current attachment
                 if ((!mAllowMultipleAttachments
                             && containsAttachment()) ||
-                    containsAttachment(EntryAttachmentState(entryAttachment, StreamDirection.UPLOAD))) {
+                    containsAttachment(
+                        EntryAttachmentState(
+                            entryAttachment,
+                            StreamDirection.UPLOAD
+                        )
+                    )
+                ) {
                     ReplaceFileDialogFragment.build(attachmentToUploadUri, entryAttachment)
                         .show(parentFragmentManager, "replacementFileFragment")
                 } else {
-                    mEntryEditViewModel.startUploadAttachment(attachmentToUploadUri, entryAttachment)
+                    mEntryEditViewModel.startUploadAttachment(
+                        attachmentToUploadUri,
+                        entryAttachment
+                    )
                 }
             }
         }
@@ -226,9 +239,11 @@ class EntryEditFragment: DatabaseFragment() {
                         mEntryEditViewModel.binaryPreviewLoaded(attachment, position)
                     }
                 }
+
                 AttachmentState.IN_PROGRESS -> {
                     putAttachment(entryAttachmentState)
                 }
+
                 AttachmentState.COMPLETE -> {
                     putAttachment(entryAttachmentState) { entryAttachment ->
                         getAttachmentViewPosition(entryAttachment) { attachment, position ->
@@ -237,11 +252,13 @@ class EntryEditFragment: DatabaseFragment() {
                     }
                     mEntryEditViewModel.onAttachmentAction(null)
                 }
+
                 AttachmentState.CANCELED,
                 AttachmentState.ERROR -> {
                     removeAttachment(entryAttachmentState)
                     mEntryEditViewModel.onAttachmentAction(null)
                 }
+
                 else -> {}
             }
         }
@@ -269,7 +286,8 @@ class EntryEditFragment: DatabaseFragment() {
             threshold = 1
             setAdapter(tagsAdapter)
         }
-        tagsContainerView.visibility = if (database?.allowTags() == true) View.VISIBLE else View.GONE
+        tagsContainerView.visibility =
+            if (database?.allowTags() == true) View.VISIBLE else View.GONE
     }
 
     private fun assignEntryInfo(entryInfo: EntryInfo?) {
@@ -324,11 +342,14 @@ class EntryEditFragment: DatabaseFragment() {
         return attachmentsAdapter?.contains(attachment) ?: false
     }
 
-    private fun putAttachment(attachment: EntryAttachmentState,
-                              onPreviewLoaded: ((attachment: EntryAttachmentState) -> Unit)? = null) {
+    private fun putAttachment(
+        attachment: EntryAttachmentState,
+        onPreviewLoaded: ((attachment: EntryAttachmentState) -> Unit)? = null
+    ) {
         // When only one attachment is allowed
         if (!mAllowMultipleAttachments
-            && attachment.downloadState == AttachmentState.START) {
+            && attachment.downloadState == AttachmentState.START
+        ) {
             attachmentsAdapter?.clear()
         }
         attachmentsContainerView.visibility = View.VISIBLE
@@ -342,14 +363,17 @@ class EntryEditFragment: DatabaseFragment() {
         attachmentsAdapter?.removeItem(attachment)
     }
 
-    private fun getAttachmentViewPosition(attachment: EntryAttachmentState,
-                                          position: (attachment: EntryAttachmentState, Float) -> Unit) {
+    private fun getAttachmentViewPosition(
+        attachment: EntryAttachmentState,
+        position: (attachment: EntryAttachmentState, Float) -> Unit
+    ) {
         attachmentsListView.postDelayed({
             attachmentsAdapter?.indexOf(attachment)?.let { index ->
-                position.invoke(attachment,
+                position.invoke(
+                    attachment,
                     attachmentsContainerView.y
-                        + attachmentsListView.y
-                        + (attachmentsListView.getChildAt(index)?.y
+                            + attachmentsListView.y
+                            + (attachmentsListView.getChildAt(index)?.y
                         ?: 0F)
                 )
             }

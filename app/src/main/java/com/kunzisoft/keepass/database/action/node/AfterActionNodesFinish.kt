@@ -14,5 +14,8 @@ import com.kunzisoft.keepass.tasks.ActionRunnable
 class ActionNodesValues(val oldNodes: List<Node>, val newNodes: List<Node>)
 
 abstract class AfterActionNodesFinish {
-    abstract fun onActionNodesFinish(result: ActionRunnable.Result, actionNodesValues: ActionNodesValues)
+    abstract fun onActionNodesFinish(
+        result: ActionRunnable.Result,
+        actionNodesValues: ActionNodesValues
+    )
 }

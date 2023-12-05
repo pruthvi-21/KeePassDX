@@ -8,21 +8,22 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "cipher_database")
 data class CipherDatabaseEntity(
-        @PrimaryKey
-        @ColumnInfo(name = "database_uri")
-        val databaseUri: String,
+    @PrimaryKey
+    @ColumnInfo(name = "database_uri")
+    val databaseUri: String,
 
-        @ColumnInfo(name = "encrypted_value")
-        var encryptedValue: String,
+    @ColumnInfo(name = "encrypted_value")
+    var encryptedValue: String,
 
-        @ColumnInfo(name = "specs_parameters")
-        var specParameters: String
-): Parcelable {
+    @ColumnInfo(name = "specs_parameters")
+    var specParameters: String
+) : Parcelable {
 
     constructor(parcel: Parcel) : this(
-            parcel.readString()!!,
-            parcel.readString()!!,
-            parcel.readString()!!)
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!
+    )
 
     fun replaceContent(copy: CipherDatabaseEntity) {
         this.encryptedValue = copy.encryptedValue

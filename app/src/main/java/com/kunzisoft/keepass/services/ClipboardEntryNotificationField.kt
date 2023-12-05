@@ -5,7 +5,6 @@ import android.os.Parcelable
 import android.util.Log
 import com.kunzisoft.keepass.model.EntryInfo
 import com.kunzisoft.keepass.otp.OtpEntryFields.OTP_TOKEN_FIELD
-import java.util.*
 
 /**
  * Utility class to manage fields in Notifications
@@ -81,15 +80,16 @@ class ClipboardEntryNotificationField : Parcelable {
         private val TAG = ClipboardEntryNotificationField::class.java.name
 
         @JvmField
-        val CREATOR: Parcelable.Creator<ClipboardEntryNotificationField> = object : Parcelable.Creator<ClipboardEntryNotificationField> {
-            override fun createFromParcel(`in`: Parcel): ClipboardEntryNotificationField {
-                return ClipboardEntryNotificationField(`in`)
-            }
+        val CREATOR: Parcelable.Creator<ClipboardEntryNotificationField> =
+            object : Parcelable.Creator<ClipboardEntryNotificationField> {
+                override fun createFromParcel(`in`: Parcel): ClipboardEntryNotificationField {
+                    return ClipboardEntryNotificationField(`in`)
+                }
 
-            override fun newArray(size: Int): Array<ClipboardEntryNotificationField?> {
-                return arrayOfNulls(size)
+                override fun newArray(size: Int): Array<ClipboardEntryNotificationField?> {
+                    return arrayOfNulls(size)
+                }
             }
-        }
 
         private const val ACTION_COPY_PREFIX = "ACTION_COPY_"
         private const val EXTRA_KEY_PREFIX = "EXTRA_"

@@ -17,8 +17,8 @@ import com.kunzisoft.keepass.icons.IconDrawableFactory
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.view.strikeOut
 
-class BreadcrumbAdapter(val context: Context)
-    : RecyclerView.Adapter<BreadcrumbAdapter.BreadcrumbGroupViewHolder>() {
+class BreadcrumbAdapter(val context: Context) :
+    RecyclerView.Adapter<BreadcrumbAdapter.BreadcrumbGroupViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     var iconDrawableFactory: IconDrawableFactory? = null
@@ -28,8 +28,8 @@ class BreadcrumbAdapter(val context: Context)
             notifyDataSetChanged()
         }
     private var mNodeBreadcrumb: MutableList<Node?> = mutableListOf()
-    var onItemClickListener: ((item: Node, position: Int)->Unit)? = null
-    var onLongItemClickListener: ((item: Node, position: Int)->Unit)? = null
+    var onItemClickListener: ((item: Node, position: Int) -> Unit)? = null
+    var onLongItemClickListener: ((item: Node, position: Int) -> Unit)? = null
 
     private var mShowNumberEntries = false
     private var mShowUUID = false
@@ -69,11 +69,13 @@ class BreadcrumbAdapter(val context: Context)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BreadcrumbGroupViewHolder {
-        return BreadcrumbGroupViewHolder(inflater.inflate(
-            when (viewType) {
-                0 -> R.layout.item_breadcrumb_important
-                else -> R.layout.item_breadcrumb
-            }, parent, false)
+        return BreadcrumbGroupViewHolder(
+            inflater.inflate(
+                when (viewType) {
+                    0 -> R.layout.item_breadcrumb_important
+                    else -> R.layout.item_breadcrumb
+                }, parent, false
+            )
         )
     }
 

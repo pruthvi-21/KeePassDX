@@ -45,11 +45,11 @@ abstract class DatabaseModeActivity : DatabaseActivity() {
     private fun isIntentSender(): Boolean {
         return (mSpecialMode == SpecialMode.SELECTION
                 && mTypeMode == TypeMode.AUTOFILL)
-                /* TODO Registration callback #765
-                || (mSpecialMode == SpecialMode.REGISTRATION
-                && mTypeMode == TypeMode.AUTOFILL
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
-                */
+        /* TODO Registration callback #765
+        || (mSpecialMode == SpecialMode.REGISTRATION
+        && mTypeMode == TypeMode.AUTOFILL
+        && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+        */
     }
 
     fun onLaunchActivitySpecialMode() {
@@ -118,7 +118,8 @@ abstract class DatabaseModeActivity : DatabaseActivity() {
 
         mSpecialMode = EntrySelectionHelper.retrieveSpecialModeFromIntent(intent)
         mTypeMode = EntrySelectionHelper.retrieveTypeModeFromIntent(intent)
-        val searchInfo: SearchInfo? = EntrySelectionHelper.retrieveRegisterInfoFromIntent(intent)?.searchInfo
+        val searchInfo: SearchInfo? =
+            EntrySelectionHelper.retrieveRegisterInfoFromIntent(intent)?.searchInfo
                 ?: EntrySelectionHelper.retrieveSearchInfoFromIntent(intent)
 
         // To show the selection mode
@@ -128,6 +129,7 @@ abstract class DatabaseModeActivity : DatabaseActivity() {
             val selectionModeStringId = when (mSpecialMode) {
                 SpecialMode.DEFAULT, // Not important because hidden
                 SpecialMode.SEARCH -> R.string.search_mode
+
                 SpecialMode.SAVE -> R.string.save_mode
                 SpecialMode.SELECTION -> R.string.selection_mode
                 SpecialMode.REGISTRATION -> R.string.registration_mode
@@ -135,6 +137,7 @@ abstract class DatabaseModeActivity : DatabaseActivity() {
             val typeModeStringId = when (mTypeMode) {
                 TypeMode.DEFAULT, // Not important because hidden
                 TypeMode.MAGIKEYBOARD -> R.string.magic_keyboard_title
+
                 TypeMode.AUTOFILL -> R.string.autofill
             }
             title = getString(selectionModeStringId)
@@ -161,7 +164,7 @@ abstract class DatabaseModeActivity : DatabaseActivity() {
             menu.clear()
             if (mTypeMode == TypeMode.AUTOFILL) {
                 menuInflater.inflate(R.menu.autofill, menu)
-                setOnMenuItemClickListener {  menuItem ->
+                setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
                         R.id.menu_block_autofill -> {
                             blockAutofill(searchInfo)
@@ -174,7 +177,8 @@ abstract class DatabaseModeActivity : DatabaseActivity() {
 
         // To hide home button from the regular toolbar in special mode
         if (mSpecialMode != SpecialMode.DEFAULT
-            && hideHomeButtonIfModeIsNotDefault()) {
+            && hideHomeButtonIfModeIsNotDefault()
+        ) {
             supportActionBar?.setDisplayHomeAsUpEnabled(false)
             supportActionBar?.setDisplayShowHomeEnabled(false)
         }
@@ -188,15 +192,21 @@ abstract class DatabaseModeActivity : DatabaseActivity() {
         val webDomain = searchInfo?.webDomain
         val applicationId = searchInfo?.applicationId
         if (webDomain != null) {
-            PreferencesUtil.addWebDomainToBlocklist(this,
-                    webDomain)
+            PreferencesUtil.addWebDomainToBlocklist(
+                this,
+                webDomain
+            )
         } else if (applicationId != null) {
-            PreferencesUtil.addApplicationIdToBlocklist(this,
-                    applicationId)
+            PreferencesUtil.addApplicationIdToBlocklist(
+                this,
+                applicationId
+            )
         }
         onCancelSpecialMode()
-        Toast.makeText(this.applicationContext,
-                R.string.autofill_block_restart,
-                Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            this.applicationContext,
+            R.string.autofill_block_restart,
+            Toast.LENGTH_LONG
+        ).show()
     }
 }

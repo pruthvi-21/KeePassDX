@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/menu_sort"
+    <item
+        android:id="@+id/menu_sort"
         android:icon="@drawable/ic_sort_white_24dp"
-        android:title="@string/sort_menu"
         android:orderInCategory="41"
+        android:title="@string/sort_menu"
         app:iconTint="?attr/colorControlNormal"
         app:showAsAction="ifRoom" />
 </menu>

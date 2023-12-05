@@ -7,8 +7,8 @@ import com.kunzisoft.keepass.autofill.AutofillComponent
 import com.kunzisoft.keepass.autofill.AutofillHelper
 import com.kunzisoft.keepass.model.RegisterInfo
 import com.kunzisoft.keepass.model.SearchInfo
-import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.utils.getEnumExtra
+import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.utils.putEnumExtra
 
 object EntrySelectionHelper {
@@ -18,18 +18,22 @@ object EntrySelectionHelper {
     private const val KEY_SEARCH_INFO = "com.kunzisoft.keepass.extra.SEARCH_INFO"
     private const val KEY_REGISTER_INFO = "com.kunzisoft.keepass.extra.REGISTER_INFO"
 
-    fun startActivityForSearchModeResult(context: Context,
-                                         intent: Intent,
-                                         searchInfo: SearchInfo) {
+    fun startActivityForSearchModeResult(
+        context: Context,
+        intent: Intent,
+        searchInfo: SearchInfo
+    ) {
         addSpecialModeInIntent(intent, SpecialMode.SEARCH)
         addSearchInfoInIntent(intent, searchInfo)
         intent.flags = intent.flags or Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(intent)
     }
 
-    fun startActivityForSaveModeResult(context: Context,
-                                             intent: Intent,
-                                             searchInfo: SearchInfo) {
+    fun startActivityForSaveModeResult(
+        context: Context,
+        intent: Intent,
+        searchInfo: SearchInfo
+    ) {
         addSpecialModeInIntent(intent, SpecialMode.SAVE)
         addTypeModeInIntent(intent, TypeMode.DEFAULT)
         addSearchInfoInIntent(intent, searchInfo)
@@ -37,9 +41,11 @@ object EntrySelectionHelper {
         context.startActivity(intent)
     }
 
-    fun startActivityForKeyboardSelectionModeResult(context: Context,
-                                                    intent: Intent,
-                                                    searchInfo: SearchInfo?) {
+    fun startActivityForKeyboardSelectionModeResult(
+        context: Context,
+        intent: Intent,
+        searchInfo: SearchInfo?
+    ) {
         addSpecialModeInIntent(intent, SpecialMode.SELECTION)
         addTypeModeInIntent(intent, TypeMode.MAGIKEYBOARD)
         addSearchInfoInIntent(intent, searchInfo)
@@ -47,9 +53,11 @@ object EntrySelectionHelper {
         context.startActivity(intent)
     }
 
-    fun startActivityForRegistrationModeResult(context: Context,
-                                               intent: Intent,
-                                               registerInfo: RegisterInfo?) {
+    fun startActivityForRegistrationModeResult(
+        context: Context,
+        intent: Intent,
+        registerInfo: RegisterInfo?
+    ) {
         addSpecialModeInIntent(intent, SpecialMode.REGISTRATION)
         // At the moment, only autofill for registration
         addTypeModeInIntent(intent, TypeMode.AUTOFILL)
@@ -112,14 +120,18 @@ object EntrySelectionHelper {
         intent.removeExtra(KEY_TYPE_MODE)
     }
 
-    fun doSpecialAction(intent: Intent,
-                        defaultAction: () -> Unit,
-                        searchAction: (searchInfo: SearchInfo) -> Unit,
-                        saveAction: (searchInfo: SearchInfo) -> Unit,
-                        keyboardSelectionAction: (searchInfo: SearchInfo?) -> Unit,
-                        autofillSelectionAction: (searchInfo: SearchInfo?,
-                                                  autofillComponent: AutofillComponent) -> Unit,
-                        autofillRegistrationAction: (registerInfo: RegisterInfo?) -> Unit) {
+    fun doSpecialAction(
+        intent: Intent,
+        defaultAction: () -> Unit,
+        searchAction: (searchInfo: SearchInfo) -> Unit,
+        saveAction: (searchInfo: SearchInfo) -> Unit,
+        keyboardSelectionAction: (searchInfo: SearchInfo?) -> Unit,
+        autofillSelectionAction: (
+            searchInfo: SearchInfo?,
+            autofillComponent: AutofillComponent
+        ) -> Unit,
+        autofillRegistrationAction: (registerInfo: RegisterInfo?) -> Unit
+    ) {
 
         when (retrieveSpecialModeFromIntent(intent)) {
             SpecialMode.DEFAULT -> {
@@ -127,6 +139,7 @@ object EntrySelectionHelper {
                 removeInfoFromIntent(intent)
                 defaultAction.invoke()
             }
+
             SpecialMode.SEARCH -> {
                 val searchInfo = retrieveSearchInfoFromIntent(intent)
                 removeModesFromIntent(intent)
@@ -137,6 +150,7 @@ object EntrySelectionHelper {
                     defaultAction.invoke()
                 }
             }
+
             SpecialMode.SAVE -> {
                 val searchInfo = retrieveSearchInfoFromIntent(intent)
                 removeModesFromIntent(intent)
@@ -147,6 +161,7 @@ object EntrySelectionHelper {
                     defaultAction.invoke()
                 }
             }
+
             SpecialMode.SELECTION -> {
                 val searchInfo: SearchInfo? = retrieveSearchInfoFromIntent(intent)
                 var autofillComponentInit = false
@@ -166,6 +181,7 @@ object EntrySelectionHelper {
                                 else
                                     defaultAction.invoke()
                             }
+
                             TypeMode.MAGIKEYBOARD -> keyboardSelectionAction.invoke(searchInfo)
                             else -> {
                                 // In this case, error
@@ -181,6 +197,7 @@ object EntrySelectionHelper {
                     }
                 }
             }
+
             SpecialMode.REGISTRATION -> {
                 val registerInfo: RegisterInfo? = retrieveRegisterInfoFromIntent(intent)
                 removeModesFromIntent(intent)

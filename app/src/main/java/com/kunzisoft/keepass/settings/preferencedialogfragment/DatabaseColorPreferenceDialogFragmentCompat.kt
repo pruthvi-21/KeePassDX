@@ -112,7 +112,11 @@ class DatabaseColorPreferenceDialogFragmentCompat : DatabaseSavePreferenceDialog
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         return rootView
     }
@@ -126,6 +130,7 @@ class DatabaseColorPreferenceDialogFragmentCompat : DatabaseSavePreferenceDialog
     companion object {
         private const val ARG_INITIAL_COLOR = "ARG_INITIAL_COLOR"
         private const val ARG_ACTIVATED = "ARG_ACTIVATED"
+
         @ColorInt
         const val DEFAULT_COLOR: Int = Color.WHITE
 

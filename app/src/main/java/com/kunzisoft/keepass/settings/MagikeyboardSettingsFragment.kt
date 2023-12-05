@@ -24,6 +24,7 @@ class MagikeyboardSettingsFragment : PreferenceFragmentCompat() {
             getString(R.string.keyboard_entry_timeout_key) -> {
                 dialogFragment = DurationDialogFragmentCompat.newInstance(preference.key)
             }
+
             else -> otherDialogFragment = true
         }
 

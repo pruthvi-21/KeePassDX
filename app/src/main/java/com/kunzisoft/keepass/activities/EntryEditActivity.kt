@@ -118,20 +118,22 @@ class EntryEditActivity : DatabaseLockActivity(),
     private var mExternalFileHelper: ExternalFileHelper? = null
     private var mAttachmentFileBinderManager: AttachmentFileBinderManager? = null
 
-    private var mIconSelectionActivityResultLauncher = IconPickerActivity.registerIconSelectionForResult(this) { icon ->
-        mEntryEditViewModel.selectIcon(icon)
-    }
+    private var mIconSelectionActivityResultLauncher =
+        IconPickerActivity.registerIconSelectionForResult(this) { icon ->
+            mEntryEditViewModel.selectIcon(icon)
+        }
 
     private var mPasswordField: Field? = null
-    private var mKeyGeneratorResultLauncher = KeyGeneratorActivity.registerForGeneratedKeyResult(this) { keyGenerated ->
-        keyGenerated?.let {
-            mPasswordField?.let {
-                it.protectedValue.stringValue = keyGenerated
-                mEntryEditViewModel.selectPassword(it)
+    private var mKeyGeneratorResultLauncher =
+        KeyGeneratorActivity.registerForGeneratedKeyResult(this) { keyGenerated ->
+            keyGenerated?.let {
+                mPasswordField?.let {
+                    it.protectedValue.stringValue = keyGenerated
+                    mEntryEditViewModel.selectPassword(it)
+                }
             }
+            mPasswordField = null
         }
-        mPasswordField = null
-    }
 
     // To ask data lost only one time
     private var backPressedAlreadyApproved = false
@@ -340,23 +342,28 @@ class EntryEditActivity : DatabaseLockActivity(),
         mEntryEditViewModel.onCustomFieldError.observe(this) {
             coordinatorLayout?.let {
                 Snackbar.make(it, R.string.error_field_name_already_exists, Snackbar.LENGTH_LONG)
-                        .asError()
-                        .show()
+                    .asError()
+                    .show()
             }
         }
 
         mEntryEditViewModel.onStartUploadAttachment.observe(this) {
             // Start uploading in service
-            mAttachmentFileBinderManager?.startUploadAttachment(it.attachmentToUploadUri, it.attachment)
+            mAttachmentFileBinderManager?.startUploadAttachment(
+                it.attachmentToUploadUri,
+                it.attachment
+            )
         }
 
         mEntryEditViewModel.onAttachmentAction.observe(this) { attachmentState ->
             when (attachmentState?.downloadState) {
                 AttachmentState.ERROR -> {
                     coordinatorLayout?.let {
-                        Snackbar.make(it, R.string.error_file_not_create, Snackbar.LENGTH_LONG).asError().show()
+                        Snackbar.make(it, R.string.error_file_not_create, Snackbar.LENGTH_LONG)
+                            .asError().show()
                     }
                 }
+
                 else -> {}
             }
         }
@@ -368,6 +375,7 @@ class EntryEditActivity : DatabaseLockActivity(),
                 AttachmentState.COMPLETE -> {
                     scrollView?.smoothScrollTo(0, it.viewPosition.toInt())
                 }
+
                 else -> {}
             }
         }
@@ -462,9 +470,13 @@ class EntryEditActivity : DatabaseLockActivity(),
                 try {
                     if (result.isSuccess) {
                         var newNodes: List<Node> = ArrayList()
-                        result.data?.getBundle(DatabaseTaskNotificationService.NEW_NODES_KEY)?.let { newNodesBundle ->
-                            newNodes = DatabaseTaskNotificationService.getListNodesFromBundle(database, newNodesBundle)
-                        }
+                        result.data?.getBundle(DatabaseTaskNotificationService.NEW_NODES_KEY)
+                            ?.let { newNodesBundle ->
+                                newNodes = DatabaseTaskNotificationService.getListNodesFromBundle(
+                                    database,
+                                    newNodesBundle
+                                )
+                            }
                         if (newNodes.size == 1) {
                             (newNodes[0] as? Entry?)?.let { entry ->
                                 EntrySelectionHelper.doSpecialAction(intent,
@@ -518,9 +530,11 @@ class EntryEditActivity : DatabaseLockActivity(),
     private fun entryValidatedForAutofillSelection(database: ContextualDatabase, entry: Entry) {
         // Build Autofill response with the entry selected
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            AutofillHelper.buildResponseAndSetResult(this@EntryEditActivity,
-                    database,
-                    entry.getEntryInfo(database))
+            AutofillHelper.buildResponseAndSetResult(
+                this@EntryEditActivity,
+                database,
+                entry.getEntryInfo(database)
+            )
         }
         onValidateSpecialMode()
     }
@@ -542,7 +556,10 @@ class EntryEditActivity : DatabaseLockActivity(),
         mAttachmentFileBinderManager?.apply {
             registerProgressTask()
             onActionTaskListener = object : AttachmentFileNotificationService.ActionTaskListener {
-                override fun onAttachmentAction(fileUri: Uri, entryAttachmentState: EntryAttachmentState) {
+                override fun onAttachmentAction(
+                    fileUri: Uri,
+                    entryAttachmentState: EntryAttachmentState
+                ) {
                     mEntryEditViewModel.onAttachmentAction(entryAttachmentState)
                 }
             }
@@ -564,11 +581,13 @@ class EntryEditActivity : DatabaseLockActivity(),
      * Add a new customized field
      */
     private fun addNewCustomField() {
-        EntryCustomFieldDialogFragment.getInstance().show(supportFragmentManager, "customFieldDialog")
+        EntryCustomFieldDialogFragment.getInstance()
+            .show(supportFragmentManager, "customFieldDialog")
     }
 
     private fun editCustomField(field: Field) {
-        EntryCustomFieldDialogFragment.getInstance(field).show(supportFragmentManager, "customFieldDialog")
+        EntryCustomFieldDialogFragment.getInstance(field)
+            .show(supportFragmentManager, "customFieldDialog")
     }
 
     override fun onNewCustomFieldApproved(newField: Field) {
@@ -663,14 +682,14 @@ class EntryEditActivity : DatabaseLockActivity(),
     private fun onApprovedBackPressed(approved: () -> Unit) {
         if (!backPressedAlreadyApproved) {
             AlertDialog.Builder(this)
-                    .setView(R.layout.alert_dialog_layout)
-                    .setMessage(R.string.discard_changes)
-                    .setNegativeButton(android.R.string.cancel, null)
-                    .setPositiveButton(R.string.discard) { _, _ ->
-                        mAttachmentFileBinderManager?.stopUploadAllAttachments()
-                        backPressedAlreadyApproved = true
-                        approved.invoke()
-                    }.create().show()
+                .setView(R.layout.alert_dialog_layout)
+                .setMessage(R.string.discard_changes)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(R.string.discard) { _, _ ->
+                    mAttachmentFileBinderManager?.stopUploadAllAttachments()
+                    backPressedAlreadyApproved = true
+                    approved.invoke()
+                }.create().show()
         } else {
             approved.invoke()
         }
@@ -700,8 +719,10 @@ class EntryEditActivity : DatabaseLockActivity(),
         const val KEY_PARENT = "parent"
         const val ADD_OR_UPDATE_ENTRY_KEY = "ADD_OR_UPDATE_ENTRY_KEY"
 
-        fun registerForEntryResult(fragment: Fragment,
-                                   entryAddedOrUpdatedListener: (NodeId<UUID>?) -> Unit): ActivityResultLauncher<Intent> {
+        fun registerForEntryResult(
+            fragment: Fragment,
+            entryAddedOrUpdatedListener: (NodeId<UUID>?) -> Unit
+        ): ActivityResultLauncher<Intent> {
             return fragment.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
                     entryAddedOrUpdatedListener.invoke(
@@ -713,8 +734,10 @@ class EntryEditActivity : DatabaseLockActivity(),
             }
         }
 
-        fun registerForEntryResult(activity: FragmentActivity,
-                                   entryAddedOrUpdatedListener: (NodeId<UUID>?) -> Unit): ActivityResultLauncher<Intent> {
+        fun registerForEntryResult(
+            activity: FragmentActivity,
+            entryAddedOrUpdatedListener: (NodeId<UUID>?) -> Unit
+        ): ActivityResultLauncher<Intent> {
             return activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
                     entryAddedOrUpdatedListener.invoke(
@@ -729,10 +752,12 @@ class EntryEditActivity : DatabaseLockActivity(),
         /**
          * Launch EntryEditActivity to update an existing entry by his [entryId]
          */
-        fun launchToUpdate(activity: Activity,
-                           database: ContextualDatabase,
-                           entryId: NodeId<UUID>,
-                           activityResultLauncher: ActivityResultLauncher<Intent>) {
+        fun launchToUpdate(
+            activity: Activity,
+            database: ContextualDatabase,
+            entryId: NodeId<UUID>,
+            activityResultLauncher: ActivityResultLauncher<Intent>
+        ) {
             if (database.loaded && !database.isReadOnly) {
                 if (TimeoutHelper.checkTimeAndLockIfTimeout(activity)) {
                     val intent = Intent(activity, EntryEditActivity::class.java)
@@ -745,10 +770,12 @@ class EntryEditActivity : DatabaseLockActivity(),
         /**
          * Launch EntryEditActivity to add a new entry in an existent group
          */
-        fun launchToCreate(activity: Activity,
-                           database: ContextualDatabase,
-                           groupId: NodeId<*>,
-                           activityResultLauncher: ActivityResultLauncher<Intent>) {
+        fun launchToCreate(
+            activity: Activity,
+            database: ContextualDatabase,
+            groupId: NodeId<*>,
+            activityResultLauncher: ActivityResultLauncher<Intent>
+        ) {
             if (database.loaded && !database.isReadOnly) {
                 if (TimeoutHelper.checkTimeAndLockIfTimeout(activity)) {
                     val intent = Intent(activity, EntryEditActivity::class.java)
@@ -758,10 +785,12 @@ class EntryEditActivity : DatabaseLockActivity(),
             }
         }
 
-        fun launchToUpdateForSave(context: Context,
-                                  database: ContextualDatabase,
-                                  entryId: NodeId<UUID>,
-                                  searchInfo: SearchInfo) {
+        fun launchToUpdateForSave(
+            context: Context,
+            database: ContextualDatabase,
+            entryId: NodeId<UUID>,
+            searchInfo: SearchInfo
+        ) {
             if (database.loaded && !database.isReadOnly) {
                 if (TimeoutHelper.checkTimeAndLockIfTimeout(context)) {
                     val intent = Intent(context, EntryEditActivity::class.java)
@@ -775,10 +804,12 @@ class EntryEditActivity : DatabaseLockActivity(),
             }
         }
 
-        fun launchToCreateForSave(context: Context,
-                                  database: ContextualDatabase,
-                                  groupId: NodeId<*>,
-                                  searchInfo: SearchInfo) {
+        fun launchToCreateForSave(
+            context: Context,
+            database: ContextualDatabase,
+            groupId: NodeId<*>,
+            searchInfo: SearchInfo
+        ) {
             if (database.loaded && !database.isReadOnly) {
                 if (TimeoutHelper.checkTimeAndLockIfTimeout(context)) {
                     val intent = Intent(context, EntryEditActivity::class.java)
@@ -795,10 +826,12 @@ class EntryEditActivity : DatabaseLockActivity(),
         /**
          * Launch EntryEditActivity to add a new entry in keyboard selection
          */
-        fun launchForKeyboardSelectionResult(context: Context,
-                                             database: ContextualDatabase,
-                                             groupId: NodeId<*>,
-                                             searchInfo: SearchInfo? = null) {
+        fun launchForKeyboardSelectionResult(
+            context: Context,
+            database: ContextualDatabase,
+            groupId: NodeId<*>,
+            searchInfo: SearchInfo? = null
+        ) {
             if (database.loaded && !database.isReadOnly) {
                 if (TimeoutHelper.checkTimeAndLockIfTimeout(context)) {
                     val intent = Intent(context, EntryEditActivity::class.java)
@@ -816,12 +849,14 @@ class EntryEditActivity : DatabaseLockActivity(),
          * Launch EntryEditActivity to add a new entry in autofill selection
          */
         @RequiresApi(api = Build.VERSION_CODES.O)
-        fun launchForAutofillResult(activity: AppCompatActivity,
-                                    database: ContextualDatabase,
-                                    activityResultLauncher: ActivityResultLauncher<Intent>?,
-                                    autofillComponent: AutofillComponent,
-                                    groupId: NodeId<*>,
-                                    searchInfo: SearchInfo? = null) {
+        fun launchForAutofillResult(
+            activity: AppCompatActivity,
+            database: ContextualDatabase,
+            activityResultLauncher: ActivityResultLauncher<Intent>?,
+            autofillComponent: AutofillComponent,
+            groupId: NodeId<*>,
+            searchInfo: SearchInfo? = null
+        ) {
             if (database.loaded && !database.isReadOnly) {
                 if (TimeoutHelper.checkTimeAndLockIfTimeout(activity)) {
                     val intent = Intent(activity, EntryEditActivity::class.java)
@@ -840,10 +875,12 @@ class EntryEditActivity : DatabaseLockActivity(),
         /**
          * Launch EntryEditActivity to register an updated entry (from autofill)
          */
-        fun launchToUpdateForRegistration(context: Context,
-                                          database: ContextualDatabase,
-                                          entryId: NodeId<UUID>,
-                                          registerInfo: RegisterInfo? = null) {
+        fun launchToUpdateForRegistration(
+            context: Context,
+            database: ContextualDatabase,
+            entryId: NodeId<UUID>,
+            registerInfo: RegisterInfo? = null
+        ) {
             if (database.loaded && !database.isReadOnly) {
                 if (TimeoutHelper.checkTimeAndLockIfTimeout(context)) {
                     val intent = Intent(context, EntryEditActivity::class.java)
@@ -860,10 +897,12 @@ class EntryEditActivity : DatabaseLockActivity(),
         /**
          * Launch EntryEditActivity to register a new entry (from autofill)
          */
-        fun launchToCreateForRegistration(context: Context,
-                                          database: ContextualDatabase,
-                                          groupId: NodeId<*>,
-                                          registerInfo: RegisterInfo? = null) {
+        fun launchToCreateForRegistration(
+            context: Context,
+            database: ContextualDatabase,
+            groupId: NodeId<*>,
+            registerInfo: RegisterInfo? = null
+        ) {
             if (database.loaded && !database.isReadOnly) {
                 if (TimeoutHelper.checkTimeAndLockIfTimeout(context)) {
                     val intent = Intent(context, EntryEditActivity::class.java)

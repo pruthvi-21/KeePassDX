@@ -9,8 +9,6 @@ import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.Log
@@ -97,12 +95,12 @@ import com.kunzisoft.keepass.viewmodels.GroupViewModel
 
 
 class GroupActivity : DatabaseLockActivity(),
-        GroupFragment.NodeClickListener,
-        GroupFragment.NodesActionMenuListener,
-        GroupFragment.OnScrollListener,
-        GroupFragment.GroupRefreshedListener,
+    GroupFragment.NodeClickListener,
+    GroupFragment.NodesActionMenuListener,
+    GroupFragment.OnScrollListener,
+    GroupFragment.GroupRefreshedListener,
     SortBottomSheetFragment.SortSelectionListener,
-        MainCredentialDialogFragment.AskMainCredentialDialogListener {
+    MainCredentialDialogFragment.AskMainCredentialDialogListener {
 
     // Views
     private var header: ViewGroup? = null
@@ -203,25 +201,29 @@ class GroupActivity : DatabaseLockActivity(),
     private val mOnSearchTextFocusChangeListener = View.OnFocusChangeListener { view, hasFocus ->
         if (!mAutoSearch
             && hasFocus
-            && PreferencesUtil.isKeyboardPreviousSearchEnable(this@GroupActivity)) {
+            && PreferencesUtil.isKeyboardPreviousSearchEnable(this@GroupActivity)
+        ) {
             // Change to the previous keyboard and show it
             sendBroadcast(Intent(BACK_PREVIOUS_KEYBOARD_ACTION))
             view.showKeyboard()
         }
     }
 
-    private val mEntryActivityResultLauncher = EntryEditActivity.registerForEntryResult(this) { entryId ->
-        entryId?.let {
-            // Simply refresh the list when entry is updated
-            loadGroup()
-        } ?: Log.e(this.javaClass.name, "Entry cannot be retrieved in Activity Result")
-    }
+    private val mEntryActivityResultLauncher =
+        EntryEditActivity.registerForEntryResult(this) { entryId ->
+            entryId?.let {
+                // Simply refresh the list when entry is updated
+                loadGroup()
+            } ?: Log.e(this.javaClass.name, "Entry cannot be retrieved in Activity Result")
+        }
 
     private fun addSearch() {
         finishNodeAction()
         if (mSearchState == null) {
-            mSearchState = SearchState(searchFiltersView?.searchParameters
-                ?: PreferencesUtil.getDefaultSearchParameters(this), 0)
+            mSearchState = SearchState(
+                searchFiltersView?.searchParameters
+                    ?: PreferencesUtil.getDefaultSearchParameters(this), 0
+            )
         }
     }
 
@@ -234,10 +236,11 @@ class GroupActivity : DatabaseLockActivity(),
         }
     }
 
-    private var mIconSelectionActivityResultLauncher = IconPickerActivity.registerIconSelectionForResult(this) { icon ->
-        // To create tree dialog for icon
-        mGroupEditViewModel.selectIcon(icon)
-    }
+    private var mIconSelectionActivityResultLauncher =
+        IconPickerActivity.registerIconSelectionForResult(this) { icon ->
+            // To create tree dialog for icon
+            mGroupEditViewModel.selectIcon(icon)
+        }
 
     private var mAutofillActivityResultLauncher: ActivityResultLauncher<Intent>? =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
@@ -311,18 +314,23 @@ class GroupActivity : DatabaseLockActivity(),
                         // To avoid flickering when launch settings in a LockingActivity
                         SettingsActivity.launch(this@GroupActivity, true)
                     }
+
                     R.id.menu_merge_from -> {
                         mExternalFileHelper?.openDocument()
                     }
+
                     R.id.menu_save_copy_to -> {
                         mExternalFileHelper?.createDocument(
                             getString(R.string.database_file_name_default) +
-                            getString(R.string.database_file_name_copy) +
-                            mDatabase?.defaultFileExtension)
+                                    getString(R.string.database_file_name_copy) +
+                                    mDatabase?.defaultFileExtension
+                        )
                     }
+
                     R.id.menu_lock_all -> {
                         lockAndExit()
                     }
+
                     R.id.menu_about -> {
                         startActivity(Intent(this@GroupActivity, AboutActivity::class.java))
                     }
@@ -442,7 +450,11 @@ class GroupActivity : DatabaseLockActivity(),
         }
 
         mGroupEditViewModel.requestIconSelection.observe(this) { iconImage ->
-            IconPickerActivity.launch(this@GroupActivity, iconImage, mIconSelectionActivityResultLauncher)
+            IconPickerActivity.launch(
+                this@GroupActivity,
+                iconImage,
+                mIconSelectionActivityResultLauncher
+            )
         }
 
         mGroupEditViewModel.requestDateTimeSelection.observe(this) { dateInstant ->
@@ -559,16 +571,20 @@ class GroupActivity : DatabaseLockActivity(),
     }
 
     private fun loadMainGroup(groupState: GroupState) {
-        mGroupViewModel.loadMainGroup(mDatabase,
+        mGroupViewModel.loadMainGroup(
+            mDatabase,
             groupState.groupId,
-            groupState.firstVisibleItem)
+            groupState.firstVisibleItem
+        )
     }
 
     private fun loadSearchGroup(searchState: SearchState) {
-        mGroupViewModel.loadSearchGroup(mDatabase,
+        mGroupViewModel.loadSearchGroup(
+            mDatabase,
             searchState.searchParameters,
             mMainGroupState?.groupId,
-            searchState.firstVisibleItem)
+            searchState.firstVisibleItem
+        )
     }
 
     private fun loadGroup() {
@@ -579,9 +595,11 @@ class GroupActivity : DatabaseLockActivity(),
                 finishNodeAction()
                 loadSearchGroup(searchState)
             }
+
             currentGroupState != null -> {
                 loadMainGroup(currentGroupState)
             }
+
             else -> {
                 loadMainGroup(GroupState(null, 0))
             }
@@ -712,14 +730,16 @@ class GroupActivity : DatabaseLockActivity(),
             // Get search query
             if (intent.action == Intent.ACTION_SEARCH) {
                 mAutoSearch = true
-                val stringQuery = intent.getStringExtra(SearchManager.QUERY)?.trim { it <= ' ' } ?: ""
+                val stringQuery =
+                    intent.getStringExtra(SearchManager.QUERY)?.trim { it <= ' ' } ?: ""
                 intent.action = Intent.ACTION_DEFAULT
                 intent.removeExtra(SearchManager.QUERY)
                 mSearchState = SearchState(PreferencesUtil.getDefaultSearchParameters(this).apply {
                     searchQuery = stringQuery
                 }, mSearchState?.firstVisibleItem ?: 0)
             } else if (mRequestStartupSearch
-                && PreferencesUtil.automaticallyFocusSearch(this@GroupActivity)) {
+                && PreferencesUtil.automaticallyFocusSearch(this@GroupActivity)
+            ) {
                 // Expand the search view if defined in settings
                 // To request search only one time
                 mRequestStartupSearch = false
@@ -753,7 +773,9 @@ class GroupActivity : DatabaseLockActivity(),
             searchFiltersView?.availableOther(mDatabase?.allowEntryCustomFields() ?: false)
             searchFiltersView?.availableTags(mDatabase?.allowTags() ?: false)
             searchFiltersView?.enableTags(mDatabase?.tagPool?.isNotEmpty() ?: false)
-            searchFiltersView?.availableSearchableGroup(mDatabase?.allowCustomSearchableGroup() ?: false)
+            searchFiltersView?.availableSearchableGroup(
+                mDatabase?.allowCustomSearchableGroup() ?: false
+            )
             searchFiltersView?.availableTemplates(mDatabase?.allowTemplatesGroup ?: false)
             searchFiltersView?.enableTemplates(mDatabase?.templatesGroup != null)
         } else {
@@ -768,7 +790,7 @@ class GroupActivity : DatabaseLockActivity(),
     private fun setBreadcrumbNode(group: Group?) {
         mBreadcrumbAdapter?.apply {
             setNode(group)
-            breadcrumbListView?.scrollToPosition(itemCount -1)
+            breadcrumbListView?.scrollToPosition(itemCount - 1)
         }
     }
 
@@ -870,7 +892,11 @@ class GroupActivity : DatabaseLockActivity(),
         }
     }
 
-    private fun entrySelectedForSave(database: ContextualDatabase, entry: Entry, searchInfo: SearchInfo) {
+    private fun entrySelectedForSave(
+        database: ContextualDatabase,
+        entry: Entry,
+        searchInfo: SearchInfo
+    ) {
         removeSearch()
         // Save to update the entry
         EntryEditActivity.launchToUpdateForSave(
@@ -987,6 +1013,7 @@ class GroupActivity : DatabaseLockActivity(),
             Type.GROUP -> {
                 launchDialogForGroupUpdate(node as Group)
             }
+
             Type.ENTRY -> {
                 EntryEditActivity.launchToUpdate(
                     this@GroupActivity,
@@ -1055,12 +1082,14 @@ class GroupActivity : DatabaseLockActivity(),
                     copyNodes(nodes, newParent)
                 }
             }
+
             GroupFragment.PasteMode.PASTE_FROM_MOVE -> {
                 // Move
                 mMainGroup?.let { newParent ->
                     moveNodes(nodes, newParent)
                 }
             }
+
             else -> {
             }
         }
@@ -1089,7 +1118,8 @@ class GroupActivity : DatabaseLockActivity(),
     override fun onAskMainCredentialDialogNegativeClick(
         databaseUri: Uri?,
         mainCredential: MainCredential
-    ) { }
+    ) {
+    }
 
     override fun onResume() {
         super.onResume()
@@ -1204,21 +1234,26 @@ class GroupActivity : DatabaseLockActivity(),
                 drawerLayout?.openDrawer(GravityCompat.START)
                 return true
             }
+
             R.id.menu_search -> {
                 return true
             }
+
             R.id.menu_save_database -> {
                 saveDatabase()
                 return true
             }
+
             R.id.menu_merge_database -> {
                 mergeDatabase()
                 return true
             }
+
             R.id.menu_reload_database -> {
                 reloadDatabase()
                 return true
             }
+
             R.id.menu_empty_recycle_bin -> {
                 if (mRecyclingBinEnabled && mRecyclingBinIsCurrentGroup) {
                     mMainGroup?.getChildren()?.let { listChildren ->
@@ -1229,6 +1264,7 @@ class GroupActivity : DatabaseLockActivity(),
                 }
                 return true
             }
+
             else -> {
                 return super.onOptionsItemSelected(item)
             }
@@ -1276,9 +1312,11 @@ class GroupActivity : DatabaseLockActivity(),
                         removeSearch()
                         loadGroup()
                     }
+
                     mPreviousGroupsIds.isEmpty() -> {
                         super.onRegularBackPressed()
                     }
+
                     else -> {
                         // Load the previous group
                         loadMainGroup(mPreviousGroupsIds.removeLast())
@@ -1366,9 +1404,11 @@ class GroupActivity : DatabaseLockActivity(),
         private const val OLD_GROUP_TO_UPDATE_KEY = "OLD_GROUP_TO_UPDATE_KEY"
         private const val AUTO_SEARCH_KEY = "AUTO_SEARCH_KEY"
 
-        private fun buildIntent(context: Context,
-                                groupState: GroupState?,
-                                intentBuildLauncher: (Intent) -> Unit) {
+        private fun buildIntent(
+            context: Context,
+            groupState: GroupState?,
+            intentBuildLauncher: (Intent) -> Unit
+        ) {
             val intent = Intent(context, GroupActivity::class.java)
             if (groupState != null) {
                 intent.putExtra(GROUP_STATE_KEY, groupState)
@@ -1376,17 +1416,21 @@ class GroupActivity : DatabaseLockActivity(),
             intentBuildLauncher.invoke(intent)
         }
 
-        private fun checkTimeAndBuildIntent(activity: Activity,
-                                            groupState: GroupState?,
-                                            intentBuildLauncher: (Intent) -> Unit) {
+        private fun checkTimeAndBuildIntent(
+            activity: Activity,
+            groupState: GroupState?,
+            intentBuildLauncher: (Intent) -> Unit
+        ) {
             if (TimeoutHelper.checkTimeAndLockIfTimeout(activity)) {
                 buildIntent(activity, groupState, intentBuildLauncher)
             }
         }
 
-        private fun checkTimeAndBuildIntent(context: Context,
-                                            groupState: GroupState?,
-                                            intentBuildLauncher: (Intent) -> Unit) {
+        private fun checkTimeAndBuildIntent(
+            context: Context,
+            groupState: GroupState?,
+            intentBuildLauncher: (Intent) -> Unit
+        ) {
             if (TimeoutHelper.checkTime(context)) {
                 buildIntent(context, groupState, intentBuildLauncher)
             }
@@ -1397,9 +1441,11 @@ class GroupActivity : DatabaseLockActivity(),
          * 		Standard Launch
          * -------------------------
          */
-        fun launch(context: Context,
-                   database: ContextualDatabase,
-                   autoSearch: Boolean = false) {
+        fun launch(
+            context: Context,
+            database: ContextualDatabase,
+            autoSearch: Boolean = false
+        ) {
             if (database.loaded) {
                 checkTimeAndBuildIntent(context, null) { intent ->
                     intent.putExtra(AUTO_SEARCH_KEY, autoSearch)
@@ -1413,10 +1459,12 @@ class GroupActivity : DatabaseLockActivity(),
          * 		Search Launch
          * -------------------------
          */
-        fun launchForSearchResult(context: Context,
-                                  database: ContextualDatabase,
-                                  searchInfo: SearchInfo,
-                                  autoSearch: Boolean = false) {
+        fun launchForSearchResult(
+            context: Context,
+            database: ContextualDatabase,
+            searchInfo: SearchInfo,
+            autoSearch: Boolean = false
+        ) {
             if (database.loaded) {
                 checkTimeAndBuildIntent(context, null) { intent ->
                     intent.putExtra(AUTO_SEARCH_KEY, autoSearch)
@@ -1434,10 +1482,12 @@ class GroupActivity : DatabaseLockActivity(),
          * 		Search save Launch
          * -------------------------
          */
-        fun launchForSaveResult(context: Context,
-                                database: ContextualDatabase,
-                                searchInfo: SearchInfo,
-                                autoSearch: Boolean = false) {
+        fun launchForSaveResult(
+            context: Context,
+            database: ContextualDatabase,
+            searchInfo: SearchInfo,
+            autoSearch: Boolean = false
+        ) {
             if (database.loaded && !database.isReadOnly) {
                 checkTimeAndBuildIntent(context, null) { intent ->
                     intent.putExtra(AUTO_SEARCH_KEY, autoSearch)
@@ -1455,10 +1505,12 @@ class GroupActivity : DatabaseLockActivity(),
          * 		Keyboard Launch
          * -------------------------
          */
-        fun launchForKeyboardSelectionResult(context: Context,
-                                             database: ContextualDatabase,
-                                             searchInfo: SearchInfo? = null,
-                                             autoSearch: Boolean = false) {
+        fun launchForKeyboardSelectionResult(
+            context: Context,
+            database: ContextualDatabase,
+            searchInfo: SearchInfo? = null,
+            autoSearch: Boolean = false
+        ) {
             if (database.loaded) {
                 checkTimeAndBuildIntent(context, null) { intent ->
                     intent.putExtra(AUTO_SEARCH_KEY, autoSearch)
@@ -1477,12 +1529,14 @@ class GroupActivity : DatabaseLockActivity(),
          * -------------------------
          */
         @RequiresApi(api = Build.VERSION_CODES.O)
-        fun launchForAutofillResult(activity: AppCompatActivity,
-                                    database: ContextualDatabase,
-                                    activityResultLaunch: ActivityResultLauncher<Intent>?,
-                                    autofillComponent: AutofillComponent,
-                                    searchInfo: SearchInfo? = null,
-                                    autoSearch: Boolean = false) {
+        fun launchForAutofillResult(
+            activity: AppCompatActivity,
+            database: ContextualDatabase,
+            activityResultLaunch: ActivityResultLauncher<Intent>?,
+            autofillComponent: AutofillComponent,
+            searchInfo: SearchInfo? = null,
+            autoSearch: Boolean = false
+        ) {
             if (database.loaded) {
                 checkTimeAndBuildIntent(activity, null) { intent ->
                     intent.putExtra(AUTO_SEARCH_KEY, autoSearch)
@@ -1502,9 +1556,11 @@ class GroupActivity : DatabaseLockActivity(),
          * 		Registration Launch
          * -------------------------
          */
-        fun launchForRegistration(context: Context,
-                                  database: ContextualDatabase,
-                                  registerInfo: RegisterInfo? = null) {
+        fun launchForRegistration(
+            context: Context,
+            database: ContextualDatabase,
+            registerInfo: RegisterInfo? = null
+        ) {
             if (database.loaded && !database.isReadOnly) {
                 checkTimeAndBuildIntent(context, null) { intent ->
                     intent.putExtra(AUTO_SEARCH_KEY, false)
@@ -1522,158 +1578,178 @@ class GroupActivity : DatabaseLockActivity(),
          * 		Global Launch
          * -------------------------
          */
-        fun launch(activity: AppCompatActivity,
-                   database: ContextualDatabase,
-                   onValidateSpecialMode: () -> Unit,
-                   onCancelSpecialMode: () -> Unit,
-                   onLaunchActivitySpecialMode: () -> Unit,
-                   autofillActivityResultLauncher: ActivityResultLauncher<Intent>?) {
+        fun launch(
+            activity: AppCompatActivity,
+            database: ContextualDatabase,
+            onValidateSpecialMode: () -> Unit,
+            onCancelSpecialMode: () -> Unit,
+            onLaunchActivitySpecialMode: () -> Unit,
+            autofillActivityResultLauncher: ActivityResultLauncher<Intent>?
+        ) {
             EntrySelectionHelper.doSpecialAction(activity.intent,
-                    {
-                        // Default action
-                        launch(
+                {
+                    // Default action
+                    launch(
+                        activity,
+                        database,
+                        true
+                    )
+                },
+                { searchInfo ->
+                    // Search action
+                    if (database.loaded) {
+                        launchForSearchResult(
                             activity,
                             database,
+                            searchInfo,
                             true
                         )
-                    },
-                    { searchInfo ->
-                        // Search action
-                        if (database.loaded) {
-                            launchForSearchResult(activity,
+                        onLaunchActivitySpecialMode()
+                    } else {
+                        // Simply close if database not opened
+                        onCancelSpecialMode()
+                    }
+                },
+                { searchInfo ->
+                    // Save info
+                    if (database.loaded) {
+                        if (!database.isReadOnly) {
+                            launchForSaveResult(
+                                activity,
                                 database,
                                 searchInfo,
-                                true)
+                                false
+                            )
                             onLaunchActivitySpecialMode()
                         } else {
-                            // Simply close if database not opened
+                            Toast.makeText(
+                                activity.applicationContext,
+                                R.string.autofill_read_only_save,
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
                             onCancelSpecialMode()
                         }
-                    },
-                    { searchInfo ->
-                        // Save info
-                        if (database.loaded) {
-                            if (!database.isReadOnly) {
-                                launchForSaveResult(
+                    }
+                },
+                { searchInfo ->
+                    // Keyboard selection
+                    SearchHelper.checkAutoSearchInfo(activity,
+                        database,
+                        searchInfo,
+                        { _, items ->
+                            MagikeyboardService.performSelection(
+                                items,
+                                { entryInfo ->
+                                    // Keyboard populated
+                                    MagikeyboardService.populateKeyboardAndMoveAppToBackground(
+                                        activity,
+                                        entryInfo
+                                    )
+                                    onValidateSpecialMode()
+                                },
+                                { autoSearch ->
+                                    launchForKeyboardSelectionResult(
+                                        activity,
+                                        database,
+                                        searchInfo,
+                                        autoSearch
+                                    )
+                                    onLaunchActivitySpecialMode()
+                                }
+                            )
+                        },
+                        {
+                            // Here no search info found, disable auto search
+                            launchForKeyboardSelectionResult(
+                                activity,
+                                database,
+                                searchInfo,
+                                false
+                            )
+                            onLaunchActivitySpecialMode()
+                        },
+                        {
+                            // Simply close if database not opened, normally not happened
+                            onCancelSpecialMode()
+                        }
+                    )
+                },
+                { searchInfo, autofillComponent ->
+                    // Autofill selection
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        SearchHelper.checkAutoSearchInfo(activity,
+                            database,
+                            searchInfo,
+                            { openedDatabase, items ->
+                                // Response is build
+                                AutofillHelper.buildResponseAndSetResult(
+                                    activity,
+                                    openedDatabase,
+                                    items
+                                )
+                                onValidateSpecialMode()
+                            },
+                            {
+                                // Here no search info found, disable auto search
+                                launchForAutofillResult(
                                     activity,
                                     database,
+                                    autofillActivityResultLauncher,
+                                    autofillComponent,
                                     searchInfo,
                                     false
                                 )
                                 onLaunchActivitySpecialMode()
-                            } else {
-                                Toast.makeText(
-                                    activity.applicationContext,
-                                    R.string.autofill_read_only_save,
-                                    Toast.LENGTH_LONG
-                                )
-                                    .show()
+                            },
+                            {
+                                // Simply close if database not opened, normally not happened
                                 onCancelSpecialMode()
                             }
-                        }
-                    },
-                    { searchInfo ->
-                        // Keyboard selection
-                        SearchHelper.checkAutoSearchInfo(activity,
-                                database,
-                                searchInfo,
-                                { _, items ->
-                                    MagikeyboardService.performSelection(
-                                        items,
-                                        { entryInfo ->
-                                            // Keyboard populated
-                                            MagikeyboardService.populateKeyboardAndMoveAppToBackground(
-                                                activity,
-                                                entryInfo
-                                            )
-                                            onValidateSpecialMode()
-                                        },
-                                        { autoSearch ->
-                                            launchForKeyboardSelectionResult(activity,
-                                                database,
-                                                searchInfo,
-                                                autoSearch)
-                                            onLaunchActivitySpecialMode()
-                                        }
-                                    )
-                                },
-                                {
-                                    // Here no search info found, disable auto search
-                                    launchForKeyboardSelectionResult(activity,
-                                        database,
-                                        searchInfo,
-                                        false)
-                                    onLaunchActivitySpecialMode()
-                                },
-                                {
-                                    // Simply close if database not opened, normally not happened
-                                    onCancelSpecialMode()
-                                }
                         )
-                    },
-                    { searchInfo, autofillComponent ->
-                        // Autofill selection
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            SearchHelper.checkAutoSearchInfo(activity,
+                    } else {
+                        onCancelSpecialMode()
+                    }
+                },
+                { registerInfo ->
+                    // Autofill registration
+                    if (!database.isReadOnly) {
+                        SearchHelper.checkAutoSearchInfo(activity,
+                            database,
+                            registerInfo?.searchInfo,
+                            { _, _ ->
+                                // No auto search, it's a registration
+                                launchForRegistration(
+                                    activity,
                                     database,
-                                    searchInfo,
-                                    { openedDatabase, items ->
-                                        // Response is build
-                                        AutofillHelper.buildResponseAndSetResult(activity, openedDatabase, items)
-                                        onValidateSpecialMode()
-                                    },
-                                    {
-                                        // Here no search info found, disable auto search
-                                        launchForAutofillResult(activity,
-                                            database,
-                                            autofillActivityResultLauncher,
-                                            autofillComponent,
-                                            searchInfo,
-                                            false)
-                                        onLaunchActivitySpecialMode()
-                                    },
-                                    {
-                                        // Simply close if database not opened, normally not happened
-                                        onCancelSpecialMode()
-                                    }
-                            )
-                        } else {
-                            onCancelSpecialMode()
-                        }
-                    },
-                    { registerInfo ->
-                        // Autofill registration
-                        if (!database.isReadOnly) {
-                            SearchHelper.checkAutoSearchInfo(activity,
+                                    registerInfo
+                                )
+                                onLaunchActivitySpecialMode()
+                            },
+                            {
+                                // Here no search info found, disable auto search
+                                launchForRegistration(
+                                    activity,
                                     database,
-                                    registerInfo?.searchInfo,
-                                    { _, _ ->
-                                        // No auto search, it's a registration
-                                        launchForRegistration(activity,
-                                            database,
-                                            registerInfo)
-                                        onLaunchActivitySpecialMode()
-                                    },
-                                    {
-                                        // Here no search info found, disable auto search
-                                        launchForRegistration(activity,
-                                            database,
-                                            registerInfo)
-                                        onLaunchActivitySpecialMode()
-                                    },
-                                    {
-                                        // Simply close if database not opened, normally not happened
-                                        onCancelSpecialMode()
-                                    }
-                            )
-                        } else {
-                            Toast.makeText(activity.applicationContext,
-                                    R.string.autofill_read_only_save,
-                                    Toast.LENGTH_LONG)
-                                    .show()
-                            onCancelSpecialMode()
-                        }
-                    })
+                                    registerInfo
+                                )
+                                onLaunchActivitySpecialMode()
+                            },
+                            {
+                                // Simply close if database not opened, normally not happened
+                                onCancelSpecialMode()
+                            }
+                        )
+                    } else {
+                        Toast.makeText(
+                            activity.applicationContext,
+                            R.string.autofill_read_only_save,
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                        onCancelSpecialMode()
+                    }
+                })
         }
     }
 }

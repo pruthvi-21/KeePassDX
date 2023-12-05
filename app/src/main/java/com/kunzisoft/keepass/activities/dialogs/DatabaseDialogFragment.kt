@@ -50,8 +50,10 @@ abstract class DatabaseDialogFragment : DialogFragment(), DatabaseRetrieval {
 
     fun resetAppTimeout() {
         context?.let {
-            TimeoutHelper.checkTimeAndLockIfTimeoutOrResetTimeout(it,
-                mDatabase?.loaded ?: false)
+            TimeoutHelper.checkTimeAndLockIfTimeoutOrResetTimeout(
+                it,
+                mDatabase?.loaded ?: false
+            )
         }
     }
 

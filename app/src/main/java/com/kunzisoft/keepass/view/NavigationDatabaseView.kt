@@ -11,10 +11,11 @@ import androidx.core.view.isVisible
 import com.google.android.material.navigation.NavigationView
 import com.kunzisoft.keepass.R
 
-class NavigationDatabaseView @JvmOverloads constructor(context: Context,
-                                                       attrs: AttributeSet? = null,
-                                                       defStyle: Int = 0)
-    : NavigationView(context, attrs, defStyle) {
+class NavigationDatabaseView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : NavigationView(context, attrs, defStyle) {
 
     private var databaseNavContainerView: View? = null
     private var databaseNavIconView: ImageView? = null

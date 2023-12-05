@@ -6,7 +6,8 @@ import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.utils.DataByte
 
-class DatabaseMaxHistorySizePreferenceDialogFragmentCompat : DatabaseSavePreferenceDialogFragmentCompat() {
+class DatabaseMaxHistorySizePreferenceDialogFragmentCompat :
+    DatabaseSavePreferenceDialogFragmentCompat() {
 
     private var dataByte = DataByte(2L, DataByte.ByteFormat.MEBIBYTE)
 
@@ -74,7 +75,8 @@ class DatabaseMaxHistorySizePreferenceDialogFragmentCompat : DatabaseSavePrefere
 
         const val INFINITE_MAX_HISTORY_SIZE = -1L
 
-        private val INFINITE_MAX_HISTORY_SIZE_DATA_BYTE = DataByte(INFINITE_MAX_HISTORY_SIZE, DataByte.ByteFormat.MEBIBYTE)
+        private val INFINITE_MAX_HISTORY_SIZE_DATA_BYTE =
+            DataByte(INFINITE_MAX_HISTORY_SIZE, DataByte.ByteFormat.MEBIBYTE)
         private val DEFAULT_MAX_HISTORY_SIZE_DATA_BYTE = DataByte(6L, DataByte.ByteFormat.MEBIBYTE)
 
         fun newInstance(key: String): DatabaseMaxHistorySizePreferenceDialogFragmentCompat {

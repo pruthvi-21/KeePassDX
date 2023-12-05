@@ -27,7 +27,8 @@ class ClipboardHelper(context: Context) {
 
     private fun getClipboardManager(): ClipboardManager? {
         if (mClipboardManager == null)
-            mClipboardManager = mAppContext.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+            mClipboardManager =
+                mAppContext.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
         return mClipboardManager
     }
 
@@ -78,7 +79,7 @@ class ClipboardHelper(context: Context) {
     }
 
     // Task which clears the clipboard, and sends a toast to the foreground.
-    private inner class ClearClipboardTask (private val mClearText: String) : TimerTask() {
+    private inner class ClearClipboardTask(private val mClearText: String) : TimerTask() {
         override fun run() {
             if (getClipboard(mAppContext).toString() == mClearText) {
                 cleanClipboard()
@@ -110,10 +111,10 @@ class ClipboardHelper(context: Context) {
 
         Linkify.addLinks(spannableString, Linkify.WEB_URLS)
         AlertDialog.Builder(mAppContext)
-                .setTitle(R.string.clipboard_error_title)
-                .setView(textView)
-                .setPositiveButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
-                .show()
+            .setTitle(R.string.clipboard_error_title)
+            .setView(textView)
+            .setPositiveButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
+            .show()
     }
 
     companion object {

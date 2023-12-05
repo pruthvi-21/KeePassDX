@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
@@ -28,12 +26,11 @@ import com.kunzisoft.keepass.timeout.ClipboardHelper
 import com.kunzisoft.keepass.utils.TimeUtil.getDateTimeString
 import com.kunzisoft.keepass.utils.UuidUtil
 import com.kunzisoft.keepass.view.TemplateView
-import com.kunzisoft.keepass.view.hideByFading
 import com.kunzisoft.keepass.view.showByFading
 import com.kunzisoft.keepass.viewmodels.EntryViewModel
 
 
-class EntryFragment: DatabaseFragment() {
+class EntryFragment : DatabaseFragment() {
 
     private lateinit var rootView: View
     private lateinit var mainSection: View
@@ -54,16 +51,20 @@ class EntryFragment: DatabaseFragment() {
 
     private val mEntryViewModel: EntryViewModel by activityViewModels()
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
         return inflater.inflate(R.layout.fragment_entry, container, false)
     }
-    
-    override fun onViewCreated(view: View,
-                               savedInstanceState: Bundle?) {
+
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
         context?.let { context ->
@@ -127,8 +128,16 @@ class EntryFragment: DatabaseFragment() {
 
     private fun loadTemplateSettings() {
         context?.let { context ->
-            templateView.setFirstTimeAskAllowCopyProtectedFields(PreferencesUtil.isFirstTimeAskAllowCopyProtectedFields(context))
-            templateView.setAllowCopyProtectedFields(PreferencesUtil.allowCopyProtectedFields(context))
+            templateView.setFirstTimeAskAllowCopyProtectedFields(
+                PreferencesUtil.isFirstTimeAskAllowCopyProtectedFields(
+                    context
+                )
+            )
+            templateView.setAllowCopyProtectedFields(
+                PreferencesUtil.allowCopyProtectedFields(
+                    context
+                )
+            )
         }
     }
 

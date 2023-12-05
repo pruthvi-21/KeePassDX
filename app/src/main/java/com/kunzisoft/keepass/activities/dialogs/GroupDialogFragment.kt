@@ -94,7 +94,8 @@ class GroupDialogFragment : DatabaseDialogFragment() {
             ta.recycle()
 
             if (savedInstanceState != null
-                    && savedInstanceState.containsKey(KEY_GROUP_INFO)) {
+                && savedInstanceState.containsKey(KEY_GROUP_INFO)
+            ) {
                 mGroupInfo = savedInstanceState.getParcelableCompat(KEY_GROUP_INFO) ?: mGroupInfo
             } else {
                 arguments?.apply {
@@ -134,8 +135,10 @@ class GroupDialogFragment : DatabaseDialogFragment() {
             creationView.text = mGroupInfo.creationTime.getDateTimeString(resources)
             modificationView.text = mGroupInfo.lastModificationTime.getDateTimeString(resources)
             searchableView.text = stringFromInheritableBoolean(mGroupInfo.searchable)
-            autoTypeView.text = stringFromInheritableBoolean(mGroupInfo.enableAutoType,
-                mGroupInfo.defaultAutoTypeSequence)
+            autoTypeView.text = stringFromInheritableBoolean(
+                mGroupInfo.enableAutoType,
+                mGroupInfo.defaultAutoTypeSequence
+            )
             val uuid = UuidUtil.toHexString(mGroupInfo.id)
             if (uuid == null || uuid.isEmpty()) {
                 uuidContainerView.visibility = View.GONE
@@ -148,9 +151,9 @@ class GroupDialogFragment : DatabaseDialogFragment() {
 
             val builder = AlertDialog.Builder(activity)
             builder.setView(root)
-                    .setPositiveButton(android.R.string.ok){ _, _ ->
-                        // Do nothing
-                    }
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    // Do nothing
+                }
             return builder.create()
         }
         return super.onCreateDialog(savedInstanceState)

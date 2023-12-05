@@ -87,7 +87,11 @@ abstract class DatabaseLockActivity : DatabaseModeActivity(),
         }
 
         mDatabaseViewModel.saveDefaultUsername.observe(this) {
-            mDatabaseTaskProvider?.startDatabaseSaveDefaultUsername(it.oldValue, it.newValue, it.save)
+            mDatabaseTaskProvider?.startDatabaseSaveDefaultUsername(
+                it.oldValue,
+                it.newValue,
+                it.save
+            )
         }
 
         mDatabaseViewModel.saveColor.observe(this) {
@@ -107,15 +111,27 @@ abstract class DatabaseLockActivity : DatabaseModeActivity(),
         }
 
         mDatabaseViewModel.saveTemplatesGroup.observe(this) {
-            mDatabaseTaskProvider?.startDatabaseSaveTemplatesGroup(it.oldValue, it.newValue, it.save)
+            mDatabaseTaskProvider?.startDatabaseSaveTemplatesGroup(
+                it.oldValue,
+                it.newValue,
+                it.save
+            )
         }
 
         mDatabaseViewModel.saveMaxHistoryItems.observe(this) {
-            mDatabaseTaskProvider?.startDatabaseSaveMaxHistoryItems(it.oldValue, it.newValue, it.save)
+            mDatabaseTaskProvider?.startDatabaseSaveMaxHistoryItems(
+                it.oldValue,
+                it.newValue,
+                it.save
+            )
         }
 
         mDatabaseViewModel.saveMaxHistorySize.observe(this) {
-            mDatabaseTaskProvider?.startDatabaseSaveMaxHistorySize(it.oldValue, it.newValue, it.save)
+            mDatabaseTaskProvider?.startDatabaseSaveMaxHistorySize(
+                it.oldValue,
+                it.newValue,
+                it.save
+            )
         }
 
         mDatabaseViewModel.saveEncryption.observe(this) {
@@ -276,23 +292,31 @@ abstract class DatabaseLockActivity : DatabaseModeActivity(),
         }
     }
 
-    fun createEntry(newEntry: Entry,
-                    parent: Group) {
+    fun createEntry(
+        newEntry: Entry,
+        parent: Group
+    ) {
         mDatabaseTaskProvider?.startDatabaseCreateEntry(newEntry, parent, mAutoSaveEnable)
     }
 
-    fun updateEntry(oldEntry: Entry,
-                    entryToUpdate: Entry) {
+    fun updateEntry(
+        oldEntry: Entry,
+        entryToUpdate: Entry
+    ) {
         mDatabaseTaskProvider?.startDatabaseUpdateEntry(oldEntry, entryToUpdate, mAutoSaveEnable)
     }
 
-    fun copyNodes(nodesToCopy: List<Node>,
-                  newParent: Group) {
+    fun copyNodes(
+        nodesToCopy: List<Node>,
+        newParent: Group
+    ) {
         mDatabaseTaskProvider?.startDatabaseCopyNodes(nodesToCopy, newParent, mAutoSaveEnable)
     }
 
-    fun moveNodes(nodesToMove: List<Node>,
-                  newParent: Group) {
+    fun moveNodes(
+        nodesToMove: List<Node>,
+        newParent: Group
+    ) {
         mDatabaseTaskProvider?.startDatabaseMoveNodes(nodesToMove, newParent, mAutoSaveEnable)
     }
 
@@ -332,8 +356,10 @@ abstract class DatabaseLockActivity : DatabaseModeActivity(),
         mDatabaseTaskProvider?.startDatabaseDeleteNodes(nodes, mAutoSaveEnable)
     }
 
-    fun createGroup(parent: Group,
-                    groupInfo: GroupInfo?) {
+    fun createGroup(
+        parent: Group,
+        groupInfo: GroupInfo?
+    ) {
         // Build the group
         mDatabase?.createGroup()?.let { newGroup ->
             groupInfo?.let { info ->
@@ -345,8 +371,10 @@ abstract class DatabaseLockActivity : DatabaseModeActivity(),
         }
     }
 
-    fun updateGroup(oldGroup: Group,
-                    groupInfo: GroupInfo) {
+    fun updateGroup(
+        oldGroup: Group,
+        groupInfo: GroupInfo
+    ) {
         // If group updated save it in the database
         val updateGroup = Group(oldGroup).let { updateGroup ->
             updateGroup.apply {
@@ -359,23 +387,32 @@ abstract class DatabaseLockActivity : DatabaseModeActivity(),
         mDatabaseTaskProvider?.startDatabaseUpdateGroup(oldGroup, updateGroup, mAutoSaveEnable)
     }
 
-    fun restoreEntryHistory(mainEntryId: NodeId<UUID>,
-                            entryHistoryPosition: Int) {
+    fun restoreEntryHistory(
+        mainEntryId: NodeId<UUID>,
+        entryHistoryPosition: Int
+    ) {
         mDatabaseTaskProvider
             ?.startDatabaseRestoreEntryHistory(mainEntryId, entryHistoryPosition, mAutoSaveEnable)
     }
 
-    fun deleteEntryHistory(mainEntryId: NodeId<UUID>,
-                           entryHistoryPosition: Int) {
-        mDatabaseTaskProvider?.startDatabaseDeleteEntryHistory(mainEntryId, entryHistoryPosition, mAutoSaveEnable)
+    fun deleteEntryHistory(
+        mainEntryId: NodeId<UUID>,
+        entryHistoryPosition: Int
+    ) {
+        mDatabaseTaskProvider?.startDatabaseDeleteEntryHistory(
+            mainEntryId,
+            entryHistoryPosition,
+            mAutoSaveEnable
+        )
     }
 
     private fun checkRegister() {
         // If in ave or registration mode, don't allow read only
         if ((mSpecialMode == SpecialMode.SAVE
                     || mSpecialMode == SpecialMode.REGISTRATION)
-            && mDatabaseReadOnly) {
-            Toast.makeText(this, R.string.error_registration_read_only , Toast.LENGTH_LONG).show()
+            && mDatabaseReadOnly
+        ) {
+            Toast.makeText(this, R.string.error_registration_read_only, Toast.LENGTH_LONG).show()
             EntrySelectionHelper.removeModesFromIntent(intent)
             finish()
         }
@@ -399,9 +436,11 @@ abstract class DatabaseLockActivity : DatabaseModeActivity(),
     }
 
     protected fun checkTimeAndLockIfTimeoutOrResetTimeout(action: (() -> Unit)? = null) {
-        TimeoutHelper.checkTimeAndLockIfTimeoutOrResetTimeout(this,
+        TimeoutHelper.checkTimeAndLockIfTimeoutOrResetTimeout(
+            this,
             mDatabase?.loaded == true,
-            action)
+            action
+        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -441,14 +480,18 @@ abstract class DatabaseLockActivity : DatabaseModeActivity(),
     }
 
     fun resetAppTimeout() {
-        TimeoutHelper.checkTimeAndLockIfTimeoutOrResetTimeout(this,
-            mDatabase?.loaded ?: false)
+        TimeoutHelper.checkTimeAndLockIfTimeoutOrResetTimeout(
+            this,
+            mDatabase?.loaded ?: false
+        )
     }
 
     override fun onDatabaseBackPressed() {
         if (mTimeoutEnable) {
-            TimeoutHelper.checkTimeAndLockIfTimeoutOrResetTimeout(this,
-                mDatabase?.loaded == true) {
+            TimeoutHelper.checkTimeAndLockIfTimeoutOrResetTimeout(
+                this,
+                mDatabase?.loaded == true
+            ) {
                 super.onDatabaseBackPressed()
             }
         } else {

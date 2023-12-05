@@ -1,46 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
-        android:title="@string/encryption">
+    <PreferenceCategory android:title="@string/encryption">
 
         <com.kunzisoft.keepass.settings.preference.DialogListExplanationPreference
             android:key="@string/encryption_algorithm_key"
             android:persistent="false"
-            android:title="@string/encryption_algorithm"/>
+            android:title="@string/encryption_algorithm" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory
-        android:title="@string/key_derivation_function">
+    <PreferenceCategory android:title="@string/key_derivation_function">
 
         <com.kunzisoft.keepass.settings.preference.DialogListExplanationPreference
             android:key="@string/key_derivation_function_key"
             android:persistent="false"
-            android:title="@string/key_derivation_function"/>
+            android:title="@string/key_derivation_function" />
         <com.kunzisoft.keepass.settings.preference.InputKdfNumberPreference
             android:key="@string/transform_rounds_key"
+            android:negativeButtonText="@string/entry_cancel"
             android:persistent="false"
-            android:title="@string/rounds"
-            custom:explanations="@string/rounds_explanation"
             android:positiveButtonText="@string/save"
-            android:negativeButtonText="@string/entry_cancel"/>
+            android:title="@string/rounds"
+            custom:explanations="@string/rounds_explanation" />
         <com.kunzisoft.keepass.settings.preference.InputKdfSizePreference
             android:key="@string/memory_usage_key"
+            android:negativeButtonText="@string/entry_cancel"
             android:persistent="false"
-            android:title="@string/memory_usage"
-            custom:explanations="@string/memory_usage_explanation"
             android:positiveButtonText="@string/save"
-            android:negativeButtonText="@string/entry_cancel"/>
+            android:title="@string/memory_usage"
+            custom:explanations="@string/memory_usage_explanation" />
         <com.kunzisoft.keepass.settings.preference.InputKdfNumberPreference
             android:key="@string/parallelism_key"
+            android:negativeButtonText="@string/entry_cancel"
             android:persistent="false"
-            android:title="@string/parallelism"
-            custom:explanations="@string/parallelism_explanation"
             android:positiveButtonText="@string/save"
-            android:negativeButtonText="@string/entry_cancel"/>
+            android:title="@string/parallelism"
+            custom:explanations="@string/parallelism_explanation" />
 
     </PreferenceCategory>
 

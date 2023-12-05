@@ -11,7 +11,7 @@ import com.kunzisoft.keepass.settings.preferencedialogfragment.adapter.ListRadio
 
 class DatabaseEncryptionAlgorithmPreferenceDialogFragmentCompat
     : DatabaseSavePreferenceDialogFragmentCompat(),
-        ListRadioItemAdapter.RadioItemSelectedCallback<EncryptionAlgorithm> {
+    ListRadioItemAdapter.RadioItemSelectedCallback<EncryptionAlgorithm> {
 
     private var mRecyclerView: RecyclerView? = null
     private var mEncryptionAlgorithmAdapter: ListRadioItemAdapter<EncryptionAlgorithm>? = null
@@ -36,7 +36,10 @@ class DatabaseEncryptionAlgorithmPreferenceDialogFragmentCompat
         super.onDatabaseRetrieved(database)
         database?.let {
             algorithmSelected = database.encryptionAlgorithm
-            mEncryptionAlgorithmAdapter?.setItems(database.availableEncryptionAlgorithms, algorithmSelected)
+            mEncryptionAlgorithmAdapter?.setItems(
+                database.availableEncryptionAlgorithms,
+                algorithmSelected
+            )
         }
     }
 

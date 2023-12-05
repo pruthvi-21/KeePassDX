@@ -5,7 +5,9 @@ import com.kunzisoft.keepass.tasks.ActionRunnable
 
 interface DatabaseRetrieval {
     fun onDatabaseRetrieved(database: ContextualDatabase?)
-    fun onDatabaseActionFinished(database: ContextualDatabase,
-                                 actionTask: String,
-                                 result: ActionRunnable.Result)
+    fun onDatabaseActionFinished(
+        database: ContextualDatabase,
+        actionTask: String,
+        result: ActionRunnable.Result
+    )
 }

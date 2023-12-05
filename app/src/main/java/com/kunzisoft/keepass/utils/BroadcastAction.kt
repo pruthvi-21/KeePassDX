@@ -40,9 +40,11 @@ class LockReceiver(var lockAction: () -> Unit) : BroadcastReceiver() {
                     Intent.ACTION_SCREEN_ON -> {
                         cancelLockPendingIntent(context)
                     }
+
                     Intent.ACTION_SCREEN_OFF -> {
                         if (PreferencesUtil.isLockDatabaseWhenScreenShutOffEnable(context)) {
-                            mLockPendingIntent = PendingIntent.getBroadcast(context,
+                            mLockPendingIntent = PendingIntent.getBroadcast(
+                                context,
                                 4575,
                                 Intent(intent).apply {
                                     action = LOCK_ACTION
@@ -54,7 +56,9 @@ class LockReceiver(var lockAction: () -> Unit) : BroadcastReceiver() {
                                 }
                             )
                             // Launch the effective action after a small time
-                            val first: Long = System.currentTimeMillis() + context.getString(R.string.timeout_screen_off).toLong()
+                            val first: Long =
+                                System.currentTimeMillis() + context.getString(R.string.timeout_screen_off)
+                                    .toLong()
                             (context.getSystemService(ALARM_SERVICE) as AlarmManager?)?.let { alarmManager ->
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                                     mLockPendingIntent?.let { pendingIntent ->
@@ -88,18 +92,23 @@ class LockReceiver(var lockAction: () -> Unit) : BroadcastReceiver() {
                             cancelLockPendingIntent(context)
                         }
                     }
+
                     LOCK_ACTION -> {
                         lockAction.invoke()
                         if (PreferencesUtil.isKeyboardPreviousLockEnable(context)) {
                             backToPreviousKeyboardAction?.invoke()
-                        } else {}
+                        } else {
+                        }
                     }
+
                     REMOVE_ENTRY_MAGIKEYBOARD_ACTION -> {
                         lockAction.invoke()
                     }
+
                     BACK_PREVIOUS_KEYBOARD_ACTION -> {
                         backToPreviousKeyboardAction?.invoke()
                     }
+
                     else -> {}
                 }
             }
@@ -115,8 +124,10 @@ class LockReceiver(var lockAction: () -> Unit) : BroadcastReceiver() {
     }
 }
 
-fun Context.registerLockReceiver(lockReceiver: LockReceiver?,
-                                 registerKeyboardAction: Boolean = false) {
+fun Context.registerLockReceiver(
+    lockReceiver: LockReceiver?,
+    registerKeyboardAction: Boolean = false
+) {
     lockReceiver?.let {
         val intentFilter = IntentFilter().apply {
             addAction(Intent.ACTION_SCREEN_OFF)

@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.kunzisoft.keepass.R
-import java.util.*
 
-class ListRadioItemAdapter<T>(private val context: Context)
-    : RecyclerView.Adapter<ListRadioItemAdapter.ListRadioViewHolder>() {
+class ListRadioItemAdapter<T>(private val context: Context) :
+    RecyclerView.Adapter<ListRadioItemAdapter.ListRadioViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 

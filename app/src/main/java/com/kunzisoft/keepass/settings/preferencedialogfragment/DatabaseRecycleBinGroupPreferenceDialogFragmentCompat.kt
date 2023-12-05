@@ -11,7 +11,7 @@ import com.kunzisoft.keepass.settings.preferencedialogfragment.adapter.ListRadio
 
 class DatabaseRecycleBinGroupPreferenceDialogFragmentCompat
     : DatabaseSavePreferenceDialogFragmentCompat(),
-        ListRadioItemAdapter.RadioItemSelectedCallback<Group> {
+    ListRadioItemAdapter.RadioItemSelectedCallback<Group> {
 
     private var mGroupsAdapter: ListRadioItemAdapter<Group>? = null
     private var mGroupRecycleBin: Group? = null
@@ -23,7 +23,7 @@ class DatabaseRecycleBinGroupPreferenceDialogFragmentCompat
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         activity?.let { activity ->
-            mGroupsAdapter  = ListRadioItemAdapter(activity)
+            mGroupsAdapter = ListRadioItemAdapter(activity)
             mGroupsAdapter?.setRadioItemSelectedCallback(this)
             recyclerView.adapter = mGroupsAdapter
         }
@@ -58,7 +58,8 @@ class DatabaseRecycleBinGroupPreferenceDialogFragmentCompat
     companion object {
 
         fun newInstance(
-                key: String): DatabaseRecycleBinGroupPreferenceDialogFragmentCompat {
+            key: String
+        ): DatabaseRecycleBinGroupPreferenceDialogFragmentCompat {
             val fragment = DatabaseRecycleBinGroupPreferenceDialogFragmentCompat()
             val bundle = Bundle(1)
             bundle.putString(ARG_KEY, key)

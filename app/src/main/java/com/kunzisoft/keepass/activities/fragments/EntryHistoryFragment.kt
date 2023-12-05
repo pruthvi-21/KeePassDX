@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -19,7 +18,7 @@ import com.kunzisoft.keepass.view.hideByFading
 import com.kunzisoft.keepass.view.showByFading
 import com.kunzisoft.keepass.viewmodels.EntryViewModel
 
-class EntryHistoryFragment: Fragment() {
+class EntryHistoryFragment : Fragment() {
 
     private lateinit var historyContainerView: View
     private lateinit var historyListView: RecyclerView

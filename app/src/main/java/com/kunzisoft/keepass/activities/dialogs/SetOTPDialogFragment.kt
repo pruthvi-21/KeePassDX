@@ -64,6 +64,7 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
         else
             resetAppTimeout()
     }
+
     @SuppressLint("ClickableViewAccessibility")
     private var mOnTouchListener = View.OnTouchListener { _, event ->
         when (event.action) {
@@ -92,8 +93,10 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
             mCreateOTPElementListener = context as CreateOtpListener
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
-            throw ClassCastException(context.toString()
-                    + " must implement " + CreateOtpListener::class.java.name)
+            throw ClassCastException(
+                context.toString()
+                        + " must implement " + CreateOtpListener::class.java.name
+            )
         }
     }
 
@@ -123,16 +126,17 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
         }
 
         activity?.let { activity ->
-            val root = activity.layoutInflater.inflate(R.layout.fragment_set_otp, null) as ViewGroup?
+            val root =
+                activity.layoutInflater.inflate(R.layout.fragment_set_otp, null) as ViewGroup?
             otpTypeMessage = root?.findViewById(R.id.setup_otp_type_message)
             otpTypeSpinner = root?.findViewById(R.id.setup_otp_type)
             otpTokenTypeSpinner = root?.findViewById(R.id.setup_otp_token_type)
             otpSecretContainer = root?.findViewById(R.id.setup_otp_secret_label)
             otpSecretTextView = root?.findViewById(R.id.setup_otp_secret)
             otpAlgorithmSpinner = root?.findViewById(R.id.setup_otp_algorithm)
-            otpPeriodContainer= root?.findViewById(R.id.setup_otp_period_label)
+            otpPeriodContainer = root?.findViewById(R.id.setup_otp_period_label)
             otpPeriodTextView = root?.findViewById(R.id.setup_otp_period)
-            otpCounterContainer= root?.findViewById(R.id.setup_otp_counter_label)
+            otpCounterContainer = root?.findViewById(R.id.setup_otp_counter_label)
             otpCounterTextView = root?.findViewById(R.id.setup_otp_counter)
             otpDigitsContainer = root?.findViewById(R.id.setup_otp_digits_label)
             otpDigitsTextView = root?.findViewById(R.id.setup_otp_digits)
@@ -174,24 +178,30 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
 
             // HOTP / TOTP Type selection
             val otpTypeArray = OtpType.values()
-            otpTypeAdapter = ArrayAdapter(activity,
-                    android.R.layout.simple_spinner_item, otpTypeArray).apply {
+            otpTypeAdapter = ArrayAdapter(
+                activity,
+                android.R.layout.simple_spinner_item, otpTypeArray
+            ).apply {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
             otpTypeSpinner?.adapter = otpTypeAdapter
 
             // Otp Token type selection
             mHotpTokenTypeArray = OtpTokenType.getHotpTokenTypeValues()
-            hotpTokenTypeAdapter = ArrayAdapter(activity,
-                    android.R.layout.simple_spinner_item, mHotpTokenTypeArray!!).apply {
+            hotpTokenTypeAdapter = ArrayAdapter(
+                activity,
+                android.R.layout.simple_spinner_item, mHotpTokenTypeArray!!
+            ).apply {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
             // Proprietary only on full version
             mTotpTokenTypeArray = OtpTokenType.getTotpTokenTypeValues(
                 activity.isContributingUser()
             )
-            totpTokenTypeAdapter = ArrayAdapter(activity,
-                    android.R.layout.simple_spinner_item, mTotpTokenTypeArray!!).apply {
+            totpTokenTypeAdapter = ArrayAdapter(
+                activity,
+                android.R.layout.simple_spinner_item, mTotpTokenTypeArray!!
+            ).apply {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
             otpTokenTypeAdapter = hotpTokenTypeAdapter
@@ -199,8 +209,10 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
 
             // OTP Algorithm
             val otpAlgorithmArray = TokenCalculator.HashAlgorithm.values()
-            otpAlgorithmAdapter = ArrayAdapter(activity,
-                    android.R.layout.simple_spinner_item, otpAlgorithmArray).apply {
+            otpAlgorithmAdapter = ArrayAdapter(
+                activity,
+                android.R.layout.simple_spinner_item, otpAlgorithmArray
+            ).apply {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
             otpAlgorithmSpinner?.adapter = otpAlgorithmAdapter
@@ -215,12 +227,12 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
             val builder = AlertDialog.Builder(activity)
             builder.apply {
                 setView(root)
-                        .setPositiveButton(android.R.string.ok) { _, _ ->
-                            resetAppTimeout()
-                        }
-                        .setNegativeButton(android.R.string.cancel) { _, _ ->
-                            resetAppTimeout()
-                        }
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
+                        resetAppTimeout()
+                    }
+                    .setNegativeButton(android.R.string.cancel) { _, _ ->
+                        resetAppTimeout()
+                    }
             }
 
             root?.findViewById<View>(R.id.otp_information)?.setOnClickListener {
@@ -236,9 +248,10 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
         super.onResume()
         (dialog as AlertDialog).getButton(Dialog.BUTTON_POSITIVE).setOnClickListener {
             if (mSecretWellFormed
-                    && mCounterWellFormed
-                    && mPeriodWellFormed
-                    && mDigitsWellFormed) {
+                && mCounterWellFormed
+                && mPeriodWellFormed
+                && mDigitsWellFormed
+            ) {
                 mCreateOTPElementListener?.onOtpCreated(mOtpElement)
                 dismiss()
             }
@@ -247,10 +260,15 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
 
     private fun attachListeners() {
         // Set Type listener
-        otpTypeSpinner?.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+        otpTypeSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 if (mManualEvent) {
                     (parent?.selectedItem as OtpType?)?.let {
                         mOtpElement.type = it
@@ -261,10 +279,15 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
         }
 
         // Set type token listener
-        otpTokenTypeSpinner?.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+        otpTokenTypeSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 if (mManualEvent) {
                     (parent?.selectedItem as OtpTokenType?)?.let {
                         mOtpElement.tokenType = it
@@ -275,10 +298,15 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
         }
 
         // Set algorithm spinner
-        otpAlgorithmSpinner?.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+        otpAlgorithmSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 if (mManualEvent) {
                     (parent?.selectedItem as TokenCalculator.HashAlgorithm?)?.let {
                         mOtpElement.algorithm = it
@@ -288,7 +316,7 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
         }
 
         // Set secret in OtpElement
-        otpSecretTextView?.addTextChangedListener(object: TextWatcher {
+        otpSecretTextView?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 s?.toString()?.let { userString ->
                     try {
@@ -300,12 +328,13 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
                     mSecretWellFormed = otpSecretContainer?.error == null
                 }
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
         // Set counter in OtpElement
-        otpCounterTextView?.addTextChangedListener(object: TextWatcher {
+        otpCounterTextView?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (mManualEvent) {
                     s?.toString()?.toLongOrNull()?.let {
@@ -313,19 +342,22 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
                             mOtpElement.counter = it
                             otpCounterContainer?.error = null
                         } catch (exception: Exception) {
-                            otpCounterContainer?.error = getString(R.string.error_otp_counter,
-                                    MIN_HOTP_COUNTER, MAX_HOTP_COUNTER)
+                            otpCounterContainer?.error = getString(
+                                R.string.error_otp_counter,
+                                MIN_HOTP_COUNTER, MAX_HOTP_COUNTER
+                            )
                         }
                         mCounterWellFormed = otpCounterContainer?.error == null
                     }
                 }
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
         // Set period in OtpElement
-        otpPeriodTextView?.addTextChangedListener(object: TextWatcher {
+        otpPeriodTextView?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (mManualEvent) {
                     s?.toString()?.toIntOrNull()?.let {
@@ -333,19 +365,22 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
                             mOtpElement.period = it
                             otpPeriodContainer?.error = null
                         } catch (exception: Exception) {
-                            otpPeriodContainer?.error = getString(R.string.error_otp_period,
-                                    MIN_TOTP_PERIOD, MAX_TOTP_PERIOD)
+                            otpPeriodContainer?.error = getString(
+                                R.string.error_otp_period,
+                                MIN_TOTP_PERIOD, MAX_TOTP_PERIOD
+                            )
                         }
                         mPeriodWellFormed = otpPeriodContainer?.error == null
                     }
                 }
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
         // Set digits in OtpElement
-        otpDigitsTextView?.addTextChangedListener(object: TextWatcher {
+        otpDigitsTextView?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (mManualEvent) {
                     s?.toString()?.toIntOrNull()?.let {
@@ -353,13 +388,16 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
                             mOtpElement.digits = it
                             otpDigitsContainer?.error = null
                         } catch (exception: Exception) {
-                            otpDigitsContainer?.error = getString(R.string.error_otp_digits,
-                                    MIN_OTP_DIGITS, MAX_OTP_DIGITS)
+                            otpDigitsContainer?.error = getString(
+                                R.string.error_otp_digits,
+                                MIN_OTP_DIGITS, MAX_OTP_DIGITS
+                            )
                         }
                         mDigitsWellFormed = otpDigitsContainer?.error == null
                     }
                 }
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
@@ -380,6 +418,7 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
                     defineOtpTokenTypeSpinner(otpTokenTypeArray, tokenType, OtpTokenType.RFC4226)
                 }
             }
+
             OtpType.TOTP -> {
                 otpPeriodContainer?.visibility = View.VISIBLE
                 otpCounterContainer?.visibility = View.GONE
@@ -391,9 +430,11 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
         }
     }
 
-    private fun defineOtpTokenTypeSpinner(otpTokenTypeArray: Array<OtpTokenType>,
-                                          tokenType: OtpTokenType,
-                                          defaultTokenType: OtpTokenType) {
+    private fun defineOtpTokenTypeSpinner(
+        otpTokenTypeArray: Array<OtpTokenType>,
+        tokenType: OtpTokenType,
+        defaultTokenType: OtpTokenType
+    ) {
         val formTokenType = if (otpTokenTypeArray.contains(tokenType)) {
             otpTypeMessage?.visibility = View.GONE
             tokenType
@@ -405,8 +446,10 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
     }
 
     private fun upgradeParameters() {
-        otpAlgorithmSpinner?.setSelection(TokenCalculator.HashAlgorithm.values()
-                .indexOf(mOtpElement.algorithm))
+        otpAlgorithmSpinner?.setSelection(
+            TokenCalculator.HashAlgorithm.values()
+                .indexOf(mOtpElement.algorithm)
+        )
 
         val secret = mOtpElement.getBase32Secret()
         otpSecretTextView?.apply {

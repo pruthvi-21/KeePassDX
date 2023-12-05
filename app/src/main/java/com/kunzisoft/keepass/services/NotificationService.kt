@@ -10,7 +10,12 @@ import android.util.TypedValue
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.kunzisoft.keepass.R
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 abstract class NotificationService : Service() {
 
@@ -41,9 +46,11 @@ abstract class NotificationService : Service() {
         // Create notification channel for Oreo+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (notificationManager?.getNotificationChannel(retrieveChannelId()) == null) {
-                val channel = NotificationChannel(retrieveChannelId(),
-                        retrieveChannelName(),
-                        NotificationManager.IMPORTANCE_DEFAULT).apply {
+                val channel = NotificationChannel(
+                    retrieveChannelId(),
+                    retrieveChannelName(),
+                    NotificationManager.IMPORTANCE_DEFAULT
+                ).apply {
                     enableVibration(false)
                     setSound(null, null)
                 }
@@ -60,9 +67,9 @@ abstract class NotificationService : Service() {
 
     protected fun buildNewNotification(): NotificationCompat.Builder {
         return NotificationCompat.Builder(this, retrieveChannelId())
-                .setColor(colorNotificationAccent)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setVisibility(NotificationCompat.VISIBILITY_SECRET)
+            .setColor(colorNotificationAccent)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setVisibility(NotificationCompat.VISIBILITY_SECRET)
     }
 
     protected fun buildSummaryNotification(): NotificationCompat.Builder {
@@ -71,19 +78,23 @@ abstract class NotificationService : Service() {
         }
     }
 
-    protected fun defineTimerJob(builder: NotificationCompat.Builder,
-                                 timeoutMilliseconds: Long,
-                                 actionAfterASecond: (() -> Unit)? = null,
-                                 actionEnd: () -> Unit) {
+    protected fun defineTimerJob(
+        builder: NotificationCompat.Builder,
+        timeoutMilliseconds: Long,
+        actionAfterASecond: (() -> Unit)? = null,
+        actionEnd: () -> Unit
+    ) {
         mTimerJob?.cancel()
         mTimerJob = CoroutineScope(Dispatchers.Main).launch {
             if (timeoutMilliseconds > 0) {
                 val timeoutInSeconds = timeoutMilliseconds / 1000L
                 for (currentTime in timeoutInSeconds downTo 0) {
                     actionAfterASecond?.invoke()
-                    builder.setProgress(100,
-                            (currentTime * 100 / timeoutInSeconds).toInt(),
-                            false)
+                    builder.setProgress(
+                        100,
+                        (currentTime * 100 / timeoutInSeconds).toInt(),
+                        false
+                    )
                     startForeground(notificationId, builder.build())
                     delay(1000)
                     if (currentTime <= 0) {

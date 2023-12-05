@@ -28,10 +28,12 @@ class DeleteNodesDialogFragment : DatabaseDialogFragment() {
             val builder = AlertDialog.Builder(activity)
             builder.setView(R.layout.alert_dialog_layout)
 
-            builder.setMessage(if (recycleBin)
-                getString(R.string.warning_empty_recycle_bin)
-            else
-                getString(R.string.warning_permanently_delete_nodes))
+            builder.setMessage(
+                if (recycleBin)
+                    getString(R.string.warning_empty_recycle_bin)
+                else
+                    getString(R.string.warning_permanently_delete_nodes)
+            )
             builder.setPositiveButton(android.R.string.ok) { _, _ ->
                 mNodesViewModel.permanentlyDeleteNodes(mNodesToDelete)
             }

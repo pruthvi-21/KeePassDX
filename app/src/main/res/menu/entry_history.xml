@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/menu_restore_entry_history"
+    <item
+        android:id="@+id/menu_restore_entry_history"
         android:icon="@drawable/ic_autorenew_white_24dp"
-        android:title="@string/menu_restore_entry_history"
         android:orderInCategory="92"
+        android:title="@string/menu_restore_entry_history"
         app:iconTint="?attr/colorControlNormal"
         app:showAsAction="ifRoom" />
-    <item android:id="@+id/menu_delete_entry_history"
+    <item
+        android:id="@+id/menu_delete_entry_history"
         android:icon="@drawable/ic_content_delete_white_24dp"
-        android:title="@string/menu_delete_entry_history"
         android:orderInCategory="93"
+        android:title="@string/menu_delete_entry_history"
         app:iconTint="?attr/colorControlNormal"
         app:showAsAction="ifRoom" />
 </menu>

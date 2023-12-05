@@ -3,7 +3,6 @@ package com.kunzisoft.keepass.utils
 import android.content.Context
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
-import com.kunzisoft.keepass.R
 
 object ColorUtils {
     @ColorInt

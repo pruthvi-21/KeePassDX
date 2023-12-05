@@ -3,7 +3,8 @@ package com.kunzisoft.keepass.settings.preferencedialogfragment
 import android.os.Bundle
 import com.kunzisoft.keepass.database.ContextualDatabase
 
-class DatabaseDescriptionPreferenceDialogFragmentCompat : DatabaseSavePreferenceDialogFragmentCompat() {
+class DatabaseDescriptionPreferenceDialogFragmentCompat :
+    DatabaseSavePreferenceDialogFragmentCompat() {
 
     override fun onDatabaseRetrieved(database: ContextualDatabase?) {
         super.onDatabaseRetrieved(database)

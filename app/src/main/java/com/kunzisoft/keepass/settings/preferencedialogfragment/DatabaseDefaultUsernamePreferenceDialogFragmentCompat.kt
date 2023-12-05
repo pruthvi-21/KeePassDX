@@ -3,11 +3,12 @@ package com.kunzisoft.keepass.settings.preferencedialogfragment
 import android.os.Bundle
 import com.kunzisoft.keepass.database.ContextualDatabase
 
-class DatabaseDefaultUsernamePreferenceDialogFragmentCompat : DatabaseSavePreferenceDialogFragmentCompat() {
+class DatabaseDefaultUsernamePreferenceDialogFragmentCompat :
+    DatabaseSavePreferenceDialogFragmentCompat() {
 
     override fun onDatabaseRetrieved(database: ContextualDatabase?) {
         super.onDatabaseRetrieved(database)
-        inputText = database?.defaultUsername?: ""
+        inputText = database?.defaultUsername ?: ""
     }
 
     override fun onDialogClosed(database: ContextualDatabase?, positiveResult: Boolean) {

@@ -14,16 +14,21 @@ object TimeUtil {
         return when (type) {
             DateInstant.Type.DATE -> DateFormat.getDateInstance(
                 DateFormat.MEDIUM,
-                locale)
+                locale
+            )
                 .format(date)
+
             DateInstant.Type.TIME -> DateFormat.getTimeInstance(
                 DateFormat.SHORT,
-                locale)
+                locale
+            )
                 .format(date)
+
             else -> DateFormat.getDateTimeInstance(
                 DateFormat.MEDIUM,
                 DateFormat.SHORT,
-                locale)
+                locale
+            )
                 .format(date)
         }
     }
@@ -37,10 +42,12 @@ object TimeUtil {
                 DateFormat.MEDIUM,
                 locale
             ).format(date)
+
             DateInstant.Type.TIME -> DateFormat.getTimeInstance(
                 DateFormat.SHORT,
                 locale
             ).format(date)
+
             else -> dateFormat.format(date)
         }
     }

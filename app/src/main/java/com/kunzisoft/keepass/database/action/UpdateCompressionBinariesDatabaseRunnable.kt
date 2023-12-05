@@ -5,7 +5,7 @@ import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.database.CompressionAlgorithm
 import com.kunzisoft.keepass.hardware.HardwareKey
 
-class UpdateCompressionBinariesDatabaseRunnable (
+class UpdateCompressionBinariesDatabaseRunnable(
     context: Context,
     database: ContextualDatabase,
     private val oldCompressionAlgorithm: CompressionAlgorithm,
@@ -44,7 +44,10 @@ class UpdateCompressionBinariesDatabaseRunnable (
                 try {
                     database.apply {
                         compressionAlgorithm = oldCompressionAlgorithm
-                        updateDataBinaryCompression(newCompressionAlgorithm, oldCompressionAlgorithm)
+                        updateDataBinaryCompression(
+                            newCompressionAlgorithm,
+                            oldCompressionAlgorithm
+                        )
                     }
                 } catch (e: Exception) {
                     setError(e)

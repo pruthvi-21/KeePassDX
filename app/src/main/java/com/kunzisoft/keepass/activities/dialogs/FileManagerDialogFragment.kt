@@ -17,7 +17,7 @@ class FileManagerDialogFragment : DialogFragment() {
             // Get the layout inflater
             val root = activity.layoutInflater.inflate(R.layout.fragment_browser_install, null)
             builder.setView(root)
-                    .setNegativeButton(android.R.string.cancel) { _, _ -> }
+                .setNegativeButton(android.R.string.cancel) { _, _ -> }
 
             val textDescription = root.findViewById<TextView>(R.id.file_manager_install_description)
             textDescription.text = getString(R.string.file_manager_install_description)

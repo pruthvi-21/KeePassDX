@@ -19,8 +19,10 @@ class PasswordEncodingDialogFragment : DialogFragment() {
         try {
             mListener = context as Listener
         } catch (e: ClassCastException) {
-            throw ClassCastException(context.toString()
-                    + " must implement " + Listener::class.java.name)
+            throw ClassCastException(
+                context.toString()
+                        + " must implement " + Listener::class.java.name
+            )
         }
     }
 
@@ -32,16 +34,18 @@ class PasswordEncodingDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
         val databaseUri: Uri? = savedInstanceState?.getParcelableCompat(DATABASE_URI_KEY)
-        val mainCredential: MainCredential = savedInstanceState?.getParcelableCompat(MAIN_CREDENTIAL) ?: MainCredential()
+        val mainCredential: MainCredential =
+            savedInstanceState?.getParcelableCompat(MAIN_CREDENTIAL) ?: MainCredential()
 
         activity?.let { activity ->
             val builder = AlertDialog.Builder(activity)
             builder.setView(R.layout.alert_dialog_layout)
-            builder.setMessage(activity.getString(R.string.warning_password_encoding)).setTitle(R.string.warning)
+            builder.setMessage(activity.getString(R.string.warning_password_encoding))
+                .setTitle(R.string.warning)
             builder.setPositiveButton(android.R.string.ok) { _, _ ->
                 mListener?.onPasswordEncodingValidateListener(
-                        databaseUri,
-                        mainCredential
+                    databaseUri,
+                    mainCredential
                 )
             }
             builder.setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.cancel() }
@@ -52,8 +56,10 @@ class PasswordEncodingDialogFragment : DialogFragment() {
     }
 
     interface Listener {
-        fun onPasswordEncodingValidateListener(databaseUri: Uri?,
-                                               mainCredential: MainCredential)
+        fun onPasswordEncodingValidateListener(
+            databaseUri: Uri?,
+            mainCredential: MainCredential
+        )
     }
 
     companion object {

@@ -46,7 +46,7 @@ import java.util.Map;
 /**
  * A view that renders a virtual {@link Keyboard}. It handles rendering of keys and
  * detecting key presses and touch movements.
- *
+ * <p>
  * ref R.styleable#KeyboardView_keyBackground
  * ref R.styleable#KeyboardView_keyPreviewLayout
  * ref R.styleable#KeyboardView_keyPreviewOffset
@@ -59,74 +59,25 @@ import java.util.Map;
  */
 public class KeyboardView extends View implements View.OnClickListener {
 
-    /**
-     * Listener for virtual keyboard events.
-     */
-    public interface OnKeyboardActionListener {
-
-        /**
-         * Called when the user presses a key. This is sent before the {@link #onKey} is called.
-         * For keys that repeat, this is only called once.
-         *
-         * @param primaryCode the unicode of the key being pressed. If the touch is not on a valid
-         *                    key, the value will be zero.
-         */
-        void onPress(int primaryCode);
-
-        /**
-         * Called when the user releases a key. This is sent after the {@link #onKey} is called.
-         * For keys that repeat, this is only called once.
-         *
-         * @param primaryCode the code of the key that was released
-         */
-        void onRelease(int primaryCode);
-
-        /**
-         * Send a key press to the listener.
-         *
-         * @param primaryCode this is the key that was pressed
-         * @param keyCodes    the codes for all the possible alternative keys
-         *                    with the primary code being the first. If the primary key code is
-         *                    a single character such as an alphabet or number or symbol, the alternatives
-         *                    will include other characters that may be on the same key or adjacent keys.
-         *                    These codes are useful to correct for accidental presses of a key adjacent to
-         *                    the intended key.
-         */
-        void onKey(int primaryCode, int[] keyCodes);
-
-        /**
-         * Sends a sequence of characters to the listener.
-         *
-         * @param text the sequence of characters to be displayed.
-         */
-        void onText(CharSequence text);
-
-        /**
-         * Called when the user quickly moves the finger from right to left.
-         */
-        void swipeLeft();
-
-        /**
-         * Called when the user quickly moves the finger from left to right.
-         */
-        void swipeRight();
-
-        /**
-         * Called when the user quickly moves the finger from up to down.
-         */
-        void swipeDown();
-
-        /**
-         * Called when the user quickly moves the finger from down to up.
-         */
-        void swipeUp();
-    }
-
     private static final boolean DEBUG = false;
     private static final int NOT_A_KEY = -1;
     private static final int[] KEY_DELETE = {Keyboard.KEYCODE_DELETE};
     private static final int[] LONG_PRESSABLE_STATE_SET = {R.attr.state_long_pressable};
-
+    private static final int MSG_SHOW_PREVIEW = 1;
+    private static final int MSG_REMOVE_PREVIEW = 2;
+    private static final int MSG_REPEAT = 3;
+    private static final int MSG_LONGPRESS = 4;
+    private static final int DELAY_BEFORE_PREVIEW = 0;
+    private static final int DELAY_AFTER_PREVIEW = 70;
+    private static final int DEBOUNCE_TIME = 70;
+    private static final int REPEAT_INTERVAL = 50; // ~20 keys per second
+    private static final int REPEAT_START_DELAY = 400;
+    private static final int LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout();
+    private static final int MULTITAP_INTERVAL = 800; // milliseconds
+    private static int MAX_NEARBY_KEYS = 12;
+    // Working variable
+    private final int[] mCoordinates = new int[2];
+    Handler mHandler;
     private Keyboard mKeyboard;
     private int mCurrentKeyIndex = NOT_A_KEY;
     private int mLabelTextSize;
@@ -135,15 +86,11 @@ public class KeyboardView extends View implements View.OnClickListener {
     private float mShadowRadius;
     private int mShadowColor;
     private float mBackgroundDimAmount;
-
     private TextView mPreviewText;
     private PopupWindow mPreviewPopup;
     private int mPreviewTextSizeLarge;
     private int mPreviewOffset;
     private int mPreviewHeight;
-    // Working variable
-    private final int[] mCoordinates = new int[2];
-
     private PopupWindow mPopupKeyboard;
     private View mMiniKeyboardContainer;
     private KeyboardView mMiniKeyboard;
@@ -153,40 +100,24 @@ public class KeyboardView extends View implements View.OnClickListener {
     private int mMiniKeyboardOffsetY;
     private Map<Key, View> mMiniKeyboardCache;
     private Key[] mKeys;
-
     /**
      * Listener for {@link OnKeyboardActionListener}.
      */
     private OnKeyboardActionListener mKeyboardActionListener;
-
-    private static final int MSG_SHOW_PREVIEW = 1;
-    private static final int MSG_REMOVE_PREVIEW = 2;
-    private static final int MSG_REPEAT = 3;
-    private static final int MSG_LONGPRESS = 4;
-
-    private static final int DELAY_BEFORE_PREVIEW = 0;
-    private static final int DELAY_AFTER_PREVIEW = 70;
-    private static final int DEBOUNCE_TIME = 70;
-
     private int mVerticalCorrection;
     private int mProximityThreshold;
-
     private boolean mPreviewCentered = false;
     private boolean mShowPreview = true;
     private boolean mShowTouchPoints = true;
     private int mPopupPreviewX;
     private int mPopupPreviewY;
-
     private int mLastX;
     private int mLastY;
     private int mStartX;
     private int mStartY;
-
     private boolean mProximityCorrectOn;
-
     private Paint mPaint;
     private Rect mPadding;
-
     private long mDownTime;
     private long mLastMoveTime;
     private int mLastKey;
@@ -209,27 +140,17 @@ public class KeyboardView extends View implements View.OnClickListener {
     private SwipeTracker mSwipeTracker = new SwipeTracker();
     private int mSwipeThreshold;
     private boolean mDisambiguateSwipe;
-
     // Variables for dealing with multiple pointers
     private int mOldPointerCount = 1;
     private float mOldPointerX;
     private float mOldPointerY;
-
     private Drawable mKeyBackground;
-
-    private static final int REPEAT_INTERVAL = 50; // ~20 keys per second
-    private static final int REPEAT_START_DELAY = 400;
-    private static final int LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout();
-
-    private static int MAX_NEARBY_KEYS = 12;
     private int[] mDistances = new int[MAX_NEARBY_KEYS];
-
     // For multi-tap
     private int mLastSentIndex;
     private int mTapCount;
     private long mLastTapTime;
     private boolean mInMultiTap;
-    private static final int MULTITAP_INTERVAL = 800; // milliseconds
     private StringBuilder mPreviewLabel = new StringBuilder(1);
 
     /**
@@ -252,8 +173,6 @@ public class KeyboardView extends View implements View.OnClickListener {
      * The canvas for the above mutable keyboard bitmap
      */
     private Canvas mCanvas;
-
-    Handler mHandler;
 
     public KeyboardView(Context context, AttributeSet attrs) {
         this(context, attrs, R.attr.keyboardViewStyle);
@@ -434,10 +353,6 @@ public class KeyboardView extends View implements View.OnClickListener {
         }
     }
 
-    public void setOnKeyboardActionListener(OnKeyboardActionListener listener) {
-        mKeyboardActionListener = listener;
-    }
-
     /**
      * Returns the {@link OnKeyboardActionListener} object.
      *
@@ -445,6 +360,20 @@ public class KeyboardView extends View implements View.OnClickListener {
      */
     protected OnKeyboardActionListener getOnKeyboardActionListener() {
         return mKeyboardActionListener;
+    }
+
+    public void setOnKeyboardActionListener(OnKeyboardActionListener listener) {
+        mKeyboardActionListener = listener;
+    }
+
+    /**
+     * Returns the current keyboard being displayed by this view.
+     *
+     * @return the currently attached keyboard
+     * @see #setKeyboard(Keyboard)
+     */
+    public Keyboard getKeyboard() {
+        return mKeyboard;
     }
 
     /**
@@ -473,16 +402,6 @@ public class KeyboardView extends View implements View.OnClickListener {
         // Switching to a different keyboard should abort any pending keys so that the key up
         // doesn't get delivered to the old or new keyboard
         mAbortKey = true; // Until the next ACTION_DOWN
-    }
-
-    /**
-     * Returns the current keyboard being displayed by this view.
-     *
-     * @return the currently attached keyboard
-     * @see #setKeyboard(Keyboard)
-     */
-    public Keyboard getKeyboard() {
-        return mKeyboard;
     }
 
     /**
@@ -518,6 +437,16 @@ public class KeyboardView extends View implements View.OnClickListener {
     }
 
     /**
+     * Returns the enabled state of the key feedback popup.
+     *
+     * @return whether or not the key feedback popup is enabled
+     * @see #setPreviewEnabled(boolean)
+     */
+    public boolean isPreviewEnabled() {
+        return mShowPreview;
+    }
+
+    /**
      * Enables or disables the key feedback popup. This is a popup that shows a magnified
      * version of the depressed key. By default the preview is enabled.
      *
@@ -526,16 +455,6 @@ public class KeyboardView extends View implements View.OnClickListener {
      */
     public void setPreviewEnabled(boolean previewEnabled) {
         mShowPreview = previewEnabled;
-    }
-
-    /**
-     * Returns the enabled state of the key feedback popup.
-     *
-     * @return whether or not the key feedback popup is enabled
-     * @see #setPreviewEnabled(boolean)
-     */
-    public boolean isPreviewEnabled() {
-        return mShowPreview;
     }
 
     public void setPopupParent(View v) {
@@ -551,6 +470,13 @@ public class KeyboardView extends View implements View.OnClickListener {
     }
 
     /**
+     * Returns true if proximity correction is enabled.
+     */
+    public boolean isProximityCorrectionEnabled() {
+        return mProximityCorrectOn;
+    }
+
+    /**
      * When enabled, calls to {@link OnKeyboardActionListener#onKey} will include key
      * codes for adjacent keys.  When disabled, only the primary key code will be
      * reported.
@@ -559,13 +485,6 @@ public class KeyboardView extends View implements View.OnClickListener {
      */
     public void setProximityCorrectionEnabled(boolean enabled) {
         mProximityCorrectOn = enabled;
-    }
-
-    /**
-     * Returns true if proximity correction is enabled.
-     */
-    public boolean isProximityCorrectionEnabled() {
-        return mProximityCorrectOn;
     }
 
     /**
@@ -1393,6 +1312,69 @@ public class KeyboardView extends View implements View.OnClickListener {
         if (eventTime > mLastTapTime + MULTITAP_INTERVAL || keyIndex != mLastSentIndex) {
             resetMultiTap();
         }
+    }
+
+    /**
+     * Listener for virtual keyboard events.
+     */
+    public interface OnKeyboardActionListener {
+
+        /**
+         * Called when the user presses a key. This is sent before the {@link #onKey} is called.
+         * For keys that repeat, this is only called once.
+         *
+         * @param primaryCode the unicode of the key being pressed. If the touch is not on a valid
+         *                    key, the value will be zero.
+         */
+        void onPress(int primaryCode);
+
+        /**
+         * Called when the user releases a key. This is sent after the {@link #onKey} is called.
+         * For keys that repeat, this is only called once.
+         *
+         * @param primaryCode the code of the key that was released
+         */
+        void onRelease(int primaryCode);
+
+        /**
+         * Send a key press to the listener.
+         *
+         * @param primaryCode this is the key that was pressed
+         * @param keyCodes    the codes for all the possible alternative keys
+         *                    with the primary code being the first. If the primary key code is
+         *                    a single character such as an alphabet or number or symbol, the alternatives
+         *                    will include other characters that may be on the same key or adjacent keys.
+         *                    These codes are useful to correct for accidental presses of a key adjacent to
+         *                    the intended key.
+         */
+        void onKey(int primaryCode, int[] keyCodes);
+
+        /**
+         * Sends a sequence of characters to the listener.
+         *
+         * @param text the sequence of characters to be displayed.
+         */
+        void onText(CharSequence text);
+
+        /**
+         * Called when the user quickly moves the finger from right to left.
+         */
+        void swipeLeft();
+
+        /**
+         * Called when the user quickly moves the finger from left to right.
+         */
+        void swipeRight();
+
+        /**
+         * Called when the user quickly moves the finger from up to down.
+         */
+        void swipeDown();
+
+        /**
+         * Called when the user quickly moves the finger from down to up.
+         */
+        void swipeUp();
     }
 
     private static class SwipeTracker {

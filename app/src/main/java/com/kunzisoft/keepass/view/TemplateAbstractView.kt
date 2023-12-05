@@ -1,7 +1,6 @@
 package com.kunzisoft.keepass.view
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
@@ -19,8 +18,14 @@ import com.kunzisoft.keepass.database.element.DateInstant
 import com.kunzisoft.keepass.database.element.Field
 import com.kunzisoft.keepass.database.element.icon.IconImage
 import com.kunzisoft.keepass.database.element.security.ProtectedString
-import com.kunzisoft.keepass.database.element.template.*
+import com.kunzisoft.keepass.database.element.template.Template
+import com.kunzisoft.keepass.database.element.template.TemplateAttribute
+import com.kunzisoft.keepass.database.element.template.TemplateAttributeAction
+import com.kunzisoft.keepass.database.element.template.TemplateAttributeOption
+import com.kunzisoft.keepass.database.element.template.TemplateAttributeType
+import com.kunzisoft.keepass.database.element.template.TemplateEngine
 import com.kunzisoft.keepass.database.element.template.TemplateEngine.Companion.addTemplateDecorator
+import com.kunzisoft.keepass.database.element.template.TemplateField
 import com.kunzisoft.keepass.model.EntryInfo
 import com.kunzisoft.keepass.otp.OtpElement
 import com.kunzisoft.keepass.otp.OtpEntryFields

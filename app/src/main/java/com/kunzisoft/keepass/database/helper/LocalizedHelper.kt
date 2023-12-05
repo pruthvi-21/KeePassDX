@@ -6,7 +6,27 @@ import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.database.CompressionAlgorithm
 import com.kunzisoft.keepass.database.element.template.TemplateEngine
 import com.kunzisoft.keepass.database.element.template.TemplateField
-import com.kunzisoft.keepass.database.exception.*
+import com.kunzisoft.keepass.database.exception.CopyEntryDatabaseException
+import com.kunzisoft.keepass.database.exception.CopyGroupDatabaseException
+import com.kunzisoft.keepass.database.exception.CorruptedDatabaseException
+import com.kunzisoft.keepass.database.exception.DatabaseException
+import com.kunzisoft.keepass.database.exception.DatabaseInputException
+import com.kunzisoft.keepass.database.exception.DatabaseOutputException
+import com.kunzisoft.keepass.database.exception.DuplicateUuidDatabaseException
+import com.kunzisoft.keepass.database.exception.EmptyKeyDatabaseException
+import com.kunzisoft.keepass.database.exception.FileNotFoundDatabaseException
+import com.kunzisoft.keepass.database.exception.HardwareKeyDatabaseException
+import com.kunzisoft.keepass.database.exception.InvalidAlgorithmDatabaseException
+import com.kunzisoft.keepass.database.exception.InvalidCredentialsDatabaseException
+import com.kunzisoft.keepass.database.exception.KDFMemoryDatabaseException
+import com.kunzisoft.keepass.database.exception.MergeDatabaseKDBException
+import com.kunzisoft.keepass.database.exception.MoveEntryDatabaseException
+import com.kunzisoft.keepass.database.exception.MoveGroupDatabaseException
+import com.kunzisoft.keepass.database.exception.NoMemoryDatabaseException
+import com.kunzisoft.keepass.database.exception.SignatureDatabaseException
+import com.kunzisoft.keepass.database.exception.UnknownDatabaseLocationException
+import com.kunzisoft.keepass.database.exception.VersionDatabaseException
+import com.kunzisoft.keepass.database.exception.XMLMalformedDatabaseException
 
 fun DatabaseException.getLocalizedMessage(resources: Resources): String? =
     when (this) {
@@ -21,7 +41,12 @@ fun DatabaseException.getLocalizedMessage(resources: Resources): String? =
         is InvalidCredentialsDatabaseException -> resources.getString(R.string.invalid_credentials)
         is KDFMemoryDatabaseException -> resources.getString(R.string.error_load_database_KDF_memory)
         is NoMemoryDatabaseException -> resources.getString(R.string.error_out_of_memory)
-        is DuplicateUuidDatabaseException -> resources.getString(R.string.invalid_db_same_uuid, parameters[0], parameters[1])
+        is DuplicateUuidDatabaseException -> resources.getString(
+            R.string.invalid_db_same_uuid,
+            parameters[0],
+            parameters[1]
+        )
+
         is XMLMalformedDatabaseException -> resources.getString(R.string.error_XML_malformed)
         is MergeDatabaseKDBException -> resources.getString(R.string.error_unable_merge_database_kdb)
         is MoveEntryDatabaseException -> resources.getString(R.string.error_move_entry_here)
@@ -85,7 +110,11 @@ fun TemplateField.getLocalizedName(context: Context?, name: String): String {
         LABEL_ACCOUNT.equals(name, true) -> context.getString(R.string.account)
         LABEL_BANK.equals(name, true) -> context.getString(R.string.bank)
         LABEL_BIC.equals(name, true) -> context.getString(R.string.bank_identifier_code)
-        LABEL_IBAN.equals(name, true) -> context.getString(R.string.international_bank_account_number)
+        LABEL_IBAN.equals(
+            name,
+            true
+        ) -> context.getString(R.string.international_bank_account_number)
+
         LABEL_SECURE_NOTE.equals(name, true) -> context.getString(R.string.secure_note)
         LABEL_MEMBERSHIP.equals(name, true) -> context.getString(R.string.membership)
 

@@ -18,10 +18,11 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.utils.ColorUtils
 
-class ToolbarAction @JvmOverloads constructor(context: Context,
-                                              attrs: AttributeSet? = null,
-                                              defStyle: Int = R.attr.toolbarActionStyle)
-    : MaterialToolbar(context, attrs, defStyle) {
+class ToolbarAction @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = R.attr.toolbarActionStyle
+) : MaterialToolbar(context, attrs, defStyle) {
 
     private var mActionModeCallback: ActionMode.Callback? = null
     private val actionMode = NodeActionMode(this)
@@ -32,7 +33,8 @@ class ToolbarAction @JvmOverloads constructor(context: Context,
             val typedValue = TypedValue()
             context.theme.resolveAttribute(R.attr.colorOnSurface, typedValue, true)
             @ColorInt val colorControl = typedValue.data
-            closeDrawable.colorFilter = PorterDuffColorFilter(colorControl, PorterDuff.Mode.SRC_ATOP)
+            closeDrawable.colorFilter =
+                PorterDuffColorFilter(colorControl, PorterDuff.Mode.SRC_ATOP)
             navigationIcon = closeDrawable
         }
         setTitleTextColor(ColorUtils.getColorFromAttr(context, R.attr.colorOnSurface, Color.WHITE))
@@ -47,7 +49,7 @@ class ToolbarAction @JvmOverloads constructor(context: Context,
         setOnMenuItemClickListener {
             mActionModeCallback?.onActionItemClicked(actionMode, it) ?: false
         }
-        setNavigationOnClickListener{
+        setNavigationOnClickListener {
             actionMode.finish()
         }
 
@@ -85,7 +87,7 @@ class ToolbarAction @JvmOverloads constructor(context: Context,
         mActionModeCallback?.onDestroyActionMode(actionMode)
     }
 
-    private class NodeActionMode(var toolbarAction: ToolbarAction): ActionMode() {
+    private class NodeActionMode(var toolbarAction: ToolbarAction) : ActionMode() {
 
         override fun finish() {
             menu.clear()

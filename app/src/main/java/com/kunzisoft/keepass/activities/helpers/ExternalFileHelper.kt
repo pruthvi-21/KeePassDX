@@ -66,8 +66,10 @@ class ExternalFileHelper {
         }
     }
 
-    fun buildCreateDocument(typeString: String = "application/octet-stream",
-                            onFileCreated: (fileCreated: Uri?)->Unit) {
+    fun buildCreateDocument(
+        typeString: String = "application/octet-stream",
+        onFileCreated: (fileCreated: Uri?) -> Unit
+    ) {
 
         val resultCallback = ActivityResultCallback<Uri?> { result ->
             onFileCreated.invoke(result)
@@ -86,8 +88,10 @@ class ExternalFileHelper {
         }
     }
 
-    fun openDocument(getContent: Boolean = false,
-                     typeString: String = "*/*") {
+    fun openDocument(
+        getContent: Boolean = false,
+        typeString: String = "*/*"
+    ) {
         try {
             if (getContent) {
                 getContentResultLauncher?.launch(typeString)

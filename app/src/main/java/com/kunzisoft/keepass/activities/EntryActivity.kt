@@ -6,8 +6,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -29,9 +27,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.progressindicator.LinearProgressIndicator
-import com.google.android.material.tabs.TabLayout
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.activities.fragments.EntryFragment
 import com.kunzisoft.keepass.activities.helpers.ExternalFileHelper
 import com.kunzisoft.keepass.activities.helpers.SpecialMode
 import com.kunzisoft.keepass.activities.legacy.DatabaseLockActivity
@@ -142,7 +138,8 @@ class EntryActivity : DatabaseLockActivity() {
         val taColorSecondary = theme.obtainStyledAttributes(intArrayOf(R.attr.colorSecondary))
         val taColorSurface = theme.obtainStyledAttributes(intArrayOf(R.attr.colorSurface))
         val taColorOnSurface = theme.obtainStyledAttributes(intArrayOf(R.attr.colorOnSurface))
-        val taColorBackground = theme.obtainStyledAttributes(intArrayOf(android.R.attr.windowBackground))
+        val taColorBackground =
+            theme.obtainStyledAttributes(intArrayOf(android.R.attr.windowBackground))
         mColorSecondary = taColorSecondary.getColor(0, Color.BLACK)
         mColorSurface = taColorSurface.getColor(0, Color.BLACK)
         mColorOnSurface = taColorOnSurface.getColor(0, Color.BLACK)
@@ -220,7 +217,9 @@ class EntryActivity : DatabaseLockActivity() {
                 mIcon = entryInfo.icon
                 // Assign title text
                 val entryTitle =
-                    if (entryInfo.title.isNotEmpty()) entryInfo.title else UuidUtil.toHexString(entryInfo.id)
+                    if (entryInfo.title.isNotEmpty()) entryInfo.title else UuidUtil.toHexString(
+                        entryInfo.id
+                    )
                 collapsingToolbarLayout?.title = entryTitle
                 toolbar?.title = entryTitle
                 // Assign tags
@@ -231,7 +230,7 @@ class EntryActivity : DatabaseLockActivity() {
                 val showEntryColors = PreferencesUtil.showEntryColors(this)
                 mBackgroundColor = if (showEntryColors) entryInfo.backgroundColor else null
                 mForegroundColor = if (showEntryColors) entryInfo.foregroundColor else null
-                if(showEntryColors && mBackgroundColor != null) {
+                if (showEntryColors && mBackgroundColor != null) {
                     window.statusBarColor = mBackgroundColor!!
                 }
 
@@ -325,7 +324,10 @@ class EntryActivity : DatabaseLockActivity() {
         mAttachmentFileBinderManager?.apply {
             registerProgressTask()
             onActionTaskListener = object : AttachmentFileNotificationService.ActionTaskListener {
-                override fun onAttachmentAction(fileUri: Uri, entryAttachmentState: EntryAttachmentState) {
+                override fun onAttachmentAction(
+                    fileUri: Uri,
+                    entryAttachmentState: EntryAttachmentState
+                ) {
                     mEntryViewModel.onAttachmentAction(entryAttachmentState)
                 }
             }
@@ -413,29 +415,37 @@ class EntryActivity : DatabaseLockActivity() {
                 }
                 return true
             }
+
             R.id.menu_restore_entry_history -> {
                 mMainEntryId?.let { mainEntryId ->
                     restoreEntryHistory(
                         mainEntryId,
-                        mHistoryPosition)
+                        mHistoryPosition
+                    )
                 }
             }
+
             R.id.menu_delete_entry_history -> {
                 mMainEntryId?.let { mainEntryId ->
                     deleteEntryHistory(
                         mainEntryId,
-                        mHistoryPosition)
+                        mHistoryPosition
+                    )
                 }
             }
+
             R.id.menu_save_database -> {
                 saveDatabase()
             }
+
             R.id.menu_merge_database -> {
                 mergeDatabase()
             }
+
             R.id.menu_reload_database -> {
                 reloadDatabase()
             }
+
             android.R.id.home -> finish() // close this activity and return to preview activity (if there is any)
         }
         return super.onOptionsItemSelected(item)
@@ -461,10 +471,12 @@ class EntryActivity : DatabaseLockActivity() {
         /**
          * Open standard Entry activity
          */
-        fun launch(activity: Activity,
-                   database: ContextualDatabase,
-                   entryId: NodeId<UUID>,
-                   activityResultLauncher: ActivityResultLauncher<Intent>) {
+        fun launch(
+            activity: Activity,
+            database: ContextualDatabase,
+            entryId: NodeId<UUID>,
+            activityResultLauncher: ActivityResultLauncher<Intent>
+        ) {
             if (database.loaded) {
                 if (TimeoutHelper.checkTimeAndLockIfTimeout(activity)) {
                     val intent = Intent(activity, EntryActivity::class.java)
@@ -477,11 +489,13 @@ class EntryActivity : DatabaseLockActivity() {
         /**
          * Open history Entry activity
          */
-        fun launch(activity: Activity,
-                   database: ContextualDatabase,
-                   entryId: NodeId<UUID>,
-                   historyPosition: Int,
-                   activityResultLauncher: ActivityResultLauncher<Intent>) {
+        fun launch(
+            activity: Activity,
+            database: ContextualDatabase,
+            entryId: NodeId<UUID>,
+            historyPosition: Int,
+            activityResultLauncher: ActivityResultLauncher<Intent>
+        ) {
             if (database.loaded) {
                 if (TimeoutHelper.checkTimeAndLockIfTimeout(activity)) {
                     val intent = Intent(activity, EntryActivity::class.java)

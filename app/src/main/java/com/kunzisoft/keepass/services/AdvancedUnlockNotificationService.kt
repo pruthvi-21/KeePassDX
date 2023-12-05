@@ -21,20 +21,24 @@ class AdvancedUnlockNotificationService : NotificationService() {
 
     private var mActionTaskBinder = AdvancedUnlockBinder()
 
-    inner class AdvancedUnlockBinder: Binder() {
+    inner class AdvancedUnlockBinder : Binder() {
         fun getCipherDatabase(databaseUri: Uri): CipherDatabaseEntity? {
-            return mTempCipherDao.firstOrNull { it.databaseUri == databaseUri.toString()}
+            return mTempCipherDao.firstOrNull { it.databaseUri == databaseUri.toString() }
         }
+
         fun addOrUpdateCipherDatabase(cipherDatabaseEntity: CipherDatabaseEntity) {
-            val cipherDatabaseRetrieve = mTempCipherDao.firstOrNull { it.databaseUri == cipherDatabaseEntity.databaseUri }
+            val cipherDatabaseRetrieve =
+                mTempCipherDao.firstOrNull { it.databaseUri == cipherDatabaseEntity.databaseUri }
             cipherDatabaseRetrieve?.replaceContent(cipherDatabaseEntity)
-                    ?: mTempCipherDao.add(cipherDatabaseEntity)
+                ?: mTempCipherDao.add(cipherDatabaseEntity)
         }
+
         fun deleteByDatabaseUri(databaseUri: Uri) {
             mTempCipherDao.firstOrNull { it.databaseUri == databaseUri.toString() }?.let {
                 mTempCipherDao.remove(it)
             }
         }
+
         fun deleteAll() {
             mTempCipherDao.clear()
         }
@@ -61,21 +65,25 @@ class AdvancedUnlockNotificationService : NotificationService() {
     override fun onBind(intent: Intent): IBinder {
         super.onBind(intent)
 
-        val pendingDeleteIntent = PendingIntent.getBroadcast(this,
+        val pendingDeleteIntent = PendingIntent.getBroadcast(
+            this,
             4577,
             Intent(REMOVE_ADVANCED_UNLOCK_KEY_ACTION),
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 PendingIntent.FLAG_IMMUTABLE
             } else {
                 0
-            })
+            }
+        )
         val biometricUnlockEnabled = PreferencesUtil.isBiometricUnlockEnable(this)
         val notificationBuilder = buildNewNotification().apply {
-            setSmallIcon(if (biometricUnlockEnabled) {
-                R.drawable.notification_ic_fingerprint_unlock_24dp
-            } else {
-                R.drawable.notification_ic_device_unlock_24dp
-            })
+            setSmallIcon(
+                if (biometricUnlockEnabled) {
+                    R.drawable.notification_ic_fingerprint_unlock_24dp
+                } else {
+                    R.drawable.notification_ic_device_unlock_24dp
+                }
+            )
             setContentTitle(getString(R.string.advanced_unlock))
             setContentText(getString(R.string.advanced_unlock_tap_delete))
             setContentIntent(pendingDeleteIntent)
@@ -106,7 +114,7 @@ class AdvancedUnlockNotificationService : NotificationService() {
         super.onDestroy()
     }
 
-    class AdvancedUnlockReceiver(var removeKeyAction: () -> Unit): BroadcastReceiver() {
+    class AdvancedUnlockReceiver(var removeKeyAction: () -> Unit) : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             intent.action?.let {
                 when (it) {
@@ -119,15 +127,21 @@ class AdvancedUnlockNotificationService : NotificationService() {
     }
 
     companion object {
-        private const val CHANNEL_ADVANCED_UNLOCK_ID = "com.kunzisoft.keepass.notification.channel.unlock"
-        const val REMOVE_ADVANCED_UNLOCK_KEY_ACTION = "com.kunzisoft.keepass.REMOVE_ADVANCED_UNLOCK_KEY"
+        private const val CHANNEL_ADVANCED_UNLOCK_ID =
+            "com.kunzisoft.keepass.notification.channel.unlock"
+        const val REMOVE_ADVANCED_UNLOCK_KEY_ACTION =
+            "com.kunzisoft.keepass.REMOVE_ADVANCED_UNLOCK_KEY"
 
         // Only one service connection
         fun bindService(context: Context, serviceConnection: ServiceConnection, flags: Int) {
-            context.bindService(Intent(context,
-                AdvancedUnlockNotificationService::class.java),
-                    serviceConnection,
-                    flags)
+            context.bindService(
+                Intent(
+                    context,
+                    AdvancedUnlockNotificationService::class.java
+                ),
+                serviceConnection,
+                flags
+            )
         }
 
         fun unbindService(context: Context, serviceConnection: ServiceConnection) {

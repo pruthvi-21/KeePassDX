@@ -9,18 +9,18 @@ class AutofillBlocklistWebDomainPreferenceDialogFragmentCompat
 
     override fun buildSearchInfoFromString(searchInfoString: String): SearchInfo? {
         val newSearchInfo = searchInfoString
-                // remove prefix https://
-                .replace(Regex("^.*://"), "")
-                // Remove suffix /login...
-                .replace(Regex("/.*$"), "")
+            // remove prefix https://
+            .replace(Regex("^.*://"), "")
+            // Remove suffix /login...
+            .replace(Regex("/.*$"), "")
         return SearchInfo().apply { webDomain = newSearchInfo }
     }
 
     override fun getDefaultValues(): Set<String> {
         return context?.resources
-                ?.getStringArray(R.array.autofill_web_domain_blocklist_default)
-                ?.toMutableSet()
-                ?: emptySet()
+            ?.getStringArray(R.array.autofill_web_domain_blocklist_default)
+            ?.toMutableSet()
+            ?: emptySet()
     }
 
     companion object {

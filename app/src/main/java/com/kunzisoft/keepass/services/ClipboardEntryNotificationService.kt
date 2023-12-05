@@ -61,16 +61,18 @@ class ClipboardEntryNotificationService : LockNotificationService() {
             ACTION_NEW_NOTIFICATION == intent.action -> {
                 newNotification(mEntryInfo?.title, constructListOfField(intent))
             }
+
             ACTION_CLEAN_CLIPBOARD == intent.action -> {
                 mTimerJob?.cancel()
                 clipboardHelper?.cleanClipboard()
                 stopNotificationAndSendLockIfNeeded()
             }
+
             else -> for (actionKey in ClipboardEntryNotificationField.allActionKeys) {
                 if (actionKey == intent.action) {
                     intent.getParcelableExtraCompat<ClipboardEntryNotificationField>(
-                            ClipboardEntryNotificationField.getExtraKeyLinkToActionKey(actionKey))?.let {
-                        fieldToCopy ->
+                        ClipboardEntryNotificationField.getExtraKeyLinkToActionKey(actionKey)
+                    )?.let { fieldToCopy ->
                         val nextFields = constructListOfField(intent)
                         // Remove the current field from the next fields
                         nextFields.remove(fieldToCopy)
@@ -85,15 +87,19 @@ class ClipboardEntryNotificationService : LockNotificationService() {
     private fun constructListOfField(intent: Intent?): MutableList<ClipboardEntryNotificationField> {
         val fieldList = mutableListOf<ClipboardEntryNotificationField>()
         if (intent?.extras?.containsKey(EXTRA_CLIPBOARD_FIELDS) == true) {
-            intent.getParcelableList<ClipboardEntryNotificationField>(EXTRA_CLIPBOARD_FIELDS)?.let { retrieveFields ->
-                fieldList.clear()
-                fieldList.addAll(retrieveFields)
-            }
+            intent.getParcelableList<ClipboardEntryNotificationField>(EXTRA_CLIPBOARD_FIELDS)
+                ?.let { retrieveFields ->
+                    fieldList.clear()
+                    fieldList.addAll(retrieveFields)
+                }
         }
         return fieldList
     }
 
-    private fun getCopyPendingIntent(fieldToCopy: ClipboardEntryNotificationField, fieldsToAdd: MutableList<ClipboardEntryNotificationField>): PendingIntent {
+    private fun getCopyPendingIntent(
+        fieldToCopy: ClipboardEntryNotificationField,
+        fieldsToAdd: MutableList<ClipboardEntryNotificationField>
+    ): PendingIntent {
         val copyIntent = Intent(this, ClipboardEntryNotificationService::class.java).apply {
             action = fieldToCopy.actionKey
             putExtra(EXTRA_ENTRY_INFO, mEntryInfo)
@@ -110,11 +116,14 @@ class ClipboardEntryNotificationService : LockNotificationService() {
         )
     }
 
-    private fun newNotification(title: String?, fieldsToAdd: MutableList<ClipboardEntryNotificationField>) {
+    private fun newNotification(
+        title: String?,
+        fieldsToAdd: MutableList<ClipboardEntryNotificationField>
+    ) {
         mTimerJob?.cancel()
 
         val builder = buildNewNotification()
-                .setSmallIcon(R.drawable.notification_ic_clipboard_key_24dp)
+            .setSmallIcon(R.drawable.notification_ic_clipboard_key_24dp)
 
         if (title != null)
             builder.setContentTitle(title)
@@ -130,8 +139,10 @@ class ClipboardEntryNotificationService : LockNotificationService() {
             fieldsWithoutFirstField.remove(field)
             // Add extra actions
             for (fieldToAdd in fieldsWithoutFirstField) {
-                builder.addAction(R.drawable.notification_ic_clipboard_key_24dp, fieldToAdd.label,
-                        getCopyPendingIntent(fieldToAdd, fieldsToAdd))
+                builder.addAction(
+                    R.drawable.notification_ic_clipboard_key_24dp, fieldToAdd.label,
+                    getCopyPendingIntent(fieldToAdd, fieldsToAdd)
+                )
             }
         }
 
@@ -140,7 +151,10 @@ class ClipboardEntryNotificationService : LockNotificationService() {
         }
     }
 
-    private fun copyField(fieldToCopy: ClipboardEntryNotificationField, nextFields: MutableList<ClipboardEntryNotificationField>) {
+    private fun copyField(
+        fieldToCopy: ClipboardEntryNotificationField,
+        nextFields: MutableList<ClipboardEntryNotificationField>
+    ) {
         mTimerJob?.cancel()
 
         try {
@@ -152,8 +166,8 @@ class ClipboardEntryNotificationService : LockNotificationService() {
             )
 
             val builder = buildNewNotification()
-                    .setSmallIcon(R.drawable.notification_ic_clipboard_key_24dp)
-                    .setContentTitle(fieldToCopy.label)
+                .setSmallIcon(R.drawable.notification_ic_clipboard_key_24dp)
+                .setContentTitle(fieldToCopy.label)
 
             // New action with next field if click
             if (nextFields.size > 0) {
@@ -208,7 +222,8 @@ class ClipboardEntryNotificationService : LockNotificationService() {
 
     private fun checkNotificationsPermission(action: () -> Unit) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
-            == PackageManager.PERMISSION_GRANTED) {
+            == PackageManager.PERMISSION_GRANTED
+        ) {
             action.invoke()
         } else {
             showPermissionErrorIfNeeded(this)
@@ -229,7 +244,8 @@ class ClipboardEntryNotificationService : LockNotificationService() {
 
         private val TAG = ClipboardEntryNotificationService::class.java.name
 
-        private const val CHANNEL_CLIPBOARD_ID = "com.kunzisoft.keepass.notification.channel.clipboard"
+        private const val CHANNEL_CLIPBOARD_ID =
+            "com.kunzisoft.keepass.notification.channel.clipboard"
 
         const val ACTION_NEW_NOTIFICATION = "ACTION_NEW_NOTIFICATION"
         const val EXTRA_ENTRY_INFO = "EXTRA_ENTRY_INFO"
@@ -250,8 +266,9 @@ class ClipboardEntryNotificationService : LockNotificationService() {
                 if (ContextCompat.checkSelfPermission(
                         activity,
                         Manifest.permission.POST_NOTIFICATIONS
-                    ) == PackageManager.PERMISSION_GRANTED) {
-                        launchNotificationIfAllowed(activity, entry)
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    launchNotificationIfAllowed(activity, entry)
                 } else {
                     showPermissionErrorIfNeeded(activity)
                 }
@@ -268,8 +285,10 @@ class ClipboardEntryNotificationService : LockNotificationService() {
             val containsOTPToCopy = entry.containsCustomField(OTP_TOKEN_FIELD)
             val containsExtraFieldToCopy = entry.customFields.isNotEmpty()
                     && (entry.containsCustomFieldsNotProtected()
-                        ||
-                        (entry.containsCustomFieldsProtected() && PreferencesUtil.allowCopyProtectedFields(context))
+                    ||
+                    (entry.containsCustomFieldsProtected() && PreferencesUtil.allowCopyProtectedFields(
+                        context
+                    ))
                     )
 
             var startService = false
@@ -279,9 +298,10 @@ class ClipboardEntryNotificationService : LockNotificationService() {
             // Don't if application timeout
             if (PreferencesUtil.isClipboardNotificationsEnable(context)) {
                 if (containsUsernameToCopy
-                        || containsPasswordToCopy
-                        || containsOTPToCopy
-                        || containsExtraFieldToCopy) {
+                    || containsPasswordToCopy
+                    || containsOTPToCopy
+                    || containsExtraFieldToCopy
+                ) {
 
                     // username already copied, waiting for user's action before copy password.
                     intent.action = ACTION_NEW_NOTIFICATION
@@ -291,22 +311,28 @@ class ClipboardEntryNotificationService : LockNotificationService() {
                     // Add username if exists to notifications
                     if (containsUsernameToCopy)
                         notificationFields.add(
-                                ClipboardEntryNotificationField(
-                                        ClipboardEntryNotificationField.NotificationFieldId.USERNAME,
-                                        context.getString(R.string.entry_user_name)))
+                            ClipboardEntryNotificationField(
+                                ClipboardEntryNotificationField.NotificationFieldId.USERNAME,
+                                context.getString(R.string.entry_user_name)
+                            )
+                        )
                     // Add password to notifications
                     if (containsPasswordToCopy) {
                         notificationFields.add(
-                                ClipboardEntryNotificationField(
-                                        ClipboardEntryNotificationField.NotificationFieldId.PASSWORD,
-                                        context.getString(R.string.entry_password)))
+                            ClipboardEntryNotificationField(
+                                ClipboardEntryNotificationField.NotificationFieldId.PASSWORD,
+                                context.getString(R.string.entry_password)
+                            )
+                        )
                     }
                     // Add OTP
                     if (containsOTPToCopy) {
                         notificationFields.add(
-                                ClipboardEntryNotificationField(
-                                        ClipboardEntryNotificationField.NotificationFieldId.OTP,
-                                        OTP_TOKEN_FIELD))
+                            ClipboardEntryNotificationField(
+                                ClipboardEntryNotificationField.NotificationFieldId.OTP,
+                                OTP_TOKEN_FIELD
+                            )
+                        )
                     }
                     // Add extra fields
                     if (containsExtraFieldToCopy) {
@@ -315,18 +341,24 @@ class ClipboardEntryNotificationService : LockNotificationService() {
                             entry.customFields.forEach { field ->
                                 //If value is not protected or allowed
                                 if ((!field.protectedValue.isProtected
-                                        || PreferencesUtil.allowCopyProtectedFields(context))
-                                     && field.name != OTP_TOKEN_FIELD) {
+                                            || PreferencesUtil.allowCopyProtectedFields(context))
+                                    && field.name != OTP_TOKEN_FIELD
+                                ) {
                                     notificationFields.add(
-                                            ClipboardEntryNotificationField(
-                                                    ClipboardEntryNotificationField.NotificationFieldId.anonymousFieldId[anonymousFieldNumber],
-                                                    field.name))
+                                        ClipboardEntryNotificationField(
+                                            ClipboardEntryNotificationField.NotificationFieldId.anonymousFieldId[anonymousFieldNumber],
+                                            field.name
+                                        )
+                                    )
                                     anonymousFieldNumber++
                                 }
                             }
                         } catch (e: ArrayIndexOutOfBoundsException) {
-                            Log.w("NotificationEntryCopyMg", "Only " + ClipboardEntryNotificationField.NotificationFieldId.anonymousFieldId.size +
-                                    " anonymous notifications are available")
+                            Log.w(
+                                "NotificationEntryCopyMg",
+                                "Only " + ClipboardEntryNotificationField.NotificationFieldId.anonymousFieldId.size +
+                                        " anonymous notifications are available"
+                            )
                         }
 
                     }

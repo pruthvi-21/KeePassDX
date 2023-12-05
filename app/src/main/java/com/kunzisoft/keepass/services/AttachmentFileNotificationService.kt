@@ -17,17 +17,17 @@ import com.kunzisoft.keepass.model.AttachmentState
 import com.kunzisoft.keepass.model.EntryAttachmentState
 import com.kunzisoft.keepass.model.StreamDirection
 import com.kunzisoft.keepass.tasks.BinaryDatabaseManager
-import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.utils.UriUtil.getDocumentFile
+import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
+import java.util.LinkedList
 import java.util.concurrent.CopyOnWriteArrayList
 
 
-class AttachmentFileNotificationService: LockNotificationService() {
+class AttachmentFileNotificationService : LockNotificationService() {
 
     private var mDatabaseTaskProvider: DatabaseTaskProvider? = null
     private var mDatabase: ContextualDatabase? = null
@@ -49,7 +49,7 @@ class AttachmentFileNotificationService: LockNotificationService() {
         return getString(R.string.entry_attachments)
     }
 
-    inner class ActionTaskBinder: Binder() {
+    inner class ActionTaskBinder : Binder() {
 
         fun getService(): AttachmentFileNotificationService = this@AttachmentFileNotificationService
 
@@ -62,15 +62,18 @@ class AttachmentFileNotificationService: LockNotificationService() {
         }
     }
 
-    private val attachmentFileActionListener = object: AttachmentFileAction.AttachmentFileActionListener {
-        override fun onUpdate(attachmentNotification: AttachmentNotification) {
-            newNotification(attachmentNotification)
-            mActionTaskListeners.forEach { actionListener ->
-                actionListener.onAttachmentAction(attachmentNotification.uri,
-                        attachmentNotification.entryAttachmentState)
+    private val attachmentFileActionListener =
+        object : AttachmentFileAction.AttachmentFileActionListener {
+            override fun onUpdate(attachmentNotification: AttachmentNotification) {
+                newNotification(attachmentNotification)
+                mActionTaskListeners.forEach { actionListener ->
+                    actionListener.onAttachmentAction(
+                        attachmentNotification.uri,
+                        attachmentNotification.entryAttachmentState
+                    )
+                }
             }
         }
-    }
 
     override fun onCreate() {
         super.onCreate()
@@ -116,33 +119,44 @@ class AttachmentFileNotificationService: LockNotificationService() {
             intent.getParcelableExtraCompat(FILE_URI_KEY)
         } else null
 
-        when(intent?.action) {
+        when (intent?.action) {
             ACTION_ATTACHMENT_FILE_START_UPLOAD -> {
-                actionStartUploadOrDownload(downloadFileUri,
+                actionStartUploadOrDownload(
+                    downloadFileUri,
                     intent,
-                    StreamDirection.UPLOAD)
+                    StreamDirection.UPLOAD
+                )
             }
+
             ACTION_ATTACHMENT_FILE_STOP_UPLOAD -> {
                 actionStopUpload()
             }
+
             ACTION_ATTACHMENT_FILE_START_DOWNLOAD -> {
-                actionStartUploadOrDownload(downloadFileUri,
+                actionStartUploadOrDownload(
+                    downloadFileUri,
                     intent,
-                    StreamDirection.DOWNLOAD)
+                    StreamDirection.DOWNLOAD
+                )
             }
+
             ACTION_ATTACHMENT_REMOVE -> {
-                intent.getParcelableExtraCompat<Attachment>(ATTACHMENT_KEY)?.let { entryAttachment ->
-                    attachmentNotificationList.firstOrNull { it.entryAttachmentState.attachment == entryAttachment }?.let { elementToRemove ->
-                        attachmentNotificationList.remove(elementToRemove)
+                intent.getParcelableExtraCompat<Attachment>(ATTACHMENT_KEY)
+                    ?.let { entryAttachment ->
+                        attachmentNotificationList.firstOrNull { it.entryAttachmentState.attachment == entryAttachment }
+                            ?.let { elementToRemove ->
+                                attachmentNotificationList.remove(elementToRemove)
+                            }
                     }
-                }
             }
+
             else -> {
                 if (downloadFileUri != null) {
-                    attachmentNotificationList.firstOrNull { it.uri == downloadFileUri }?.let { elementToRemove ->
-                        notificationManager?.cancel(elementToRemove.notificationId)
-                        attachmentNotificationList.remove(elementToRemove)
-                    }
+                    attachmentNotificationList.firstOrNull { it.uri == downloadFileUri }
+                        ?.let { elementToRemove ->
+                            notificationManager?.cancel(elementToRemove.notificationId)
+                            attachmentNotificationList.remove(elementToRemove)
+                        }
                 }
                 if (attachmentNotificationList.isEmpty()) {
                     stopSelf()
@@ -156,8 +170,8 @@ class AttachmentFileNotificationService: LockNotificationService() {
         attachmentNotificationList.forEach { attachmentNotification ->
             mActionTaskListeners.forEach { actionListener ->
                 actionListener.onAttachmentAction(
-                        attachmentNotification.uri,
-                        attachmentNotification.entryAttachmentState
+                    attachmentNotification.uri,
+                    attachmentNotification.entryAttachmentState
                 )
             }
         }
@@ -174,12 +188,15 @@ class AttachmentFileNotificationService: LockNotificationService() {
 
     private fun newNotification(attachmentNotification: AttachmentNotification) {
 
-        val pendingContentIntent = PendingIntent.getActivity(this,
+        val pendingContentIntent = PendingIntent.getActivity(
+            this,
             0,
             Intent().apply {
                 action = Intent.ACTION_VIEW
-                setDataAndType(attachmentNotification.uri,
-                        contentResolver.getType(attachmentNotification.uri))
+                setDataAndType(
+                    attachmentNotification.uri,
+                    contentResolver.getType(attachmentNotification.uri)
+                )
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }, if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
@@ -188,12 +205,13 @@ class AttachmentFileNotificationService: LockNotificationService() {
             }
         )
 
-        val pendingDeleteIntent =  PendingIntent.getService(this,
-                0,
-                Intent(this, AttachmentFileNotificationService::class.java).apply {
-                    // No action to delete the service
-                    putExtra(FILE_URI_KEY, attachmentNotification.uri)
-                }, if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val pendingDeleteIntent = PendingIntent.getService(
+            this,
+            0,
+            Intent(this, AttachmentFileNotificationService::class.java).apply {
+                // No action to delete the service
+                putExtra(FILE_URI_KEY, attachmentNotification.uri)
+            }, if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
             } else {
                 PendingIntent.FLAG_CANCEL_CURRENT
@@ -201,7 +219,7 @@ class AttachmentFileNotificationService: LockNotificationService() {
         )
 
         val fileName = attachmentNotification.uri.getDocumentFile(this)?.name
-                ?: attachmentNotification.uri.path
+            ?: attachmentNotification.uri.path
 
         val builder = buildNewNotification().apply {
             when (attachmentNotification.entryAttachmentState.streamDirection) {
@@ -209,6 +227,7 @@ class AttachmentFileNotificationService: LockNotificationService() {
                     setSmallIcon(R.drawable.ic_file_upload_white_24dp)
                     setContentTitle(getString(R.string.upload_attachment, fileName))
                 }
+
                 StreamDirection.DOWNLOAD -> {
                     setSmallIcon(R.drawable.ic_file_download_white_24dp)
                     setContentTitle(getString(R.string.download_attachment, fileName))
@@ -220,24 +239,33 @@ class AttachmentFileNotificationService: LockNotificationService() {
                     setContentText(getString(R.string.download_initialization))
                     setOngoing(true)
                 }
+
                 AttachmentState.IN_PROGRESS -> {
                     if (attachmentNotification.entryAttachmentState.downloadProgression > FILE_PROGRESSION_MAX) {
                         setContentText(getString(R.string.download_finalization))
                     } else {
-                        setProgress(FILE_PROGRESSION_MAX,
-                                attachmentNotification.entryAttachmentState.downloadProgression,
-                                false)
-                        setContentText(getString(R.string.download_progression,
-                                attachmentNotification.entryAttachmentState.downloadProgression))
+                        setProgress(
+                            FILE_PROGRESSION_MAX,
+                            attachmentNotification.entryAttachmentState.downloadProgression,
+                            false
+                        )
+                        setContentText(
+                            getString(
+                                R.string.download_progression,
+                                attachmentNotification.entryAttachmentState.downloadProgression
+                            )
+                        )
                     }
                     setOngoing(true)
                 }
+
                 AttachmentState.COMPLETE -> {
                     setContentText(getString(R.string.download_complete))
                     when (attachmentNotification.entryAttachmentState.streamDirection) {
                         StreamDirection.UPLOAD -> {
 
                         }
+
                         StreamDirection.DOWNLOAD -> {
                             setContentIntent(pendingContentIntent)
                         }
@@ -245,11 +273,13 @@ class AttachmentFileNotificationService: LockNotificationService() {
                     setDeleteIntent(pendingDeleteIntent)
                     setOngoing(false)
                 }
+
                 AttachmentState.CANCELED -> {
                     setContentText(getString(R.string.download_canceled))
                     setDeleteIntent(pendingDeleteIntent)
                     setOngoing(false)
                 }
+
                 AttachmentState.ERROR -> {
                     setContentText(getString(R.string.error_file_not_create))
                     setDeleteIntent(pendingDeleteIntent)
@@ -270,7 +300,9 @@ class AttachmentFileNotificationService: LockNotificationService() {
                 } catch (e: SecurityException) {
                     Log.e(TAG, "Unable to notify the attachment state", e)
                 }
-            } else -> {
+            }
+
+            else -> {
                 startForeground(attachmentNotification.notificationId, builder.build())
             }
         }
@@ -288,10 +320,12 @@ class AttachmentFileNotificationService: LockNotificationService() {
         super.onDestroy()
     }
 
-    private data class AttachmentNotification(var uri: Uri,
-                                              var notificationId: Int,
-                                              var entryAttachmentState: EntryAttachmentState,
-                                              var attachmentFileAction: AttachmentFileAction? = null) {
+    private data class AttachmentNotification(
+        var uri: Uri,
+        var notificationId: Int,
+        var entryAttachmentState: EntryAttachmentState,
+        var attachmentFileAction: AttachmentFileAction? = null
+    ) {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
             if (javaClass != other?.javaClass) return false
@@ -308,32 +342,44 @@ class AttachmentFileNotificationService: LockNotificationService() {
         }
     }
 
-    private fun actionStartUploadOrDownload(fileUri: Uri?,
-                                            intent: Intent,
-                                            streamDirection: StreamDirection) {
+    private fun actionStartUploadOrDownload(
+        fileUri: Uri?,
+        intent: Intent,
+        streamDirection: StreamDirection
+    ) {
         if (fileUri != null
-                && intent.hasExtra(ATTACHMENT_KEY)) {
+            && intent.hasExtra(ATTACHMENT_KEY)
+        ) {
             try {
-                intent.getParcelableExtraCompat<Attachment>(ATTACHMENT_KEY)?.let { entryAttachment ->
+                intent.getParcelableExtraCompat<Attachment>(ATTACHMENT_KEY)
+                    ?.let { entryAttachment ->
 
-                    val nextNotificationId = (attachmentNotificationList.maxByOrNull { it.notificationId }
-                            ?.notificationId ?: notificationId) + 1
-                    val entryAttachmentState = EntryAttachmentState(entryAttachment, streamDirection)
-                    val attachmentNotification = AttachmentNotification(fileUri, nextNotificationId, entryAttachmentState)
+                        val nextNotificationId =
+                            (attachmentNotificationList.maxByOrNull { it.notificationId }
+                                ?.notificationId ?: notificationId) + 1
+                        val entryAttachmentState =
+                            EntryAttachmentState(entryAttachment, streamDirection)
+                        val attachmentNotification = AttachmentNotification(
+                            fileUri,
+                            nextNotificationId,
+                            entryAttachmentState
+                        )
 
-                    // Add action to the list on start
-                    attachmentNotificationList.add(attachmentNotification)
+                        // Add action to the list on start
+                        attachmentNotificationList.add(attachmentNotification)
 
-                    mDatabase?.let { database ->
-                        mainScope.launch {
-                            AttachmentFileAction(attachmentNotification,
+                        mDatabase?.let { database ->
+                            mainScope.launch {
+                                AttachmentFileAction(
+                                    attachmentNotification,
                                     database,
-                                    contentResolver).apply {
-                                listener = attachmentFileActionListener
-                            }.executeAction()
+                                    contentResolver
+                                ).apply {
+                                    listener = attachmentFileActionListener
+                                }.executeAction()
+                            }
                         }
                     }
-                }
             } catch (e: Exception) {
                 Log.e(TAG, "Unable to upload/download $fileUri", e)
             }
@@ -356,7 +402,8 @@ class AttachmentFileNotificationService: LockNotificationService() {
     private class AttachmentFileAction(
         private val attachmentNotification: AttachmentNotification,
         private val database: ContextualDatabase,
-        private val contentResolver: ContentResolver) {
+        private val contentResolver: ContentResolver
+    ) {
 
         private val updateMinFrequency = 1000
         private var previousSaveTime = System.currentTimeMillis()
@@ -383,35 +430,36 @@ class AttachmentFileNotificationService: LockNotificationService() {
                 val asyncAction = launch {
                     attachmentNotification.entryAttachmentState.apply {
                         try {
-                                downloadState = AttachmentState.IN_PROGRESS
+                            downloadState = AttachmentState.IN_PROGRESS
 
-                                when (streamDirection) {
-                                    StreamDirection.UPLOAD -> {
-                                        BinaryDatabaseManager.uploadToDatabase(
-                                                database,
-                                                attachmentNotification.uri,
-                                                attachment.binaryData,
-                                                contentResolver,
-                                                { percent ->
-                                                    publishProgress(percent)
-                                                },
-                                                { // Cancellation
-                                                    downloadState == AttachmentState.CANCELED
-                                                }
-                                        )
-                                    }
-                                    StreamDirection.DOWNLOAD -> {
-                                        BinaryDatabaseManager.downloadFromDatabase(
-                                                database,
-                                                attachmentNotification.uri,
-                                                attachment.binaryData,
-                                                contentResolver,
-                                                { percent ->
-                                                    publishProgress(percent)
-                                                }
-                                        )
-                                    }
+                            when (streamDirection) {
+                                StreamDirection.UPLOAD -> {
+                                    BinaryDatabaseManager.uploadToDatabase(
+                                        database,
+                                        attachmentNotification.uri,
+                                        attachment.binaryData,
+                                        contentResolver,
+                                        { percent ->
+                                            publishProgress(percent)
+                                        },
+                                        { // Cancellation
+                                            downloadState == AttachmentState.CANCELED
+                                        }
+                                    )
                                 }
+
+                                StreamDirection.DOWNLOAD -> {
+                                    BinaryDatabaseManager.downloadFromDatabase(
+                                        database,
+                                        attachmentNotification.uri,
+                                        attachment.binaryData,
+                                        contentResolver,
+                                        { percent ->
+                                            publishProgress(percent)
+                                        }
+                                    )
+                                }
+                            }
                         } catch (e: Exception) {
                             e.printStackTrace()
                             downloadState = AttachmentState.ERROR
@@ -425,7 +473,8 @@ class AttachmentFileNotificationService: LockNotificationService() {
                     asyncAction.join()
                     attachmentNotification.entryAttachmentState.apply {
                         if (downloadState != AttachmentState.CANCELED
-                                && downloadState != AttachmentState.ERROR) {
+                            && downloadState != AttachmentState.ERROR
+                        ) {
                             downloadState = AttachmentState.COMPLETE
                             downloadProgression = FILE_PROGRESSION_MAX
                         }
@@ -467,7 +516,8 @@ class AttachmentFileNotificationService: LockNotificationService() {
     companion object {
         private val TAG = AttachmentFileNotificationService::javaClass.name
 
-        private const val CHANNEL_ATTACHMENT_ID = "com.kunzisoft.keepass.notification.channel.attachment"
+        private const val CHANNEL_ATTACHMENT_ID =
+            "com.kunzisoft.keepass.notification.channel.attachment"
 
         const val ACTION_ATTACHMENT_FILE_START_UPLOAD = "ACTION_ATTACHMENT_FILE_START_UPLOAD"
         const val ACTION_ATTACHMENT_FILE_STOP_UPLOAD = "ACTION_ATTACHMENT_FILE_STOP_UPLOAD"

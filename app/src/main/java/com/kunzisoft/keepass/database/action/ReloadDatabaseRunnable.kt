@@ -16,7 +16,7 @@ class ReloadDatabaseRunnable(
     private val progressTaskUpdater: ProgressTaskUpdater?
 ) : ActionRunnable() {
 
-    var afterReloadDatabase : ((Result) -> Unit)? = null
+    var afterReloadDatabase: ((Result) -> Unit)? = null
 
     private val binaryDir = context.getBinaryDir()
 
@@ -34,7 +34,8 @@ class ReloadDatabaseRunnable(
                 { memoryWanted ->
                     BinaryData.canMemoryBeAllocatedInRAM(context, memoryWanted)
                 },
-                progressTaskUpdater)
+                progressTaskUpdater
+            )
         } catch (e: DatabaseException) {
             setError(e)
         }

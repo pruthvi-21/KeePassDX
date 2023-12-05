@@ -31,11 +31,12 @@ class DurationDialogFragmentCompat : InputPreferenceDialogFragmentCompat() {
 
         // To get items from saved instance state
         if (savedInstanceState != null
-                && savedInstanceState.containsKey(ENABLE_KEY)
-                && savedInstanceState.containsKey(DAYS_KEY)
-                && savedInstanceState.containsKey(HOURS_KEY)
-                && savedInstanceState.containsKey(MINUTES_KEY)
-                && savedInstanceState.containsKey(SECONDS_KEY)) {
+            && savedInstanceState.containsKey(ENABLE_KEY)
+            && savedInstanceState.containsKey(DAYS_KEY)
+            && savedInstanceState.containsKey(HOURS_KEY)
+            && savedInstanceState.containsKey(MINUTES_KEY)
+            && savedInstanceState.containsKey(SECONDS_KEY)
+        ) {
             mEnabled = savedInstanceState.getBoolean(ENABLE_KEY)
             mDays = savedInstanceState.getInt(DAYS_KEY)
             mHours = savedInstanceState.getInt(HOURS_KEY)
@@ -54,7 +55,8 @@ class DurationDialogFragmentCompat : InputPreferenceDialogFragmentCompat() {
 
         (context?.applicationContext?.getSystemService(Context.ALARM_SERVICE) as AlarmManager?)?.let { alarmManager ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-                && !alarmManager.canScheduleExactAlarms()) {
+                && !alarmManager.canScheduleExactAlarms()
+            ) {
                 setExplanationText(R.string.warning_exact_alarm)
                 setExplanationButton(R.string.permission) {
                     // Open the exact alarm permission screen
@@ -88,7 +90,8 @@ class DurationDialogFragmentCompat : InputPreferenceDialogFragmentCompat() {
             val hoursMilliseconds = mHours * 60L * 60L * 1000L
             mMinutes = ((duration - daysMilliseconds - hoursMilliseconds) / (60L * 1000L)).toInt()
             val minutesMilliseconds = mMinutes * 60L * 1000L
-            mSeconds = ((duration - daysMilliseconds - hoursMilliseconds - minutesMilliseconds) / (1000L)).toInt()
+            mSeconds =
+                ((duration - daysMilliseconds - hoursMilliseconds - minutesMilliseconds) / (1000L)).toInt()
         }
     }
 

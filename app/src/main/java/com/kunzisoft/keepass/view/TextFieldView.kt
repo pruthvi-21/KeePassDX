@@ -1,7 +1,6 @@
 package com.kunzisoft.keepass.view
 
 import android.content.Context
-import android.os.Build
 import android.text.InputFilter
 import android.text.SpannableString
 import android.text.util.Linkify
@@ -13,7 +12,6 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.core.text.util.LinkifyCompat
-import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.template.TemplateField

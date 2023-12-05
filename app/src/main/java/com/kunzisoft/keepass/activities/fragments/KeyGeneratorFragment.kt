@@ -23,7 +23,7 @@ class KeyGeneratorFragment : DatabaseFragment() {
     private val mKeyGeneratorViewModel: KeyGeneratorViewModel by activityViewModels()
 
     private var mSelectedTab = KeyGeneratorTab.PASSWORD
-    private var mOnPageChangeCallback: ViewPager2.OnPageChangeCallback = object:
+    private var mOnPageChangeCallback: ViewPager2.OnPageChangeCallback = object :
         ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
@@ -32,9 +32,9 @@ class KeyGeneratorFragment : DatabaseFragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_tabs_pagination, container, false)
     }
@@ -42,7 +42,7 @@ class KeyGeneratorFragment : DatabaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        keyGeneratorPagerAdapter = KeyGeneratorPagerAdapter(this, )
+        keyGeneratorPagerAdapter = KeyGeneratorPagerAdapter(this)
         viewPager = view.findViewById(R.id.tabs_view_pager)
         tabLayout = view.findViewById(R.id.tabs_layout)
         viewPager.adapter = keyGeneratorPagerAdapter
@@ -65,6 +65,7 @@ class KeyGeneratorFragment : DatabaseFragment() {
                 KeyGeneratorTab.PASSWORD -> {
                     mKeyGeneratorViewModel.requirePasswordGeneration()
                 }
+
                 KeyGeneratorTab.PASSPHRASE -> {
                     mKeyGeneratorViewModel.requirePassphraseGeneration()
                 }
@@ -76,6 +77,7 @@ class KeyGeneratorFragment : DatabaseFragment() {
                 KeyGeneratorTab.PASSWORD -> {
                     mKeyGeneratorViewModel.validatePasswordGenerated()
                 }
+
                 KeyGeneratorTab.PASSPHRASE -> {
                     mKeyGeneratorViewModel.validatePassphraseGenerated()
                 }

@@ -44,14 +44,17 @@ class KeyboardEntryNotificationService : LockNotificationService() {
 
         //Get settings
         mNotificationTimeoutMilliSecs = PreferenceManager.getDefaultSharedPreferences(this)
-                .getString(getString(R.string.keyboard_entry_timeout_key),
-                getString(R.string.timeout_default))?.toLong() ?: TimeoutHelper.DEFAULT_TIMEOUT
+            .getString(
+                getString(R.string.keyboard_entry_timeout_key),
+                getString(R.string.timeout_default)
+            )?.toLong() ?: TimeoutHelper.DEFAULT_TIMEOUT
 
         when {
             intent == null -> Log.w(TAG, "null intent")
             ACTION_CLEAN_KEYBOARD_ENTRY == intent.action -> {
                 stopNotificationAndSendLockIfNeeded()
             }
+
             else -> {
                 notificationManager?.cancel(notificationId)
                 if (intent.hasExtra(ENTRY_INFO_KEY)) {
@@ -76,7 +79,8 @@ class KeyboardEntryNotificationService : LockNotificationService() {
         val deleteIntent = Intent(this, KeyboardEntryNotificationService::class.java).apply {
             action = ACTION_CLEAN_KEYBOARD_ENTRY
         }
-        pendingDeleteIntent = PendingIntent.getService(this, 0, deleteIntent,
+        pendingDeleteIntent = PendingIntent.getService(
+            this, 0, deleteIntent,
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             } else {
@@ -85,12 +89,22 @@ class KeyboardEntryNotificationService : LockNotificationService() {
         )
 
         val builder = buildNewNotification()
-                .setSmallIcon(R.drawable.notification_ic_keyboard_key_24dp)
-                .setContentTitle(getString(R.string.keyboard_notification_entry_content_title, entryTitle))
-                .setContentText(getString(R.string.keyboard_notification_entry_content_text, entryUsername))
-                .setAutoCancel(false)
-                .setContentIntent(null)
-                .setDeleteIntent(pendingDeleteIntent)
+            .setSmallIcon(R.drawable.notification_ic_keyboard_key_24dp)
+            .setContentTitle(
+                getString(
+                    R.string.keyboard_notification_entry_content_title,
+                    entryTitle
+                )
+            )
+            .setContentText(
+                getString(
+                    R.string.keyboard_notification_entry_content_text,
+                    entryUsername
+                )
+            )
+            .setAutoCancel(false)
+            .setContentIntent(null)
+            .setDeleteIntent(pendingDeleteIntent)
 
         notificationManager?.cancel(notificationId)
         notificationManager?.notify(notificationId, builder.build())
@@ -124,7 +138,8 @@ class KeyboardEntryNotificationService : LockNotificationService() {
 
         private const val TAG = "KeyboardEntryNotifSrv"
 
-        private const val CHANNEL_MAGIKEYBOARD_ID = "com.kunzisoft.keepass.notification.channel.magikeyboard"
+        private const val CHANNEL_MAGIKEYBOARD_ID =
+            "com.kunzisoft.keepass.notification.channel.magikeyboard"
 
         const val ENTRY_INFO_KEY = "ENTRY_INFO_KEY"
         const val ACTION_CLEAN_KEYBOARD_ENTRY = "ACTION_CLEAN_KEYBOARD_ENTRY"
@@ -135,11 +150,14 @@ class KeyboardEntryNotificationService : LockNotificationService() {
             val intent = Intent(context, KeyboardEntryNotificationService::class.java)
 
             if (toast) {
-                Toast.makeText(context,
-                        context.getString(R.string.keyboard_notification_entry_content_title,
-                            entry.getVisualTitle()
-                        ),
-                        Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    context.getString(
+                        R.string.keyboard_notification_entry_content_title,
+                        entry.getVisualTitle()
+                    ),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
             // Show the notification if allowed in Preferences

@@ -9,8 +9,7 @@ import android.view.autofill.AutofillId
 import android.view.autofill.AutofillValue
 import androidx.annotation.RequiresApi
 import org.joda.time.DateTime
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Locale
 
 
 /**
@@ -50,9 +49,9 @@ class StructureParser(private val structure: AssistStructure) {
             }
 
             return if (result?.passwordId != null || result?.creditCardNumberId != null)
-                    result
-                else
-                    null
+                result
+            else
+                null
         } catch (e: Exception) {
             return null
         }
@@ -128,6 +127,7 @@ class StructureParser(private val structure: AssistStructure) {
                         Log.d(TAG, "Autofill username hint if password")
                     }
                 }
+
                 it.contains(View.AUTOFILL_HINT_PASSWORD, true) -> {
                     // Password Id changed if it's the second times we are here,
                     // So the last username candidate is most appropriate
@@ -140,11 +140,13 @@ class StructureParser(private val structure: AssistStructure) {
                     Log.d(TAG, "Autofill password hint")
                     return true
                 }
+
                 it.equals("cc-name", true) -> {
                     Log.d(TAG, "Autofill credit card name hint")
                     result?.creditCardHolderId = autofillId
                     result?.creditCardHolder = node.autofillValue?.textValue?.toString()
                 }
+
                 it.contains(View.AUTOFILL_HINT_CREDIT_CARD_NUMBER, true)
                         || it.equals("cc-number", true) -> {
                     Log.d(TAG, "Autofill credit card number hint")
@@ -162,13 +164,14 @@ class StructureParser(private val structure: AssistStructure) {
                                     result?.creditCardExpirationValue = DateTime()
                                         .withYear(date.substring(2, 4).toInt())
                                         .withMonthOfYear(date.substring(5, 7).toInt())
-                                } catch(e: Exception) {
+                                } catch (e: Exception) {
                                     Log.e(TAG, "Unable to retrieve expiration", e)
                                 }
                             }
                         }
                     }
                 }
+
                 it.contains(View.AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_DATE, true) -> {
                     Log.d(TAG, "Autofill credit card expiration date hint")
                     result?.creditCardExpirationDateId = autofillId
@@ -178,6 +181,7 @@ class StructureParser(private val structure: AssistStructure) {
                         }
                     }
                 }
+
                 it.contains(View.AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_YEAR, true)
                         || it.equals("cc-exp-year", true) -> {
                     Log.d(TAG, "Autofill credit card expiration year hint")
@@ -200,6 +204,7 @@ class StructureParser(private val structure: AssistStructure) {
                         result?.creditCardExpirationYearValue = year % 100
                     }
                 }
+
                 it.contains(View.AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_MONTH, true)
                         || it.equals("cc-exp-month", true) -> {
                     Log.d(TAG, "Autofill credit card expiration month hint")
@@ -223,6 +228,7 @@ class StructureParser(private val structure: AssistStructure) {
                         result?.creditCardExpirationMonthValue = month
                     }
                 }
+
                 it.contains(View.AUTOFILL_HINT_CREDIT_CARD_EXPIRATION_DAY, true)
                         || it.equals("cc-exp-day", true) -> {
                     Log.d(TAG, "Autofill credit card expiration day hint")
@@ -245,6 +251,7 @@ class StructureParser(private val structure: AssistStructure) {
                         result?.creditCardExpirationDayValue = day
                     }
                 }
+
                 it.contains(View.AUTOFILL_HINT_CREDIT_CARD_SECURITY_CODE, true)
                         || it.contains("cc-csc", true) -> {
                     Log.d(TAG, "Autofill card security code hint")
@@ -258,6 +265,7 @@ class StructureParser(private val structure: AssistStructure) {
                     Log.d(TAG, "Autofill web hint")
                     return parseNodeByHtmlAttributes(node)
                 }
+
                 else -> Log.d(TAG, "Autofill unsupported hint $it")
             }
         }
@@ -277,21 +285,32 @@ class StructureParser(private val structure: AssistStructure) {
                                     if (result?.passwordId == null) {
                                         result?.usernameId = autofillId
                                         result?.usernameValue = node.autofillValue
-                                        Log.d(TAG, "Autofill username web type: ${node.htmlInfo?.tag} ${node.htmlInfo?.attributes}")
+                                        Log.d(
+                                            TAG,
+                                            "Autofill username web type: ${node.htmlInfo?.tag} ${node.htmlInfo?.attributes}"
+                                        )
                                     }
                                 }
+
                                 "text" -> {
                                     // Assume username is before password
                                     if (result?.passwordId == null) {
                                         usernameIdCandidate = autofillId
                                         usernameValueCandidate = node.autofillValue
-                                        Log.d(TAG, "Autofill username candidate web type: ${node.htmlInfo?.tag} ${node.htmlInfo?.attributes}")
+                                        Log.d(
+                                            TAG,
+                                            "Autofill username candidate web type: ${node.htmlInfo?.tag} ${node.htmlInfo?.attributes}"
+                                        )
                                     }
                                 }
+
                                 "password" -> {
                                     result?.passwordId = autofillId
                                     result?.passwordValue = node.autofillValue
-                                    Log.d(TAG, "Autofill password web type: ${node.htmlInfo?.tag} ${node.htmlInfo?.attributes}")
+                                    Log.d(
+                                        TAG,
+                                        "Autofill password web type: ${node.htmlInfo?.tag} ${node.htmlInfo?.attributes}"
+                                    )
                                     return true
                                 }
                             }
@@ -321,83 +340,141 @@ class StructureParser(private val structure: AssistStructure) {
         when (inputType and InputType.TYPE_MASK_CLASS) {
             InputType.TYPE_CLASS_TEXT -> {
                 when {
-                    inputIsVariationType(inputType,
-                            InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
-                            InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS) -> {
+                    inputIsVariationType(
+                        inputType,
+                        InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
+                        InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS
+                    ) -> {
                         if (result?.passwordId == null) {
                             result?.usernameId = autofillId
                             result?.usernameValue = node.autofillValue
-                            Log.d(TAG, "Autofill username android text type: ${showHexInputType(inputType)}")
+                            Log.d(
+                                TAG,
+                                "Autofill username android text type: ${showHexInputType(inputType)}"
+                            )
                         }
                     }
-                    inputIsVariationType(inputType,
-                            InputType.TYPE_TEXT_VARIATION_NORMAL,
-                            InputType.TYPE_TEXT_VARIATION_PERSON_NAME,
-                            InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT) -> {
+
+                    inputIsVariationType(
+                        inputType,
+                        InputType.TYPE_TEXT_VARIATION_NORMAL,
+                        InputType.TYPE_TEXT_VARIATION_PERSON_NAME,
+                        InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT
+                    ) -> {
                         // Assume the username field is before the password field
                         if (result?.passwordId == null) {
                             usernameIdCandidate = autofillId
                             usernameValueCandidate = node.autofillValue
                         }
-                        Log.d(TAG, "Autofill username candidate android text type: ${showHexInputType(inputType)}")
+                        Log.d(
+                            TAG,
+                            "Autofill username candidate android text type: ${
+                                showHexInputType(inputType)
+                            }"
+                        )
                     }
-                    inputIsVariationType(inputType,
-                            InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) -> {
+
+                    inputIsVariationType(
+                        inputType,
+                        InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                    ) -> {
                         // Some forms used visible password as username
                         if (result?.passwordId == null &&
-                            usernameIdCandidate == null && usernameValueCandidate == null) {
+                            usernameIdCandidate == null && usernameValueCandidate == null
+                        ) {
                             usernameIdCandidate = autofillId
                             usernameValueCandidate = node.autofillValue
-                            Log.d(TAG, "Autofill visible password android text type (as username): ${showHexInputType(inputType)}")
+                            Log.d(
+                                TAG,
+                                "Autofill visible password android text type (as username): ${
+                                    showHexInputType(inputType)
+                                }"
+                            )
                         } else if (result?.passwordId == null && result?.passwordValue == null) {
                             result?.passwordId = autofillId
                             result?.passwordValue = node.autofillValue
-                            Log.d(TAG, "Autofill visible password android text type (as password): ${showHexInputType(inputType)}")
+                            Log.d(
+                                TAG,
+                                "Autofill visible password android text type (as password): ${
+                                    showHexInputType(inputType)
+                                }"
+                            )
                             usernameNeeded = false
                         }
                     }
-                    inputIsVariationType(inputType,
-                            InputType.TYPE_TEXT_VARIATION_PASSWORD,
-                            InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD) -> {
+
+                    inputIsVariationType(
+                        inputType,
+                        InputType.TYPE_TEXT_VARIATION_PASSWORD,
+                        InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD
+                    ) -> {
                         result?.passwordId = autofillId
                         result?.passwordValue = node.autofillValue
-                        Log.d(TAG, "Autofill password android text type: ${showHexInputType(inputType)}")
+                        Log.d(
+                            TAG,
+                            "Autofill password android text type: ${showHexInputType(inputType)}"
+                        )
                         return true
                     }
-                    inputIsVariationType(inputType,
-                            InputType.TYPE_TEXT_VARIATION_EMAIL_SUBJECT,
-                            InputType.TYPE_TEXT_VARIATION_FILTER,
-                            InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE,
-                            InputType.TYPE_TEXT_VARIATION_PHONETIC,
-                            InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS,
-                            InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE,
-                            InputType.TYPE_TEXT_VARIATION_URI) -> {
+
+                    inputIsVariationType(
+                        inputType,
+                        InputType.TYPE_TEXT_VARIATION_EMAIL_SUBJECT,
+                        InputType.TYPE_TEXT_VARIATION_FILTER,
+                        InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE,
+                        InputType.TYPE_TEXT_VARIATION_PHONETIC,
+                        InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS,
+                        InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE,
+                        InputType.TYPE_TEXT_VARIATION_URI
+                    ) -> {
                         // Type not used
                     }
+
                     else -> {
-                        Log.d(TAG, "Autofill unknown android text type: ${showHexInputType(inputType)}")
+                        Log.d(
+                            TAG,
+                            "Autofill unknown android text type: ${showHexInputType(inputType)}"
+                        )
                     }
                 }
             }
+
             InputType.TYPE_CLASS_NUMBER -> {
                 when {
-                    inputIsVariationType(inputType,
-                            InputType.TYPE_NUMBER_VARIATION_NORMAL) -> {
+                    inputIsVariationType(
+                        inputType,
+                        InputType.TYPE_NUMBER_VARIATION_NORMAL
+                    ) -> {
                         if (usernameIdCandidate == null) {
                             usernameIdCandidate = autofillId
                             usernameValueCandidate = node.autofillValue
-                            Log.d(TAG, "Autofill username candidate android number type: ${showHexInputType(inputType)}")
+                            Log.d(
+                                TAG,
+                                "Autofill username candidate android number type: ${
+                                    showHexInputType(inputType)
+                                }"
+                            )
                         }
                     }
-                    inputIsVariationType(inputType,
-                            InputType.TYPE_NUMBER_VARIATION_PASSWORD) -> {
+
+                    inputIsVariationType(
+                        inputType,
+                        InputType.TYPE_NUMBER_VARIATION_PASSWORD
+                    ) -> {
                         result?.passwordId = autofillId
                         result?.passwordValue = node.autofillValue
-                        Log.d(TAG, "Autofill password android number type: ${showHexInputType(inputType)}")
+                        Log.d(
+                            TAG,
+                            "Autofill password android number type: ${showHexInputType(inputType)}"
+                        )
                         return true
                     }
+
                     else -> {
-                        Log.d(TAG, "Autofill unknown android number type: ${showHexInputType(inputType)}")
+                        Log.d(
+                            TAG,
+                            "Autofill unknown android number type: ${showHexInputType(inputType)}"
+                        )
                     }
                 }
             }

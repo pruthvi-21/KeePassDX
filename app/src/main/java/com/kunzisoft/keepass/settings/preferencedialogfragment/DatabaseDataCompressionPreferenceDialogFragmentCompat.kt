@@ -11,7 +11,7 @@ import com.kunzisoft.keepass.settings.preferencedialogfragment.adapter.ListRadio
 
 class DatabaseDataCompressionPreferenceDialogFragmentCompat
     : DatabaseSavePreferenceDialogFragmentCompat(),
-        ListRadioItemAdapter.RadioItemSelectedCallback<CompressionAlgorithm> {
+    ListRadioItemAdapter.RadioItemSelectedCallback<CompressionAlgorithm> {
 
     private var mRecyclerView: RecyclerView? = null
     private var mCompressionAdapter: ListRadioItemAdapter<CompressionAlgorithm>? = null

@@ -4,7 +4,7 @@ import android.content.Context
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.hardware.HardwareKey
 
-class RemoveUnlinkedDataDatabaseRunnable (
+class RemoveUnlinkedDataDatabaseRunnable(
     context: Context,
     database: ContextualDatabase,
     saveDatabase: Boolean,

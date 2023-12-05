@@ -10,15 +10,16 @@ import com.kunzisoft.keepass.hardware.HardwareKey
 import com.kunzisoft.keepass.model.DatabaseFile
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.utils.IOActionTask
-import com.kunzisoft.keepass.utils.parseUri
 import com.kunzisoft.keepass.utils.UriUtil.releaseUriPermission
+import com.kunzisoft.keepass.utils.parseUri
 
 class DatabaseFilesViewModel(application: Application) : AndroidViewModel(application) {
 
     private var mFileDatabaseHistoryAction: FileDatabaseHistoryAction? = null
 
     init {
-        mFileDatabaseHistoryAction = FileDatabaseHistoryAction.getInstance(application.applicationContext)
+        mFileDatabaseHistoryAction =
+            FileDatabaseHistoryAction.getInstance(application.applicationContext)
     }
 
     val databaseFilesLoaded: MutableLiveData<DatabaseFileData> by lazy {
@@ -31,25 +32,27 @@ class DatabaseFilesViewModel(application: Application) : AndroidViewModel(applic
 
     fun checkDefaultDatabase() {
         IOActionTask(
-                {
-                    PreferencesUtil.getDefaultDatabasePath(getApplication<App>().applicationContext)
-                        ?.parseUri()
-                },
-                {
-                    defaultDatabase.value = it
-                }
+            {
+                PreferencesUtil.getDefaultDatabasePath(getApplication<App>().applicationContext)
+                    ?.parseUri()
+            },
+            {
+                defaultDatabase.value = it
+            }
         ).execute()
     }
 
     fun setDefaultDatabase(databaseFile: DatabaseFile?) {
         IOActionTask(
-                {
-                    PreferencesUtil.saveDefaultDatabasePath(getApplication<App>().applicationContext,
-                            databaseFile?.databaseUri)
-                },
-                {
-                    checkDefaultDatabase()
-                }
+            {
+                PreferencesUtil.saveDefaultDatabasePath(
+                    getApplication<App>().applicationContext,
+                    databaseFile?.databaseUri
+                )
+            },
+            {
+                checkDefaultDatabase()
+            }
         ).execute()
     }
 
@@ -100,15 +103,15 @@ class DatabaseFilesViewModel(application: Application) : AndroidViewModel(applic
                 databaseFilesLoaded.value = getDatabaseFilesLoadedValue().apply {
                     this.databaseFileAction = DatabaseFileAction.UPDATE
                     this.databaseFileList
-                            .find { it.databaseUri == databaseFileUpdated.databaseUri }
-                            ?.apply {
-                                keyFileUri = databaseFileUpdated.keyFileUri
-                                hardwareKey = databaseFileUpdated.hardwareKey
-                                databaseAlias = databaseFileUpdated.databaseAlias
-                                databaseFileExists = databaseFileUpdated.databaseFileExists
-                                databaseLastModified = databaseFileUpdated.databaseLastModified
-                                databaseSize = databaseFileUpdated.databaseSize
-                            }
+                        .find { it.databaseUri == databaseFileUpdated.databaseUri }
+                        ?.apply {
+                            keyFileUri = databaseFileUpdated.keyFileUri
+                            hardwareKey = databaseFileUpdated.hardwareKey
+                            databaseAlias = databaseFileUpdated.databaseAlias
+                            databaseFileExists = databaseFileUpdated.databaseFileExists
+                            databaseLastModified = databaseFileUpdated.databaseLastModified
+                            databaseSize = databaseFileUpdated.databaseSize
+                        }
                     this.databaseFileToActivate = databaseFileUpdated
                 }
             }

@@ -21,20 +21,30 @@ class UnavailableFeatureDialogFragment : DialogFragment() {
                     minVersionRequired = getInt(MIN_REQUIRED_VERSION_ARG)
             }
 
-            val rootView = activity.layoutInflater.inflate(R.layout.fragment_unavailable_feature, null)
+            val rootView =
+                activity.layoutInflater.inflate(R.layout.fragment_unavailable_feature, null)
             val messageView = rootView.findViewById<TextView>(R.id.unavailable_feature_message)
 
             val builder = AlertDialog.Builder(activity)
 
             val message = SpannableStringBuilder()
             message.append(getString(R.string.unavailable_feature_text))
-                    .append("\n\n")
+                .append("\n\n")
             if (Build.VERSION.SDK_INT < minVersionRequired) {
-                message.append(getString(R.string.unavailable_feature_version,
+                message.append(
+                    getString(
+                        R.string.unavailable_feature_version,
                         androidNameFromApiNumber(Build.VERSION.SDK_INT, Build.VERSION.RELEASE),
-                        androidNameFromApiNumber(minVersionRequired)))
+                        androidNameFromApiNumber(minVersionRequired)
+                    )
+                )
                 message.append("\n\n")
-                        .append(HtmlCompat.fromHtml("<a href=\"https://source.android.com/setup/build-numbers\">CodeNames</a>", HtmlCompat.FROM_HTML_MODE_LEGACY))
+                    .append(
+                        HtmlCompat.fromHtml(
+                            "<a href=\"https://source.android.com/setup/build-numbers\">CodeNames</a>",
+                            HtmlCompat.FROM_HTML_MODE_LEGACY
+                        )
+                    )
             } else
                 message.append(getString(R.string.unavailable_feature_hardware))
 
@@ -42,7 +52,7 @@ class UnavailableFeatureDialogFragment : DialogFragment() {
             messageView.movementMethod = LinkMovementMethod.getInstance()
 
             builder.setView(rootView)
-                    .setPositiveButton(android.R.string.ok) { _, _ -> }
+                .setPositiveButton(android.R.string.ok) { _, _ -> }
             return builder.create()
         }
         return super.onCreateDialog(savedInstanceState)
@@ -71,12 +81,74 @@ class UnavailableFeatureDialogFragment : DialogFragment() {
             }
         }
         if (apiName.isEmpty()) {
-            val mapper = arrayOf("ANDROID BASE", "ANDROID BASE 1.1", "CUPCAKE", "DONUT", "ECLAIR", "ECLAIR_0_1", "ECLAIR_MR1", "FROYO", "GINGERBREAD", "GINGERBREAD_MR1", "HONEYCOMB", "HONEYCOMB_MR1", "HONEYCOMB_MR2", "ICE_CREAM_SANDWICH", "ICE_CREAM_SANDWICH_MR1", "JELLY_BEAN", "JELLY_BEAN", "JELLY_BEAN", "KITKAT", "KITKAT", "LOLLIPOOP", "LOLLIPOOP_MR1", "MARSHMALLOW", "NOUGAT", "NOUGAT", "OREO", "OREO", "PIE", "", "")
+            val mapper = arrayOf(
+                "ANDROID BASE",
+                "ANDROID BASE 1.1",
+                "CUPCAKE",
+                "DONUT",
+                "ECLAIR",
+                "ECLAIR_0_1",
+                "ECLAIR_MR1",
+                "FROYO",
+                "GINGERBREAD",
+                "GINGERBREAD_MR1",
+                "HONEYCOMB",
+                "HONEYCOMB_MR1",
+                "HONEYCOMB_MR2",
+                "ICE_CREAM_SANDWICH",
+                "ICE_CREAM_SANDWICH_MR1",
+                "JELLY_BEAN",
+                "JELLY_BEAN",
+                "JELLY_BEAN",
+                "KITKAT",
+                "KITKAT",
+                "LOLLIPOOP",
+                "LOLLIPOOP_MR1",
+                "MARSHMALLOW",
+                "NOUGAT",
+                "NOUGAT",
+                "OREO",
+                "OREO",
+                "PIE",
+                "",
+                ""
+            )
             val index = apiNumber - 1
             apiName = if (index < mapper.size) mapper[index] else "UNKNOWN_VERSION"
         }
         if (version.isEmpty()) {
-            val versions = arrayOf("1.0", "1.1", "1.5", "1.6", "2.0", "2.0.1", "2.1", "2.2.X", "2.3", "2.3.3", "3.0", "3.1", "3.2.0", "4.0.1", "4.0.3", "4.1.0", "4.2.0", "4.3.0", "4.4", "4.4", "5.0", "5.1", "6.0", "7.0", "7.1", "8.0.0", "8.1.0", "9", "10", "11")
+            val versions = arrayOf(
+                "1.0",
+                "1.1",
+                "1.5",
+                "1.6",
+                "2.0",
+                "2.0.1",
+                "2.1",
+                "2.2.X",
+                "2.3",
+                "2.3.3",
+                "3.0",
+                "3.1",
+                "3.2.0",
+                "4.0.1",
+                "4.0.3",
+                "4.1.0",
+                "4.2.0",
+                "4.3.0",
+                "4.4",
+                "4.4",
+                "5.0",
+                "5.1",
+                "6.0",
+                "7.0",
+                "7.1",
+                "8.0.0",
+                "8.1.0",
+                "9",
+                "10",
+                "11"
+            )
             val index = apiNumber - 1
             version = if (index < versions.size) versions[index] else "UNKNOWN_VERSION"
         }

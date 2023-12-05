@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- To encapsulate elevation & status bar color -->
-    <style name="Theme.Keepass.v21" parent="Theme.Keepass.Base" >
+    <style name="Theme.Keepass.v21" parent="Theme.Keepass.Base">
         <item name="preferenceTheme">@style/KeepassDXStyle.Preference.Theme</item>
         <item name="android:statusBarColor">@color/grey_dark</item>
         <item name="android:navigationBarColor">@color/grey_dark</item>
@@ -23,7 +23,7 @@
     </style>
 
     <!-- Button Style -->
-    <style name="Theme.Keepass.v21.ImageButton" parent="Theme.Keepass.Base.ImageButton" >
+    <style name="Theme.Keepass.v21.ImageButton" parent="Theme.Keepass.Base.ImageButton">
         <item name="android:elevation">4dp</item>
     </style>
 

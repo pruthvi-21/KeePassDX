@@ -12,14 +12,15 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.textfield.TextInputLayout
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.utils.readParcelableCompat
 import com.kunzisoft.keepass.utils.UriUtil.getDocumentFile
+import com.kunzisoft.keepass.utils.readParcelableCompat
 
 
-class KeyFileSelectionView @JvmOverloads constructor(context: Context,
-                                                     attrs: AttributeSet? = null,
-                                                     defStyle: Int = 0)
-    : ConstraintLayout(context, attrs, defStyle) {
+class KeyFileSelectionView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : ConstraintLayout(context, attrs, defStyle) {
 
     private var mUri: Uri? = null
 

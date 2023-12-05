@@ -89,9 +89,12 @@ fun TextView.customLink(listener: (View) -> Unit) {
             listener.invoke(view)
         }
     }
-    spannableString.setSpan(clickableSpan, 0, text.length,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-    this.movementMethod = LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
+    spannableString.setSpan(
+        clickableSpan, 0, text.length,
+        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+    )
+    this.movementMethod =
+        LinkMovementMethod.getInstance() // without LinkMovementMethod, link can not click
     this.setText(spannableString, TextView.BufferType.SPANNABLE)
 }
 
@@ -103,9 +106,11 @@ fun Snackbar.asError(): Snackbar {
     return this
 }
 
-fun View.collapse(animate: Boolean = true,
-                  duration: Long = 250L,
-                  onCollapseFinished: (() -> Unit)? = null) {
+fun View.collapse(
+    animate: Boolean = true,
+    duration: Long = 250L,
+    onCollapseFinished: (() -> Unit)? = null
+) {
     val recordViewHeight = layoutParams.height
     val slideAnimator = ValueAnimator.ofInt(height, 0)
     slideAnimator.duration = if (animate) duration else 0L
@@ -116,28 +121,32 @@ fun View.collapse(animate: Boolean = true,
     AnimatorSet().apply {
         play(slideAnimator)
         interpolator = AccelerateDecelerateInterpolator()
-        addListener(object: Animator.AnimatorListener {
+        addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {
             }
+
             override fun onAnimationRepeat(animation: Animator) {}
             override fun onAnimationEnd(animation: Animator) {
                 visibility = View.GONE
                 layoutParams.height = recordViewHeight
                 onCollapseFinished?.invoke()
             }
+
             override fun onAnimationCancel(animation: Animator) {}
         })
     }.start()
 }
 
-fun View.expand(animate: Boolean = true,
-                defaultHeight: Int? = null,
-                duration: Long = 250L,
-                onExpandFinished: (() -> Unit)? = null)  {
+fun View.expand(
+    animate: Boolean = true,
+    defaultHeight: Int? = null,
+    duration: Long = 250L,
+    onExpandFinished: (() -> Unit)? = null
+) {
     val viewHeight = defaultHeight ?: layoutParams.height
     layoutParams.height = 0
     val slideAnimator = ValueAnimator
-            .ofInt(0, viewHeight)
+        .ofInt(0, viewHeight)
     slideAnimator.duration = if (animate) duration else 0L
     var alreadyVisible = false
     slideAnimator.addUpdateListener { animation ->
@@ -151,12 +160,13 @@ fun View.expand(animate: Boolean = true,
     AnimatorSet().apply {
         play(slideAnimator)
         interpolator = AccelerateDecelerateInterpolator()
-        addListener(object: Animator.AnimatorListener {
+        addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator) {}
             override fun onAnimationRepeat(animation: Animator) {}
             override fun onAnimationEnd(animation: Animator) {
                 onExpandFinished?.invoke()
             }
+
             override fun onAnimationCancel(animation: Animator) {}
         })
     }.start()
@@ -184,16 +194,17 @@ fun ViewGroup.getFullHeight(): Int {
 fun View.hideByFading() {
     alpha = 1f
     animate()
-            .alpha(0f)
-            .setDuration(140)
-            .setListener(object: Animator.AnimatorListener {
-                override fun onAnimationStart(p0: Animator) {}
-                override fun onAnimationEnd(p0: Animator) {
-                    isVisible = false
-                }
-                override fun onAnimationCancel(p0: Animator) {}
-                override fun onAnimationRepeat(p0: Animator) {}
-            })
+        .alpha(0f)
+        .setDuration(140)
+        .setListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(p0: Animator) {}
+            override fun onAnimationEnd(p0: Animator) {
+                isVisible = false
+            }
+
+            override fun onAnimationCancel(p0: Animator) {}
+            override fun onAnimationRepeat(p0: Animator) {}
+        })
 }
 
 fun View.showByFading() {
@@ -209,13 +220,15 @@ fun View.showByFading() {
 }
 
 fun View.updateLockPaddingLeft() {
-    updatePadding(resources.getDimensionPixelSize(
+    updatePadding(
+        resources.getDimensionPixelSize(
             if (PreferencesUtil.showLockDatabaseButton(context)) {
                 R.dimen.lock_button_size
             } else {
                 R.dimen.hidden_lock_button_size
             }
-    ))
+        )
+    )
 }
 
 fun Context.showActionErrorIfNeeded(result: ActionRunnable.Result) {
@@ -284,10 +297,14 @@ fun CollapsingToolbarLayout.changeTitleColor(color: Int) {
     invalidate()
 }
 
-fun Activity.setTransparentNavigationBar(applyToStatusBar: Boolean = false, applyWindowInsets: () -> Unit) {
+fun Activity.setTransparentNavigationBar(
+    applyToStatusBar: Boolean = false,
+    applyWindowInsets: () -> Unit
+) {
     // Only in portrait
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
-        && resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+        && resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+    ) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         this.window.navigationBarColor = ContextCompat.getColor(this, R.color.surface_selector)
         if (applyToStatusBar) {
@@ -325,6 +342,7 @@ fun View.applyWindowInsets(position: WindowInsetPosition = WindowInsetPosition.B
                     }
                 }
             }
+
             WindowInsetPosition.LEGIT_TOP -> {
                 if (view.layoutParams is ViewGroup.MarginLayoutParams) {
                     view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
@@ -332,6 +350,7 @@ fun View.applyWindowInsets(position: WindowInsetPosition = WindowInsetPosition.B
                     }
                 }
             }
+
             WindowInsetPosition.BOTTOM -> {
                 if (view.layoutParams is ViewGroup.MarginLayoutParams) {
                     view.updateLayoutParams<ViewGroup.MarginLayoutParams> {

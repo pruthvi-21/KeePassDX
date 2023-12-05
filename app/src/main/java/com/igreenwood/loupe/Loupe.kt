@@ -41,9 +41,9 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
         val DEFAULT_INTERPOLATOR = DecelerateInterpolator()
 
         fun create(
-                imageView: ImageView,
-                container: ViewGroup,
-                config: Loupe.() -> Unit = { }
+            imageView: ImageView,
+            container: ViewGroup,
+            config: Loupe.() -> Unit = { }
         ): Loupe {
             return Loupe(imageView, container).apply(config)
         }
@@ -62,30 +62,43 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
 
     // max zoom(> 1f)
     var maxZoom = DEFAULT_MAX_ZOOM
+
     // use fling gesture for dismiss
     var useFlingToDismissGesture = true
+
     // flag to enable or disable drag to dismiss
     var useDragToDismiss = true
+
     // duration millis for dismiss animation
     var dismissAnimationDuration = DEFAULT_ANIM_DURATION
+
     // duration millis for restore animation
     var restoreAnimationDuration = DEFAULT_ANIM_DURATION
+
     // duration millis for image animation
     var flingAnimationDuration = DEFAULT_ANIM_DURATION
+
     // duration millis for double tap scale animation
     var scaleAnimationDuration = DEFAULT_ANIM_DURATION_LONG
+
     // duration millis for over scale animation
     var overScaleAnimationDuration = DEFAULT_ANIM_DURATION_LONG
+
     // duration millis for over scrolling animation
     var overScrollAnimationDuration = DEFAULT_ANIM_DURATION
+
     // view drag friction for swipe to dismiss(1f : drag distance == view move distance. Smaller value, view is moving more slower)
     var viewDragFriction = DEFAULT_VIEW_DRAG_FRICTION
+
     // drag distance threshold in dp for swipe to dismiss
     var dragDismissDistanceInDp = DEFAULT_DRAG_DISMISS_DISTANCE_IN_DP
+
     // on view touched
     var onViewTouchedListener: View.OnTouchListener? = null
+
     // on view translate listener
     var onViewTranslateListener: OnViewTranslateListener? = null
+
     // on scale changed
     var onScaleChangedListener: OnScaleChangedListener? = null
 
@@ -109,22 +122,31 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
 
     // bitmap matrix
     private var transfrom = Matrix()
+
     // bitmap scale
     private var scale = 1f
+
     // is ready for drawing bitmap
     private var isReadyToDraw = false
+
     // view rect - padding (recalculated on size changed)
     private var canvasBounds = RectF()
+
     // bitmap drawing rect (move on scroll, recalculated on scale changed)
     private var bitmapBounds = RectF()
+
     // displaying bitmap rect (does not move, recalculated on scale changed)
     private var viewport = RectF()
+
     // minimum scale of bitmap
     private var minScale = 1f
+
     // maximum scale of bitmap
     private var maxScale = 1f
+
     // bitmap (decoded) width
     private var imageWidth = 0f
+
     // bitmap (decoded) height
     private var imageHeight = 0f
 
@@ -138,8 +160,10 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
     private var isBitmapTranslateAnimationRunning = false
     private var isBitmapScaleAnimationRunninng = false
     private var initialY = 0f
+
     // scaling helper
     private var scaleGestureDetector: ScaleGestureDetector? = null
+
     // translating helper
     private var gestureDetector: GestureDetector? = null
     private val onScaleGestureListener: ScaleGestureDetector.OnScaleGestureListener =
@@ -229,9 +253,9 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
             gestureDetector = GestureDetector(context, onGestureListener)
             scroller = OverScroller(context)
             dragDismissDistanceInPx = TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP,
-                    dragDismissDistanceInDp.toFloat(),
-                    resources.displayMetrics
+                TypedValue.COMPLEX_UNIT_DIP,
+                dragDismissDistanceInDp.toFloat(),
+                resources.displayMetrics
             )
         }
         imageView.apply {
@@ -273,6 +297,7 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
             MotionEvent.ACTION_DOWN -> {
                 flingAnimator.cancel()
             }
+
             MotionEvent.ACTION_UP -> {
                 when {
                     scale == minScale -> {
@@ -280,9 +305,11 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
                             dismissOrRestoreIfNeeded()
                         }
                     }
+
                     scale > minScale -> {
                         constrainBitmapBounds(true)
                     }
+
                     else -> {
                         zoomOutToMinimumScale(true)
                     }
@@ -296,15 +323,15 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
     }
 
     override fun onLayoutChange(
-            view: View?,
-            left: Int,
-            top: Int,
-            right: Int,
-            bottom: Int,
-            oldLeft: Int,
-            oldTop: Int,
-            oldRight: Int,
-            oldBottom: Int
+        view: View?,
+        left: Int,
+        top: Int,
+        right: Int,
+        bottom: Int,
+        oldLeft: Int,
+        oldTop: Int,
+        oldRight: Int,
+        oldBottom: Int
     ) {
         val imageView = imageViewRef.get() ?: return
         val container = containerRef.get() ?: return
@@ -337,40 +364,42 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
                     originalViewBounds.top - height - top
                 }
                 animate()
-                        .setDuration(dismissAnimationDuration)
-                        .setInterpolator(dismissAnimationInterpolator)
-                        .translationY(translationY.toFloat())
-                        .setUpdateListener {
-                            val amount = calcTranslationAmount()
-                            changeBackgroundAlpha(amount)
-                            onViewTranslateListener?.onViewTranslate(imageView, amount)
+                    .setDuration(dismissAnimationDuration)
+                    .setInterpolator(dismissAnimationInterpolator)
+                    .translationY(translationY.toFloat())
+                    .setUpdateListener {
+                        val amount = calcTranslationAmount()
+                        changeBackgroundAlpha(amount)
+                        onViewTranslateListener?.onViewTranslate(imageView, amount)
+                    }
+                    .setListener(object : Animator.AnimatorListener {
+                        override fun onAnimationStart(p0: Animator) {
+
                         }
-                        .setListener(object : Animator.AnimatorListener {
-                            override fun onAnimationStart(p0: Animator) {
 
-                            }
+                        override fun onAnimationEnd(p0: Animator) {
+                            isViewTranslateAnimationRunning = false
+                            onViewTranslateListener?.onDismiss(imageView)
+                            cleanup()
+                        }
 
-                            override fun onAnimationEnd(p0: Animator) {
-                                isViewTranslateAnimationRunning = false
-                                onViewTranslateListener?.onDismiss(imageView)
-                                cleanup()
-                            }
+                        override fun onAnimationCancel(p0: Animator) {
+                            isViewTranslateAnimationRunning = false
+                        }
 
-                            override fun onAnimationCancel(p0: Animator) {
-                                isViewTranslateAnimationRunning = false
-                            }
-
-                            override fun onAnimationRepeat(p0: Animator) {
-                                // no op
-                            }
-                        })
+                        override fun onAnimationRepeat(p0: Animator) {
+                            // no op
+                        }
+                    })
             }
         } else {
-            ObjectAnimator.ofFloat(imageView, View.TRANSLATION_Y, if (velY > 0) {
-                originalViewBounds.top + imageView.height - imageView.top
-            } else {
-                originalViewBounds.top - imageView.height - imageView.top
-            }.toFloat()).apply {
+            ObjectAnimator.ofFloat(
+                imageView, View.TRANSLATION_Y, if (velY > 0) {
+                    originalViewBounds.top + imageView.height - imageView.top
+                } else {
+                    originalViewBounds.top - imageView.height - imageView.top
+                }.toFloat()
+            ).apply {
                 duration = dismissAnimationDuration
                 interpolator = dismissAnimationInterpolator
                 addUpdateListener {
@@ -423,14 +452,14 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
 
         scroller.forceFinished(true)
         scroller.fling(
-                fromX.roundToInt(),
-                fromY.roundToInt(),
-                velX.roundToInt(),
-                velY.roundToInt(),
-                (viewport.right - bitmapBounds.width()).roundToInt(),
-                viewport.left.roundToInt(),
-                (viewport.bottom - bitmapBounds.height()).roundToInt(),
-                viewport.top.roundToInt()
+            fromX.roundToInt(),
+            fromY.roundToInt(),
+            velX.roundToInt(),
+            velY.roundToInt(),
+            (viewport.right - bitmapBounds.width()).roundToInt(),
+            viewport.left.roundToInt(),
+            (viewport.bottom - bitmapBounds.height()).roundToInt(),
+            viewport.top.roundToInt()
         )
 
         ViewCompat.postInvalidateOnAnimation(imageView)
@@ -630,34 +659,38 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             imageView.run {
                 animate()
-                        .setDuration(restoreAnimationDuration)
-                        .setInterpolator(restoreAnimationInterpolator)
-                        .translationY((originalViewBounds.top - top).toFloat())
-                        .setUpdateListener {
-                            val amount = calcTranslationAmount()
-                            changeBackgroundAlpha(amount)
-                            onViewTranslateListener?.onViewTranslate(this, amount)
+                    .setDuration(restoreAnimationDuration)
+                    .setInterpolator(restoreAnimationInterpolator)
+                    .translationY((originalViewBounds.top - top).toFloat())
+                    .setUpdateListener {
+                        val amount = calcTranslationAmount()
+                        changeBackgroundAlpha(amount)
+                        onViewTranslateListener?.onViewTranslate(this, amount)
+                    }
+                    .setListener(object : Animator.AnimatorListener {
+                        override fun onAnimationStart(p0: Animator) {
+                            // no op
                         }
-                        .setListener(object : Animator.AnimatorListener {
-                            override fun onAnimationStart(p0: Animator) {
-                                // no op
-                            }
 
-                            override fun onAnimationEnd(p0: Animator) {
-                                onViewTranslateListener?.onRestore(imageView)
-                            }
+                        override fun onAnimationEnd(p0: Animator) {
+                            onViewTranslateListener?.onRestore(imageView)
+                        }
 
-                            override fun onAnimationCancel(p0: Animator) {
-                                // no op
-                            }
+                        override fun onAnimationCancel(p0: Animator) {
+                            // no op
+                        }
 
-                            override fun onAnimationRepeat(p0: Animator) {
-                                // no op
-                            }
-                        })
+                        override fun onAnimationRepeat(p0: Animator) {
+                            // no op
+                        }
+                    })
             }
         } else {
-            ObjectAnimator.ofFloat(imageView, View.TRANSLATION_Y, (originalViewBounds.top - imageView.top).toFloat()).apply {
+            ObjectAnimator.ofFloat(
+                imageView,
+                View.TRANSLATION_Y,
+                (originalViewBounds.top - imageView.top).toFloat()
+            ).apply {
                 duration = restoreAnimationDuration
                 interpolator = restoreAnimationInterpolator
                 addUpdateListener {
@@ -698,33 +731,33 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
                     originalViewBounds.top - height - top
                 }
                 animate()
-                        .setDuration(dismissAnimationDuration)
-                        .setInterpolator(AccelerateDecelerateInterpolator())
-                        .translationY(translationY.toFloat())
-                        .setUpdateListener {
-                            val amount = calcTranslationAmount()
-                            changeBackgroundAlpha(amount)
-                            onViewTranslateListener?.onViewTranslate(this, amount)
+                    .setDuration(dismissAnimationDuration)
+                    .setInterpolator(AccelerateDecelerateInterpolator())
+                    .translationY(translationY.toFloat())
+                    .setUpdateListener {
+                        val amount = calcTranslationAmount()
+                        changeBackgroundAlpha(amount)
+                        onViewTranslateListener?.onViewTranslate(this, amount)
+                    }
+                    .setListener(object : Animator.AnimatorListener {
+                        override fun onAnimationStart(p0: Animator) {
+                            isViewTranslateAnimationRunning = true
                         }
-                        .setListener(object : Animator.AnimatorListener {
-                            override fun onAnimationStart(p0: Animator) {
-                                isViewTranslateAnimationRunning = true
-                            }
 
-                            override fun onAnimationEnd(p0: Animator) {
-                                isViewTranslateAnimationRunning = false
-                                onViewTranslateListener?.onDismiss(imageView)
-                                cleanup()
-                            }
+                        override fun onAnimationEnd(p0: Animator) {
+                            isViewTranslateAnimationRunning = false
+                            onViewTranslateListener?.onDismiss(imageView)
+                            cleanup()
+                        }
 
-                            override fun onAnimationCancel(p0: Animator) {
-                                isViewTranslateAnimationRunning = false
-                            }
+                        override fun onAnimationCancel(p0: Animator) {
+                            isViewTranslateAnimationRunning = false
+                        }
 
-                            override fun onAnimationRepeat(p0: Animator) {
-                                // no op
-                            }
-                        })
+                        override fun onAnimationRepeat(p0: Animator) {
+                            // no op
+                        }
+                    })
             }
         } else {
             ObjectAnimator.ofFloat(imageView, View.TRANSLATION_Y, imageView.translationY).apply {
@@ -770,9 +803,9 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
 
     private fun calcTranslationAmount() =
         constrain(
-                0f,
-                norm(dragDistance(), 0f, originalViewBounds.height().toFloat()),
-                1f
+            0f,
+            norm(dragDistance(), 0f, originalViewBounds.height().toFloat()),
+            1f
         )
 
     private fun dragDistance() = abs(viewOffsetY())
@@ -901,25 +934,25 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
         imageView.run {
             // calc canvas bounds
             canvasBounds = RectF(
-                    paddingLeft.toFloat(),
-                    paddingTop.toFloat(),
-                    width - paddingRight.toFloat(),
-                    height - paddingBottom.toFloat()
+                paddingLeft.toFloat(),
+                paddingTop.toFloat(),
+                width - paddingRight.toFloat(),
+                height - paddingBottom.toFloat()
             )
         }
         // calc bitmap bounds
         bitmapBounds = RectF(
-                canvasBounds.centerX() - imageWidth * scale * 0.5f,
-                canvasBounds.centerY() - imageHeight * scale * 0.5f,
-                canvasBounds.centerX() + imageWidth * scale * 0.5f,
-                canvasBounds.centerY() + imageHeight * scale * 0.5f
+            canvasBounds.centerX() - imageWidth * scale * 0.5f,
+            canvasBounds.centerY() - imageHeight * scale * 0.5f,
+            canvasBounds.centerX() + imageWidth * scale * 0.5f,
+            canvasBounds.centerY() + imageHeight * scale * 0.5f
         )
         // calc viewport
         viewport = RectF(
-                max(canvasBounds.left, bitmapBounds.left),
-                max(canvasBounds.top, bitmapBounds.top),
-                min(canvasBounds.right, bitmapBounds.right),
-                min(canvasBounds.bottom, bitmapBounds.bottom)
+            max(canvasBounds.left, bitmapBounds.left),
+            max(canvasBounds.top, bitmapBounds.top),
+            min(canvasBounds.right, bitmapBounds.right),
+            min(canvasBounds.bottom, bitmapBounds.bottom)
         )
         // check scroll availability
         isHorizontalScrollEnabled = true
@@ -942,10 +975,10 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
      * calc min/max scale and set initial scale
      */
     private fun calcScaleRange(
-            canvasWidth: Float,
-            canvasHeight: Float,
-            bitmapWidth: Float,
-            bitmapHeight: Float
+        canvasWidth: Float,
+        canvasHeight: Float,
+        bitmapWidth: Float,
+        bitmapHeight: Float
     ) {
         val canvasRatio = canvasHeight / canvasWidth
         val bitmapRatio = bitmapHeight / bitmapWidth
@@ -968,10 +1001,10 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
     }
 
     private fun offsetToZoomFocalPoint(
-            focalX: Float,
-            focalY: Float,
-            oldBounds: RectF,
-            newBounds: RectF
+        focalX: Float,
+        focalY: Float,
+        oldBounds: RectF,
+        newBounds: RectF
     ) {
         val oldX = constrain(viewport.left, focalX, viewport.right)
         val oldY = constrain(viewport.top, focalY, viewport.bottom)
@@ -981,11 +1014,11 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
     }
 
     private fun map(
-            value: Float,
-            srcStart: Float,
-            srcStop: Float,
-            dstStart: Float,
-            dstStop: Float
+        value: Float,
+        srcStart: Float,
+        srcStop: Float,
+        dstStart: Float,
+        dstStop: Float
     ): Float {
         if (srcStop - srcStart == 0f) {
             return 0f
@@ -1010,9 +1043,9 @@ class Loupe(imageView: ImageView, container: ViewGroup) : View.OnTouchListener,
     fun setDragToDismissDistance(distance: Int) {
         val imageView = imageViewRef.get() ?: return
         dragToDismissThreshold = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                distance.toFloat(),
-                imageView.context.resources.displayMetrics
+            TypedValue.COMPLEX_UNIT_DIP,
+            distance.toFloat(),
+            imageView.context.resources.displayMetrics
         )
     }
 

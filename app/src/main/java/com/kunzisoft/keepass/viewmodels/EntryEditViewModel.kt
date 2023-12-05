@@ -23,7 +23,7 @@ import com.kunzisoft.keepass.utils.IOActionTask
 import java.util.UUID
 
 
-class EntryEditViewModel: NodeEditViewModel() {
+class EntryEditViewModel : NodeEditViewModel() {
 
     private var mEntryId: NodeId<UUID>? = null
     private var mParentId: NodeId<*>? = null
@@ -34,54 +34,56 @@ class EntryEditViewModel: NodeEditViewModel() {
     private var mIsTemplate: Boolean = false
     private val mTempAttachments = mutableListOf<EntryAttachmentState>()
 
-    val templatesEntry : LiveData<TemplatesEntry?> get() = _templatesEntry
+    val templatesEntry: LiveData<TemplatesEntry?> get() = _templatesEntry
     private val _templatesEntry = MutableLiveData<TemplatesEntry?>()
 
-    val requestEntryInfoUpdate : LiveData<EntryUpdate> get() = _requestEntryInfoUpdate
+    val requestEntryInfoUpdate: LiveData<EntryUpdate> get() = _requestEntryInfoUpdate
     private val _requestEntryInfoUpdate = SingleLiveEvent<EntryUpdate>()
-    val onEntrySaved : LiveData<EntrySave> get() = _onEntrySaved
+    val onEntrySaved: LiveData<EntrySave> get() = _onEntrySaved
     private val _onEntrySaved = SingleLiveEvent<EntrySave>()
 
-    val onTemplateChanged : LiveData<Template> get() = _onTemplateChanged
+    val onTemplateChanged: LiveData<Template> get() = _onTemplateChanged
     private val _onTemplateChanged = MutableLiveData<Template>()
 
-    val requestPasswordSelection : LiveData<Field> get() = _requestPasswordSelection
+    val requestPasswordSelection: LiveData<Field> get() = _requestPasswordSelection
     private val _requestPasswordSelection = SingleLiveEvent<Field>()
-    val onPasswordSelected : LiveData<Field> get() = _onPasswordSelected
+    val onPasswordSelected: LiveData<Field> get() = _onPasswordSelected
     private val _onPasswordSelected = SingleLiveEvent<Field>()
 
-    val requestCustomFieldEdition : LiveData<Field> get() = _requestCustomFieldEdition
+    val requestCustomFieldEdition: LiveData<Field> get() = _requestCustomFieldEdition
     private val _requestCustomFieldEdition = SingleLiveEvent<Field>()
-    val onCustomFieldEdited : LiveData<FieldEdition> get() = _onCustomFieldEdited
+    val onCustomFieldEdited: LiveData<FieldEdition> get() = _onCustomFieldEdited
     private val _onCustomFieldEdited = SingleLiveEvent<FieldEdition>()
-    val onCustomFieldError : LiveData<Void?> get() = _onCustomFieldError
+    val onCustomFieldError: LiveData<Void?> get() = _onCustomFieldError
     private val _onCustomFieldError = SingleLiveEvent<Void?>()
 
-    val requestSetupOtp : LiveData<Void?> get() = _requestSetupOtp
+    val requestSetupOtp: LiveData<Void?> get() = _requestSetupOtp
     private val _requestSetupOtp = SingleLiveEvent<Void?>()
-    val onOtpCreated : LiveData<OtpElement> get() = _onOtpCreated
+    val onOtpCreated: LiveData<OtpElement> get() = _onOtpCreated
     private val _onOtpCreated = SingleLiveEvent<OtpElement>()
 
-    val onBuildNewAttachment : LiveData<AttachmentBuild> get() = _onBuildNewAttachment
+    val onBuildNewAttachment: LiveData<AttachmentBuild> get() = _onBuildNewAttachment
     private val _onBuildNewAttachment = SingleLiveEvent<AttachmentBuild>()
-    val onStartUploadAttachment : LiveData<AttachmentUpload> get() = _onStartUploadAttachment
+    val onStartUploadAttachment: LiveData<AttachmentUpload> get() = _onStartUploadAttachment
     private val _onStartUploadAttachment = SingleLiveEvent<AttachmentUpload>()
-    val attachmentDeleted : LiveData<Attachment> get() = _attachmentDeleted
+    val attachmentDeleted: LiveData<Attachment> get() = _attachmentDeleted
     private val _attachmentDeleted = SingleLiveEvent<Attachment>()
-    val onAttachmentAction : LiveData<EntryAttachmentState?> get() = _onAttachmentAction
+    val onAttachmentAction: LiveData<EntryAttachmentState?> get() = _onAttachmentAction
     private val _onAttachmentAction = MutableLiveData<EntryAttachmentState?>()
-    val onBinaryPreviewLoaded : LiveData<AttachmentPosition> get() = _onBinaryPreviewLoaded
+    val onBinaryPreviewLoaded: LiveData<AttachmentPosition> get() = _onBinaryPreviewLoaded
     private val _onBinaryPreviewLoaded = SingleLiveEvent<AttachmentPosition>()
 
     fun loadDatabase(database: ContextualDatabase?) {
         loadTemplateEntry(database, mEntryId, mParentId, mRegisterInfo, mSearchInfo)
     }
 
-    fun loadTemplateEntry(database: ContextualDatabase?,
-                          entryId: NodeId<UUID>?,
-                          parentId: NodeId<*>?,
-                          registerInfo: RegisterInfo?,
-                          searchInfo: SearchInfo?) {
+    fun loadTemplateEntry(
+        database: ContextualDatabase?,
+        entryId: NodeId<UUID>?,
+        parentId: NodeId<*>?,
+        registerInfo: RegisterInfo?,
+        searchInfo: SearchInfo?
+    ) {
         this.mEntryId = entryId
         this.mParentId = parentId
         this.mRegisterInfo = registerInfo
@@ -159,14 +161,16 @@ class EntryEditViewModel: NodeEditViewModel() {
         }
     }
 
-    private fun decodeTemplateEntry(database: ContextualDatabase,
-                                    entry: Entry?,
-                                    isTemplate: Boolean,
-                                    registerInfo: RegisterInfo?,
-                                    searchInfo: SearchInfo?): TemplatesEntry {
+    private fun decodeTemplateEntry(
+        database: ContextualDatabase,
+        entry: Entry?,
+        isTemplate: Boolean,
+        registerInfo: RegisterInfo?,
+        searchInfo: SearchInfo?
+    ): TemplatesEntry {
         val templates = database.getTemplates(isTemplate)
         val entryTemplate = entry?.let { database.getTemplate(it) }
-                ?: Template.STANDARD
+            ?: Template.STANDARD
         var entryInfo: EntryInfo? = null
         // Decode the entry / load entry info
         entry?.let {
@@ -197,7 +201,12 @@ class EntryEditViewModel: NodeEditViewModel() {
         _requestEntryInfoUpdate.value = EntryUpdate(database, mEntry, mParent)
     }
 
-    fun saveEntryInfo(database: ContextualDatabase?, entry: Entry?, parent: Group?, entryInfo: EntryInfo) {
+    fun saveEntryInfo(
+        database: ContextualDatabase?,
+        entry: Entry?,
+        parent: Group?,
+        entryInfo: EntryInfo
+    ) {
         IOActionTask(
             {
                 removeTempAttachmentsNotCompleted(entryInfo)
@@ -251,6 +260,7 @@ class EntryEditViewModel: NodeEditViewModel() {
                             remove(attachmentState.attachment)
                         }
                     }
+
                     else -> {
                     }
                 }
@@ -321,16 +331,22 @@ class EntryEditViewModel: NodeEditViewModel() {
         _onBinaryPreviewLoaded.value = AttachmentPosition(entryAttachmentState, viewPosition)
     }
 
-    data class TemplatesEntry(val isTemplate: Boolean,
-                              val templates: List<Template>,
-                              val defaultTemplate: Template,
-                              val entryInfo: EntryInfo?)
+    data class TemplatesEntry(
+        val isTemplate: Boolean,
+        val templates: List<Template>,
+        val defaultTemplate: Template,
+        val entryInfo: EntryInfo?
+    )
+
     data class EntryUpdate(val database: ContextualDatabase?, val entry: Entry?, val parent: Group?)
     data class EntrySave(val oldEntry: Entry, val newEntry: Entry, val parent: Group?)
     data class FieldEdition(val oldField: Field?, val newField: Field?)
     data class AttachmentBuild(val attachmentToUploadUri: Uri, val fileName: String)
     data class AttachmentUpload(val attachmentToUploadUri: Uri, val attachment: Attachment)
-    data class AttachmentPosition(val entryAttachmentState: EntryAttachmentState, val viewPosition: Float)
+    data class AttachmentPosition(
+        val entryAttachmentState: EntryAttachmentState,
+        val viewPosition: Float
+    )
 
     companion object {
         private val TAG = EntryEditViewModel::class.java.name

@@ -63,9 +63,11 @@ class KeeAutofillService : AutofillService() {
         autofillInlineSuggestionsEnabled = PreferencesUtil.isAutofillInlineSuggestionsEnable(this)
     }
 
-    override fun onFillRequest(request: FillRequest,
-                               cancellationSignal: CancellationSignal,
-                               callback: FillCallback) {
+    override fun onFillRequest(
+        request: FillRequest,
+        cancellationSignal: CancellationSignal,
+        callback: FillCallback
+    ) {
 
         cancellationSignal.setOnCancelListener { Log.w(TAG, "Cancel autofill.") }
 
@@ -81,70 +83,90 @@ class KeeAutofillService : AutofillService() {
 
             // Build search info only if applicationId or webDomain are not blocked
             if (autofillAllowedFor(parseResult.applicationId, applicationIdBlocklist)
-                    && autofillAllowedFor(parseResult.webDomain, webDomainBlocklist)) {
+                && autofillAllowedFor(parseResult.webDomain, webDomainBlocklist)
+            ) {
                 val searchInfo = SearchInfo().apply {
                     applicationId = parseResult.applicationId
                     webDomain = parseResult.webDomain
                     webScheme = parseResult.webScheme
                 }
-                WebDomain.getConcreteWebDomain(this, searchInfo.webDomain) { webDomainWithoutSubDomain ->
+                WebDomain.getConcreteWebDomain(
+                    this,
+                    searchInfo.webDomain
+                ) { webDomainWithoutSubDomain ->
                     searchInfo.webDomain = webDomainWithoutSubDomain
-                    val inlineSuggestionsRequest = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
-                            && autofillInlineSuggestionsEnabled) {
-                        CompatInlineSuggestionsRequest(request)
-                    } else {
-                        null
-                    }
-                    launchSelection(mDatabase,
-                            searchInfo,
-                            parseResult,
-                            inlineSuggestionsRequest,
-                            callback)
+                    val inlineSuggestionsRequest =
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+                            && autofillInlineSuggestionsEnabled
+                        ) {
+                            CompatInlineSuggestionsRequest(request)
+                        } else {
+                            null
+                        }
+                    launchSelection(
+                        mDatabase,
+                        searchInfo,
+                        parseResult,
+                        inlineSuggestionsRequest,
+                        callback
+                    )
                 }
             }
         }
     }
 
-    private fun launchSelection(database: ContextualDatabase?,
-                                searchInfo: SearchInfo,
-                                parseResult: StructureParser.Result,
-                                inlineSuggestionsRequest: CompatInlineSuggestionsRequest?,
-                                callback: FillCallback) {
+    private fun launchSelection(
+        database: ContextualDatabase?,
+        searchInfo: SearchInfo,
+        parseResult: StructureParser.Result,
+        inlineSuggestionsRequest: CompatInlineSuggestionsRequest?,
+        callback: FillCallback
+    ) {
         SearchHelper.checkAutoSearchInfo(this,
-                database,
-                searchInfo,
-                { openedDatabase, items ->
-                    callback.onSuccess(
-                            AutofillHelper.buildResponse(this, openedDatabase,
-                                    items, parseResult, inlineSuggestionsRequest)
+            database,
+            searchInfo,
+            { openedDatabase, items ->
+                callback.onSuccess(
+                    AutofillHelper.buildResponse(
+                        this, openedDatabase,
+                        items, parseResult, inlineSuggestionsRequest
                     )
-                },
-                { openedDatabase ->
-                    // Show UI if no search result
-                    showUIForEntrySelection(parseResult, openedDatabase,
-                            searchInfo, inlineSuggestionsRequest, callback)
-                },
-                {
-                    // Show UI if database not open
-                    showUIForEntrySelection(parseResult, null,
-                            searchInfo, inlineSuggestionsRequest, callback)
-                }
+                )
+            },
+            { openedDatabase ->
+                // Show UI if no search result
+                showUIForEntrySelection(
+                    parseResult, openedDatabase,
+                    searchInfo, inlineSuggestionsRequest, callback
+                )
+            },
+            {
+                // Show UI if database not open
+                showUIForEntrySelection(
+                    parseResult, null,
+                    searchInfo, inlineSuggestionsRequest, callback
+                )
+            }
         )
     }
 
     @SuppressLint("RestrictedApi")
-    private fun showUIForEntrySelection(parseResult: StructureParser.Result,
-                                        database: ContextualDatabase?,
-                                        searchInfo: SearchInfo,
-                                        inlineSuggestionsRequest: CompatInlineSuggestionsRequest?,
-                                        callback: FillCallback) {
+    private fun showUIForEntrySelection(
+        parseResult: StructureParser.Result,
+        database: ContextualDatabase?,
+        searchInfo: SearchInfo,
+        inlineSuggestionsRequest: CompatInlineSuggestionsRequest?,
+        callback: FillCallback
+    ) {
         var success = false
         parseResult.allAutofillIds().let { autofillIds ->
             if (autofillIds.isNotEmpty()) {
                 // If the entire Autofill Response is authenticated, AuthActivity is used
                 // to generate Response.
-                AutofillLauncherActivity.getPendingIntentForSelection(this,
-                        searchInfo, inlineSuggestionsRequest)?.intentSender?.let { intentSender ->
+                AutofillLauncherActivity.getPendingIntentForSelection(
+                    this,
+                    searchInfo, inlineSuggestionsRequest
+                )?.intentSender?.let { intentSender ->
                     val responseBuilder = FillResponse.Builder()
                     val remoteViewsUnlock: RemoteViews = if (database == null) {
                         if (!parseResult.webDomain.isNullOrEmpty()) {
@@ -334,37 +356,41 @@ class KeeAutofillService : AutofillService() {
             StructureParser(latestStructure).parse(true)?.let { parseResult ->
 
                 if (autofillAllowedFor(parseResult.applicationId, applicationIdBlocklist)
-                        && autofillAllowedFor(parseResult.webDomain, webDomainBlocklist)) {
+                    && autofillAllowedFor(parseResult.webDomain, webDomainBlocklist)
+                ) {
                     Log.d(TAG, "autofill onSaveRequest password")
 
                     // Build expiration from date or from year and month
                     var expiration: DateTime? = parseResult.creditCardExpirationValue
                     if (parseResult.creditCardExpirationValue == null
                         && parseResult.creditCardExpirationYearValue != 0
-                        && parseResult.creditCardExpirationMonthValue != 0) {
+                        && parseResult.creditCardExpirationMonthValue != 0
+                    ) {
                         expiration = DateTime()
                             .withYear(parseResult.creditCardExpirationYearValue)
                             .withMonthOfYear(parseResult.creditCardExpirationMonthValue)
                         if (parseResult.creditCardExpirationDayValue != 0) {
-                            expiration = expiration.withDayOfMonth(parseResult.creditCardExpirationDayValue)
+                            expiration =
+                                expiration.withDayOfMonth(parseResult.creditCardExpirationDayValue)
                         }
                     }
 
                     // Show UI to save data
                     val registerInfo = RegisterInfo(
-                            SearchInfo().apply {
-                                applicationId = parseResult.applicationId
-                                webDomain = parseResult.webDomain
-                                webScheme = parseResult.webScheme
-                            },
-                            parseResult.usernameValue?.textValue?.toString(),
-                            parseResult.passwordValue?.textValue?.toString(),
-                            CreditCard(
-                                parseResult.creditCardHolder,
-                                parseResult.creditCardNumber,
-                                expiration,
-                                parseResult.cardVerificationValue
-                            ))
+                        SearchInfo().apply {
+                            applicationId = parseResult.applicationId
+                            webDomain = parseResult.webDomain
+                            webScheme = parseResult.webScheme
+                        },
+                        parseResult.usernameValue?.textValue?.toString(),
+                        parseResult.passwordValue?.textValue?.toString(),
+                        CreditCard(
+                            parseResult.creditCardHolder,
+                            parseResult.creditCardNumber,
+                            expiration,
+                            parseResult.cardVerificationValue
+                        )
+                    )
 
                     // TODO Callback in each activity #765
                     //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -398,8 +424,8 @@ class KeeAutofillService : AutofillService() {
         fun autofillAllowedFor(element: String?, blockList: Set<String>?): Boolean {
             element?.let { elementNotNull ->
                 if (blockList?.any { appIdBlocked ->
-                            elementNotNull.contains(appIdBlocked)
-                        } == true
+                        elementNotNull.contains(appIdBlocked)
+                    } == true
                 ) {
                     Log.d(TAG, "Autofill not allowed for $elementNotNull")
                     return false

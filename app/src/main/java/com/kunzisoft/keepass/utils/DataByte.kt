@@ -16,14 +16,17 @@ class DataByte(var number: Long, var format: ByteFormat) {
                     this.number % MEBIBYTES == 0L -> {
                         DataByte((this.number / MEBIBYTES), ByteFormat.MEBIBYTE)
                     }
+
                     this.number % KIBIBYTES == 0L -> {
                         DataByte((this.number / KIBIBYTES), ByteFormat.KIBIBYTE)
                     }
+
                     else -> {
                         DataByte(this.number, ByteFormat.BYTE)
                     }
                 }
             }
+
             else -> {
                 DataByte(toBytes(), ByteFormat.BYTE).toBetterByteFormat()
             }

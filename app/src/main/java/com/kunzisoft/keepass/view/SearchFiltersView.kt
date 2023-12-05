@@ -15,10 +15,11 @@ import com.kunzisoft.keepass.database.helper.SearchHelper
 import com.kunzisoft.keepass.database.search.SearchParameters
 import com.kunzisoft.keepass.settings.PreferencesUtil
 
-class SearchFiltersView @JvmOverloads constructor(context: Context,
-                                                  attrs: AttributeSet? = null,
-                                                  defStyle: Int = 0)
-    : LinearLayout(context, attrs, defStyle) {
+class SearchFiltersView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : LinearLayout(context, attrs, defStyle) {
 
     private var searchContainer: ViewGroup
     private var searchAdvanceFiltersContainer: ViewGroup? = null
@@ -235,7 +236,8 @@ class SearchFiltersView @JvmOverloads constructor(context: Context,
     }
 
     private fun openAdvancedFilters() {
-        searchAdvanceFiltersContainer?.expand(true,
+        searchAdvanceFiltersContainer?.expand(
+            true,
             searchAdvanceFiltersContainer?.getFullHeight()
         )
     }
@@ -246,6 +248,7 @@ class SearchFiltersView @JvmOverloads constructor(context: Context,
                 searchAdvanceFiltersContainer?.visibility = View.GONE
                 searchContainer.showByFading()
             }
+
             else -> {
                 searchContainer.hideByFading()
                 if (searchAdvanceFiltersContainer?.visibility == View.VISIBLE) {

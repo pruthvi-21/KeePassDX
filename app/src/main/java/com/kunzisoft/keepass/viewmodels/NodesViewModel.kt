@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kunzisoft.keepass.database.element.node.Node
 
-class NodesViewModel: ViewModel() {
+class NodesViewModel : ViewModel() {
 
-    val nodesToDelete : LiveData<List<Node>> get() = _nodesToDelete
+    val nodesToDelete: LiveData<List<Node>> get() = _nodesToDelete
     private val _nodesToDelete = MutableLiveData<List<Node>>()
 
-    val nodesToPermanentlyDelete : LiveData<List<Node>> get() = _nodesToPermanentlyDelete
+    val nodesToPermanentlyDelete: LiveData<List<Node>> get() = _nodesToPermanentlyDelete
     private val _nodesToPermanentlyDelete = SingleLiveEvent<List<Node>>()
 
     fun deleteNodes(nodes: List<Node>) {

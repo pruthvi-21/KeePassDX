@@ -17,7 +17,8 @@ import com.kunzisoft.keepass.icons.IconDrawableFactory
 
 class TemplatesSelectorAdapter(
     private val context: Context,
-    private var templates: List<Template>): BaseAdapter() {
+    private var templates: List<Template>
+) : BaseAdapter() {
 
     var iconDrawableFactory: IconDrawableFactory? = null
     private val inflater: LayoutInflater = LayoutInflater.from(context)

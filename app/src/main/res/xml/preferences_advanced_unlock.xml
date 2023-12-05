@@ -1,44 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
-        android:title="@string/general">
+    <PreferenceCategory android:title="@string/general">
         <Preference
-            android:key="@string/advanced_unlock_explanation_key"
             android:icon="@drawable/prefs_info_24dp"
-            android:summary="@string/advanced_unlock_explanation_summary"/>
+            android:key="@string/advanced_unlock_explanation_key"
+            android:summary="@string/advanced_unlock_explanation_summary" />
         <SwitchPreferenceCompat
+            android:defaultValue="@bool/biometric_unlock_enable_default"
             android:key="@string/biometric_unlock_enable_key"
-            android:title="@string/biometric_unlock_enable_title"
             android:summary="@string/biometric_unlock_enable_summary"
-            android:defaultValue="@bool/biometric_unlock_enable_default"/>
+            android:title="@string/biometric_unlock_enable_title" />
         <SwitchPreferenceCompat
+            android:defaultValue="@bool/device_credential_unlock_enable_default"
             android:key="@string/device_credential_unlock_enable_key"
-            android:title="@string/device_credential_unlock_enable_title"
             android:summary="@string/device_credential_unlock_enable_summary"
-            android:defaultValue="@bool/device_credential_unlock_enable_default"/>
+            android:title="@string/device_credential_unlock_enable_title" />
         <SwitchPreferenceCompat
+            android:defaultValue="@bool/biometric_auto_open_prompt_default"
             android:key="@string/biometric_auto_open_prompt_key"
-            android:title="@string/biometric_auto_open_prompt_title"
             android:summary="@string/biometric_auto_open_prompt_summary"
-            android:defaultValue="@bool/biometric_auto_open_prompt_default"/>
+            android:title="@string/biometric_auto_open_prompt_title" />
     </PreferenceCategory>
-    <PreferenceCategory
-        android:title="@string/content">
+    <PreferenceCategory android:title="@string/content">
         <SwitchPreferenceCompat
+            android:defaultValue="@bool/temp_advanced_unlock_enable_default"
             android:key="@string/temp_advanced_unlock_enable_key"
-            android:title="@string/temp_advanced_unlock_enable_title"
             android:summary="@string/temp_advanced_unlock_enable_summary"
-            android:defaultValue="@bool/temp_advanced_unlock_enable_default"/>
+            android:title="@string/temp_advanced_unlock_enable_title" />
         <com.kunzisoft.keepass.settings.preference.DurationDialogPreference
-            android:key="@string/temp_advanced_unlock_timeout_key"
-            android:title="@string/temp_advanced_unlock_timeout_title"
-            android:summary="@string/temp_advanced_unlock_timeout_summary"
+            android:defaultValue="@string/temp_advanced_unlock_timeout_default"
             android:dependency="@string/temp_advanced_unlock_enable_key"
             android:dialogTitle="@string/advanced_unlock_timeout"
-            android:defaultValue="@string/temp_advanced_unlock_timeout_default"/>
+            android:key="@string/temp_advanced_unlock_timeout_key"
+            android:summary="@string/temp_advanced_unlock_timeout_summary"
+            android:title="@string/temp_advanced_unlock_timeout_title" />
         <Preference
             android:key="@string/biometric_delete_all_key_key"
-            android:title="@string/biometric_delete_all_key_title"
-            android:summary="@string/biometric_delete_all_key_summary" />
+            android:summary="@string/biometric_delete_all_key_summary"
+            android:title="@string/biometric_delete_all_key_title" />
     </PreferenceCategory>
 </PreferenceScreen>

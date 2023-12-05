@@ -54,7 +54,10 @@ class FileDatabaseHistoryAdapter(
                     0
             }
 
-            override fun areContentsTheSame(oldItem: SuperDatabaseFile, newItem: SuperDatabaseFile): Boolean {
+            override fun areContentsTheSame(
+                oldItem: SuperDatabaseFile,
+                newItem: SuperDatabaseFile
+            ): Boolean {
                 val oldDatabaseFile = oldItem.databaseFile
                 val newDatabaseFile = newItem.databaseFile
                 return oldDatabaseFile.databaseUri == newDatabaseFile.databaseUri
@@ -66,13 +69,19 @@ class FileDatabaseHistoryAdapter(
                         && oldItem.default == newItem.default
             }
 
-            override fun areItemsTheSame(item1: SuperDatabaseFile, item2: SuperDatabaseFile): Boolean {
+            override fun areItemsTheSame(
+                item1: SuperDatabaseFile,
+                item2: SuperDatabaseFile
+            ): Boolean {
                 return item1.databaseFile == item2.databaseFile
             }
         }
     )
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileDatabaseHistoryViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): FileDatabaseHistoryViewHolder {
         val view = inflater.inflate(R.layout.item_file_info, parent, false)
         return FileDatabaseHistoryViewHolder(view)
     }
@@ -256,7 +265,10 @@ class FileDatabaseHistoryAdapter(
                 default = true
             }
             mDefaultDatabase = newDefaultDatabase.databaseFile
-            mSortedListDatabaseFiles.updateItemAt(newDefaultDatabaseFilePosition, newDefaultDatabase)
+            mSortedListDatabaseFiles.updateItemAt(
+                newDefaultDatabaseFilePosition,
+                newDefaultDatabase
+            )
         }
     }
 
@@ -264,15 +276,15 @@ class FileDatabaseHistoryAdapter(
         this.defaultDatabaseListener = listener
     }
 
-    fun setOnFileDatabaseHistoryOpenListener(listener : ((DatabaseFile)->Unit)?) {
+    fun setOnFileDatabaseHistoryOpenListener(listener: ((DatabaseFile) -> Unit)?) {
         this.fileItemOpenListener = listener
     }
 
-    fun setOnFileDatabaseHistoryDeleteListener(listener : ((DatabaseFile)->Boolean)?) {
+    fun setOnFileDatabaseHistoryDeleteListener(listener: ((DatabaseFile) -> Boolean)?) {
         this.fileSelectClearListener = listener
     }
 
-    fun setOnSaveAliasListener(listener : ((DatabaseFile)->Unit)?) {
+    fun setOnSaveAliasListener(listener: ((DatabaseFile) -> Unit)?) {
         this.saveAliasListener = listener
     }
 

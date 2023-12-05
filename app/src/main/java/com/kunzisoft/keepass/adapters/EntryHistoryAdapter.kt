@@ -8,23 +8,30 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.model.EntryInfo
-import com.kunzisoft.keepass.utils.TimeUtil.getDateTimeString
 import com.kunzisoft.keepass.utils.TimeUtil.getDateTimeStringShort
 
-class EntryHistoryAdapter(val context: Context) : RecyclerView.Adapter<EntryHistoryAdapter.EntryHistoryViewHolder>() {
+class EntryHistoryAdapter(val context: Context) :
+    RecyclerView.Adapter<EntryHistoryAdapter.EntryHistoryViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     var entryHistoryList: MutableList<EntryInfo> = ArrayList()
-    var onItemClickListener: ((item: EntryInfo, position: Int)->Unit)? = null
+    var onItemClickListener: ((item: EntryInfo, position: Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntryHistoryViewHolder {
-        return EntryHistoryViewHolder(inflater.inflate(R.layout.item_list_entry_history, parent, false))
+        return EntryHistoryViewHolder(
+            inflater.inflate(
+                R.layout.item_list_entry_history,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: EntryHistoryViewHolder, position: Int) {
         val entryHistory = entryHistoryList[position]
 
-        holder.lastModifiedView.text = entryHistory.lastModificationTime.getDateTimeStringShort(context.resources)
+        holder.lastModifiedView.text =
+            entryHistory.lastModificationTime.getDateTimeStringShort(context.resources)
         holder.titleView.text = entryHistory.title
         holder.usernameView.text = entryHistory.username
 

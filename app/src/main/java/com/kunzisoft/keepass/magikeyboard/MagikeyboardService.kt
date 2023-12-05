@@ -75,8 +75,8 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
         }
         // Remove the entry and lock the keyboard when the lock signal is receive
         lockReceiver = LockReceiver {
-                        removeEntryInfo()
-                        assignKeyboardView()
+            removeEntryInfo()
+            assignKeyboardView()
         }
         lockReceiver?.backToPreviousKeyboardAction = {
             switchToPreviousKeyboard()
@@ -85,7 +85,10 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
         fieldsAdapter = FieldsAdapter(this)
         fieldsAdapter?.onItemClickListener = object : FieldsAdapter.OnItemClickListener {
             override fun onItemClick(item: Field) {
-                currentInputConnection.commitText(getEntryInfo()?.getGeneratedFieldValue(item.name) , 1)
+                currentInputConnection.commitText(
+                    getEntryInfo()?.getGeneratedFieldValue(item.name),
+                    1
+                )
                 actionTabAutomatically()
             }
         }
@@ -109,7 +112,7 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
 
             val context = baseContext
             val popupFieldsView = LayoutInflater.from(context)
-                    .inflate(R.layout.keyboard_popup_fields, FrameLayout(context))
+                .inflate(R.layout.keyboard_popup_fields, FrameLayout(context))
 
             popupCustomKeys = PopupWindow(context).apply {
                 width = WindowManager.LayoutParams.MATCH_PARENT
@@ -118,8 +121,10 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
                 contentView = popupFieldsView
             }
 
-            val recyclerView = popupFieldsView.findViewById<RecyclerView>(R.id.keyboard_popup_fields_list)
-            recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
+            val recyclerView =
+                popupFieldsView.findViewById<RecyclerView>(R.id.keyboard_popup_fields_list)
+            recyclerView.layoutManager =
+                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true)
             recyclerView.adapter = fieldsAdapter
 
             val closeView = popupFieldsView.findViewById<View>(R.id.keyboard_popup_close)
@@ -239,9 +244,11 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
             KEY_BACK_KEYBOARD -> {
                 switchToPreviousKeyboard()
             }
+
             KEY_CHANGE_KEYBOARD -> {
                 showKeyboardPicker()
             }
+
             KEY_ENTRY -> {
                 var searchInfo: SearchInfo? = null
                 if (mFormPackageName != null) {
@@ -251,20 +258,24 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
                 }
                 actionKeyEntry(searchInfo)
             }
+
             KEY_ENTRY_ALT -> {
                 actionKeyEntry()
             }
+
             KEY_LOCK -> {
                 removeEntryInfo()
                 sendBroadcast(Intent(LOCK_ACTION))
                 dismissCustomKeys()
             }
+
             KEY_USERNAME -> {
                 getEntryInfo()?.username?.let { username ->
                     currentInputConnection.commitText(username, 1)
                 }
                 actionTabAutomatically()
             }
+
             KEY_PASSWORD -> {
                 val entryInfoKey = getEntryInfo()
                 entryInfoKey?.password?.let { password ->
@@ -273,13 +284,16 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
                 val otpFieldExists = entryInfoKey?.containsCustomField(OTP_TOKEN_FIELD) ?: false
                 actionGoAutomatically(!otpFieldExists)
             }
+
             KEY_OTP -> {
                 getEntryInfo()?.let { entryInfo ->
                     currentInputConnection.commitText(
-                        entryInfo.getGeneratedFieldValue(OTP_TOKEN_FIELD), 1)
+                        entryInfo.getGeneratedFieldValue(OTP_TOKEN_FIELD), 1
+                    )
                 }
                 actionGoAutomatically()
             }
+
             KEY_OTP_ALT -> {
                 getEntryInfo()?.let { entryInfo ->
                     val otpToken = entryInfo.getGeneratedFieldValue(OTP_TOKEN_FIELD)
@@ -288,7 +302,7 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
                         val otpTokenChars = otpToken.chunked(1)
                         otpTokenChars.forEachIndexed { index, char ->
                             currentInputConnection.commitText(char, 1)
-                            if (index < (otpTokenChars.size-1))
+                            if (index < (otpTokenChars.size - 1))
                                 currentInputConnection.sendKeyEvent(
                                     KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_TAB)
                                 )
@@ -297,25 +311,31 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
                 }
                 actionGoAutomatically()
             }
+
             KEY_URL -> {
                 getEntryInfo()?.url?.let { url ->
                     currentInputConnection.commitText(url, 1)
                 }
                 actionGoAutomatically()
             }
+
             KEY_FIELDS -> {
                 getEntryInfo()?.customFields?.let { customFields ->
                     fieldsAdapter?.apply {
-                        setFields(customFields.filter { it.name != OTP_TOKEN_FIELD})
+                        setFields(customFields.filter { it.name != OTP_TOKEN_FIELD })
                         notifyDataSetChanged()
                     }
                 }
-                popupCustomKeys?.showAtLocation(keyboardView,
-                    Gravity.END or Gravity.TOP, 0, 180)
+                popupCustomKeys?.showAtLocation(
+                    keyboardView,
+                    Gravity.END or Gravity.TOP, 0, 180
+                )
             }
+
             Keyboard.KEYCODE_DELETE -> {
                 inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
             }
+
             Keyboard.KEYCODE_DONE -> inputConnection.performEditorAction(EditorInfo.IME_ACTION_GO)
         }
     }
@@ -359,14 +379,20 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
 
     private fun actionTabAutomatically() {
         if (PreferencesUtil.isAutoGoActionEnable(this))
-            currentInputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_TAB))
+            currentInputConnection.sendKeyEvent(
+                KeyEvent(
+                    KeyEvent.ACTION_DOWN,
+                    KeyEvent.KEYCODE_TAB
+                )
+            )
     }
 
     private fun actionGoAutomatically(switchToPreviousKeyboardIfAllowed: Boolean = true) {
         if (PreferencesUtil.isAutoGoActionEnable(this)) {
             currentInputConnection.performEditorAction(EditorInfo.IME_ACTION_GO)
             if (switchToPreviousKeyboardIfAllowed
-                    && PreferencesUtil.isKeyboardPreviousFillInEnable(this)) {
+                && PreferencesUtil.isKeyboardPreviousFillInEnable(this)
+            ) {
                 switchToPreviousKeyboard()
             }
         }
@@ -376,13 +402,15 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
         val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager?
         if (audioManager != null)
             when (primaryCode) {
-                Keyboard.KEYCODE_DELETE -> keyboardView?.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+                Keyboard.KEYCODE_DELETE -> keyboardView?.performHapticFeedback(
+                    HapticFeedbackConstants.LONG_PRESS
+                )
             }
     }
 
     override fun onRelease(primaryCode: Int) {
         when (primaryCode) {
-            Keyboard.KEYCODE_DELETE -> { }
+            Keyboard.KEYCODE_DELETE -> {}
         }
     }
 
@@ -433,18 +461,24 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
             context.sendBroadcast(Intent(REMOVE_ENTRY_MAGIKEYBOARD_ACTION))
         }
 
-        fun addEntryAndLaunchNotificationIfAllowed(context: Context, entry: EntryInfo, toast: Boolean = false) {
+        fun addEntryAndLaunchNotificationIfAllowed(
+            context: Context,
+            entry: EntryInfo,
+            toast: Boolean = false
+        ) {
             // Add a new entry
             entryUUID = entry.id
             // Launch notification if allowed
             KeyboardEntryNotificationService.launchNotificationIfAllowed(context, entry, toast)
         }
 
-        fun performSelection(items: List<EntryInfo>,
-                             actionPopulateKeyboard: (entryInfo: EntryInfo) -> Unit,
-                             actionEntrySelection: (autoSearch: Boolean) -> Unit) {
-             if (items.size == 1) {
-                 val itemFound = items[0]
+        fun performSelection(
+            items: List<EntryInfo>,
+            actionPopulateKeyboard: (entryInfo: EntryInfo) -> Unit,
+            actionEntrySelection: (autoSearch: Boolean) -> Unit
+        ) {
+            if (items.size == 1) {
+                val itemFound = items[0]
                 if (entryUUID != itemFound.id) {
                     actionPopulateKeyboard.invoke(itemFound)
                 } else {
@@ -460,9 +494,11 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
             }
         }
 
-        fun populateKeyboardAndMoveAppToBackground(activity: Activity,
-                                                   entry: EntryInfo,
-                                                   toast: Boolean = true) {
+        fun populateKeyboardAndMoveAppToBackground(
+            activity: Activity,
+            entry: EntryInfo,
+            toast: Boolean = true
+        ) {
             // Populate Magikeyboard with entry
             addEntryAndLaunchNotificationIfAllowed(activity, entry, toast)
             // Consume the selection mode

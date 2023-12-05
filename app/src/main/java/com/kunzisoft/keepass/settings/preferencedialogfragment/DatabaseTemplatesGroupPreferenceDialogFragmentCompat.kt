@@ -11,7 +11,7 @@ import com.kunzisoft.keepass.settings.preferencedialogfragment.adapter.ListRadio
 
 class DatabaseTemplatesGroupPreferenceDialogFragmentCompat
     : DatabaseSavePreferenceDialogFragmentCompat(),
-        ListRadioItemAdapter.RadioItemSelectedCallback<Group> {
+    ListRadioItemAdapter.RadioItemSelectedCallback<Group> {
 
     private var mGroupsAdapter: ListRadioItemAdapter<Group>? = null
     private var mGroupTemplates: Group? = null
@@ -58,7 +58,8 @@ class DatabaseTemplatesGroupPreferenceDialogFragmentCompat
     companion object {
 
         fun newInstance(
-                key: String): DatabaseTemplatesGroupPreferenceDialogFragmentCompat {
+            key: String
+        ): DatabaseTemplatesGroupPreferenceDialogFragmentCompat {
             val fragment = DatabaseTemplatesGroupPreferenceDialogFragmentCompat()
             val bundle = Bundle(1)
             bundle.putString(ARG_KEY, key)

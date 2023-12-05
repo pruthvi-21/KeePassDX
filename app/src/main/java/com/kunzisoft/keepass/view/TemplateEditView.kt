@@ -2,11 +2,9 @@ package com.kunzisoft.keepass.view
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Build
 import android.util.AttributeSet
 import android.view.View
-import android.widget.ImageView
 import androidx.annotation.IdRes
 import androidx.core.view.isVisible
 import com.kunzisoft.keepass.R

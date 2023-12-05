@@ -19,17 +19,17 @@
  */
 package com.kunzisoft.keepass.app.database
 
+import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import android.content.Context
-import androidx.room.AutoMigration
 
 @Database(
     version = 2,
     entities = [FileDatabaseHistoryEntity::class, CipherDatabaseEntity::class],
     autoMigrations = [
-        AutoMigration (from = 1, to = 2)
+        AutoMigration(from = 1, to = 2)
     ]
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -40,8 +40,8 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         fun getDatabase(applicationContext: Context): AppDatabase {
             return Room.databaseBuilder(
-                    applicationContext,
-                    AppDatabase::class.java, "com.kunzisoft.keepass.database"
+                applicationContext,
+                AppDatabase::class.java, "com.kunzisoft.keepass.database"
             ).build()
         }
     }

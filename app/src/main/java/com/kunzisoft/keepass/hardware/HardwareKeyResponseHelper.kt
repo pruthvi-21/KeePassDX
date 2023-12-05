@@ -33,18 +33,27 @@ class HardwareKeyResponseHelper {
         this.fragment = context
     }
 
-    fun buildHardwareKeyResponse(onChallengeResponded: (challengeResponse: ByteArray?,
-                                                        extra: Bundle?) -> Unit) {
+    fun buildHardwareKeyResponse(
+        onChallengeResponded: (
+            challengeResponse: ByteArray?,
+            extra: Bundle?
+        ) -> Unit
+    ) {
         val resultCallback = ActivityResultCallback<ActivityResult> { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val challengeResponse: ByteArray? = result.data?.getByteArrayExtra(HARDWARE_KEY_RESPONSE_KEY)
+                val challengeResponse: ByteArray? =
+                    result.data?.getByteArrayExtra(HARDWARE_KEY_RESPONSE_KEY)
                 Log.d(TAG, "Response form challenge")
-                onChallengeResponded.invoke(challengeResponse,
-                    result.data?.getBundleExtra(EXTRA_BUNDLE_KEY))
+                onChallengeResponded.invoke(
+                    challengeResponse,
+                    result.data?.getBundleExtra(EXTRA_BUNDLE_KEY)
+                )
             } else {
                 Log.e(TAG, "Response from challenge error")
-                onChallengeResponded.invoke(null,
-                    result.data?.getBundleExtra(EXTRA_BUNDLE_KEY))
+                onChallengeResponded.invoke(
+                    null,
+                    result.data?.getBundleExtra(EXTRA_BUNDLE_KEY)
+                )
             }
         }
 
@@ -91,7 +100,8 @@ class HardwareKeyResponseHelper {
     companion object {
         private val TAG = HardwareKeyResponseHelper::class.java.simpleName
 
-        private const val YUBIKEY_CHALLENGE_RESPONSE_INTENT = "android.yubikey.intent.action.CHALLENGE_RESPONSE"
+        private const val YUBIKEY_CHALLENGE_RESPONSE_INTENT =
+            "android.yubikey.intent.action.CHALLENGE_RESPONSE"
         private const val HARDWARE_KEY_CHALLENGE_KEY = "challenge"
         private const val HARDWARE_KEY_RESPONSE_KEY = "response"
         private const val EXTRA_BUNDLE_KEY = "EXTRA_BUNDLE_KEY"

@@ -25,7 +25,8 @@ class DatabaseNamePreferenceDialogFragmentCompat : DatabaseSavePreferenceDialogF
     companion object {
 
         fun newInstance(
-                key: String): DatabaseNamePreferenceDialogFragmentCompat {
+            key: String
+        ): DatabaseNamePreferenceDialogFragmentCompat {
             val fragment = DatabaseNamePreferenceDialogFragmentCompat()
             val bundle = Bundle(1)
             bundle.putString(ARG_KEY, key)

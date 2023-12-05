@@ -11,19 +11,22 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.appbar.MaterialToolbar
 import com.kunzisoft.keepass.R
 
-class ToolbarSpecial @JvmOverloads constructor(context: Context,
-                                               attrs: AttributeSet? = null,
-                                               defStyle: Int = R.attr.toolbarSpecialStyle)
-    : MaterialToolbar(context, attrs, defStyle) {
+class ToolbarSpecial @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = R.attr.toolbarSpecialStyle
+) : MaterialToolbar(context, attrs, defStyle) {
 
     init {
-        ContextCompat.getDrawable(context, R.drawable.ic_arrow_back_white_24dp)?.let { closeDrawable ->
-            val typedValue = TypedValue()
-            context.theme.resolveAttribute(R.attr.colorOnSurface, typedValue, true)
-            @ColorInt val colorOnSurface = typedValue.data
-            closeDrawable.colorFilter = PorterDuffColorFilter(colorOnSurface, PorterDuff.Mode.SRC_ATOP)
-            navigationIcon = closeDrawable
-        }
+        ContextCompat.getDrawable(context, R.drawable.ic_arrow_back_white_24dp)
+            ?.let { closeDrawable ->
+                val typedValue = TypedValue()
+                context.theme.resolveAttribute(R.attr.colorOnSurface, typedValue, true)
+                @ColorInt val colorOnSurface = typedValue.data
+                closeDrawable.colorFilter =
+                    PorterDuffColorFilter(colorOnSurface, PorterDuff.Mode.SRC_ATOP)
+                navigationIcon = closeDrawable
+            }
         title = resources.getString(R.string.selection_mode)
     }
 

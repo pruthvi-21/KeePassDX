@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="warning">#eba700</color>
-	<color name="transparent">#00ffffff</color>
-	<color name="white">#ffffff</color>
+    <color name="transparent">#00ffffff</color>
+    <color name="white">#ffffff</color>
     <color name="white_darkest">#ececec</color>
     <color name="white_grey_light">#D4D4D4</color>
     <color name="grey_lighter">#7c7c7c</color>
@@ -10,7 +10,7 @@
     <color name="grey_dark">#303030</color>
     <color name="black_light">#0e0e0e</color>
     <!-- #000001 To fix refresh theme -->
-	<color name="black_selection">#0D000000</color>
+    <color name="black_selection">#0D000000</color>
 
     <color name="cyan_lightest">#33b5e5</color>
     <color name="cyan_lighter">#2B9AC3</color>

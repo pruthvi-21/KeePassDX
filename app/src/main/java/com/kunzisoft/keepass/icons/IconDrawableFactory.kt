@@ -73,8 +73,10 @@ class IconDrawableFactory(
             this.clearCache()
         }
         iconPack?.iconToResId(icon.standard.id)?.let { iconId ->
-            return SuperDrawable(getIconDrawable(context.resources, iconId, width, tintColor),
-                iconPack.tintable())
+            return SuperDrawable(
+                getIconDrawable(context.resources, iconId, width, tintColor),
+                iconPack.tintable()
+            )
         } ?: run {
             return SuperDrawable(PatternIcon(IconPackChooser.defaultIconSize).blankDrawable)
         }
@@ -159,10 +161,12 @@ class IconDrawableFactory(
 
         return if (width == dimensionPattern.width && height == dimensionPattern.height) {
             bitmap
-        } else Bitmap.createScaledBitmap(bitmap,
+        } else Bitmap.createScaledBitmap(
+            bitmap,
             dimensionPattern.width,
             dimensionPattern.height,
-            true)
+            true
+        )
 
     }
 
@@ -179,14 +183,18 @@ class IconDrawableFactory(
             CoroutineScope(Dispatchers.IO).launch {
                 addToCustomCache(context.resources, icon)
                 withContext(Dispatchers.Main) {
-                    val superDrawable = getIconSuperDrawable(context,
+                    val superDrawable = getIconSuperDrawable(
+                        context,
                         icon,
                         imageView.width,
-                        tintColor)
+                        tintColor
+                    )
                     imageView.setImageDrawable(superDrawable.drawable)
                     if (superDrawable.tintable) {
-                        ImageViewCompat.setImageTintList(imageView,
-                            ColorStateList.valueOf(tintColor))
+                        ImageViewCompat.setImageTintList(
+                            imageView,
+                            ColorStateList.valueOf(tintColor)
+                        )
                     } else {
                         ImageViewCompat.setImageTintList(imageView, null)
                     }
@@ -206,10 +214,12 @@ class IconDrawableFactory(
         tintColor: Int = Color.BLACK,
     ): Bitmap? {
         try {
-            val superDrawable = getIconSuperDrawable(context,
+            val superDrawable = getIconSuperDrawable(
+                context,
                 icon,
                 24,
-                tintColor)
+                tintColor
+            )
             val bitmap = superDrawable.drawable.toBitmap()
             // Tint bitmap if it's not a custom icon
             if (superDrawable.tintable && bitmap.isMutable) {
@@ -256,7 +266,7 @@ class IconDrawableFactory(
      * Build a blankDrawable drawable
      * @param res Resource to build the drawable
      */
-    private class PatternIcon(defaultIconSize : Int) {
+    private class PatternIcon(defaultIconSize: Int) {
 
         var blankDrawable: Drawable = ColorDrawable(Color.TRANSPARENT)
         var width = -1

@@ -15,7 +15,13 @@ class AddEntryRunnable constructor(
     save: Boolean,
     afterActionNodesFinish: AfterActionNodesFinish?,
     challengeResponseRetriever: (HardwareKey, ByteArray?) -> ByteArray
-) : ActionNodeDatabaseRunnable(context, database, afterActionNodesFinish, save, challengeResponseRetriever) {
+) : ActionNodeDatabaseRunnable(
+    context,
+    database,
+    afterActionNodesFinish,
+    save,
+    challengeResponseRetriever
+) {
 
     override fun nodeAction() {
         mNewEntry.touch(modified = true, touchParents = true)

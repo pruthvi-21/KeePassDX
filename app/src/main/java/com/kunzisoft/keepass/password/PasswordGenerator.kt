@@ -13,20 +13,22 @@ import java.util.*
 class PasswordGenerator(private val resources: Resources) {
 
     @Throws(IllegalArgumentException::class)
-    fun generatePassword(length: Int,
-                         upperCase: Boolean,
-                         lowerCase: Boolean,
-                         digits: Boolean,
-                         minus: Boolean,
-                         underline: Boolean,
-                         space: Boolean,
-                         specials: Boolean,
-                         brackets: Boolean,
-                         extended: Boolean,
-                         considerChars: String,
-                         ignoreChars: String,
-                         atLeastOneFromEach: Boolean,
-                         excludeAmbiguousChar: Boolean): String {
+    fun generatePassword(
+        length: Int,
+        upperCase: Boolean,
+        lowerCase: Boolean,
+        digits: Boolean,
+        minus: Boolean,
+        underline: Boolean,
+        space: Boolean,
+        specials: Boolean,
+        brackets: Boolean,
+        extended: Boolean,
+        considerChars: String,
+        ignoreChars: String,
+        atLeastOneFromEach: Boolean,
+        excludeAmbiguousChar: Boolean
+    ): String {
         // Desired password length is 0 or less
         if (length <= 0) {
             throw IllegalArgumentException(resources.getString(R.string.error_wrong_length))
@@ -42,7 +44,8 @@ class PasswordGenerator(private val resources: Resources) {
             && !specials
             && !brackets
             && !extended
-            && considerChars.isEmpty()) {
+            && considerChars.isEmpty()
+        ) {
             throw IllegalArgumentException(resources.getString(R.string.error_pass_gen_type))
         }
 
@@ -138,12 +141,14 @@ class PasswordGenerator(private val resources: Resources) {
 
             // Now that the string is built, get the next random character.
             val selectableCharsMaxIndex = selectableChars.length
-            val randomSelectableCharsIndex = if (selectableCharsMaxIndex > 0) random.nextInt(selectableCharsMaxIndex) else 0
+            val randomSelectableCharsIndex =
+                if (selectableCharsMaxIndex > 0) random.nextInt(selectableCharsMaxIndex) else 0
             val nextChar = selectableChars[randomSelectableCharsIndex]
 
             // Put at random position
             val randomStringMaxIndex = randomString.length
-            val randomStringIndex = if (randomStringMaxIndex > 0) random.nextInt(randomStringMaxIndex) else 0
+            val randomStringIndex =
+                if (randomStringMaxIndex > 0) random.nextInt(randomStringMaxIndex) else 0
             randomString.insert(randomStringIndex, nextChar)
 
             // Now figure out where it came from, and decrement the appropriate minimum value
@@ -157,8 +162,10 @@ class PasswordGenerator(private val resources: Resources) {
         return randomString.toString()
     }
 
-    private data class Filter(var chars: String,
-                              var minCharsNeeded: Int)
+    private data class Filter(
+        var chars: String,
+        var minCharsNeeded: Int
+    )
 
     private class PasswordFilters {
         var length: Int = 0
@@ -239,28 +246,33 @@ class PasswordGenerator(private val resources: Resources) {
             if (password.isNotEmpty()) {
                 password.forEach {
                     when {
-                        UPPERCASE_CHARS.contains(it)||
-                        LOWERCASE_CHARS.contains(it) -> {
+                        UPPERCASE_CHARS.contains(it) ||
+                                LOWERCASE_CHARS.contains(it) -> {
                             spannableString.append(it)
                         }
+
                         DIGIT_CHARS.contains(it) -> {
                             // RED
                             spannableString.append(colorizeChar(it, Color.rgb(246, 79, 62)))
                         }
+
                         SPECIAL_CHARS.contains(it) -> {
                             // Blue
                             spannableString.append(colorizeChar(it, Color.rgb(39, 166, 228)))
                         }
-                        MINUS_CHAR.contains(it)||
-                        UNDERLINE_CHAR.contains(it)||
-                        BRACKET_CHARS.contains(it) -> {
+
+                        MINUS_CHAR.contains(it) ||
+                                UNDERLINE_CHAR.contains(it) ||
+                                BRACKET_CHARS.contains(it) -> {
                             // Purple
                             spannableString.append(colorizeChar(it, Color.rgb(185, 38, 209)))
                         }
+
                         extendedChars().contains(it) -> {
                             // Green
                             spannableString.append(colorizeChar(it, Color.rgb(44, 181, 50)))
                         }
+
                         else -> {
                             spannableString.append(it)
                         }

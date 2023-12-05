@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/menu_paste"
+    <item
+        android:id="@+id/menu_paste"
         android:icon="@drawable/ic_content_paste_white_24dp"
-        android:title="@string/menu_paste"
         android:orderInCategory="1090"
+        android:title="@string/menu_paste"
         app:iconTint="?attr/colorControlNormal"
         app:showAsAction="ifRoom|withText" />
 </menu>

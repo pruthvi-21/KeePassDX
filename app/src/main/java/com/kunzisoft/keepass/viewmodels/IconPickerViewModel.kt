@@ -9,7 +9,7 @@ import com.kunzisoft.keepass.database.element.icon.IconImageStandard
 import com.kunzisoft.keepass.utils.readParcelableCompat
 
 
-class IconPickerViewModel: ViewModel() {
+class IconPickerViewModel : ViewModel() {
 
     val standardIconPicked: MutableLiveData<IconImageStandard> by lazy {
         MutableLiveData<IconImageStandard>()
@@ -31,7 +31,7 @@ class IconPickerViewModel: ViewModel() {
         MutableLiveData<IconCustomState>()
     }
 
-    val customIconUpdated : MutableLiveData<IconCustomState> by lazy {
+    val customIconUpdated: MutableLiveData<IconCustomState> by lazy {
         MutableLiveData<IconCustomState>()
     }
 
@@ -63,16 +63,19 @@ class IconPickerViewModel: ViewModel() {
         customIconUpdated.value = customIcon
     }
 
-    data class IconCustomState(var iconCustom: IconImageCustom? = null,
-                               var error: Boolean = true,
-                               var errorStringId: Int = -1,
-                               var errorConsumed: Boolean = false): Parcelable {
+    data class IconCustomState(
+        var iconCustom: IconImageCustom? = null,
+        var error: Boolean = true,
+        var errorStringId: Int = -1,
+        var errorConsumed: Boolean = false
+    ) : Parcelable {
 
         constructor(parcel: Parcel) : this(
-                parcel.readParcelableCompat(),
-                parcel.readByte() != 0.toByte(),
-                parcel.readInt(),
-                parcel.readByte() != 0.toByte())
+            parcel.readParcelableCompat(),
+            parcel.readByte() != 0.toByte(),
+            parcel.readInt(),
+            parcel.readByte() != 0.toByte()
+        )
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
             parcel.writeParcelable(iconCustom, flags)

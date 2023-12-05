@@ -29,8 +29,8 @@ import java.util.Properties
 
 open class SettingsActivity
     : DatabaseLockActivity(),
-        MainPreferenceFragment.Callback,
-        SetMainCredentialDialogFragment.AssignMainCredentialDialogListener {
+    MainPreferenceFragment.Callback,
+    SetMainCredentialDialogFragment.AssignMainCredentialDialogListener {
 
     private var backupManager: BackupManager? = null
     private var mExternalFileHelper: ExternalFileHelper? = null
@@ -70,7 +70,8 @@ open class SettingsActivity
 
                     // Restart the current activity
                     reloadActivity()
-                    Toast.makeText(this, R.string.success_import_app_properties, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, R.string.success_import_app_properties, Toast.LENGTH_LONG)
+                        .show()
                 }
             } catch (e: Exception) {
                 Toast.makeText(this, R.string.error_import_app_properties, Toast.LENGTH_LONG).show()
@@ -86,7 +87,8 @@ open class SettingsActivity
                             .getAppProperties(this)
                             .store(outputStream, getString(R.string.description_app_properties))
                     }
-                    Toast.makeText(this, R.string.success_export_app_properties, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, R.string.success_export_app_properties, Toast.LENGTH_LONG)
+                        .show()
                 }
             } catch (e: Exception) {
                 Toast.makeText(this, R.string.error_export_app_properties, Toast.LENGTH_LONG).show()
@@ -112,8 +114,8 @@ open class SettingsActivity
         if (savedInstanceState == null) {
             lockView?.visibility = View.GONE
             supportFragmentManager.beginTransaction()
-                    .add(R.id.fragment_container, retrieveMainFragment())
-                    .commit()
+                .add(R.id.fragment_container, retrieveMainFragment())
+                .commit()
         } else {
             if (savedInstanceState.getBoolean(SHOW_LOCK)) lockView?.show() else lockView?.hide()
         }
@@ -123,7 +125,10 @@ open class SettingsActivity
         // To reload the current screen
         if (intent.extras?.containsKey(FRAGMENT_ARG) == true) {
             intent.extras?.getString(FRAGMENT_ARG)?.let { fragmentScreenName ->
-                onNestedPreferenceSelected(NestedSettingsFragment.Screen.valueOf(fragmentScreenName), true)
+                onNestedPreferenceSelected(
+                    NestedSettingsFragment.Screen.valueOf(fragmentScreenName),
+                    true
+                )
             }
             // Eat state
             intent.removeExtra(FRAGMENT_ARG)
@@ -188,6 +193,7 @@ open class SettingsActivity
                 NestedSettingsFragment.Screen.DATABASE_SECURITY -> {
                     lockView?.show()
                 }
+
                 else -> {
                     lockView?.hide()
                 }
@@ -211,11 +217,15 @@ open class SettingsActivity
     private fun replaceFragment(key: NestedSettingsFragment.Screen, reload: Boolean) {
         supportFragmentManager.beginTransaction().apply {
             if (reload) {
-                setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
-                        R.anim.slide_in_left, R.anim.slide_out_right)
+                setCustomAnimations(
+                    android.R.anim.fade_in, android.R.anim.fade_out,
+                    R.anim.slide_in_left, R.anim.slide_out_right
+                )
             } else {
-                setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,
-                        R.anim.slide_in_left, R.anim.slide_out_right)
+                setCustomAnimations(
+                    R.anim.slide_in_right, R.anim.slide_out_left,
+                    R.anim.slide_in_left, R.anim.slide_out_right
+                )
             }
             replace(R.id.fragment_container, NestedSettingsFragment.newInstance(key), TAG_NESTED)
             addToBackStack(TAG_NESTED)
@@ -232,12 +242,12 @@ open class SettingsActivity
 
     /**
      * To keep the current screen when activity is reloaded
-      */
+     */
     private fun keepCurrentScreen() {
         (supportFragmentManager.findFragmentByTag(TAG_NESTED) as? NestedSettingsFragment?)
-                ?.getScreen()?.let { fragmentKey ->
-            intent.putExtra(FRAGMENT_ARG, fragmentKey.name)
-        }
+            ?.getScreen()?.let { fragmentKey ->
+                intent.putExtra(FRAGMENT_ARG, fragmentKey.name)
+            }
     }
 
     override fun onNestedPreferenceSelected(key: NestedSettingsFragment.Screen, reload: Boolean) {
@@ -254,8 +264,12 @@ open class SettingsActivity
     }
 
     fun exportAppProperties() {
-        mExternalFileHelper?.createDocument(getString(R.string.app_properties_file_name,
-            DateTime.now().toLocalDateTime().toString("yyyy-MM-dd'_'HH-mm")))
+        mExternalFileHelper?.createDocument(
+            getString(
+                R.string.app_properties_file_name,
+                DateTime.now().toLocalDateTime().toString("yyyy-MM-dd'_'HH-mm")
+            )
+        )
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

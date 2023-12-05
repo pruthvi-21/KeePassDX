@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/menu_generate"
+    <item
+        android:id="@+id/menu_generate"
         android:icon="@drawable/ic_random_white_24dp"
-        android:title="@string/generate_password"
         android:orderInCategory="8"
+        android:title="@string/generate_password"
         app:iconTint="?attr/colorControlNormal"
         app:showAsAction="ifRoom" />
 </menu>

@@ -7,7 +7,7 @@ import com.kunzisoft.keepass.database.element.Entry
 import com.kunzisoft.keepass.hardware.HardwareKey
 import com.kunzisoft.keepass.tasks.ActionRunnable
 
-class RestoreEntryHistoryDatabaseRunnable (
+class RestoreEntryHistoryDatabaseRunnable(
     private val context: Context,
     private val database: ContextualDatabase,
     private val mainEntry: Entry,

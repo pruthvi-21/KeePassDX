@@ -3,7 +3,12 @@ package com.kunzisoft.keepass.settings
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -20,10 +25,29 @@ import com.kunzisoft.keepass.database.crypto.EncryptionAlgorithm
 import com.kunzisoft.keepass.database.crypto.kdf.KdfEngine
 import com.kunzisoft.keepass.database.element.Group
 import com.kunzisoft.keepass.database.element.database.CompressionAlgorithm
-import com.kunzisoft.keepass.database.helper.*
+import com.kunzisoft.keepass.database.helper.getLocalizedName
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService
-import com.kunzisoft.keepass.settings.preference.*
-import com.kunzisoft.keepass.settings.preferencedialogfragment.*
+import com.kunzisoft.keepass.settings.preference.DialogColorPreference
+import com.kunzisoft.keepass.settings.preference.DialogListExplanationPreference
+import com.kunzisoft.keepass.settings.preference.InputKdfNumberPreference
+import com.kunzisoft.keepass.settings.preference.InputKdfSizePreference
+import com.kunzisoft.keepass.settings.preference.InputNumberPreference
+import com.kunzisoft.keepass.settings.preference.InputTextPreference
+import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseColorPreferenceDialogFragmentCompat
+import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseDataCompressionPreferenceDialogFragmentCompat
+import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseDefaultUsernamePreferenceDialogFragmentCompat
+import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseDescriptionPreferenceDialogFragmentCompat
+import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseEncryptionAlgorithmPreferenceDialogFragmentCompat
+import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseKeyDerivationPreferenceDialogFragmentCompat
+import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseMaxHistoryItemsPreferenceDialogFragmentCompat
+import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseMaxHistorySizePreferenceDialogFragmentCompat
+import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseMemoryUsagePreferenceDialogFragmentCompat
+import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseNamePreferenceDialogFragmentCompat
+import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseParallelismPreferenceDialogFragmentCompat
+import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseRecycleBinGroupPreferenceDialogFragmentCompat
+import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseRemoveUnlinkedDataPreferenceDialogFragmentCompat
+import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseRoundsPreferenceDialogFragmentCompat
+import com.kunzisoft.keepass.settings.preferencedialogfragment.DatabaseTemplatesGroupPreferenceDialogFragmentCompat
 import com.kunzisoft.keepass.tasks.ActionRunnable
 import com.kunzisoft.keepass.utils.getParcelableCompat
 import com.kunzisoft.keepass.utils.getSerializableCompat
@@ -54,7 +78,7 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
     private var mMemoryPref: InputKdfSizePreference? = null
     private var mParallelismPref: InputKdfNumberPreference? = null
 
-    private val menuProvider: MenuProvider = object: MenuProvider {
+    private val menuProvider: MenuProvider = object : MenuProvider {
         override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
             menuInflater.inflate(R.menu.database, menu)
             if (mDatabaseReadOnly) {
@@ -72,14 +96,17 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
                     saveDatabase(!mDatabaseReadOnly)
                     true
                 }
+
                 R.id.menu_merge_database -> {
                     mergeDatabase(!mDatabaseReadOnly)
                     true
                 }
+
                 R.id.menu_reload_database -> {
                     reloadDatabase()
                     true
                 }
+
                 R.id.menu_app_settings -> {
                     // Check the time lock before launching settings
                     // TODO activity menu
@@ -88,6 +115,7 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
                     }
                     true
                 }
+
                 else -> {
                     false
                 }
@@ -111,7 +139,11 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
         }
     }
 
-    override fun onCreateScreenPreference(screen: Screen, savedInstanceState: Bundle?, rootKey: String?) {
+    override fun onCreateScreenPreference(
+        screen: Screen,
+        savedInstanceState: Bundle?,
+        rootKey: String?
+    ) {
         mScreen = screen
         val database = mDatabase
         // Load the preferences from an XML resource
@@ -121,16 +153,19 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
                 if (database?.loaded == true)
                     onCreateDatabasePreference(database)
             }
+
             Screen.DATABASE_SECURITY -> {
                 setPreferencesFromResource(R.xml.preferences_database_security, rootKey)
                 if (database?.loaded == true)
                     onCreateDatabaseSecurityPreference(database)
             }
+
             Screen.DATABASE_MASTER_KEY -> {
                 setPreferencesFromResource(R.xml.preferences_database_master_key, rootKey)
                 if (database?.loaded == true)
                     onCreateDatabaseMasterKeyPreference(database)
             }
+
             else -> {
             }
         }
@@ -159,12 +194,15 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
                     Screen.DATABASE -> {
                         onCreateDatabasePreference(it)
                     }
+
                     Screen.DATABASE_SECURITY -> {
                         onCreateDatabaseSecurityPreference(it)
                     }
+
                     Screen.DATABASE_MASTER_KEY -> {
                         onCreateDatabaseMasterKeyPreference(it)
                     }
+
                     else -> {
                     }
                 }
@@ -175,7 +213,8 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
     }
 
     private fun onCreateDatabasePreference(database: ContextualDatabase) {
-        val dbGeneralPrefCategory: PreferenceCategory? = findPreference(getString(R.string.database_category_general_key))
+        val dbGeneralPrefCategory: PreferenceCategory? =
+            findPreference(getString(R.string.database_category_general_key))
 
         // Database name
         dbNamePref = findPreference(getString(R.string.database_name_key))
@@ -208,7 +247,7 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
             if (customColor != null) {
                 color = customColor
                 summary = ChromaUtil.getFormattedColorString(customColor, false)
-            } else{
+            } else {
                 color = DialogColorPreference.DISABLE_COLOR
                 summary = ""
             }
@@ -218,7 +257,8 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
         findPreference<Preference>(getString(R.string.database_version_key))
             ?.summary = database.version
 
-        val dbCompressionPrefCategory: PreferenceCategory? = findPreference(getString(R.string.database_category_data_key))
+        val dbCompressionPrefCategory: PreferenceCategory? =
+            findPreference(getString(R.string.database_category_data_key))
 
         // Database compression
         dbDataCompressionPref = findPreference(getString(R.string.database_data_compression_key))
@@ -229,18 +269,23 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
             dbCompressionPrefCategory?.isVisible = false
         }
 
-        val dbRecycleBinPrefCategory: PreferenceCategory? = findPreference(getString(R.string.database_category_recycle_bin_key))
+        val dbRecycleBinPrefCategory: PreferenceCategory? =
+            findPreference(getString(R.string.database_category_recycle_bin_key))
         recycleBinGroupPref = findPreference(getString(R.string.recycle_bin_group_key))
 
         // Recycle bin
         if (database.allowConfigurableRecycleBin) {
-            val recycleBinEnablePref: TwoStatePreference? = findPreference(getString(R.string.recycle_bin_enable_key))
+            val recycleBinEnablePref: TwoStatePreference? =
+                findPreference(getString(R.string.recycle_bin_enable_key))
             recycleBinEnablePref?.apply {
                 isChecked = database.isRecycleBinEnabled
                 isEnabled = if (!mDatabaseReadOnly) {
                     setOnPreferenceChangeListener { _, newValue ->
                         val recycleBinEnabled = newValue as Boolean
-                        database.enableRecycleBin(recycleBinEnabled, resources.getString(R.string.recycle_bin))
+                        database.enableRecycleBin(
+                            recycleBinEnabled,
+                            resources.getString(R.string.recycle_bin)
+                        )
                         refreshRecycleBinGroup(database)
                         // Save the database if not in readonly mode
                         saveDatabase(mDatabaseAutoSaveEnabled)
@@ -264,16 +309,19 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
         }
 
         // Templates
-        val templatesGroupPrefCategory: PreferenceCategory? = findPreference(getString(R.string.database_category_templates_key))
+        val templatesGroupPrefCategory: PreferenceCategory? =
+            findPreference(getString(R.string.database_category_templates_key))
         templatesGroupPref = findPreference(getString(R.string.templates_group_uuid_key))
         if (database.allowTemplatesGroup) {
-            val templatesEnablePref: TwoStatePreference? = findPreference(getString(R.string.templates_group_enable_key))
+            val templatesEnablePref: TwoStatePreference? =
+                findPreference(getString(R.string.templates_group_enable_key))
             templatesEnablePref?.apply {
                 isChecked = database.isTemplatesEnabled
                 isEnabled = if (!mDatabaseReadOnly) {
                     setOnPreferenceChangeListener { _, newValue ->
                         val templatesEnabled = newValue as Boolean
-                        database.enableTemplates(templatesEnabled,
+                        database.enableTemplates(
+                            templatesEnabled,
                             resources.getString(R.string.templates)
                         )
                         refreshTemplatesGroup(database)
@@ -297,14 +345,16 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
             ?.isVisible = database.manageHistory == true
 
         // Max history items
-        dbMaxHistoryItemsPref = findPreference<InputNumberPreference>(getString(R.string.max_history_items_key))?.apply {
-            summary = database.historyMaxItems.toString()
-        }
+        dbMaxHistoryItemsPref =
+            findPreference<InputNumberPreference>(getString(R.string.max_history_items_key))?.apply {
+                summary = database.historyMaxItems.toString()
+            }
 
         // Max history size
-        dbMaxHistorySizePref = findPreference<InputNumberPreference>(getString(R.string.max_history_size_key))?.apply {
-            summary = database.historyMaxSize.toString()
-        }
+        dbMaxHistorySizePref =
+            findPreference<InputNumberPreference>(getString(R.string.max_history_size_key))?.apply {
+                summary = database.historyMaxSize.toString()
+            }
     }
 
     private fun refreshRecycleBinGroup(database: ContextualDatabase?) {
@@ -333,29 +383,34 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
 
     private fun onCreateDatabaseSecurityPreference(database: ContextualDatabase) {
         // Encryption Algorithm
-        mEncryptionAlgorithmPref = findPreference<DialogListExplanationPreference>(getString(R.string.encryption_algorithm_key))?.apply {
-            summary = database.getEncryptionAlgorithmName()
-        }
+        mEncryptionAlgorithmPref =
+            findPreference<DialogListExplanationPreference>(getString(R.string.encryption_algorithm_key))?.apply {
+                summary = database.getEncryptionAlgorithmName()
+            }
 
         // Key derivation function
-        mKeyDerivationPref = findPreference<DialogListExplanationPreference>(getString(R.string.key_derivation_function_key))?.apply {
-            summary = database.getKeyDerivationName()
-        }
+        mKeyDerivationPref =
+            findPreference<DialogListExplanationPreference>(getString(R.string.key_derivation_function_key))?.apply {
+                summary = database.getKeyDerivationName()
+            }
 
         // Round encryption
-        mRoundPref = findPreference<InputKdfNumberPreference>(getString(R.string.transform_rounds_key))?.apply {
-            summary = database.numberKeyEncryptionRounds.toString()
-        }
+        mRoundPref =
+            findPreference<InputKdfNumberPreference>(getString(R.string.transform_rounds_key))?.apply {
+                summary = database.numberKeyEncryptionRounds.toString()
+            }
 
         // Memory Usage
-        mMemoryPref = findPreference<InputKdfSizePreference>(getString(R.string.memory_usage_key))?.apply {
-            summary = database.memoryUsage.toString()
-        }
+        mMemoryPref =
+            findPreference<InputKdfSizePreference>(getString(R.string.memory_usage_key))?.apply {
+                summary = database.memoryUsage.toString()
+            }
 
         // Parallelism
-        mParallelismPref = findPreference<InputKdfNumberPreference>(getString(R.string.parallelism_key))?.apply {
-            summary = database.parallelism.toString()
-        }
+        mParallelismPref =
+            findPreference<InputKdfNumberPreference>(getString(R.string.parallelism_key))?.apply {
+                summary = database.parallelism.toString()
+            }
     }
 
     private fun onCreateDatabaseMasterKeyPreference(database: ContextualDatabase) {
@@ -363,7 +418,7 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
             isEnabled = if (!mDatabaseReadOnly) {
                 onPreferenceClickListener = Preference.OnPreferenceClickListener {
                     SetMainCredentialDialogFragment.getInstance(database.allowNoMasterKey)
-                            .show(parentFragmentManager, "passwordDialog")
+                        .show(parentFragmentManager, "passwordDialog")
                     false
                 }
                 true
@@ -373,7 +428,7 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
         }
     }
 
-    private val colorSelectedListener: ((Int?)-> Unit) = { color ->
+    private val colorSelectedListener: ((Int?) -> Unit) = { color ->
         if (color != null) {
             dbCustomColorPref?.color = color
             dbCustomColorPref?.summary = ChromaUtil.getFormattedColorString(color, false)
@@ -383,25 +438,34 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
         try {
             // To reassign color listener after orientation change
-            val chromaDialog = parentFragmentManager.findFragmentByTag(TAG_PREF_FRAGMENT) as DatabaseColorPreferenceDialogFragmentCompat?
+            val chromaDialog =
+                parentFragmentManager.findFragmentByTag(TAG_PREF_FRAGMENT) as DatabaseColorPreferenceDialogFragmentCompat?
             chromaDialog?.onColorSelectedListener = colorSelectedListener
-        } catch (e: Exception) {}
+        } catch (e: Exception) {
+        }
 
         return view
     }
 
     // TODO check error
-    override fun onDatabaseActionFinished(database: ContextualDatabase,
-                                          actionTask: String,
-                                          result: ActionRunnable.Result) {
+    override fun onDatabaseActionFinished(
+        database: ContextualDatabase,
+        actionTask: String,
+        result: ActionRunnable.Result
+    ) {
         result.data?.let { data ->
             if (data.containsKey(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
-                    && data.containsKey(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)) {
+                && data.containsKey(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
+            ) {
                 when (actionTask) {
                     /*
                     --------
@@ -409,81 +473,104 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
                     --------
                     */
                     DatabaseTaskNotificationService.ACTION_DATABASE_UPDATE_NAME_TASK -> {
-                        val oldName = data.getString(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)!!
-                        val newName = data.getString(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)!!
+                        val oldName =
+                            data.getString(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)!!
+                        val newName =
+                            data.getString(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)!!
                         val nameToShow =
-                                if (result.isSuccess) {
-                                    newName
-                                } else {
-                                    database.name = oldName
-                                    oldName
-                                }
+                            if (result.isSuccess) {
+                                newName
+                            } else {
+                                database.name = oldName
+                                oldName
+                            }
                         dbNamePref?.summary = nameToShow
                     }
+
                     DatabaseTaskNotificationService.ACTION_DATABASE_UPDATE_DESCRIPTION_TASK -> {
-                        val oldDescription = data.getString(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)!!
-                        val newDescription = data.getString(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)!!
+                        val oldDescription =
+                            data.getString(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)!!
+                        val newDescription =
+                            data.getString(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)!!
                         val descriptionToShow =
-                                if (result.isSuccess) {
-                                    newDescription
-                                } else {
-                                    database.description = oldDescription
-                                    oldDescription
-                                }
+                            if (result.isSuccess) {
+                                newDescription
+                            } else {
+                                database.description = oldDescription
+                                oldDescription
+                            }
                         dbDescriptionPref?.summary = descriptionToShow
                     }
+
                     DatabaseTaskNotificationService.ACTION_DATABASE_UPDATE_DEFAULT_USERNAME_TASK -> {
-                        val oldDefaultUsername = data.getString(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)!!
-                        val newDefaultUsername = data.getString(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)!!
+                        val oldDefaultUsername =
+                            data.getString(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)!!
+                        val newDefaultUsername =
+                            data.getString(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)!!
                         val defaultUsernameToShow =
-                                if (result.isSuccess) {
-                                    newDefaultUsername
-                                } else {
-                                    mDatabase?.defaultUsername = oldDefaultUsername
-                                    oldDefaultUsername
-                                }
+                            if (result.isSuccess) {
+                                newDefaultUsername
+                            } else {
+                                mDatabase?.defaultUsername = oldDefaultUsername
+                                oldDefaultUsername
+                            }
                         dbDefaultUsernamePref?.summary = defaultUsernameToShow
                     }
+
                     DatabaseTaskNotificationService.ACTION_DATABASE_UPDATE_COLOR_TASK -> {
-                        val oldColor = data.getString(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)!!
-                        val newColor = data.getString(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)!!
+                        val oldColor =
+                            data.getString(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)!!
+                        val newColor =
+                            data.getString(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)!!
 
                         val defaultColorToShow =
-                                if (result.isSuccess) {
-                                    newColor
-                                } else {
-                                    mDatabase?.customColor = Color.parseColor(oldColor)
-                                    oldColor
-                                }
+                            if (result.isSuccess) {
+                                newColor
+                            } else {
+                                mDatabase?.customColor = Color.parseColor(oldColor)
+                                oldColor
+                            }
                         dbCustomColorPref?.summary = defaultColorToShow
                     }
+
                     DatabaseTaskNotificationService.ACTION_DATABASE_UPDATE_COMPRESSION_TASK -> {
-                        val oldCompression = data.getSerializableCompat<CompressionAlgorithm>(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
-                        val newCompression = data.getSerializableCompat<CompressionAlgorithm>(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
+                        val oldCompression = data.getSerializableCompat<CompressionAlgorithm>(
+                            DatabaseTaskNotificationService.OLD_ELEMENT_KEY
+                        )
+                        val newCompression = data.getSerializableCompat<CompressionAlgorithm>(
+                            DatabaseTaskNotificationService.NEW_ELEMENT_KEY
+                        )
                         val algorithmToShow =
-                                if (result.isSuccess) {
-                                    newCompression
-                                } else {
-                                    mDatabase?.compressionAlgorithm = oldCompression
-                                    oldCompression
-                                }
-                        dbDataCompressionPref?.summary = algorithmToShow?.getLocalizedName(resources)
+                            if (result.isSuccess) {
+                                newCompression
+                            } else {
+                                mDatabase?.compressionAlgorithm = oldCompression
+                                oldCompression
+                            }
+                        dbDataCompressionPref?.summary =
+                            algorithmToShow?.getLocalizedName(resources)
                     }
+
                     DatabaseTaskNotificationService.ACTION_DATABASE_UPDATE_RECYCLE_BIN_TASK -> {
-                        val oldRecycleBin = data.getParcelableCompat<Group>(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
-                        val newRecycleBin = data.getParcelableCompat<Group>(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
+                        val oldRecycleBin =
+                            data.getParcelableCompat<Group>(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
+                        val newRecycleBin =
+                            data.getParcelableCompat<Group>(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
                         val recycleBinToShow =
-                                if (result.isSuccess) {
-                                    newRecycleBin
-                                } else {
-                                    oldRecycleBin
-                                }
+                            if (result.isSuccess) {
+                                newRecycleBin
+                            } else {
+                                oldRecycleBin
+                            }
                         mDatabase?.setRecycleBin(recycleBinToShow)
                         refreshRecycleBinGroup(database)
                     }
+
                     DatabaseTaskNotificationService.ACTION_DATABASE_UPDATE_TEMPLATES_GROUP_TASK -> {
-                        val oldTemplatesGroup = data.getParcelableCompat<Group>(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
-                        val newTemplatesGroup = data.getParcelableCompat<Group>(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
+                        val oldTemplatesGroup =
+                            data.getParcelableCompat<Group>(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
+                        val newTemplatesGroup =
+                            data.getParcelableCompat<Group>(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
                         val templatesGroupToShow =
                             if (result.isSuccess) {
                                 newTemplatesGroup
@@ -493,28 +580,34 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
                         mDatabase?.setTemplatesGroup(templatesGroupToShow)
                         refreshTemplatesGroup(database)
                     }
+
                     DatabaseTaskNotificationService.ACTION_DATABASE_UPDATE_MAX_HISTORY_ITEMS_TASK -> {
-                        val oldMaxHistoryItems = data.getInt(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
-                        val newMaxHistoryItems = data.getInt(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
+                        val oldMaxHistoryItems =
+                            data.getInt(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
+                        val newMaxHistoryItems =
+                            data.getInt(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
                         val maxHistoryItemsToShow =
-                                if (result.isSuccess) {
-                                    newMaxHistoryItems
-                                } else {
-                                    mDatabase?.historyMaxItems = oldMaxHistoryItems
-                                    oldMaxHistoryItems
-                                }
+                            if (result.isSuccess) {
+                                newMaxHistoryItems
+                            } else {
+                                mDatabase?.historyMaxItems = oldMaxHistoryItems
+                                oldMaxHistoryItems
+                            }
                         dbMaxHistoryItemsPref?.summary = maxHistoryItemsToShow.toString()
                     }
+
                     DatabaseTaskNotificationService.ACTION_DATABASE_UPDATE_MAX_HISTORY_SIZE_TASK -> {
-                        val oldMaxHistorySize = data.getLong(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
-                        val newMaxHistorySize = data.getLong(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
+                        val oldMaxHistorySize =
+                            data.getLong(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
+                        val newMaxHistorySize =
+                            data.getLong(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
                         val maxHistorySizeToShow =
-                                if (result.isSuccess) {
-                                    newMaxHistorySize
-                                } else {
-                                    mDatabase?.historyMaxSize = oldMaxHistorySize
-                                    oldMaxHistorySize
-                                }
+                            if (result.isSuccess) {
+                                newMaxHistorySize
+                            } else {
+                                mDatabase?.historyMaxSize = oldMaxHistorySize
+                                oldMaxHistorySize
+                            }
                         dbMaxHistorySizePref?.summary = maxHistorySizeToShow.toString()
                     }
 
@@ -524,27 +617,34 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
                     --------
                      */
                     DatabaseTaskNotificationService.ACTION_DATABASE_UPDATE_ENCRYPTION_TASK -> {
-                        val oldEncryption = data.getSerializableCompat<EncryptionAlgorithm>(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
-                        val newEncryption = data.getSerializableCompat<EncryptionAlgorithm>(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
+                        val oldEncryption = data.getSerializableCompat<EncryptionAlgorithm>(
+                            DatabaseTaskNotificationService.OLD_ELEMENT_KEY
+                        )
+                        val newEncryption = data.getSerializableCompat<EncryptionAlgorithm>(
+                            DatabaseTaskNotificationService.NEW_ELEMENT_KEY
+                        )
                         val algorithmToShow =
-                                if (result.isSuccess) {
-                                    newEncryption
-                                } else {
-                                    mDatabase?.encryptionAlgorithm = oldEncryption
-                                    oldEncryption
-                                }
+                            if (result.isSuccess) {
+                                newEncryption
+                            } else {
+                                mDatabase?.encryptionAlgorithm = oldEncryption
+                                oldEncryption
+                            }
                         mEncryptionAlgorithmPref?.summary = algorithmToShow.toString()
                     }
+
                     DatabaseTaskNotificationService.ACTION_DATABASE_UPDATE_KEY_DERIVATION_TASK -> {
-                        val oldKeyDerivationEngine = data.getSerializableCompat<KdfEngine>(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
-                        val newKeyDerivationEngine = data.getSerializableCompat<KdfEngine>(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
+                        val oldKeyDerivationEngine =
+                            data.getSerializableCompat<KdfEngine>(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
+                        val newKeyDerivationEngine =
+                            data.getSerializableCompat<KdfEngine>(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
                         val kdfEngineToShow =
-                                if (result.isSuccess) {
-                                    newKeyDerivationEngine
-                                } else {
-                                    mDatabase?.kdfEngine = oldKeyDerivationEngine
-                                    oldKeyDerivationEngine
-                                }
+                            if (result.isSuccess) {
+                                newKeyDerivationEngine
+                            } else {
+                                mDatabase?.kdfEngine = oldKeyDerivationEngine
+                                oldKeyDerivationEngine
+                            }
                         mKeyDerivationPref?.summary = kdfEngineToShow.toString()
 
                         mRoundPref?.summary = kdfEngineToShow?.defaultKeyRounds.toString()
@@ -552,40 +652,49 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
                         mMemoryPref?.summary = kdfEngineToShow?.defaultMemoryUsage.toString()
                         mParallelismPref?.summary = kdfEngineToShow?.defaultParallelism.toString()
                     }
+
                     DatabaseTaskNotificationService.ACTION_DATABASE_UPDATE_ITERATIONS_TASK -> {
-                        val oldIterations = data.getLong(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
-                        val newIterations = data.getLong(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
+                        val oldIterations =
+                            data.getLong(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
+                        val newIterations =
+                            data.getLong(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
                         val roundsToShow =
-                                if (result.isSuccess) {
-                                    newIterations
-                                } else {
-                                    mDatabase?.numberKeyEncryptionRounds = oldIterations
-                                    oldIterations
-                                }
+                            if (result.isSuccess) {
+                                newIterations
+                            } else {
+                                mDatabase?.numberKeyEncryptionRounds = oldIterations
+                                oldIterations
+                            }
                         mRoundPref?.summary = roundsToShow.toString()
                     }
+
                     DatabaseTaskNotificationService.ACTION_DATABASE_UPDATE_MEMORY_USAGE_TASK -> {
-                        val oldMemoryUsage = data.getLong(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
-                        val newMemoryUsage = data.getLong(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
+                        val oldMemoryUsage =
+                            data.getLong(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
+                        val newMemoryUsage =
+                            data.getLong(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
                         val memoryToShow =
-                                if (result.isSuccess) {
-                                    newMemoryUsage
-                                } else {
-                                    mDatabase?.memoryUsage = oldMemoryUsage
-                                    oldMemoryUsage
-                                }
+                            if (result.isSuccess) {
+                                newMemoryUsage
+                            } else {
+                                mDatabase?.memoryUsage = oldMemoryUsage
+                                oldMemoryUsage
+                            }
                         mMemoryPref?.summary = memoryToShow.toString()
                     }
+
                     DatabaseTaskNotificationService.ACTION_DATABASE_UPDATE_PARALLELISM_TASK -> {
-                        val oldParallelism = data.getLong(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
-                        val newParallelism = data.getLong(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
+                        val oldParallelism =
+                            data.getLong(DatabaseTaskNotificationService.OLD_ELEMENT_KEY)
+                        val newParallelism =
+                            data.getLong(DatabaseTaskNotificationService.NEW_ELEMENT_KEY)
                         val parallelismToShow =
-                                if (result.isSuccess) {
-                                    newParallelism
-                                } else {
-                                    mDatabase?.parallelism = oldParallelism
-                                    oldParallelism
-                                }
+                            if (result.isSuccess) {
+                                newParallelism
+                            } else {
+                                mDatabase?.parallelism = oldParallelism
+                                oldParallelism
+                            }
                         mParallelismPref?.summary = parallelismToShow.toString()
                     }
                 }
@@ -601,59 +710,88 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
         // Main Preferences
         when (preference.key) {
             getString(R.string.database_name_key) -> {
-                dialogFragment = DatabaseNamePreferenceDialogFragmentCompat.newInstance(preference.key)
+                dialogFragment =
+                    DatabaseNamePreferenceDialogFragmentCompat.newInstance(preference.key)
             }
+
             getString(R.string.database_description_key) -> {
-                dialogFragment = DatabaseDescriptionPreferenceDialogFragmentCompat.newInstance(preference.key)
+                dialogFragment =
+                    DatabaseDescriptionPreferenceDialogFragmentCompat.newInstance(preference.key)
             }
+
             getString(R.string.database_default_username_key) -> {
-                dialogFragment = DatabaseDefaultUsernamePreferenceDialogFragmentCompat.newInstance(preference.key)
+                dialogFragment =
+                    DatabaseDefaultUsernamePreferenceDialogFragmentCompat.newInstance(preference.key)
             }
+
             getString(R.string.database_custom_color_key) -> {
-                dialogFragment = DatabaseColorPreferenceDialogFragmentCompat.newInstance(preference.key).apply {
-                    onColorSelectedListener = colorSelectedListener
-                }
+                dialogFragment =
+                    DatabaseColorPreferenceDialogFragmentCompat.newInstance(preference.key).apply {
+                        onColorSelectedListener = colorSelectedListener
+                    }
             }
+
             getString(R.string.database_data_compression_key) -> {
-                dialogFragment = DatabaseDataCompressionPreferenceDialogFragmentCompat.newInstance(preference.key)
+                dialogFragment =
+                    DatabaseDataCompressionPreferenceDialogFragmentCompat.newInstance(preference.key)
             }
+
             getString(R.string.database_data_remove_unlinked_attachments_key) -> {
-                dialogFragment = DatabaseRemoveUnlinkedDataPreferenceDialogFragmentCompat.newInstance(preference.key)
+                dialogFragment =
+                    DatabaseRemoveUnlinkedDataPreferenceDialogFragmentCompat.newInstance(preference.key)
             }
+
             getString(R.string.recycle_bin_group_key) -> {
-                dialogFragment = DatabaseRecycleBinGroupPreferenceDialogFragmentCompat.newInstance(preference.key)
+                dialogFragment =
+                    DatabaseRecycleBinGroupPreferenceDialogFragmentCompat.newInstance(preference.key)
             }
+
             getString(R.string.templates_group_uuid_key) -> {
-                dialogFragment = DatabaseTemplatesGroupPreferenceDialogFragmentCompat.newInstance(preference.key)
+                dialogFragment =
+                    DatabaseTemplatesGroupPreferenceDialogFragmentCompat.newInstance(preference.key)
             }
+
             getString(R.string.max_history_items_key) -> {
-                dialogFragment = DatabaseMaxHistoryItemsPreferenceDialogFragmentCompat.newInstance(preference.key)
+                dialogFragment =
+                    DatabaseMaxHistoryItemsPreferenceDialogFragmentCompat.newInstance(preference.key)
             }
+
             getString(R.string.max_history_size_key) -> {
-                dialogFragment = DatabaseMaxHistorySizePreferenceDialogFragmentCompat.newInstance(preference.key)
+                dialogFragment =
+                    DatabaseMaxHistorySizePreferenceDialogFragmentCompat.newInstance(preference.key)
             }
 
             // Security
             getString(R.string.encryption_algorithm_key) -> {
-                dialogFragment = DatabaseEncryptionAlgorithmPreferenceDialogFragmentCompat.newInstance(preference.key)
+                dialogFragment =
+                    DatabaseEncryptionAlgorithmPreferenceDialogFragmentCompat.newInstance(preference.key)
             }
+
             getString(R.string.key_derivation_function_key) -> {
-                val keyDerivationDialogFragment = DatabaseKeyDerivationPreferenceDialogFragmentCompat.newInstance(preference.key)
+                val keyDerivationDialogFragment =
+                    DatabaseKeyDerivationPreferenceDialogFragmentCompat.newInstance(preference.key)
                 // Add other prefs to manage
                 keyDerivationDialogFragment.setRoundPreference(mRoundPref)
                 keyDerivationDialogFragment.setMemoryPreference(mMemoryPref)
                 keyDerivationDialogFragment.setParallelismPreference(mParallelismPref)
                 dialogFragment = keyDerivationDialogFragment
             }
+
             getString(R.string.transform_rounds_key) -> {
-                dialogFragment = DatabaseRoundsPreferenceDialogFragmentCompat.newInstance(preference.key)
+                dialogFragment =
+                    DatabaseRoundsPreferenceDialogFragmentCompat.newInstance(preference.key)
             }
+
             getString(R.string.memory_usage_key) -> {
-                dialogFragment = DatabaseMemoryUsagePreferenceDialogFragmentCompat.newInstance(preference.key)
+                dialogFragment =
+                    DatabaseMemoryUsagePreferenceDialogFragmentCompat.newInstance(preference.key)
             }
+
             getString(R.string.parallelism_key) -> {
-                dialogFragment = DatabaseParallelismPreferenceDialogFragmentCompat.newInstance(preference.key)
+                dialogFragment =
+                    DatabaseParallelismPreferenceDialogFragmentCompat.newInstance(preference.key)
             }
+
             else -> otherDialogFragment = true
         }
 

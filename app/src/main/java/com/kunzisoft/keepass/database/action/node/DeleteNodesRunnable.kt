@@ -16,7 +16,13 @@ class DeleteNodesRunnable(
     save: Boolean,
     afterActionNodesFinish: AfterActionNodesFinish,
     challengeResponseRetriever: (HardwareKey, ByteArray?) -> ByteArray
-) : ActionNodeDatabaseRunnable(context, database, afterActionNodesFinish, save, challengeResponseRetriever) {
+) : ActionNodeDatabaseRunnable(
+    context,
+    database,
+    afterActionNodesFinish,
+    save,
+    challengeResponseRetriever
+) {
 
     private var mOldParent: Group? = null
     private var mCanRecycle: Boolean = false
@@ -25,7 +31,7 @@ class DeleteNodesRunnable(
 
     override fun nodeAction() {
 
-        foreachNode@ for(nodeToDelete in mNodesToDelete) {
+        foreachNode@ for (nodeToDelete in mNodesToDelete) {
             mOldParent = nodeToDelete.parent
             nodeToDelete.touch(modified = true, touchParents = true)
 
@@ -44,6 +50,7 @@ class DeleteNodesRunnable(
                         database.deleteGroup(groupToDelete)
                     }
                 }
+
                 Type.ENTRY -> {
                     val entryToDelete = nodeToDelete as Entry
                     // Create a copy to keep the old ref and remove it visually
@@ -75,6 +82,7 @@ class DeleteNodesRunnable(
                             Type.GROUP -> {
                                 database.undoRecycle(backupNode as Group, it)
                             }
+
                             Type.ENTRY -> {
                                 database.undoRecycle(backupNode as Entry, it)
                             }
@@ -83,8 +91,8 @@ class DeleteNodesRunnable(
                 }
             }
             // else {
-                // Let's not bother recovering from a failure to save a deleted tree. It is too much work.
-                // TODO database.undoDeleteGroupFrom(mGroup, mParent);
+            // Let's not bother recovering from a failure to save a deleted tree. It is too much work.
+            // TODO database.undoDeleteGroupFrom(mGroup, mParent);
             // }
         }
 

@@ -35,8 +35,7 @@ class CompatInlineSuggestionsRequest : Parcelable {
     constructor(parcel: Parcel) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             this.inlineSuggestionsRequest = parcel.readParcelableCompat()
-        }
-        else {
+        } else {
             this.inlineSuggestionsRequest = null
         }
     }

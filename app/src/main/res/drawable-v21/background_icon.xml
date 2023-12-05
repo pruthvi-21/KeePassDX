@@ -4,14 +4,13 @@
     android:color="@color/white"
     tools:targetApi="lollipop">
     <item>
-        <shape
-            android:shape="oval">
+        <shape android:shape="oval">
             <padding
+                android:bottom="12dp"
                 android:left="12dp"
                 android:right="12dp"
-                android:top="12dp"
-                android:bottom="12dp"/>
-            <solid android:color="?attr/colorSecondary"/>
+                android:top="12dp" />
+            <solid android:color="?attr/colorSecondary" />
         </shape>
     </item>
 </ripple>

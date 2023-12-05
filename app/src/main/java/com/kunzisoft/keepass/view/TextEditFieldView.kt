@@ -18,7 +18,6 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
-import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.kunzisoft.keepass.R
@@ -27,10 +26,11 @@ import com.kunzisoft.keepass.database.helper.isStandardPasswordName
 import com.kunzisoft.keepass.password.PasswordGenerator
 import com.kunzisoft.keepass.settings.PreferencesUtil
 
-class TextEditFieldView @JvmOverloads constructor(context: Context,
-                                                  attrs: AttributeSet? = null,
-                                                  defStyle: Int = 0)
-    : RelativeLayout(context, attrs, defStyle), GenericTextFieldView {
+class TextEditFieldView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : RelativeLayout(context, attrs, defStyle), GenericTextFieldView {
 
     private var labelViewId = ViewCompat.generateViewId()
     private var valueViewId = ViewCompat.generateViewId()
@@ -41,16 +41,20 @@ class TextEditFieldView @JvmOverloads constructor(context: Context,
 
     private val labelView = TextInputLayout(context).apply {
         layoutParams = LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT)
+            LayoutParams.MATCH_PARENT,
+            LayoutParams.WRAP_CONTENT
+        )
     }
     private val valueView = TextInputEditText(
-        ContextThemeWrapper(getContext(),
-        R.style.Theme_Keepass_TextInputLayout)
+        ContextThemeWrapper(
+            getContext(),
+            R.style.Theme_Keepass_TextInputLayout
+        )
     ).apply {
         layoutParams = LinearLayout.LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT)
+            LayoutParams.MATCH_PARENT,
+            LayoutParams.WRAP_CONTENT
+        )
         inputType = EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             imeOptions = EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING
@@ -62,14 +66,16 @@ class TextEditFieldView @JvmOverloads constructor(context: Context,
         maxLines = 1
     }
     private var actionImageButton = AppCompatImageButton(
-            ContextThemeWrapper(context, R.style.Theme_Keepass_ImageButton_Simple), null, 0).apply {
+        ContextThemeWrapper(context, R.style.Theme_Keepass_ImageButton_Simple), null, 0
+    ).apply {
         layoutParams = LayoutParams(
-                LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT).also {
+            LayoutParams.WRAP_CONTENT,
+            LayoutParams.WRAP_CONTENT
+        ).also {
             it.topMargin = TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP,
-                    12f,
-                    resources.displayMetrics
+                TypedValue.COMPLEX_UNIT_DIP,
+                12f,
+                resources.displayMetrics
             ).toInt()
             it.addRule(ALIGN_PARENT_RIGHT)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -140,10 +146,14 @@ class TextEditFieldView @JvmOverloads constructor(context: Context,
     private fun spannableValue(value: String?): Spannable? {
         if (value == null)
             return null
-        return if (isColorizedPasswordActivated && TemplateField.isStandardPasswordName(context, label))
-                PasswordGenerator.getColorizedPassword(value)
-            else
-                SpannableString(value)
+        return if (isColorizedPasswordActivated && TemplateField.isStandardPasswordName(
+                context,
+                label
+            )
+        )
+            PasswordGenerator.getColorizedPassword(value)
+        else
+            SpannableString(value)
     }
 
     override var label: String
@@ -174,6 +184,7 @@ class TextEditFieldView @JvmOverloads constructor(context: Context,
             numberChars <= 0 -> {
                 valueView.filters += InputFilter.LengthFilter(MAX_CHARS_LIMIT)
             }
+
             else -> {
                 @Suppress("KotlinConstantConditions")
                 val chars = if (numberChars > MAX_CHARS_LIMIT) MAX_CHARS_LIMIT else numberChars
@@ -186,14 +197,16 @@ class TextEditFieldView @JvmOverloads constructor(context: Context,
         when {
             numberLines == 1 -> {
                 valueView.inputType = valueView.inputType or
-                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
                 valueView.maxLines = 1
             }
+
             numberLines <= 0 -> {
                 valueView.inputType = valueView.inputType or
-                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
+                        InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
                 valueView.maxLines = MAX_LINES_LIMIT
             }
+
             else -> {
                 @Suppress("KotlinConstantConditions")
                 val lines = if (numberLines > MAX_LINES_LIMIT) MAX_LINES_LIMIT else numberLines
@@ -215,13 +228,16 @@ class TextEditFieldView @JvmOverloads constructor(context: Context,
         }
     }
 
-    override fun setOnActionClickListener(onActionClickListener: OnClickListener?,
-                                          @DrawableRes actionImageId: Int?) {
+    override fun setOnActionClickListener(
+        onActionClickListener: OnClickListener?,
+        @DrawableRes actionImageId: Int?
+    ) {
         actionImageId?.let {
             actionImageButton.setImageDrawable(ContextCompat.getDrawable(context, it))
         }
         actionImageButton.setOnClickListener(onActionClickListener)
-        actionImageButton.visibility = if (onActionClickListener == null) View.GONE else View.VISIBLE
+        actionImageButton.visibility =
+            if (onActionClickListener == null) View.GONE else View.VISIBLE
     }
 
     override var isFieldVisible: Boolean

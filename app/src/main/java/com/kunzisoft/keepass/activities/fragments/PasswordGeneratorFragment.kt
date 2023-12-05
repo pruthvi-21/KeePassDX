@@ -46,9 +46,11 @@ class PasswordGeneratorFragment : DatabaseFragment() {
 
     private val mKeyGeneratorViewModel: KeyGeneratorViewModel by activityViewModels()
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return inflater.inflate(R.layout.fragment_generate_password, container, false)
     }
 
@@ -76,7 +78,7 @@ class PasswordGeneratorFragment : DatabaseFragment() {
         excludeAmbiguousCompound = view.findViewById(R.id.excludeAmbiguous_filter)
 
         context?.let { context ->
-            passwordCopyView?.visibility = if(PreferencesUtil.allowCopyProtectedFields(context))
+            passwordCopyView?.visibility = if (PreferencesUtil.allowCopyProtectedFields(context))
                 View.VISIBLE else View.GONE
             val clipboardHelper = ClipboardHelper(context)
             passwordCopyView?.setOnClickListener {
@@ -151,7 +153,8 @@ class PasswordGeneratorFragment : DatabaseFragment() {
             // TODO upgrade material-components lib
             // https://stackoverflow.com/questions/70873160/material-slider-onslidertouchlisteners-methods-can-only-be-called-from-within-t
             @SuppressLint("RestrictedApi")
-            override fun onStartTrackingTouch(slider: Slider) {}
+            override fun onStartTrackingTouch(slider: Slider) {
+            }
 
             @SuppressLint("RestrictedApi")
             override fun onStopTrackingTouch(slider: Slider) {
@@ -250,7 +253,8 @@ class PasswordGeneratorFragment : DatabaseFragment() {
                 getString(R.string.value_password_brackets) -> bracketsCompound.isChecked = true
                 getString(R.string.value_password_extended) -> extendedCompound.isChecked = true
                 getString(R.string.value_password_atLeastOne) -> atLeastOneCompound.isChecked = true
-                getString(R.string.value_password_excludeAmbiguous) -> excludeAmbiguousCompound.isChecked = true
+                getString(R.string.value_password_excludeAmbiguous) -> excludeAmbiguousCompound.isChecked =
+                    true
             }
         }
     }
@@ -274,7 +278,8 @@ class PasswordGeneratorFragment : DatabaseFragment() {
     private fun generatePassword() {
         var password = ""
         try {
-            password = PasswordGenerator(resources).generatePassword(getPasswordLength(),
+            password = PasswordGenerator(resources).generatePassword(
+                getPasswordLength(),
                 uppercaseCompound.isChecked,
                 lowercaseCompound.isChecked,
                 digitsCompound.isChecked,
@@ -287,7 +292,8 @@ class PasswordGeneratorFragment : DatabaseFragment() {
                 getConsiderChars(),
                 getIgnoreChars(),
                 atLeastOneCompound.isChecked,
-                excludeAmbiguousCompound.isChecked)
+                excludeAmbiguousCompound.isChecked
+            )
         } catch (e: Exception) {
             Log.e(TAG, "Unable to generate a password", e)
         }
@@ -326,9 +332,11 @@ class PasswordGeneratorFragment : DatabaseFragment() {
             value < minLengthSlider -> {
                 sliderLength.value = minLengthSlider.toFloat()
             }
+
             value > maxLengthSlider -> {
                 sliderLength.value = maxLengthSlider.toFloat()
             }
+
             else -> {
                 sliderLength.value = value.toFloat()
             }

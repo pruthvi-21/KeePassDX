@@ -20,12 +20,13 @@ import com.kunzisoft.keepass.utils.UriUtil.openExternalApp
  * Special activity to deal with hardware key drivers,
  * return the response to the database service once finished
  */
-class HardwareKeyActivity: DatabaseModeActivity(){
+class HardwareKeyActivity : DatabaseModeActivity() {
 
     // To manage hardware key challenge response
     private val resultCallback = ActivityResultCallback<ActivityResult> { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            val challengeResponse: ByteArray? = result.data?.getByteArrayExtra(HARDWARE_KEY_RESPONSE_KEY)
+            val challengeResponse: ByteArray? =
+                result.data?.getByteArrayExtra(HARDWARE_KEY_RESPONSE_KEY)
             Log.d(TAG, "Response form challenge")
             mDatabaseTaskProvider?.startChallengeResponded(challengeResponse ?: ByteArray(0))
         } else {
@@ -63,6 +64,7 @@ class HardwareKeyActivity: DatabaseModeActivity(){
                 HardwareKey.CHALLENGE_RESPONSE_YUBIKEY -> {
                     launchYubikeyChallengeForResponse(intent.getByteArrayExtra(DATA_SEED))
                 }
+
                 else -> {
                     finish()
                 }
@@ -92,7 +94,8 @@ class HardwareKeyActivity: DatabaseModeActivity(){
 
         private const val DATA_HARDWARE_KEY = "DATA_HARDWARE_KEY"
         private const val DATA_SEED = "DATA_SEED"
-        private const val YUBIKEY_CHALLENGE_RESPONSE_INTENT = "android.yubikey.intent.action.CHALLENGE_RESPONSE"
+        private const val YUBIKEY_CHALLENGE_RESPONSE_INTENT =
+            "android.yubikey.intent.action.CHALLENGE_RESPONSE"
         private const val HARDWARE_KEY_CHALLENGE_KEY = "challenge"
         private const val HARDWARE_KEY_RESPONSE_KEY = "response"
 
@@ -132,7 +135,8 @@ class HardwareKeyActivity: DatabaseModeActivity(){
                         Intent(YUBIKEY_CHALLENGE_RESPONSE_INTENT)
                             .resolveActivity(context.packageManager) != null
                     if (showDialog && !yubikeyDriverAvailable
-                        && context is Activity)
+                        && context is Activity
+                    )
                         showHardwareKeyDriverNeeded(context, hardwareKey) {
                             onDialogDismissed?.onDismiss(it)
                             context.finish()

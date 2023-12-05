@@ -6,7 +6,8 @@ import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.utils.DataByte
 
-class DatabaseMemoryUsagePreferenceDialogFragmentCompat : DatabaseSavePreferenceDialogFragmentCompat() {
+class DatabaseMemoryUsagePreferenceDialogFragmentCompat :
+    DatabaseSavePreferenceDialogFragmentCompat() {
 
     private var dataByte = DataByte(MIN_MEMORY_USAGE, DataByte.ByteFormat.BYTE)
 

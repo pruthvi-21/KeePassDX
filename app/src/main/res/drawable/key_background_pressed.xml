@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
  Copyright 2018 Jeremy Jamet / Kunzisoft.
 
  This file is part of KeePassDX.
@@ -18,13 +17,14 @@
   along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <corners
-        android:radius="4dp" />
+    <corners android:radius="4dp" />
     <padding
+        android:bottom="12dp"
         android:left="0dp"
         android:right="0dp"
-        android:top="12dp"
-        android:bottom="12dp"/>
-    <stroke android:width="1dp" android:color="@color/grey_blue_slight" />
-    <solid android:color="@color/grey_blue_deep"/>
+        android:top="12dp" />
+    <stroke
+        android:width="1dp"
+        android:color="@color/grey_blue_slight" />
+    <solid android:color="@color/grey_blue_deep" />
 </shape>

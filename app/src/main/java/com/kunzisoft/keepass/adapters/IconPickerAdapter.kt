@@ -11,8 +11,8 @@ import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.icon.IconImageDraw
 import com.kunzisoft.keepass.icons.IconDrawableFactory
 
-class IconPickerAdapter<I: IconImageDraw>(val context: Context, private val tintIcon: Int)
-    : RecyclerView.Adapter<IconPickerAdapter<I>.CustomIconViewHolder>() {
+class IconPickerAdapter<I : IconImageDraw>(val context: Context, private val tintIcon: Int) :
+    RecyclerView.Adapter<IconPickerAdapter<I>.CustomIconViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -45,7 +45,8 @@ class IconPickerAdapter<I: IconImageDraw>(val context: Context, private val tint
         icons.forEach { icon ->
             val index = iconList.indexOf(icon)
             if (index != -1
-                    && iconList[index].selected != icon.selected) {
+                && iconList[index].selected != icon.selected
+            ) {
                 iconList[index] = icon
                 notifyItemChanged(index)
             }
@@ -116,7 +117,7 @@ class IconPickerAdapter<I: IconImageDraw>(val context: Context, private val tint
         return iconList.size
     }
 
-    interface IconPickerListener<I: IconImageDraw> {
+    interface IconPickerListener<I : IconImageDraw> {
         fun onIconClickListener(icon: I)
         fun onIconLongClickListener(icon: I)
     }

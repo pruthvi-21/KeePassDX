@@ -23,7 +23,8 @@ object TimeoutHelper {
         private set
 
     private fun getLockPendingIntent(context: Context): PendingIntent {
-        return PendingIntent.getBroadcast(context.applicationContext,
+        return PendingIntent.getBroadcast(
+            context.applicationContext,
             REQUEST_ID,
             Intent(LOCK_ACTION),
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -48,7 +49,8 @@ object TimeoutHelper {
                     Log.d(TAG, "TimeoutHelper start")
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-                            && !alarmManager.canScheduleExactAlarms()) {
+                            && !alarmManager.canScheduleExactAlarms()
+                        ) {
                             alarmManager.set(
                                 AlarmManager.RTC,
                                 triggerTime,
@@ -89,7 +91,8 @@ object TimeoutHelper {
     fun recordTime(context: Context, databaseLoaded: Boolean) {
         // To prevent spam registration, record after at least 2 seconds
         if (lastAppTimeoutRecord == null
-                || lastAppTimeoutRecord!! + 2000 <= System.currentTimeMillis()) {
+            || lastAppTimeoutRecord!! + 2000 <= System.currentTimeMillis()
+        ) {
             Log.d(TAG, "Record app timeout")
             // Record timeout time in case timeout service is killed
             PreferencesUtil.saveCurrentTime(context)
@@ -148,9 +151,11 @@ object TimeoutHelper {
     /**
      * Check the time previously record then, if timeout lock the database, else reset the timer
      */
-    fun checkTimeAndLockIfTimeoutOrResetTimeout(context: Context,
-                                                databaseLoaded: Boolean,
-                                                action: (() -> Unit)? = null) {
+    fun checkTimeAndLockIfTimeoutOrResetTimeout(
+        context: Context,
+        databaseLoaded: Boolean,
+        action: (() -> Unit)? = null
+    ) {
         if (checkTimeAndLockIfTimeout(context)) {
             recordTime(context, databaseLoaded)
             action?.invoke()

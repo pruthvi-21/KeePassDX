@@ -38,7 +38,8 @@ class IconCustomFragment : IconFragment<IconImageCustom>() {
                     iconCustomAdded.iconCustom = null
                     try {
                         iconsGridView.smoothScrollToPosition(iconPickerAdapter.lastPosition)
-                    } catch (ignore: Exception) {}
+                    } catch (ignore: Exception) {
+                    }
                 }
             }
         }

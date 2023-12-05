@@ -4,11 +4,17 @@ import android.content.res.Resources
 import android.graphics.Color
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.utils.IOActionTask
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.gosimple.nbvcxz.Nbvcxz
 import me.gosimple.nbvcxz.resources.Configuration
 import me.gosimple.nbvcxz.resources.ConfigurationBuilder
-import java.util.*
+import java.util.Locale
 import kotlin.math.min
 
 class PasswordEntropy(actionOnInitFinished: (() -> Unit)? = null) {
@@ -37,16 +43,20 @@ class PasswordEntropy(actionOnInitFinished: (() -> Unit)? = null) {
         VERY_UNGUESSABLE(Color.rgb(37, 152, 41))
     }
 
-    data class EntropyStrength(val strength: Strength,
-                               val entropy: Double,
-                               val estimationPercent: Int) {
+    data class EntropyStrength(
+        val strength: Strength,
+        val entropy: Double,
+        val estimationPercent: Int
+    ) {
         override fun toString(): String {
             return "EntropyStrength(strength=$strength, entropy=$entropy, estimationPercent=$estimationPercent)"
         }
     }
 
-    fun getEntropyStrength(passwordString: String,
-                           entropyStrengthResult: (EntropyStrength) -> Unit) {
+    fun getEntropyStrength(
+        passwordString: String,
+        entropyStrengthResult: (EntropyStrength) -> Unit
+    ) {
 
         entropyStrengthResult.invoke(EntropyStrength(Strength.RISKY, CALCULATE_ENTROPY, 0))
         entropyJob?.cancel()
@@ -101,9 +111,11 @@ class PasswordEntropy(actionOnInitFinished: (() -> Unit)? = null) {
                 CALCULATE_ENTROPY -> {
                     resources.getString(R.string.entropy_calculate)
                 }
+
                 HIGH_ENTROPY -> {
                     resources.getString(R.string.entropy_high)
                 }
+
                 else -> {
                     resources.getString(
                         R.string.entropy,

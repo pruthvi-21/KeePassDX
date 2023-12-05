@@ -20,8 +20,10 @@ open class ProgressTaskDialogFragment : DialogFragment() {
 
     @StringRes
     private var title = UNDEFINED
+
     @StringRes
     private var message = UNDEFINED
+
     @StringRes
     private var warning = UNDEFINED
     private var cancellable: (() -> Unit)? = null

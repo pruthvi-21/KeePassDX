@@ -22,8 +22,15 @@ class MainCredentialDialogFragment : DatabaseDialogFragment() {
     private var mExternalFileHelper: ExternalFileHelper? = null
 
     interface AskMainCredentialDialogListener {
-        fun onAskMainCredentialDialogPositiveClick(databaseUri: Uri?, mainCredential: MainCredential)
-        fun onAskMainCredentialDialogNegativeClick(databaseUri: Uri?, mainCredential: MainCredential)
+        fun onAskMainCredentialDialogPositiveClick(
+            databaseUri: Uri?,
+            mainCredential: MainCredential
+        )
+
+        fun onAskMainCredentialDialogNegativeClick(
+            databaseUri: Uri?,
+            mainCredential: MainCredential
+        )
     }
 
     override fun onAttach(activity: Context) {
@@ -31,8 +38,10 @@ class MainCredentialDialogFragment : DatabaseDialogFragment() {
         try {
             mListener = activity as AskMainCredentialDialogListener
         } catch (e: ClassCastException) {
-            throw ClassCastException(activity.toString()
-                    + " must implement " + AskMainCredentialDialogListener::class.java.name)
+            throw ClassCastException(
+                activity.toString()
+                        + " must implement " + AskMainCredentialDialogListener::class.java.name
+            )
         }
     }
 
@@ -59,19 +68,19 @@ class MainCredentialDialogFragment : DatabaseDialogFragment() {
                     it.getDocumentFile(requireContext())?.name
             }
             builder.setView(root)
-                    // Add action buttons
-                    .setPositiveButton(android.R.string.ok) { _, _ ->
-                        mListener?.onAskMainCredentialDialogPositiveClick(
-                            databaseUri,
-                            retrieveMainCredential()
-                        )
-                    }
-                    .setNegativeButton(android.R.string.cancel) { _, _ ->
-                        mListener?.onAskMainCredentialDialogNegativeClick(
-                            databaseUri,
-                            retrieveMainCredential()
-                        )
-                    }
+                // Add action buttons
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    mListener?.onAskMainCredentialDialogPositiveClick(
+                        databaseUri,
+                        retrieveMainCredential()
+                    )
+                }
+                .setNegativeButton(android.R.string.cancel) { _, _ ->
+                    mListener?.onAskMainCredentialDialogNegativeClick(
+                        databaseUri,
+                        retrieveMainCredential()
+                    )
+                }
 
 
             mExternalFileHelper = ExternalFileHelper(this)

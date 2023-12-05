@@ -13,12 +13,8 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
-import androidx.preference.ListPreference
 import androidx.preference.Preference
-import androidx.preference.SwitchPreferenceCompat
 import androidx.preference.TwoStatePreference
-import com.google.android.material.color.DynamicColors
-import com.google.android.material.snackbar.Snackbar
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.activities.dialogs.UnavailableFeatureDialogFragment
 import com.kunzisoft.keepass.app.database.FileDatabaseHistoryAction
@@ -34,22 +30,30 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
 
     private var warningAlertDialog: AlertDialog? = null
 
-    override fun onCreateScreenPreference(screen: Screen, savedInstanceState: Bundle?, rootKey: String?) {
+    override fun onCreateScreenPreference(
+        screen: Screen,
+        savedInstanceState: Bundle?,
+        rootKey: String?
+    ) {
 
         // Load the preferences from an XML resource
         when (screen) {
             Screen.APPLICATION -> {
                 onCreateApplicationPreferences(rootKey)
             }
+
             Screen.FORM_FILLING -> {
                 onCreateFormFillingPreference(rootKey)
             }
+
             Screen.ADVANCED_UNLOCK -> {
                 onCreateAdvancedUnlockPreferences(rootKey)
             }
+
             Screen.APPEARANCE -> {
                 onCreateAppearancePreferences(rootKey)
             }
+
             else -> {}
         }
     }
@@ -69,9 +73,10 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
 
             findPreference<Preference>(getString(R.string.remember_keyfile_locations_key))?.setOnPreferenceChangeListener { _, newValue ->
                 if (!(newValue as Boolean)) {
-                    FileDatabaseHistoryAction.getInstance(activity.applicationContext).deleteAllKeyFiles {
-                        activity.releaseAllUnnecessaryPermissionUris()
-                    }
+                    FileDatabaseHistoryAction.getInstance(activity.applicationContext)
+                        .deleteAllKeyFiles {
+                            activity.releaseAllUnnecessaryPermissionUris()
+                        }
                 }
                 true
             }
@@ -97,10 +102,12 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
 
         activity?.let { activity ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val autoFillEnablePreference: TwoStatePreference? = findPreference(getString(R.string.settings_autofill_enable_key))
+                val autoFillEnablePreference: TwoStatePreference? =
+                    findPreference(getString(R.string.settings_autofill_enable_key))
                 activity.getSystemService(AutofillManager::class.java)?.let { autofillManager ->
                     if (autofillManager.hasEnabledAutofillServices())
-                        autoFillEnablePreference?.isChecked = autofillManager.hasEnabledAutofillServices()
+                        autoFillEnablePreference?.isChecked =
+                            autofillManager.hasEnabledAutofillServices()
 
                     autoFillEnablePreference?.onPreferenceClickListener =
                         object : Preference.OnPreferenceClickListener {
@@ -192,28 +199,29 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
             false
         }
 
-        val copyPasswordPreference: TwoStatePreference? = findPreference(getString(R.string.allow_copy_password_key))
+        val copyPasswordPreference: TwoStatePreference? =
+            findPreference(getString(R.string.allow_copy_password_key))
         copyPasswordPreference?.setOnPreferenceChangeListener { _, newValue ->
             if (newValue as Boolean && context != null) {
                 val message = getString(R.string.allow_copy_password_warning) +
                         "\n\n" +
                         getString(R.string.clipboard_warning)
                 AlertDialog.Builder(requireContext())
-                        .setMessage(message)
-                        .setView(R.layout.alert_dialog_layout)
-                        .create()
-                        .apply {
-                            setButton(AlertDialog.BUTTON_POSITIVE, getText(R.string.enable))
-                            { dialog, _ ->
-                                dialog.dismiss()
-                            }
-                            setButton(AlertDialog.BUTTON_NEGATIVE, getText(R.string.disable))
-                            { dialog, _ ->
-                                copyPasswordPreference.isChecked = false
-                                dialog.dismiss()
-                            }
-                            show()
+                    .setMessage(message)
+                    .setView(R.layout.alert_dialog_layout)
+                    .create()
+                    .apply {
+                        setButton(AlertDialog.BUTTON_POSITIVE, getText(R.string.enable))
+                        { dialog, _ ->
+                            dialog.dismiss()
                         }
+                        setButton(AlertDialog.BUTTON_NEGATIVE, getText(R.string.disable))
+                        { dialog, _ ->
+                            copyPasswordPreference.isChecked = false
+                            dialog.dismiss()
+                        }
+                        show()
+                    }
             }
             true
         }
@@ -224,10 +232,14 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
 
         activity?.let { activity ->
 
-            val biometricUnlockEnablePreference: TwoStatePreference? = findPreference(getString(R.string.biometric_unlock_enable_key))
-            val deviceCredentialUnlockEnablePreference: TwoStatePreference? = findPreference(getString(R.string.device_credential_unlock_enable_key))
-            val autoOpenPromptPreference: TwoStatePreference? = findPreference(getString(R.string.biometric_auto_open_prompt_key))
-            val tempAdvancedUnlockPreference: TwoStatePreference? = findPreference(getString(R.string.temp_advanced_unlock_enable_key))
+            val biometricUnlockEnablePreference: TwoStatePreference? =
+                findPreference(getString(R.string.biometric_unlock_enable_key))
+            val deviceCredentialUnlockEnablePreference: TwoStatePreference? =
+                findPreference(getString(R.string.device_credential_unlock_enable_key))
+            val autoOpenPromptPreference: TwoStatePreference? =
+                findPreference(getString(R.string.biometric_auto_open_prompt_key))
+            val tempAdvancedUnlockPreference: TwoStatePreference? =
+                findPreference(getString(R.string.temp_advanced_unlock_enable_key))
 
             val biometricUnlockSupported = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 AdvancedUnlockManager.biometricUnlockSupported(activity)
@@ -239,13 +251,14 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
                     setOnPreferenceClickListener { preference ->
                         (preference as TwoStatePreference).isChecked = false
                         UnavailableFeatureDialogFragment.getInstance(Build.VERSION_CODES.M)
-                                .show(parentFragmentManager, "unavailableFeatureDialog")
+                            .show(parentFragmentManager, "unavailableFeatureDialog")
                         false
                     }
                 } else {
                     setOnPreferenceClickListener {
                         val biometricChecked = biometricUnlockEnablePreference.isChecked
-                        val deviceCredentialChecked = deviceCredentialUnlockEnablePreference?.isChecked ?: false
+                        val deviceCredentialChecked =
+                            deviceCredentialUnlockEnablePreference?.isChecked ?: false
                         if (!biometricChecked) {
                             biometricUnlockEnablePreference.isChecked = true
                             warningMessage(activity, keystoreWarning = false, deleteKeys = true) {
@@ -256,13 +269,21 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
                         } else {
                             if (deviceCredentialChecked) {
                                 biometricUnlockEnablePreference.isChecked = false
-                                warningMessage(activity, keystoreWarning = true, deleteKeys = true) {
+                                warningMessage(
+                                    activity,
+                                    keystoreWarning = true,
+                                    deleteKeys = true
+                                ) {
                                     biometricUnlockEnablePreference.isChecked = true
                                     deviceCredentialUnlockEnablePreference?.isChecked = false
                                 }
                             } else {
                                 biometricUnlockEnablePreference.isChecked = false
-                                warningMessage(activity, keystoreWarning = true, deleteKeys = false) {
+                                warningMessage(
+                                    activity,
+                                    keystoreWarning = true,
+                                    deleteKeys = false
+                                ) {
                                     biometricUnlockEnablePreference.isChecked = true
                                     autoOpenPromptPreference?.isEnabled = true
                                     tempAdvancedUnlockPreference?.isEnabled = true
@@ -274,9 +295,10 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
                 }
             }
 
-            val deviceCredentialUnlockSupported = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                AdvancedUnlockManager.deviceCredentialUnlockSupported(activity)
-            } else false
+            val deviceCredentialUnlockSupported =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    AdvancedUnlockManager.deviceCredentialUnlockSupported(activity)
+                } else false
             deviceCredentialUnlockEnablePreference?.apply {
                 // Biometric unlock already checked
                 if (biometricUnlockEnablePreference?.isChecked == true)
@@ -286,12 +308,13 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
                     setOnPreferenceClickListener { preference ->
                         (preference as TwoStatePreference).isChecked = false
                         UnavailableFeatureDialogFragment.getInstance(Build.VERSION_CODES.M)
-                                .show(parentFragmentManager, "unavailableFeatureDialog")
+                            .show(parentFragmentManager, "unavailableFeatureDialog")
                         false
                     }
                 } else {
                     setOnPreferenceClickListener {
-                        val deviceCredentialChecked = deviceCredentialUnlockEnablePreference.isChecked
+                        val deviceCredentialChecked =
+                            deviceCredentialUnlockEnablePreference.isChecked
                         val biometricChecked = biometricUnlockEnablePreference?.isChecked ?: false
                         if (!deviceCredentialChecked) {
                             deviceCredentialUnlockEnablePreference.isChecked = true
@@ -303,13 +326,21 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
                         } else {
                             if (biometricChecked) {
                                 deviceCredentialUnlockEnablePreference.isChecked = false
-                                warningMessage(activity, keystoreWarning = true, deleteKeys = true) {
+                                warningMessage(
+                                    activity,
+                                    keystoreWarning = true,
+                                    deleteKeys = true
+                                ) {
                                     deviceCredentialUnlockEnablePreference.isChecked = true
                                     biometricUnlockEnablePreference?.isChecked = false
                                 }
                             } else {
                                 deviceCredentialUnlockEnablePreference.isChecked = false
-                                warningMessage(activity, keystoreWarning = true, deleteKeys = false) {
+                                warningMessage(
+                                    activity,
+                                    keystoreWarning = true,
+                                    deleteKeys = false
+                                ) {
                                     deviceCredentialUnlockEnablePreference.isChecked = true
                                     autoOpenPromptPreference?.isEnabled = true
                                     tempAdvancedUnlockPreference?.isEnabled = true
@@ -322,9 +353,10 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
             }
 
             autoOpenPromptPreference?.isEnabled = biometricUnlockEnablePreference?.isChecked == true
-                        || deviceCredentialUnlockEnablePreference?.isChecked == true
-            tempAdvancedUnlockPreference?.isEnabled = biometricUnlockEnablePreference?.isChecked == true
                     || deviceCredentialUnlockEnablePreference?.isChecked == true
+            tempAdvancedUnlockPreference?.isEnabled =
+                biometricUnlockEnablePreference?.isChecked == true
+                        || deviceCredentialUnlockEnablePreference?.isChecked == true
 
             tempAdvancedUnlockPreference?.setOnPreferenceClickListener {
                 tempAdvancedUnlockPreference.isChecked = !tempAdvancedUnlockPreference.isChecked
@@ -334,7 +366,8 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
                 true
             }
 
-            val deleteKeysFingerprints: Preference? = findPreference(getString(R.string.biometric_delete_all_key_key))
+            val deleteKeysFingerprints: Preference? =
+                findPreference(getString(R.string.biometric_delete_all_key_key))
             if (biometricUnlockSupported || deviceCredentialUnlockSupported) {
                 deleteKeysFingerprints?.setOnPreferenceClickListener {
                     warningMessage(activity, keystoreWarning = false, deleteKeys = true)
@@ -351,10 +384,12 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
         }
     }
 
-    private fun warningMessage(activity: FragmentActivity,
-                               keystoreWarning: Boolean,
-                               deleteKeys: Boolean,
-                               validate: (()->Unit)? = null) {
+    private fun warningMessage(
+        activity: FragmentActivity,
+        keystoreWarning: Boolean,
+        deleteKeys: Boolean,
+        validate: (() -> Unit)? = null
+    ) {
         var message = ""
         if (keystoreWarning) {
             message += resources.getString(R.string.advanced_unlock_prompt_store_credential_message)
@@ -371,7 +406,8 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
             .setMessage(message)
             .setTitle(R.string.warning)
             .setIcon(R.drawable.ic_warning_white_24dp)
-            .setPositiveButton(resources.getString(android.R.string.ok)
+            .setPositiveButton(
+                resources.getString(android.R.string.ok)
             ) { _, _ ->
                 validate?.invoke()
                 warningAlertDialog?.setOnDismissListener(null)
@@ -379,8 +415,9 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
                     AdvancedUnlockManager.deleteAllEntryKeysInKeystoreForBiometric(activity)
                 }
             }
-            .setNegativeButton(resources.getString(android.R.string.cancel)
-            ) { _, _ ->}
+            .setNegativeButton(
+                resources.getString(android.R.string.cancel)
+            ) { _, _ -> }
             .create()
         warningAlertDialog?.show()
     }
@@ -428,6 +465,7 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
             getString(R.string.temp_advanced_unlock_timeout_key) -> {
                 dialogFragment = DurationDialogFragmentCompat.newInstance(preference.key)
             }
+
             else -> otherDialogFragment = true
         }
 

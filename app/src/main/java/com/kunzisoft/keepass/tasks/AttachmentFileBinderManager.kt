@@ -28,21 +28,26 @@ class AttachmentFileBinderManager(private val activity: FragmentActivity) {
 
     private var mServiceConnection: ServiceConnection? = null
 
-    private val mActionTaskListener = object: AttachmentFileNotificationService.ActionTaskListener {
-        override fun onAttachmentAction(fileUri: Uri, entryAttachmentState: EntryAttachmentState) {
-            onActionTaskListener?.let {
-                it.onAttachmentAction(fileUri, entryAttachmentState)
-                when (entryAttachmentState.downloadState) {
-                    AttachmentState.COMPLETE,
-                    AttachmentState.ERROR -> {
-                        // Finish the action when capture by activity
-                        consumeAttachmentAction(entryAttachmentState)
+    private val mActionTaskListener =
+        object : AttachmentFileNotificationService.ActionTaskListener {
+            override fun onAttachmentAction(
+                fileUri: Uri,
+                entryAttachmentState: EntryAttachmentState
+            ) {
+                onActionTaskListener?.let {
+                    it.onAttachmentAction(fileUri, entryAttachmentState)
+                    when (entryAttachmentState.downloadState) {
+                        AttachmentState.COMPLETE,
+                        AttachmentState.ERROR -> {
+                            // Finish the action when capture by activity
+                            consumeAttachmentAction(entryAttachmentState)
+                        }
+
+                        else -> {}
                     }
-                    else -> {}
                 }
             }
         }
-    }
 
     @Synchronized
     fun registerProgressTask() {
@@ -50,9 +55,10 @@ class AttachmentFileBinderManager(private val activity: FragmentActivity) {
         if (mServiceConnection == null) {
             mServiceConnection = object : ServiceConnection {
                 override fun onServiceConnected(name: ComponentName?, serviceBinder: IBinder?) {
-                    mBinder = (serviceBinder as AttachmentFileNotificationService.ActionTaskBinder).apply {
-                        addActionTaskListener(mActionTaskListener)
-                    }
+                    mBinder =
+                        (serviceBinder as AttachmentFileNotificationService.ActionTaskBinder).apply {
+                            addActionTaskListener(mActionTaskListener)
+                        }
                     mBinder?.getService()?.checkCurrentAttachmentProgress()
                 }
 
@@ -94,8 +100,10 @@ class AttachmentFileBinderManager(private val activity: FragmentActivity) {
         activity.startService(mIntentTask)
     }
 
-    fun startUploadAttachment(uploadFileUri: Uri,
-                              attachment: Attachment) {
+    fun startUploadAttachment(
+        uploadFileUri: Uri,
+        attachment: Attachment
+    ) {
         start(Bundle().apply {
             putParcelable(AttachmentFileNotificationService.FILE_URI_KEY, uploadFileUri)
             putParcelable(AttachmentFileNotificationService.ATTACHMENT_KEY, attachment)
@@ -106,8 +114,10 @@ class AttachmentFileBinderManager(private val activity: FragmentActivity) {
         start(null, ACTION_ATTACHMENT_FILE_STOP_UPLOAD)
     }
 
-    fun startDownloadAttachment(downloadFileUri: Uri,
-                                attachment: Attachment) {
+    fun startDownloadAttachment(
+        downloadFileUri: Uri,
+        attachment: Attachment
+    ) {
         start(Bundle().apply {
             putParcelable(AttachmentFileNotificationService.FILE_URI_KEY, downloadFileUri)
             putParcelable(AttachmentFileNotificationService.ATTACHMENT_KEY, attachment)

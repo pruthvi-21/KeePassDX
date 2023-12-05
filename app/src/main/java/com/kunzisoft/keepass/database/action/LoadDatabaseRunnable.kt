@@ -24,7 +24,7 @@ class LoadDatabaseRunnable(
     private val progressTaskUpdater: ProgressTaskUpdater?
 ) : ActionRunnable() {
 
-    var afterLoadDatabase : ((Result) -> Unit)? = null
+    var afterLoadDatabase: ((Result) -> Unit)? = null
 
     private val binaryDir = context.getBinaryDir()
 

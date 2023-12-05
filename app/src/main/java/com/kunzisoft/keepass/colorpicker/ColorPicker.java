@@ -27,10 +27,6 @@ public class ColorPicker extends LinearLayout implements Scale.OnValueUpdateList
 
     private OnColorChangedListener mListener;
 
-    public interface OnColorChangedListener {
-        void onColorChanged(int color);
-    }
-
     public ColorPicker(Context context) {
         this(context, null);
     }
@@ -103,26 +99,6 @@ public class ColorPicker extends LinearLayout implements Scale.OnValueUpdateList
         return Color.HSVToColor(new float[]{mHue, mSat, mVal});
     }
 
-    @Override
-    public void onValueUpdate(Scale.ScaleType type, float val) {
-        switch (type) {
-            case HUE:
-                mHue = val;
-                mSatScale.updateScale(getSatValues());
-                break;
-            case SAT:
-                mSat = val;
-                break;
-            case VAL:
-                mVal = val;
-                break;
-        }
-
-        if (mListener != null) {
-            mListener.onColorChanged(getColor());
-        }
-    }
-
     public void setColor(String hex) {
         setColor(Color.parseColor(hex));
     }
@@ -144,6 +120,26 @@ public class ColorPicker extends LinearLayout implements Scale.OnValueUpdateList
         }
     }
 
+    @Override
+    public void onValueUpdate(Scale.ScaleType type, float val) {
+        switch (type) {
+            case HUE:
+                mHue = val;
+                mSatScale.updateScale(getSatValues());
+                break;
+            case SAT:
+                mSat = val;
+                break;
+            case VAL:
+                mVal = val;
+                break;
+        }
+
+        if (mListener != null) {
+            mListener.onColorChanged(getColor());
+        }
+    }
+
     private Space getSpacer() {
         float height = (int) (SCALE_SPACING * getContext().getResources().getDisplayMetrics().density);
         Space space = new Space(getContext());
@@ -153,5 +149,9 @@ public class ColorPicker extends LinearLayout implements Scale.OnValueUpdateList
 
     public void setOnColorChangedListener(OnColorChangedListener listener) {
         mListener = listener;
+    }
+
+    public interface OnColorChangedListener {
+        void onColorChanged(int color);
     }
 }

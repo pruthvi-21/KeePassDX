@@ -76,7 +76,8 @@ class GroupEditDialogFragment : DatabaseDialogFragment() {
             mGroupInfo.expiryTime = DateInstant(
                 DateTime(mGroupInfo.expiryTime.date)
                     .withMillis(dateMilliseconds)
-                    .toDate())
+                    .toDate()
+            )
             expirationView.dateTime = mGroupInfo.expiryTime
             if (expirationView.dateTime.type == DateInstant.Type.DATE_TIME) {
                 val instantTime = DateInstant(mGroupInfo.expiryTime.date, DateInstant.Type.TIME)
@@ -91,7 +92,8 @@ class GroupEditDialogFragment : DatabaseDialogFragment() {
                 DateTime(mGroupInfo.expiryTime.date)
                     .withHourOfDay(viewModelTime.hours)
                     .withMinuteOfHour(viewModelTime.minutes)
-                    .toDate(), mGroupInfo.expiryTime.type)
+                    .toDate(), mGroupInfo.expiryTime.type
+            )
             expirationView.dateTime = mGroupInfo.expiryTime
         }
 
@@ -125,7 +127,8 @@ class GroupEditDialogFragment : DatabaseDialogFragment() {
             threshold = 1
             setAdapter(tagsAdapter)
         }
-        tagsContainerView.visibility = if (database?.allowTags() == true) View.VISIBLE else View.GONE
+        tagsContainerView.visibility =
+            if (database?.allowTags() == true) View.VISIBLE else View.GONE
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -151,14 +154,18 @@ class GroupEditDialogFragment : DatabaseDialogFragment() {
             ta.recycle()
 
             if (savedInstanceState != null
-                    && savedInstanceState.containsKey(KEY_ACTION_ID)
-                    && savedInstanceState.containsKey(KEY_GROUP_INFO)) {
-                mEditGroupDialogAction = EditGroupDialogAction.getActionFromOrdinal(savedInstanceState.getInt(KEY_ACTION_ID))
+                && savedInstanceState.containsKey(KEY_ACTION_ID)
+                && savedInstanceState.containsKey(KEY_GROUP_INFO)
+            ) {
+                mEditGroupDialogAction = EditGroupDialogAction.getActionFromOrdinal(
+                    savedInstanceState.getInt(KEY_ACTION_ID)
+                )
                 mGroupInfo = savedInstanceState.getParcelableCompat(KEY_GROUP_INFO) ?: mGroupInfo
             } else {
                 arguments?.apply {
                     if (containsKey(KEY_ACTION_ID))
-                        mEditGroupDialogAction = EditGroupDialogAction.getActionFromOrdinal(getInt(KEY_ACTION_ID))
+                        mEditGroupDialogAction =
+                            EditGroupDialogAction.getActionFromOrdinal(getInt(KEY_ACTION_ID))
                     if (containsKey(KEY_GROUP_INFO)) {
                         mGroupInfo = getParcelableCompat(KEY_GROUP_INFO) ?: mGroupInfo
                     }
@@ -177,10 +184,10 @@ class GroupEditDialogFragment : DatabaseDialogFragment() {
 
             val builder = AlertDialog.Builder(activity)
             builder.setView(root)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .setNegativeButton(android.R.string.cancel) { _, _ ->
-                        // Do nothing
-                    }
+                .setPositiveButton(android.R.string.ok, null)
+                .setNegativeButton(android.R.string.cancel) { _, _ ->
+                    // Do nothing
+                }
 
             return builder.create()
         }
@@ -200,8 +207,10 @@ class GroupEditDialogFragment : DatabaseDialogFragment() {
                     when (mEditGroupDialogAction) {
                         CREATION ->
                             mGroupEditViewModel.approveGroupCreation(mGroupInfo)
+
                         UPDATE ->
                             mGroupEditViewModel.approveGroupUpdate(mGroupInfo)
+
                         NONE -> {}
                     }
                     alertDialog.dismiss()
@@ -262,12 +271,15 @@ class GroupEditDialogFragment : DatabaseDialogFragment() {
             name.isEmpty() -> {
                 Error(true, R.string.error_no_name)
             }
+
             mGroupNamesNotAllowed == null -> {
                 Error(true, R.string.error_word_reserved)
             }
+
             mGroupNamesNotAllowed?.find { it.equals(name, ignoreCase = true) } != null -> {
                 Error(true, R.string.error_word_reserved)
             }
+
             else -> {
                 Error(false, null)
             }

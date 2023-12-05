@@ -14,14 +14,15 @@ import android.widget.TextView
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.textfield.TextInputLayout
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.password.PasswordGenerator
 import com.kunzisoft.keepass.password.PasswordEntropy
+import com.kunzisoft.keepass.password.PasswordGenerator
 import com.kunzisoft.keepass.settings.PreferencesUtil
 
-class PassKeyView @JvmOverloads constructor(context: Context,
-                                            attrs: AttributeSet? = null,
-                                            defStyle: Int = 0)
-    : FrameLayout(context, attrs, defStyle) {
+class PassKeyView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : FrameLayout(context, attrs, defStyle) {
 
     private var mPasswordEntropyCalculator: PasswordEntropy? = null
 
@@ -42,13 +43,16 @@ class PassKeyView @JvmOverloads constructor(context: Context,
         context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.PassKeyView,
-            0, 0).apply {
+            0, 0
+        ).apply {
             try {
                 mViewHint = getString(R.styleable.PassKeyView_passKeyHint)
                     ?: context.getString(R.string.password)
                 mMaxLines = getInteger(R.styleable.PassKeyView_passKeyMaxLines, mMaxLines)
-                mShowPassword = getBoolean(R.styleable.PassKeyView_passKeyVisible,
-                    !PreferencesUtil.hideProtectedValue(context))
+                mShowPassword = getBoolean(
+                    R.styleable.PassKeyView_passKeyVisible,
+                    !PreferencesUtil.hideProtectedValue(context)
+                )
             } finally {
                 recycle()
             }

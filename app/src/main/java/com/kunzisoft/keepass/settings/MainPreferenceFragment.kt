@@ -31,6 +31,7 @@ class MainPreferenceFragment : PreferenceFragmentCompat() {
         mCallback = null
         super.onDetach()
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mDatabaseViewModel.database.observe(viewLifecycleOwner) { database ->
             mDatabaseLoaded = database?.loaded == true

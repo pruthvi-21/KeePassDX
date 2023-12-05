@@ -14,9 +14,10 @@ object KeyboardUtil {
     fun Activity.hideKeyboard(): Boolean {
         ContextCompat.getSystemService(this, InputMethodManager::class.java)?.let { inputManager ->
             this.currentFocus?.let { focus ->
-                focus.windowToken?.let {windowToken ->
+                focus.windowToken?.let { windowToken ->
                     return inputManager.hideSoftInputFromWindow(
-                        windowToken, 0)
+                        windowToken, 0
+                    )
                 }
             }
         }

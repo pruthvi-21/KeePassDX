@@ -31,8 +31,10 @@ class SortBottomSheetFragment : BottomSheetDialogFragment() {
         try {
             mListener = context as SortSelectionListener
         } catch (e: ClassCastException) {
-            throw ClassCastException(context.toString()
-                    + " must implement " + SortSelectionListener::class.java.name)
+            throw ClassCastException(
+                context.toString()
+                        + " must implement " + SortSelectionListener::class.java.name
+            )
         }
     }
 
@@ -81,7 +83,9 @@ class SortBottomSheetFragment : BottomSheetDialogFragment() {
         } else {
             // Check if recycle bin at the bottom
             recycleBinBottomView?.isChecked = mRecycleBinBottom
-            recycleBinBottomView?.setOnCheckedChangeListener { _, isChecked -> mRecycleBinBottom = isChecked }
+            recycleBinBottomView?.setOnCheckedChangeListener { _, isChecked ->
+                mRecycleBinBottom = isChecked
+            }
 
             disableRecycleBinBottomOptionIfNaturalOrder()
         }

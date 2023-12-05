@@ -12,7 +12,7 @@ import com.kunzisoft.keepass.settings.preferencedialogfragment.adapter.ListRadio
 
 class DatabaseKeyDerivationPreferenceDialogFragmentCompat
     : DatabaseSavePreferenceDialogFragmentCompat(),
-        ListRadioItemAdapter.RadioItemSelectedCallback<KdfEngine> {
+    ListRadioItemAdapter.RadioItemSelectedCallback<KdfEngine> {
 
     private var kdfEngineSelected: KdfEngine? = null
     private var mKdfAdapter: ListRadioItemAdapter<KdfEngine>? = null

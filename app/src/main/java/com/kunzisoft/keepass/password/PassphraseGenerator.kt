@@ -5,19 +5,23 @@ import me.gosimple.nbvcxz.resources.Generator
 class PassphraseGenerator {
 
     @Throws(IllegalArgumentException::class)
-    fun generatePassphrase(wordCount: Int,
-                           wordSeparator: String,
-                           wordCase: WordCase): String {
+    fun generatePassphrase(
+        wordCount: Int,
+        wordSeparator: String,
+        wordCase: WordCase
+    ): String {
         // From eff_large dictionary
         return when (wordCase) {
             WordCase.LOWER_CASE -> {
                 Generator.generatePassphrase(wordSeparator, wordCount)
             }
+
             WordCase.UPPER_CASE -> {
                 applyWordCase(wordCount, wordSeparator) { word ->
                     word.uppercase()
                 }
             }
+
             WordCase.TITLE_CASE -> {
                 applyWordCase(wordCount, wordSeparator) { word ->
                     word.replaceFirstChar { char -> char.uppercaseChar() }
@@ -26,9 +30,11 @@ class PassphraseGenerator {
         }
     }
 
-    private fun applyWordCase(wordCount: Int,
-                              wordSeparator: String,
-                              wordAction: (word: String) -> String): String {
+    private fun applyWordCase(
+        wordCount: Int,
+        wordSeparator: String,
+        wordAction: (word: String) -> String
+    ): String {
         val splitWords = Generator.generatePassphrase(TEMP_SPLIT, wordCount).split(TEMP_SPLIT)
         val stringBuilder = StringBuilder()
         splitWords.forEach {

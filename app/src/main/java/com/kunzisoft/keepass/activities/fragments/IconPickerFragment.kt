@@ -22,9 +22,9 @@ class IconPickerFragment : DatabaseFragment() {
     private val iconPickerViewModel: IconPickerViewModel by activityViewModels()
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_tabs_pagination, container, false)
     }
@@ -49,8 +49,10 @@ class IconPickerFragment : DatabaseFragment() {
     }
 
     override fun onDatabaseRetrieved(database: ContextualDatabase?) {
-        iconPickerPagerAdapter = IconPickerPagerAdapter(this,
-            if (database?.allowCustomIcons == true) 2 else 1)
+        iconPickerPagerAdapter = IconPickerPagerAdapter(
+            this,
+            if (database?.allowCustomIcons == true) 2 else 1
+        )
         viewPager.adapter = iconPickerPagerAdapter
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = when (position) {

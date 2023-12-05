@@ -6,16 +6,16 @@ import androidx.lifecycle.ViewModel
 
 class AdvancedUnlockViewModel : ViewModel() {
 
-    var allowAutoOpenBiometricPrompt : Boolean = true
+    var allowAutoOpenBiometricPrompt: Boolean = true
     var deviceCredentialAuthSucceeded: Boolean? = null
 
-    val onInitAdvancedUnlockModeRequested : LiveData<Void?> get() = _onInitAdvancedUnlockModeRequested
+    val onInitAdvancedUnlockModeRequested: LiveData<Void?> get() = _onInitAdvancedUnlockModeRequested
     private val _onInitAdvancedUnlockModeRequested = SingleLiveEvent<Void?>()
 
-    val onUnlockAvailabilityCheckRequested : LiveData<Void?> get() = _onUnlockAvailabilityCheckRequested
+    val onUnlockAvailabilityCheckRequested: LiveData<Void?> get() = _onUnlockAvailabilityCheckRequested
     private val _onUnlockAvailabilityCheckRequested = SingleLiveEvent<Void?>()
 
-    val onDatabaseFileLoaded : LiveData<Uri?> get() = _onDatabaseFileLoaded
+    val onDatabaseFileLoaded: LiveData<Uri?> get() = _onDatabaseFileLoaded
     private val _onDatabaseFileLoaded = SingleLiveEvent<Uri?>()
 
     fun initAdvancedUnlockMode() {

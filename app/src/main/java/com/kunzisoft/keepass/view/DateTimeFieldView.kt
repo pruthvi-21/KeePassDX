@@ -14,10 +14,11 @@ import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.DateInstant
 import com.kunzisoft.keepass.utils.TimeUtil.getDateTimeString
 
-class DateTimeFieldView @JvmOverloads constructor(context: Context,
-                                                  attrs: AttributeSet? = null,
-                                                  defStyle: Int = 0)
-    : FrameLayout(context, attrs, defStyle), GenericDateTimeFieldView {
+class DateTimeFieldView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : FrameLayout(context, attrs, defStyle), GenericDateTimeFieldView {
 
     private var dateTimeLabelView: TextView
     private var dateTimeValueView: TextView
@@ -53,9 +54,11 @@ class DateTimeFieldView @JvmOverloads constructor(context: Context,
             if (isExpires) {
                 // Add strike
                 SpannableString(dateTimeString).apply {
-                    setSpan(StrikethroughSpan(),
+                    setSpan(
+                        StrikethroughSpan(),
                         0, dateTimeString.length,
-                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
                 }
             } else {
                 dateTimeString

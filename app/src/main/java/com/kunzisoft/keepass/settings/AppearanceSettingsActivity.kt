@@ -1,7 +1,6 @@
 package com.kunzisoft.keepass.settings
 
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.fragment.app.Fragment
 
 

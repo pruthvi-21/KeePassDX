@@ -44,8 +44,10 @@ class IconEditDialogFragment : DatabaseDialogFragment() {
             nameTextView = root.findViewById(R.id.icon_edit_name)
 
             if (savedInstanceState != null
-                    && savedInstanceState.containsKey(KEY_CUSTOM_ICON_ID)) {
-                mCustomIcon = savedInstanceState.getParcelableCompat(KEY_CUSTOM_ICON_ID) ?: mCustomIcon
+                && savedInstanceState.containsKey(KEY_CUSTOM_ICON_ID)
+            ) {
+                mCustomIcon =
+                    savedInstanceState.getParcelableCompat(KEY_CUSTOM_ICON_ID) ?: mCustomIcon
             } else {
                 arguments?.apply {
                     if (containsKey(KEY_CUSTOM_ICON_ID)) {
@@ -56,20 +58,20 @@ class IconEditDialogFragment : DatabaseDialogFragment() {
 
             val builder = AlertDialog.Builder(activity)
             builder.setView(root)
-                    .setPositiveButton(android.R.string.ok) { _, _ ->
-                        retrieveIconInfoFromViews()
-                        mCustomIcon?.let { customIcon ->
-                            mIconPickerViewModel.updateCustomIcon(
-                                IconPickerViewModel.IconCustomState(customIcon, false)
-                            )
-                        }
-                    }
-                    .setNegativeButton(android.R.string.cancel) { _, _ ->
-                        // Do nothing
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    retrieveIconInfoFromViews()
+                    mCustomIcon?.let { customIcon ->
                         mIconPickerViewModel.updateCustomIcon(
-                            IconPickerViewModel.IconCustomState(null, false)
+                            IconPickerViewModel.IconCustomState(customIcon, false)
                         )
                     }
+                }
+                .setNegativeButton(android.R.string.cancel) { _, _ ->
+                    // Do nothing
+                    mIconPickerViewModel.updateCustomIcon(
+                        IconPickerViewModel.IconCustomState(null, false)
+                    )
+                }
 
             return builder.create()
         }

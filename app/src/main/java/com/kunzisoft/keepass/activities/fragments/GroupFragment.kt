@@ -67,13 +67,14 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
                 mGroupViewModel.assignPosition(getFirstVisiblePosition())
             }
         }
+
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
             onScrollListener?.onScrolled(dy)
         }
     }
 
-    private val menuProvider: MenuProvider = object: MenuProvider {
+    private val menuProvider: MenuProvider = object : MenuProvider {
         override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
             menuInflater.inflate(R.menu.tree, menu)
         }
@@ -102,6 +103,7 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
                     }
                     true
                 }
+
                 else -> false
             }
         }
@@ -115,8 +117,10 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
             nodeClickListener = context as NodeClickListener
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
-            throw ClassCastException(context.toString()
-                    + " must implement " + NodesAdapter.NodeClickCallback::class.java.name)
+            throw ClassCastException(
+                context.toString()
+                        + " must implement " + NodesAdapter.NodeClickCallback::class.java.name
+            )
         }
 
         try {
@@ -126,15 +130,18 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
             // Context menu can be omit
             Log.w(
                 TAG, context.toString()
-                    + " must implement " + RecyclerView.OnScrollListener::class.java.name)
+                        + " must implement " + RecyclerView.OnScrollListener::class.java.name
+            )
         }
 
         try {
             groupRefreshed = context as GroupRefreshedListener
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
-            throw ClassCastException(context.toString()
-                    + " must implement " + GroupRefreshedListener::class.java.name)
+            throw ClassCastException(
+                context.toString()
+                        + " must implement " + GroupRefreshedListener::class.java.name
+            )
         }
     }
 
@@ -170,7 +177,10 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
                             }
                         }
 
-                        override fun onNodeLongClick(database: ContextualDatabase, node: Node): Boolean {
+                        override fun onNodeLongClick(
+                            database: ContextualDatabase,
+                            node: Node
+                        ): Boolean {
                             if (nodeActionPasteMode == PasteMode.UNDEFINED) {
                                 // Select the first item after a long click
                                 if (!listActionNodes.contains(node))
@@ -205,7 +215,11 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         // To apply theme
         return inflater.inflate(R.layout.fragment_nodes, container, false)
@@ -263,7 +277,7 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
                 // Thrown an exception when sort cannot be performed
                 mAdapter?.rebuildList(currentGroup)
             }
-        } catch (e:Exception) {
+        } catch (e: Exception) {
             Log.e(TAG, "Unable to rebuild the list", e)
         }
 
@@ -277,8 +291,10 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
         groupRefreshed?.onGroupRefreshed()
     }
 
-    override fun onSortSelected(sortNodeEnum: SortNodeEnum,
-                                sortNodeParameters: SortNodeEnum.SortNodeParameters) {
+    override fun onSortSelected(
+        sortNodeEnum: SortNodeEnum,
+        sortNodeParameters: SortNodeEnum.SortNodeParameters
+    ) {
         // Save setting
         context?.let {
             PreferencesUtil.saveNodeSort(it, sortNodeEnum, sortNodeParameters)
@@ -288,15 +304,17 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
         try {
             mAdapter?.notifyChangeSort(sortNodeEnum, sortNodeParameters)
             rebuildList()
-        } catch (e:Exception) {
+        } catch (e: Exception) {
             Log.e(TAG, "Unable to sort the list", e)
         }
     }
 
-    fun actionNodesCallback(database: ContextualDatabase,
-                            nodes: List<Node>,
-                            menuListener: NodesActionMenuListener?,
-                            onDestroyActionMode: (mode: ActionMode?) -> Unit) : ActionMode.Callback {
+    fun actionNodesCallback(
+        database: ContextualDatabase,
+        nodes: List<Node>,
+        menuListener: NodesActionMenuListener?,
+        onDestroyActionMode: (mode: ActionMode?) -> Unit
+    ): ActionMode.Callback {
 
         return object : ActionMode.Callback {
 
@@ -318,7 +336,8 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
                     if (nodes.size == 1) {
                         // Edition
                         if (database.isReadOnly
-                                || (mRecycleBinEnable && nodes[0] == mRecycleBin)) {
+                            || (mRecycleBinEnable && nodes[0] == mRecycleBin)
+                        ) {
                             menu?.removeItem(R.id.menu_edit)
                         }
                     } else {
@@ -333,13 +352,15 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
 
                     // Copy (not allowed for group)
                     if (database.isReadOnly
-                            || nodes.any { it.type == Type.GROUP }) {
+                        || nodes.any { it.type == Type.GROUP }
+                    ) {
                         menu?.removeItem(R.id.menu_copy)
                     }
 
                     // Deletion
                     if (database.isReadOnly
-                            || (mRecycleBinEnable && nodes.any { it == mRecycleBin })) {
+                        || (mRecycleBinEnable && nodes.any { it == mRecycleBin })
+                    ) {
                         menu?.removeItem(R.id.menu_delete)
                     }
                 }
@@ -362,6 +383,7 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
                         nodeActionSelectionMode = false
                         returnValue
                     }
+
                     R.id.menu_move -> {
                         nodeActionPasteMode = PasteMode.PASTE_FROM_MOVE
                         mAdapter?.unselectActionNodes()
@@ -369,13 +391,16 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
                         nodeActionSelectionMode = false
                         returnValue
                     }
+
                     R.id.menu_delete -> menuListener.onDeleteMenuClick(database, nodes)
                     R.id.menu_paste -> {
-                        val returnValue = menuListener.onPasteMenuClick(database, nodeActionPasteMode, nodes)
+                        val returnValue =
+                            menuListener.onPasteMenuClick(database, nodeActionPasteMode, nodes)
                         nodeActionPasteMode = PasteMode.UNDEFINED
                         nodeActionSelectionMode = false
                         returnValue
                     }
+
                     else -> false
                 }
             }
@@ -408,7 +433,11 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
         fun onCopyMenuClick(database: ContextualDatabase, nodes: List<Node>): Boolean
         fun onMoveMenuClick(database: ContextualDatabase, nodes: List<Node>): Boolean
         fun onDeleteMenuClick(database: ContextualDatabase, nodes: List<Node>): Boolean
-        fun onPasteMenuClick(database: ContextualDatabase, pasteMode: PasteMode?, nodes: List<Node>): Boolean
+        fun onPasteMenuClick(
+            database: ContextualDatabase,
+            pasteMode: PasteMode?,
+            nodes: List<Node>
+        ): Boolean
     }
 
     enum class PasteMode {

@@ -17,8 +17,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-abstract class IconFragment<T: IconImageDraw> : DatabaseFragment(),
-        IconPickerAdapter.IconPickerListener<T> {
+abstract class IconFragment<T : IconImageDraw> : DatabaseFragment(),
+    IconPickerAdapter.IconPickerListener<T> {
 
     protected lateinit var iconsGridView: RecyclerView
     protected lateinit var iconPickerAdapter: IconPickerAdapter<T>
@@ -30,9 +30,11 @@ abstract class IconFragment<T: IconImageDraw> : DatabaseFragment(),
 
     abstract fun defineIconList(database: ContextualDatabase?)
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         return inflater.inflate(retrieveMainLayoutId(), container, false)
     }
 

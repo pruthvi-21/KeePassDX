@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.activities.StylishActivity
 import com.kunzisoft.keepass.utils.getPackageInfoCompat
 import org.joda.time.DateTime
 
@@ -43,20 +42,26 @@ class AboutActivity : StylishActivity() {
 
         findViewById<TextView>(R.id.activity_about_licence_text).apply {
             movementMethod = LinkMovementMethod.getInstance()
-            text = HtmlCompat.fromHtml(getString(R.string.html_about_licence, DateTime().year),
-                    HtmlCompat.FROM_HTML_MODE_LEGACY)
+            text = HtmlCompat.fromHtml(
+                getString(R.string.html_about_licence, DateTime().year),
+                HtmlCompat.FROM_HTML_MODE_LEGACY
+            )
         }
 
         findViewById<TextView>(R.id.activity_about_privacy_text).apply {
             movementMethod = LinkMovementMethod.getInstance()
-            text = HtmlCompat.fromHtml(getString(R.string.html_about_privacy),
-                HtmlCompat.FROM_HTML_MODE_LEGACY)
+            text = HtmlCompat.fromHtml(
+                getString(R.string.html_about_privacy),
+                HtmlCompat.FROM_HTML_MODE_LEGACY
+            )
         }
 
         findViewById<TextView>(R.id.activity_about_contribution_text).apply {
             movementMethod = LinkMovementMethod.getInstance()
-            text = HtmlCompat.fromHtml(getString(R.string.html_about_contribution),
-                    HtmlCompat.FROM_HTML_MODE_LEGACY)
+            text = HtmlCompat.fromHtml(
+                getString(R.string.html_about_contribution),
+                HtmlCompat.FROM_HTML_MODE_LEGACY
+            )
         }
     }
 

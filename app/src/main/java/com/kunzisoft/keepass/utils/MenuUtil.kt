@@ -19,14 +19,17 @@ object MenuUtil {
     /*
      * @param checkLock Check the time lock before launch settings in LockingActivity
      */
-    fun onDefaultMenuOptionsItemSelected(activity: Activity,
-                                         item: MenuItem,
-                                         timeoutEnable: Boolean = false) {
+    fun onDefaultMenuOptionsItemSelected(
+        activity: Activity,
+        item: MenuItem,
+        timeoutEnable: Boolean = false
+    ) {
         when (item.itemId) {
             R.id.menu_app_settings -> {
                 // To avoid flickering when launch settings in a LockingActivity
                 SettingsActivity.launch(activity, timeoutEnable)
             }
+
             R.id.menu_about -> {
                 val intent = Intent(activity, AboutActivity::class.java)
                 activity.startActivity(intent)

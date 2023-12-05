@@ -16,7 +16,8 @@ class AutofillSettingsFragment : PreferenceFragmentCompat() {
         // Load the preferences from an XML resource
         setPreferencesFromResource(R.xml.preferences_autofill, rootKey)
 
-        val autofillInlineSuggestionsPreference: TwoStatePreference? = findPreference(getString(R.string.autofill_inline_suggestions_key))
+        val autofillInlineSuggestionsPreference: TwoStatePreference? =
+            findPreference(getString(R.string.autofill_inline_suggestions_key))
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
             autofillInlineSuggestionsPreference?.isVisible = false
         }
@@ -29,11 +30,15 @@ class AutofillSettingsFragment : PreferenceFragmentCompat() {
 
         when (preference.key) {
             getString(R.string.autofill_application_id_blocklist_key) -> {
-                dialogFragment = AutofillBlocklistAppIdPreferenceDialogFragmentCompat.newInstance(preference.key)
+                dialogFragment =
+                    AutofillBlocklistAppIdPreferenceDialogFragmentCompat.newInstance(preference.key)
             }
+
             getString(R.string.autofill_web_domain_blocklist_key) -> {
-                dialogFragment = AutofillBlocklistWebDomainPreferenceDialogFragmentCompat.newInstance(preference.key)
+                dialogFragment =
+                    AutofillBlocklistWebDomainPreferenceDialogFragmentCompat.newInstance(preference.key)
             }
+
             else -> otherDialogFragment = true
         }
 

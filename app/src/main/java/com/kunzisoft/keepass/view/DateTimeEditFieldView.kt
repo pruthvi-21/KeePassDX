@@ -12,10 +12,11 @@ import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.DateInstant
 import com.kunzisoft.keepass.utils.TimeUtil.getDateTimeString
 
-class DateTimeEditFieldView @JvmOverloads constructor(context: Context,
-                                                      attrs: AttributeSet? = null,
-                                                      defStyle: Int = 0)
-    : FrameLayout(context, attrs, defStyle), GenericDateTimeFieldView {
+class DateTimeEditFieldView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : FrameLayout(context, attrs, defStyle), GenericDateTimeFieldView {
 
     private var entryExpiresLabelView: TextInputLayout
     private var entryExpiresTextView: TextView

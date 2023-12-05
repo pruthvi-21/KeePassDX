@@ -6,14 +6,16 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.kunzisoft.keepass.database.element.MasterCredential
 import com.kunzisoft.keepass.hardware.HardwareKey
-import com.kunzisoft.keepass.utils.readParcelableCompat
 import com.kunzisoft.keepass.utils.getUriInputStream
 import com.kunzisoft.keepass.utils.readEnum
+import com.kunzisoft.keepass.utils.readParcelableCompat
 import com.kunzisoft.keepass.utils.writeEnum
 
-data class MainCredential(var password: String? = null,
-                          var keyFileUri: Uri? = null,
-                          var hardwareKey: HardwareKey? = null): Parcelable {
+data class MainCredential(
+    var password: String? = null,
+    var keyFileUri: Uri? = null,
+    var hardwareKey: HardwareKey? = null
+) : Parcelable {
 
     constructor(parcel: Parcel) : this() {
         password = parcel.readString()
@@ -61,8 +63,10 @@ data class MainCredential(var password: String? = null,
         )
     }
 
-    private fun getKeyFileData(contentResolver: ContentResolver,
-                               keyFileUri: Uri): ByteArray? {
+    private fun getKeyFileData(
+        contentResolver: ContentResolver,
+        keyFileUri: Uri
+    ): ByteArray? {
         contentResolver.getUriInputStream(keyFileUri)?.use { keyFileInputStream ->
             return keyFileInputStream.readBytes()
         }

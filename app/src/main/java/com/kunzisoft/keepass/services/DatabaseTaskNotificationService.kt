@@ -17,10 +17,24 @@ import com.kunzisoft.keepass.app.database.FileDatabaseHistoryAction
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.MainCredential
 import com.kunzisoft.keepass.database.ProgressMessage
-import com.kunzisoft.keepass.database.action.*
+import com.kunzisoft.keepass.database.action.CreateDatabaseRunnable
+import com.kunzisoft.keepass.database.action.LoadDatabaseRunnable
+import com.kunzisoft.keepass.database.action.MergeDatabaseRunnable
+import com.kunzisoft.keepass.database.action.ReloadDatabaseRunnable
+import com.kunzisoft.keepass.database.action.RemoveUnlinkedDataDatabaseRunnable
+import com.kunzisoft.keepass.database.action.SaveDatabaseRunnable
+import com.kunzisoft.keepass.database.action.UpdateCompressionBinariesDatabaseRunnable
 import com.kunzisoft.keepass.database.action.history.DeleteEntryHistoryDatabaseRunnable
 import com.kunzisoft.keepass.database.action.history.RestoreEntryHistoryDatabaseRunnable
-import com.kunzisoft.keepass.database.action.node.*
+import com.kunzisoft.keepass.database.action.node.ActionNodesValues
+import com.kunzisoft.keepass.database.action.node.AddEntryRunnable
+import com.kunzisoft.keepass.database.action.node.AddGroupRunnable
+import com.kunzisoft.keepass.database.action.node.AfterActionNodesFinish
+import com.kunzisoft.keepass.database.action.node.CopyNodesRunnable
+import com.kunzisoft.keepass.database.action.node.DeleteNodesRunnable
+import com.kunzisoft.keepass.database.action.node.MoveNodesRunnable
+import com.kunzisoft.keepass.database.action.node.UpdateEntryRunnable
+import com.kunzisoft.keepass.database.action.node.UpdateGroupRunnable
 import com.kunzisoft.keepass.database.element.Entry
 import com.kunzisoft.keepass.database.element.Group
 import com.kunzisoft.keepass.database.element.database.CompressionAlgorithm
@@ -43,9 +57,17 @@ import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.utils.getParcelableList
 import com.kunzisoft.keepass.utils.putParcelableList
 import com.kunzisoft.keepass.viewmodels.FileDatabaseInfo
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
-import java.util.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import java.util.UUID
 
 open class DatabaseTaskNotificationService : LockNotificationService(), ProgressTaskUpdater {
 
@@ -63,6 +85,7 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
     private var mDatabaseInfoListeners = mutableListOf<DatabaseInfoListener>()
     private var mActionTaskBinder = ActionTaskBinder()
     private var mActionTaskListeners = mutableListOf<ActionTaskListener>()
+
     // Channel to connect asynchronously a response
     private var mResponseChallengeChannel: Channel<ByteArray?>? = null
 
@@ -128,13 +151,16 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             database: ContextualDatabase,
             progressMessage: ProgressMessage
         )
+
         fun onActionUpdated(
             database: ContextualDatabase,
             progressMessage: ProgressMessage
         )
+
         fun onActionStopped(
             database: ContextualDatabase
         )
+
         fun onActionFinished(
             database: ContextualDatabase,
             actionTask: String,
@@ -153,7 +179,8 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             mDatabase?.fileUri?.let {
                 val previousDatabaseInfo = mSnapFileDatabaseInfo
                 val lastFileDatabaseInfo = SnapFileDatabaseInfo.fromFileDatabaseInfo(
-                    FileDatabaseInfo(applicationContext, it))
+                    FileDatabaseInfo(applicationContext, it)
+                )
 
                 val oldDatabaseModification = previousDatabaseInfo?.lastModification
                 val newDatabaseModification = lastFileDatabaseInfo.lastModification
@@ -173,13 +200,17 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
 
                 if (conditionExists || conditionLastModification) {
                     // Show the dialog only if it's real new info and not a delay after a save
-                    Log.i(TAG, "Database file modified " +
-                            "$previousDatabaseInfo != $lastFileDatabaseInfo ")
+                    Log.i(
+                        TAG, "Database file modified " +
+                                "$previousDatabaseInfo != $lastFileDatabaseInfo "
+                    )
                     // Call listener to indicate a change in database info
                     if (!mSaveState && previousDatabaseInfo != null) {
                         mDatabaseInfoListeners.forEach { listener ->
-                            listener.onDatabaseInfoChanged(previousDatabaseInfo,
-                                lastFileDatabaseInfo)
+                            listener.onDatabaseInfoChanged(
+                                previousDatabaseInfo,
+                                lastFileDatabaseInfo
+                            )
                         }
                     }
                     mSnapFileDatabaseInfo = lastFileDatabaseInfo
@@ -194,7 +225,8 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         try {
             mDatabase?.fileUri?.let {
                 mSnapFileDatabaseInfo = SnapFileDatabaseInfo.fromFileDatabaseInfo(
-                    FileDatabaseInfo(applicationContext, it))
+                    FileDatabaseInfo(applicationContext, it)
+                )
                 Log.i(TAG, "Database file saved $mSnapFileDatabaseInfo")
             }
         } catch (e: Exception) {
@@ -300,18 +332,58 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             ACTION_DATABASE_LOAD_TASK -> buildDatabaseLoadActionTask(intent, database)
             ACTION_DATABASE_MERGE_TASK -> buildDatabaseMergeActionTask(intent, database)
             ACTION_DATABASE_RELOAD_TASK -> buildDatabaseReloadActionTask(database)
-            ACTION_DATABASE_ASSIGN_CREDENTIAL_TASK -> buildDatabaseAssignCredentialActionTask(intent, database)
-            ACTION_DATABASE_CREATE_GROUP_TASK -> buildDatabaseCreateGroupActionTask(intent, database)
-            ACTION_DATABASE_UPDATE_GROUP_TASK -> buildDatabaseUpdateGroupActionTask(intent, database)
-            ACTION_DATABASE_CREATE_ENTRY_TASK -> buildDatabaseCreateEntryActionTask(intent, database)
-            ACTION_DATABASE_UPDATE_ENTRY_TASK -> buildDatabaseUpdateEntryActionTask(intent, database)
+            ACTION_DATABASE_ASSIGN_CREDENTIAL_TASK -> buildDatabaseAssignCredentialActionTask(
+                intent,
+                database
+            )
+
+            ACTION_DATABASE_CREATE_GROUP_TASK -> buildDatabaseCreateGroupActionTask(
+                intent,
+                database
+            )
+
+            ACTION_DATABASE_UPDATE_GROUP_TASK -> buildDatabaseUpdateGroupActionTask(
+                intent,
+                database
+            )
+
+            ACTION_DATABASE_CREATE_ENTRY_TASK -> buildDatabaseCreateEntryActionTask(
+                intent,
+                database
+            )
+
+            ACTION_DATABASE_UPDATE_ENTRY_TASK -> buildDatabaseUpdateEntryActionTask(
+                intent,
+                database
+            )
+
             ACTION_DATABASE_COPY_NODES_TASK -> buildDatabaseCopyNodesActionTask(intent, database)
             ACTION_DATABASE_MOVE_NODES_TASK -> buildDatabaseMoveNodesActionTask(intent, database)
-            ACTION_DATABASE_DELETE_NODES_TASK -> buildDatabaseDeleteNodesActionTask(intent, database)
-            ACTION_DATABASE_RESTORE_ENTRY_HISTORY -> buildDatabaseRestoreEntryHistoryActionTask(intent, database)
-            ACTION_DATABASE_DELETE_ENTRY_HISTORY -> buildDatabaseDeleteEntryHistoryActionTask(intent, database)
-            ACTION_DATABASE_UPDATE_COMPRESSION_TASK -> buildDatabaseUpdateCompressionActionTask(intent, database)
-            ACTION_DATABASE_REMOVE_UNLINKED_DATA_TASK -> buildDatabaseRemoveUnlinkedDataActionTask(intent, database)
+            ACTION_DATABASE_DELETE_NODES_TASK -> buildDatabaseDeleteNodesActionTask(
+                intent,
+                database
+            )
+
+            ACTION_DATABASE_RESTORE_ENTRY_HISTORY -> buildDatabaseRestoreEntryHistoryActionTask(
+                intent,
+                database
+            )
+
+            ACTION_DATABASE_DELETE_ENTRY_HISTORY -> buildDatabaseDeleteEntryHistoryActionTask(
+                intent,
+                database
+            )
+
+            ACTION_DATABASE_UPDATE_COMPRESSION_TASK -> buildDatabaseUpdateCompressionActionTask(
+                intent,
+                database
+            )
+
+            ACTION_DATABASE_REMOVE_UNLINKED_DATA_TASK -> buildDatabaseRemoveUnlinkedDataActionTask(
+                intent,
+                database
+            )
+
             ACTION_DATABASE_UPDATE_NAME_TASK,
             ACTION_DATABASE_UPDATE_DESCRIPTION_TASK,
             ACTION_DATABASE_UPDATE_DEFAULT_USERNAME_TASK,
@@ -324,7 +396,11 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             ACTION_DATABASE_UPDATE_KEY_DERIVATION_TASK,
             ACTION_DATABASE_UPDATE_MEMORY_USAGE_TASK,
             ACTION_DATABASE_UPDATE_PARALLELISM_TASK,
-            ACTION_DATABASE_UPDATE_ITERATIONS_TASK -> buildDatabaseUpdateElementActionTask(intent, database)
+            ACTION_DATABASE_UPDATE_ITERATIONS_TASK -> buildDatabaseUpdateElementActionTask(
+                intent,
+                database
+            )
+
             ACTION_DATABASE_SAVE -> buildDatabaseSaveActionTask(intent, database)
             ACTION_CHALLENGE_RESPONDED -> buildChallengeRespondedActionTask(intent)
             else -> null
@@ -441,6 +517,7 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             -> {
                 START_STICKY
             }
+
             else -> {
                 // Relaunch action if failed
                 START_REDELIVER_INTENT
@@ -466,9 +543,13 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
                 ACTION_DATABASE_CREATE_TASK -> R.string.creating_database
                 ACTION_DATABASE_LOAD_TASK,
                 ACTION_DATABASE_MERGE_TASK,
-                ACTION_DATABASE_RELOAD_TASK, -> R.string.loading_database
+                ACTION_DATABASE_RELOAD_TASK,
+                -> R.string.loading_database
+
                 ACTION_DATABASE_ASSIGN_CREDENTIAL_TASK,
-                ACTION_DATABASE_SAVE, -> R.string.saving_database
+                ACTION_DATABASE_SAVE,
+                -> R.string.saving_database
+
                 else -> {
                     if (mSaveState)
                         R.string.saving_database
@@ -490,8 +571,10 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         val notificationBuilder = buildNewNotification().apply {
             setSmallIcon(iconId)
             intent?.let {
-                setContentTitle(getString(
-                    intent.getIntExtra(DATABASE_TASK_TITLE_KEY, mProgressMessage.titleId))
+                setContentTitle(
+                    getString(
+                        intent.getIntExtra(DATABASE_TASK_TITLE_KEY, mProgressMessage.titleId)
+                    )
                 )
             }
             setAutoCancel(false)
@@ -690,7 +773,8 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             val mainCredential: MainCredential =
                 intent.getParcelableExtraCompat(MAIN_CREDENTIAL_KEY) ?: MainCredential()
             if (databaseUri == null) return null
-            return CreateDatabaseRunnable(this,
+            return CreateDatabaseRunnable(
+                this,
                 database,
                 databaseUri,
                 getString(R.string.database_default_name),
@@ -914,7 +998,8 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             val newGroup: Group? = intent.getParcelableExtraCompat(GROUP_KEY)
             if (parentId == null || newGroup == null) return null
             database.getGroupById(parentId)?.let { parent ->
-                AddGroupRunnable(this,
+                AddGroupRunnable(
+                    this,
                     database,
                     newGroup,
                     parent,
@@ -941,7 +1026,8 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             val newGroup: Group? = intent.getParcelableExtraCompat(GROUP_KEY)
             if (groupId == null || newGroup == null) return null
             database.getGroupById(groupId)?.let { oldGroup ->
-                UpdateGroupRunnable(this,
+                UpdateGroupRunnable(
+                    this,
                     database,
                     oldGroup,
                     newGroup,
@@ -968,7 +1054,8 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             val newEntry: Entry? = intent.getParcelableExtraCompat(ENTRY_KEY)
             if (parentId == null || newEntry == null) return null
             database.getGroupById(parentId)?.let { parent ->
-                AddEntryRunnable(this,
+                AddEntryRunnable(
+                    this,
                     database,
                     newEntry,
                     parent,
@@ -995,7 +1082,8 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             val newEntry: Entry? = intent.getParcelableExtraCompat(ENTRY_KEY)
             if (entryId == null || newEntry == null) return null
             database.getEntryById(entryId)?.let { oldEntry ->
-                UpdateEntryRunnable(this,
+                UpdateEntryRunnable(
+                    this,
                     database,
                     oldEntry,
                     newEntry,
@@ -1021,7 +1109,8 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         ) {
             val parentId: NodeId<*> = intent.getParcelableExtraCompat(PARENT_ID_KEY) ?: return null
             database.getGroupById(parentId)?.let { newParent ->
-                CopyNodesRunnable(this,
+                CopyNodesRunnable(
+                    this,
                     database,
                     getListNodesFromBundle(database, intent.extras!!),
                     newParent,
@@ -1047,7 +1136,8 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         ) {
             val parentId: NodeId<*> = intent.getParcelableExtraCompat(PARENT_ID_KEY) ?: return null
             database.getGroupById(parentId)?.let { newParent ->
-                MoveNodesRunnable(this,
+                MoveNodesRunnable(
+                    this,
                     database,
                     getListNodesFromBundle(database, intent.extras!!),
                     newParent,
@@ -1070,7 +1160,8 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             && intent.hasExtra(ENTRIES_ID_KEY)
             && intent.hasExtra(SAVE_DATABASE_KEY)
         ) {
-            DeleteNodesRunnable(this,
+            DeleteNodesRunnable(
+                this,
                 database,
                 getListNodesFromBundle(database, intent.extras!!),
                 resources.getString(R.string.recycle_bin),
@@ -1094,7 +1185,8 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         ) {
             val entryId: NodeId<UUID> = intent.getParcelableExtraCompat(ENTRY_ID_KEY) ?: return null
             database.getEntryById(entryId)?.let { mainEntry ->
-                RestoreEntryHistoryDatabaseRunnable(this,
+                RestoreEntryHistoryDatabaseRunnable(
+                    this,
                     database,
                     mainEntry,
                     intent.getIntExtra(ENTRY_HISTORY_POSITION_KEY, -1),
@@ -1118,7 +1210,8 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         ) {
             val entryId: NodeId<UUID> = intent.getParcelableExtraCompat(ENTRY_ID_KEY) ?: return null
             database.getEntryById(entryId)?.let { mainEntry ->
-                DeleteEntryHistoryDatabaseRunnable(this,
+                DeleteEntryHistoryDatabaseRunnable(
+                    this,
                     database,
                     mainEntry,
                     intent.getIntExtra(ENTRY_HISTORY_POSITION_KEY, -1),
@@ -1143,7 +1236,8 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             val oldElement: CompressionAlgorithm? = intent.getParcelableExtraCompat(OLD_ELEMENT_KEY)
             val newElement: CompressionAlgorithm? = intent.getParcelableExtraCompat(NEW_ELEMENT_KEY)
             if (oldElement == null || newElement == null) return null
-            return UpdateCompressionBinariesDatabaseRunnable(this,
+            return UpdateCompressionBinariesDatabaseRunnable(
+                this,
                 database,
                 oldElement,
                 newElement,
@@ -1165,7 +1259,8 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         database: ContextualDatabase,
     ): ActionRunnable? {
         return if (intent.hasExtra(SAVE_DATABASE_KEY)) {
-            return RemoveUnlinkedDataDatabaseRunnable(this,
+            return RemoveUnlinkedDataDatabaseRunnable(
+                this,
                 database,
                 !database.isReadOnly && intent.getBooleanExtra(SAVE_DATABASE_KEY, false)
             ) { hardwareKey, seed ->
@@ -1214,14 +1309,16 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
             if (intent.hasExtra(DATABASE_URI_KEY)) {
                 databaseCopyUri = intent.getParcelableExtraCompat(DATABASE_URI_KEY)
             }
-            SaveDatabaseRunnable(this,
+            SaveDatabaseRunnable(
+                this,
                 database,
                 !database.isReadOnly && intent.getBooleanExtra(SAVE_DATABASE_KEY, false),
                 null,
                 { hardwareKey, seed ->
                     retrieveResponseFromChallenge(hardwareKey, seed)
                 },
-                databaseCopyUri)
+                databaseCopyUri
+            )
         } else {
             null
         }
@@ -1238,6 +1335,7 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
                         }
                     }
                 }
+
                 override fun onFinishRun() {}
             }
         } else {
@@ -1249,7 +1347,8 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
 
         private val TAG = DatabaseTaskNotificationService::class.java.name
 
-        private const val CHANNEL_DATABASE_ID = "com.kunzisoft.keepass.notification.channel.database"
+        private const val CHANNEL_DATABASE_ID =
+            "com.kunzisoft.keepass.notification.channel.database"
 
         const val ACTION_DATABASE_CREATE_TASK = "ACTION_DATABASE_CREATE_TASK"
         const val ACTION_DATABASE_LOAD_TASK = "ACTION_DATABASE_LOAD_TASK"
@@ -1266,19 +1365,30 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         const val ACTION_DATABASE_RESTORE_ENTRY_HISTORY = "ACTION_DATABASE_RESTORE_ENTRY_HISTORY"
         const val ACTION_DATABASE_DELETE_ENTRY_HISTORY = "ACTION_DATABASE_DELETE_ENTRY_HISTORY"
         const val ACTION_DATABASE_UPDATE_NAME_TASK = "ACTION_DATABASE_UPDATE_NAME_TASK"
-        const val ACTION_DATABASE_UPDATE_DESCRIPTION_TASK = "ACTION_DATABASE_UPDATE_DESCRIPTION_TASK"
-        const val ACTION_DATABASE_UPDATE_DEFAULT_USERNAME_TASK = "ACTION_DATABASE_UPDATE_DEFAULT_USERNAME_TASK"
+        const val ACTION_DATABASE_UPDATE_DESCRIPTION_TASK =
+            "ACTION_DATABASE_UPDATE_DESCRIPTION_TASK"
+        const val ACTION_DATABASE_UPDATE_DEFAULT_USERNAME_TASK =
+            "ACTION_DATABASE_UPDATE_DEFAULT_USERNAME_TASK"
         const val ACTION_DATABASE_UPDATE_COLOR_TASK = "ACTION_DATABASE_UPDATE_COLOR_TASK"
-        const val ACTION_DATABASE_UPDATE_COMPRESSION_TASK = "ACTION_DATABASE_UPDATE_COMPRESSION_TASK"
-        const val ACTION_DATABASE_REMOVE_UNLINKED_DATA_TASK = "ACTION_DATABASE_REMOVE_UNLINKED_DATA_TASK"
-        const val ACTION_DATABASE_UPDATE_RECYCLE_BIN_TASK = "ACTION_DATABASE_UPDATE_RECYCLE_BIN_TASK"
-        const val ACTION_DATABASE_UPDATE_TEMPLATES_GROUP_TASK = "ACTION_DATABASE_UPDATE_TEMPLATES_GROUP_TASK"
-        const val ACTION_DATABASE_UPDATE_MAX_HISTORY_ITEMS_TASK = "ACTION_DATABASE_UPDATE_MAX_HISTORY_ITEMS_TASK"
-        const val ACTION_DATABASE_UPDATE_MAX_HISTORY_SIZE_TASK ="ACTION_DATABASE_UPDATE_MAX_HISTORY_SIZE_TASK"
+        const val ACTION_DATABASE_UPDATE_COMPRESSION_TASK =
+            "ACTION_DATABASE_UPDATE_COMPRESSION_TASK"
+        const val ACTION_DATABASE_REMOVE_UNLINKED_DATA_TASK =
+            "ACTION_DATABASE_REMOVE_UNLINKED_DATA_TASK"
+        const val ACTION_DATABASE_UPDATE_RECYCLE_BIN_TASK =
+            "ACTION_DATABASE_UPDATE_RECYCLE_BIN_TASK"
+        const val ACTION_DATABASE_UPDATE_TEMPLATES_GROUP_TASK =
+            "ACTION_DATABASE_UPDATE_TEMPLATES_GROUP_TASK"
+        const val ACTION_DATABASE_UPDATE_MAX_HISTORY_ITEMS_TASK =
+            "ACTION_DATABASE_UPDATE_MAX_HISTORY_ITEMS_TASK"
+        const val ACTION_DATABASE_UPDATE_MAX_HISTORY_SIZE_TASK =
+            "ACTION_DATABASE_UPDATE_MAX_HISTORY_SIZE_TASK"
         const val ACTION_DATABASE_UPDATE_ENCRYPTION_TASK = "ACTION_DATABASE_UPDATE_ENCRYPTION_TASK"
-        const val ACTION_DATABASE_UPDATE_KEY_DERIVATION_TASK ="ACTION_DATABASE_UPDATE_KEY_DERIVATION_TASK"
-        const val ACTION_DATABASE_UPDATE_MEMORY_USAGE_TASK ="ACTION_DATABASE_UPDATE_MEMORY_USAGE_TASK"
-        const val ACTION_DATABASE_UPDATE_PARALLELISM_TASK ="ACTION_DATABASE_UPDATE_PARALLELISM_TASK"
+        const val ACTION_DATABASE_UPDATE_KEY_DERIVATION_TASK =
+            "ACTION_DATABASE_UPDATE_KEY_DERIVATION_TASK"
+        const val ACTION_DATABASE_UPDATE_MEMORY_USAGE_TASK =
+            "ACTION_DATABASE_UPDATE_MEMORY_USAGE_TASK"
+        const val ACTION_DATABASE_UPDATE_PARALLELISM_TASK =
+            "ACTION_DATABASE_UPDATE_PARALLELISM_TASK"
         const val ACTION_DATABASE_UPDATE_ITERATIONS_TASK = "ACTION_DATABASE_UPDATE_ITERATIONS_TASK"
         const val ACTION_DATABASE_SAVE = "ACTION_DATABASE_SAVE"
         const val ACTION_CHALLENGE_RESPONDED = "ACTION_CHALLENGE_RESPONDED"
@@ -1303,8 +1413,10 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         const val SAVE_DATABASE_KEY = "SAVE_DATABASE_KEY"
         const val OLD_NODES_KEY = "OLD_NODES_KEY"
         const val NEW_NODES_KEY = "NEW_NODES_KEY"
-        const val OLD_ELEMENT_KEY = "OLD_ELEMENT_KEY" // Warning type of this thing change every time
-        const val NEW_ELEMENT_KEY = "NEW_ELEMENT_KEY" // Warning type of this thing change every time
+        const val OLD_ELEMENT_KEY =
+            "OLD_ELEMENT_KEY" // Warning type of this thing change every time
+        const val NEW_ELEMENT_KEY =
+            "NEW_ELEMENT_KEY" // Warning type of this thing change every time
         const val DATA_BYTES = "DATA_BYTES"
 
         fun getListNodesFromBundle(database: ContextualDatabase, bundle: Bundle): List<Node> {
@@ -1330,6 +1442,7 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
                     Type.GROUP -> {
                         groupsId.add((nodeVersioned as Group).nodeId)
                     }
+
                     Type.ENTRY -> {
                         entriesId.add((nodeVersioned as Entry).nodeId)
                     }

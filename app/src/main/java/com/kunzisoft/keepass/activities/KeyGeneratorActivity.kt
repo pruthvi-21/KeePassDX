@@ -54,7 +54,8 @@ class KeyGeneratorActivity : DatabaseLockActivity() {
         }
 
         supportFragmentManager.commit {
-            replace(R.id.key_generator_fragment, KeyGeneratorFragment.getInstance(
+            replace(
+                R.id.key_generator_fragment, KeyGeneratorFragment.getInstance(
                     // Default selection tab
                     KeyGeneratorFragment.KeyGeneratorTab.PASSWORD
                 ), KEY_GENERATED_FRAGMENT_TAG
@@ -98,6 +99,7 @@ class KeyGeneratorActivity : DatabaseLockActivity() {
             android.R.id.home -> {
                 onDatabaseBackPressed()
             }
+
             R.id.menu_generate -> {
                 keyGeneratorViewModel.requireKeyGeneration()
             }
@@ -115,8 +117,10 @@ class KeyGeneratorActivity : DatabaseLockActivity() {
         private const val KEY_GENERATED = "KEY_GENERATED"
         private const val KEY_GENERATED_FRAGMENT_TAG = "KEY_GENERATED_FRAGMENT_TAG"
 
-        fun registerForGeneratedKeyResult(activity: FragmentActivity,
-                                          keyGeneratedListener: (String?) -> Unit): ActivityResultLauncher<Intent> {
+        fun registerForGeneratedKeyResult(
+            activity: FragmentActivity,
+            keyGeneratedListener: (String?) -> Unit
+        ): ActivityResultLauncher<Intent> {
             return activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
                     keyGeneratedListener.invoke(
@@ -128,8 +132,10 @@ class KeyGeneratorActivity : DatabaseLockActivity() {
             }
         }
 
-        fun launch(context: FragmentActivity,
-                   resultLauncher: ActivityResultLauncher<Intent>) {
+        fun launch(
+            context: FragmentActivity,
+            resultLauncher: ActivityResultLauncher<Intent>
+        ) {
             // Create an instance to return the picker icon
             resultLauncher.launch(
                 Intent(context, KeyGeneratorActivity::class.java)

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/menu_search"
+    <item
+        android:id="@+id/menu_search"
         android:icon="@drawable/ic_search_white_24dp"
-        android:title="@string/menu_search"
-        android:orderInCategory="31"
         android:iconifiedByDefault="true"
+        android:orderInCategory="31"
+        android:title="@string/menu_search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:iconTint="?attr/colorControlNormal"
-        app:showAsAction="always|collapseActionView"
-        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+        app:showAsAction="always|collapseActionView" />
 </menu>

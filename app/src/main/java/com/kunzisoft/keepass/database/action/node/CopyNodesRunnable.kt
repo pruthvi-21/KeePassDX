@@ -19,19 +19,26 @@ class CopyNodesRunnable constructor(
     save: Boolean,
     afterActionNodesFinish: AfterActionNodesFinish?,
     challengeResponseRetriever: (HardwareKey, ByteArray?) -> ByteArray
-) : ActionNodeDatabaseRunnable(context, database, afterActionNodesFinish, save, challengeResponseRetriever) {
+) : ActionNodeDatabaseRunnable(
+    context,
+    database,
+    afterActionNodesFinish,
+    save,
+    challengeResponseRetriever
+) {
 
     private var mEntriesCopied = ArrayList<Entry>()
 
     override fun nodeAction() {
 
-        foreachNode@ for(currentNode in mNodesToCopy) {
+        foreachNode@ for (currentNode in mNodesToCopy) {
             when (currentNode.type) {
                 Type.GROUP -> {
                     Log.e(TAG, "Copy not allowed for group")// Only finish thread
                     setError(CopyGroupDatabaseException())
                     break@foreachNode
                 }
+
                 Type.ENTRY -> {
                     // Root can contains entry
                     if (mNewParent != database.rootGroup || database.rootCanContainsEntry()) {

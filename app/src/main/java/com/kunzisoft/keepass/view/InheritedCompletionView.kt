@@ -18,9 +18,10 @@ class InheritedCompletionView @JvmOverloads constructor(
         android.R.layout.simple_list_item_1
     )
 
-    private class ArrayAdapterNoFilter(context: Context,
-                                       @LayoutRes private val layoutResource: Int)
-        : ArrayAdapter<String>(context, layoutResource) {
+    private class ArrayAdapterNoFilter(
+        context: Context,
+        @LayoutRes private val layoutResource: Int
+    ) : ArrayAdapter<String>(context, layoutResource) {
         val items = InheritedStatus.listOfStrings(context)
 
         override fun getCount(): Int {

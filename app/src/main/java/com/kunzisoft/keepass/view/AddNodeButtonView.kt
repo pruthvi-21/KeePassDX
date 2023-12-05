@@ -3,24 +3,25 @@ package com.kunzisoft.keepass.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Rect
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import androidx.core.view.ViewCompat
-import androidx.core.view.ViewPropertyAnimatorListener
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Interpolator
 import android.widget.RelativeLayout
-
+import androidx.core.view.ViewCompat
+import androidx.core.view.ViewPropertyAnimatorListener
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kunzisoft.keepass.R
 
-class AddNodeButtonView @JvmOverloads constructor(context: Context,
-                                                  attrs: AttributeSet? = null,
-                                                  defStyle: Int = 0)
-    : RelativeLayout(context, attrs, defStyle) {
+class AddNodeButtonView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : RelativeLayout(context, attrs, defStyle) {
 
     var addButtonView: FloatingActionButton? = null
     private lateinit var addEntryView: View
@@ -34,7 +35,8 @@ class AddNodeButtonView @JvmOverloads constructor(context: Context,
     private var state: State? = null
     private var allowAction: Boolean = false
     private var onAddButtonClickListener: OnClickListener? = null
-    private var onAddButtonVisibilityChangedListener: FloatingActionButton.OnVisibilityChangedListener? = null
+    private var onAddButtonVisibilityChangedListener: FloatingActionButton.OnVisibilityChangedListener? =
+        null
     private var viewButtonMenuAnimation: AddButtonAnimation? = null
     private var viewMenuAnimationAddEntry: ViewMenuAnimation? = null
     private var viewMenuAnimationAddGroup: ViewMenuAnimation? = null
@@ -73,21 +75,22 @@ class AddNodeButtonView @JvmOverloads constructor(context: Context,
         allowAction = true
         state = State.CLOSE
 
-        onAddButtonClickListener = OnClickListener{ startGlobalAnimation() }
+        onAddButtonClickListener = OnClickListener { startGlobalAnimation() }
         addButtonView?.setOnClickListener(onAddButtonClickListener)
 
-        onAddButtonVisibilityChangedListener = object : FloatingActionButton.OnVisibilityChangedListener() {
-            override fun onHidden(fab: FloatingActionButton?) {
-                super.onHidden(fab)
-                addButtonView?.setOnClickListener(null)
-                addButtonView?.isClickable = false
-            }
+        onAddButtonVisibilityChangedListener =
+            object : FloatingActionButton.OnVisibilityChangedListener() {
+                override fun onHidden(fab: FloatingActionButton?) {
+                    super.onHidden(fab)
+                    addButtonView?.setOnClickListener(null)
+                    addButtonView?.isClickable = false
+                }
 
-            override fun onShown(fab: FloatingActionButton?) {
-                super.onShown(fab)
-                addButtonView?.setOnClickListener(onAddButtonClickListener)
+                override fun onShown(fab: FloatingActionButton?) {
+                    super.onShown(fab)
+                    addButtonView?.setOnClickListener(onAddButtonClickListener)
+                }
             }
-        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -99,8 +102,9 @@ class AddNodeButtonView @JvmOverloads constructor(context: Context,
         addEntryView.getGlobalVisibleRect(viewEntryRect)
         addGroupView.getGlobalVisibleRect(viewGroupRect)
         if (!(viewButtonRect.contains(event.rawX.toInt(), event.rawY.toInt())
-                        && viewEntryRect.contains(event.rawX.toInt(), event.rawY.toInt())
-                        && viewGroupRect.contains(event.rawX.toInt(), event.rawY.toInt()))) {
+                    && viewEntryRect.contains(event.rawX.toInt(), event.rawY.toInt())
+                    && viewGroupRect.contains(event.rawX.toInt(), event.rawY.toInt()))
+        ) {
             closeButtonIfOpen()
         }
         return super.onTouchEvent(event)
@@ -234,29 +238,30 @@ class AddNodeButtonView @JvmOverloads constructor(context: Context,
             view?.let { view ->
                 if (!isRotate) {
                     ViewCompat.animate(view)
-                            .rotation(135.0f)
-                            .withLayer()
-                            .setDuration(animationDuration)
-                            .setInterpolator(interpolator)
-                            .setListener(this)
-                            .start()
+                        .rotation(135.0f)
+                        .withLayer()
+                        .setDuration(animationDuration)
+                        .setInterpolator(interpolator)
+                        .setListener(this)
+                        .start()
                 } else {
                     ViewCompat.animate(view)
-                            .rotation(0.0f)
-                            .withLayer()
-                            .setDuration(animationDuration)
-                            .setInterpolator(interpolator)
-                            .setListener(this)
-                            .start()
+                        .rotation(0.0f)
+                        .withLayer()
+                        .setDuration(animationDuration)
+                        .setInterpolator(interpolator)
+                        .setListener(this)
+                        .start()
                 }
             }
         }
     }
 
-    private inner class ViewMenuAnimation(private val view: View?,
-                                          private val delayIn: Long,
-                                          private val delayOut: Long)
-        : ViewPropertyAnimatorListener {
+    private inner class ViewMenuAnimation(
+        private val view: View?,
+        private val delayIn: Long,
+        private val delayOut: Long
+    ) : ViewPropertyAnimatorListener {
 
         private val interpolator: Interpolator
         private var translation: Float = 0.toFloat()
@@ -282,38 +287,39 @@ class AddNodeButtonView @JvmOverloads constructor(context: Context,
 
         fun startAnimation() {
             view?.let { view ->
-               if (view.visibility == View.VISIBLE) {
+                if (view.visibility == View.VISIBLE) {
                     // In
                     wasInvisible = false
                     ViewCompat.animate(view)
-                            .translationY(-translation)
-                            .translationX((view.width / 3).toFloat())
-                            .alpha(0.0f)
-                            .scaleX(0.33f)
-                            .setDuration(animationDuration - delayIn)
-                            .setInterpolator(interpolator)
-                            .setListener(this)
-                            .setStartDelay(delayIn)
-                            .start()
+                        .translationY(-translation)
+                        .translationX((view.width / 3).toFloat())
+                        .alpha(0.0f)
+                        .scaleX(0.33f)
+                        .setDuration(animationDuration - delayIn)
+                        .setInterpolator(interpolator)
+                        .setListener(this)
+                        .setStartDelay(delayIn)
+                        .start()
                 } else {
 
-                // The first time
-                if (translation == 0f) {
-                    if (addButtonView != null) {
-                        translation = view.y + view.height / 2 - addButtonView!!.y - (addButtonView!!.height / 2).toFloat()
-                        view.apply {
-                            translationY = -translation
-                            translationX = (view.width / 3).toFloat()
-                            alpha = 0.0f
-                            scaleX = 0.33f
+                    // The first time
+                    if (translation == 0f) {
+                        if (addButtonView != null) {
+                            translation =
+                                view.y + view.height / 2 - addButtonView!!.y - (addButtonView!!.height / 2).toFloat()
+                            view.apply {
+                                translationY = -translation
+                                translationX = (view.width / 3).toFloat()
+                                alpha = 0.0f
+                                scaleX = 0.33f
+                            }
                         }
                     }
-                }
 
-                // Out
-                view.visibility = View.VISIBLE
-                wasInvisible = true
-                ViewCompat.animate(view)
+                    // Out
+                    view.visibility = View.VISIBLE
+                    wasInvisible = true
+                    ViewCompat.animate(view)
                         .translationY(1f)
                         .translationX(1f)
                         .alpha(1.0f)

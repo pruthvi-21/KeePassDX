@@ -17,7 +17,8 @@ class DatabaseFileViewModel(application: Application) : AndroidViewModel(applica
     private var mFileDatabaseHistoryAction: FileDatabaseHistoryAction? = null
 
     init {
-        mFileDatabaseHistoryAction = FileDatabaseHistoryAction.getInstance(application.applicationContext)
+        mFileDatabaseHistoryAction =
+            FileDatabaseHistoryAction.getInstance(application.applicationContext)
     }
 
     private val mIsDefaultDatabase = MutableLiveData<Boolean>()
@@ -25,24 +26,26 @@ class DatabaseFileViewModel(application: Application) : AndroidViewModel(applica
 
     fun checkIfIsDefaultDatabase(databaseUri: Uri) {
         IOActionTask(
-                {
-                    (PreferencesUtil.getDefaultDatabasePath(getApplication<App>().applicationContext)
-                        ?.parseUri() == databaseUri)
-                },
-                {
-                    mIsDefaultDatabase.value = it
-                }
+            {
+                (PreferencesUtil.getDefaultDatabasePath(getApplication<App>().applicationContext)
+                    ?.parseUri() == databaseUri)
+            },
+            {
+                mIsDefaultDatabase.value = it
+            }
         ).execute()
     }
 
     fun removeDefaultDatabase() {
         IOActionTask(
-                {
-                    PreferencesUtil.saveDefaultDatabasePath(getApplication<App>().applicationContext,
-                            null)
-                },
-                {
-                }
+            {
+                PreferencesUtil.saveDefaultDatabasePath(
+                    getApplication<App>().applicationContext,
+                    null
+                )
+            },
+            {
+            }
         ).execute()
     }
 

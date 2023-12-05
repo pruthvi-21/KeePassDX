@@ -6,7 +6,7 @@ import com.kunzisoft.keepass.database.action.SaveDatabaseRunnable
 import com.kunzisoft.keepass.database.element.Entry
 import com.kunzisoft.keepass.hardware.HardwareKey
 
-class DeleteEntryHistoryDatabaseRunnable (
+class DeleteEntryHistoryDatabaseRunnable(
     context: Context,
     database: ContextualDatabase,
     private val mainEntry: Entry,

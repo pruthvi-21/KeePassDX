@@ -26,9 +26,11 @@ object UriUtil {
                         }
                     }
                 }
+
                 this.withContentScheme() -> {
                     DocumentFile.fromSingleUri(context, this)
                 }
+
                 else -> {
                     Log.e("FileData", "Content scheme not known")
                     null
@@ -40,10 +42,12 @@ object UriUtil {
         }
     }
 
-    private fun persistUriPermission(contentResolver: ContentResolver?,
-                                     uri: Uri,
-                                     release: Boolean,
-                                     readOnly: Boolean) {
+    private fun persistUriPermission(
+        contentResolver: ContentResolver?,
+        uri: Uri,
+        release: Boolean,
+        readOnly: Boolean
+    ) {
         try {
             // try to persist read and write permissions
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -212,7 +216,8 @@ object UriUtil {
             launchIntent = this.packageManager.getLaunchIntentForPackage(packageName)?.apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
-        } catch (ignored: Exception) { }
+        } catch (ignored: Exception) {
+        }
         try {
             if (launchIntent == null) {
                 this.startActivity(

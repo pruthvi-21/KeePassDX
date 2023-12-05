@@ -6,17 +6,17 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.kunzisoft.keepass.view.collapse
 
-abstract class AnimatedItemsAdapter<Item, T: RecyclerView.ViewHolder>(val context: Context)
-    : RecyclerView.Adapter<T>() {
+abstract class AnimatedItemsAdapter<Item, T : RecyclerView.ViewHolder>(val context: Context) :
+    RecyclerView.Adapter<T>() {
 
     protected val inflater: LayoutInflater = LayoutInflater.from(context)
     var itemsList: MutableList<Item> = ArrayList()
         private set
 
-    var onDeleteButtonClickListener: ((item: Item)->Unit)? = null
+    var onDeleteButtonClickListener: ((item: Item) -> Unit)? = null
     private var mItemToRemove: Item? = null
 
-    var onListSizeChangedListener: ((previousSize: Int, newSize: Int)->Unit)? = null
+    var onListSizeChangedListener: ((previousSize: Int, newSize: Int) -> Unit)? = null
 
     override fun getItemCount(): Int {
         return itemsList.size

@@ -23,8 +23,10 @@ class ReplaceFileDialogFragment : DatabaseDialogFragment() {
         try {
             mActionChooseListener = context as ActionChooseListener
         } catch (e: ClassCastException) {
-            throw ClassCastException(context.toString()
-                    + " must implement " + ActionChooseListener::class.java.name)
+            throw ClassCastException(
+                context.toString()
+                        + " must implement " + ActionChooseListener::class.java.name
+            )
         }
     }
 
@@ -44,8 +46,9 @@ class ReplaceFileDialogFragment : DatabaseDialogFragment() {
             })
             builder.setPositiveButton(android.R.string.ok) { _, _ ->
                 mActionChooseListener?.onValidateReplaceFile(
-                        arguments?.getParcelableCompat(KEY_FILE_URI),
-                        arguments?.getParcelableCompat(KEY_ENTRY_ATTACHMENT))
+                    arguments?.getParcelableCompat(KEY_FILE_URI),
+                    arguments?.getParcelableCompat(KEY_ENTRY_ATTACHMENT)
+                )
             }
             builder.setNegativeButton(android.R.string.cancel) { _, _ ->
                 dismiss()
@@ -64,8 +67,10 @@ class ReplaceFileDialogFragment : DatabaseDialogFragment() {
         private const val KEY_FILE_URI = "KEY_FILE_URI"
         private const val KEY_ENTRY_ATTACHMENT = "KEY_ENTRY_ATTACHMENT"
 
-        fun build(attachmentToUploadUri: Uri,
-                  attachment: Attachment): ReplaceFileDialogFragment {
+        fun build(
+            attachmentToUploadUri: Uri,
+            attachment: Attachment
+        ): ReplaceFileDialogFragment {
             val fragment = ReplaceFileDialogFragment()
             fragment.arguments = Bundle().apply {
                 putParcelable(KEY_FILE_URI, attachmentToUploadUri)

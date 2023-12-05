@@ -15,28 +15,30 @@ import com.kunzisoft.keepass.otp.OtpElement
 import com.kunzisoft.keepass.otp.OtpEntryFields.OTP_TOKEN_FIELD
 
 
-class TemplateView @JvmOverloads constructor(context: Context,
-                                                 attrs: AttributeSet? = null,
-                                                 defStyle: Int = 0)
-    : TemplateAbstractView<TextFieldView, TextFieldView, DateTimeFieldView>
-        (context, attrs, defStyle) {
+class TemplateView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : TemplateAbstractView<TextFieldView, TextFieldView, DateTimeFieldView>
+    (context, attrs, defStyle) {
 
     private var mOnAskCopySafeClickListener: (() -> Unit)? = null
     fun setOnAskCopySafeClickListener(listener: (() -> Unit)? = null) {
         this.mOnAskCopySafeClickListener = listener
     }
+
     private var mOnCopyActionClickListener: ((Field) -> Unit)? = null
     fun setOnCopyActionClickListener(listener: ((Field) -> Unit)? = null) {
         this.mOnCopyActionClickListener = listener
     }
 
     private var mFirstTimeAskAllowCopyProtectedFields: Boolean = false
-    fun setFirstTimeAskAllowCopyProtectedFields(firstTimeAskAllowCopyProtectedFields : Boolean) {
+    fun setFirstTimeAskAllowCopyProtectedFields(firstTimeAskAllowCopyProtectedFields: Boolean) {
         this.mFirstTimeAskAllowCopyProtectedFields = firstTimeAskAllowCopyProtectedFields
     }
 
     private var mAllowCopyProtectedFields: Boolean = false
-    fun setAllowCopyProtectedFields(allowCopyProtectedFields : Boolean) {
+    fun setAllowCopyProtectedFields(allowCopyProtectedFields: Boolean) {
         this.mAllowCopyProtectedFields = allowCopyProtectedFields
     }
 
@@ -44,15 +46,17 @@ class TemplateView @JvmOverloads constructor(context: Context,
         headerContainerView.isVisible = false
     }
 
-    override fun buildLinearTextView(templateAttribute: TemplateAttribute,
-                                     field: Field): TextFieldView? {
+    override fun buildLinearTextView(
+        templateAttribute: TemplateAttribute,
+        field: Field
+    ): TextFieldView? {
         // Add an action icon if needed
         return context?.let {
             TextFieldView(it).apply {
                 applyFontVisibility(mFontInVisibility)
                 setProtection(field.protectedValue.isProtected, mHideProtectedValue)
                 label = templateAttribute.alias
-                        ?: TemplateField.getLocalizedName(context, field.name)
+                    ?: TemplateField.getLocalizedName(context, field.name)
                 setMaxChars(templateAttribute.options.getNumberChars())
                 // TODO Linkify
                 value = field.protectedValue.stringValue
@@ -100,8 +104,10 @@ class TemplateView @JvmOverloads constructor(context: Context,
         return buildLinearTextView(templateAttribute, field)
     }
 
-    override fun buildDataTimeView(templateAttribute: TemplateAttribute,
-                                   field: Field): DateTimeFieldView? {
+    override fun buildDataTimeView(
+        templateAttribute: TemplateAttribute,
+        field: Field
+    ): DateTimeFieldView? {
         return context?.let {
             DateTimeFieldView(it).apply {
                 label = TemplateField.getLocalizedName(context, field.name)
@@ -122,7 +128,7 @@ class TemplateView @JvmOverloads constructor(context: Context,
         return findViewWithTag<TextFieldView?>(FIELD_PASSWORD_TAG)?.getCopyButtonView()
     }
 
-    override fun populateViewsWithEntryInfo(showEmptyFields: Boolean): List<ViewField>  {
+    override fun populateViewsWithEntryInfo(showEmptyFields: Boolean): List<ViewField> {
         val emptyCustomFields = super.populateViewsWithEntryInfo(false)
 
         // Hide empty custom fields
@@ -151,6 +157,7 @@ class TemplateView @JvmOverloads constructor(context: Context,
     fun setOnOtpElementUpdated(listener: ((OtpElement?) -> Unit)?) {
         this.mOnOtpElementUpdated = listener
     }
+
     private var mOnOtpElementUpdated: ((OtpElement?) -> Unit)? = null
 
     private fun getOtpTokenView(): TextFieldView? {
@@ -174,9 +181,12 @@ class TemplateView @JvmOverloads constructor(context: Context,
                 value = otpElement.tokenString
                 setCopyButtonState(TextFieldView.ButtonState.ACTIVATE)
                 setCopyButtonClickListener { _, _ ->
-                    mOnCopyActionClickListener?.invoke(Field(
-                        otpElement.type.name,
-                        ProtectedString(false, otpElement.token)))
+                    mOnCopyActionClickListener?.invoke(
+                        Field(
+                            otpElement.type.name,
+                            ProtectedString(false, otpElement.token)
+                        )
+                    )
                 }
                 mLastOtpTokenView = this
                 mOtpRunnable = Runnable {

@@ -13,8 +13,8 @@ import com.kunzisoft.keepass.magikeyboard.MagikeyboardService
 import com.kunzisoft.keepass.model.SearchInfo
 import com.kunzisoft.keepass.otp.OtpEntryFields
 import com.kunzisoft.keepass.utils.KeyboardUtil.isKeyboardActivatedInSettings
-import com.kunzisoft.keepass.utils.getParcelableCompat
 import com.kunzisoft.keepass.utils.WebDomain
+import com.kunzisoft.keepass.utils.getParcelableCompat
 
 /**
  * Activity to search or select entry in database,
@@ -33,9 +33,10 @@ class EntrySelectionLauncherActivity : DatabaseModeActivity() {
         if (keySelectionBundle != null) {
             // To manage package name
             var searchInfo = SearchInfo()
-            keySelectionBundle.getParcelableCompat<SearchInfo>(KEY_SEARCH_INFO)?.let { mSearchInfo ->
-                searchInfo = mSearchInfo
-            }
+            keySelectionBundle.getParcelableCompat<SearchInfo>(KEY_SEARCH_INFO)
+                ?.let { mSearchInfo ->
+                    searchInfo = mSearchInfo
+                }
             launch(database, searchInfo)
         } else {
             // To manage share
@@ -55,6 +56,7 @@ class EntrySelectionLauncherActivity : DatabaseModeActivity() {
                     }
                     launchSelection(database, sharedWebDomain, otpString)
                 }
+
                 Intent.ACTION_VIEW -> {
                     // Retrieve OTP
                     intent.dataString?.let { extra ->
@@ -63,6 +65,7 @@ class EntrySelectionLauncherActivity : DatabaseModeActivity() {
                     }
                     launchSelection(database, sharedWebDomain, otpString)
                 }
+
                 else -> {
                     if (database != null) {
                         GroupActivity.launch(this, database)
@@ -75,9 +78,11 @@ class EntrySelectionLauncherActivity : DatabaseModeActivity() {
         finish()
     }
 
-    private fun launchSelection(database: ContextualDatabase?,
-                                sharedWebDomain: String?,
-                                otpString: String?) {
+    private fun launchSelection(
+        database: ContextualDatabase?,
+        sharedWebDomain: String?,
+        otpString: String?
+    ) {
         // Build domain search param
         val searchInfo = SearchInfo().apply {
             this.webDomain = sharedWebDomain
@@ -90,8 +95,10 @@ class EntrySelectionLauncherActivity : DatabaseModeActivity() {
         }
     }
 
-    private fun launch(database: ContextualDatabase?,
-                       searchInfo: SearchInfo) {
+    private fun launch(
+        database: ContextualDatabase?,
+        searchInfo: SearchInfo
+    ) {
 
         // Setting to integrate Magikeyboard
         val searchShareForMagikeyboard = isKeyboardActivatedInSettings()
@@ -99,86 +106,107 @@ class EntrySelectionLauncherActivity : DatabaseModeActivity() {
         // If database is open
         val readOnly = database?.isReadOnly != false
         SearchHelper.checkAutoSearchInfo(this,
-                database,
-                searchInfo,
-                { openedDatabase, items ->
-                    // Items found
-                    if (searchInfo.otpString != null) {
-                        if (!readOnly) {
-                            GroupActivity.launchForSaveResult(
+            database,
+            searchInfo,
+            { openedDatabase, items ->
+                // Items found
+                if (searchInfo.otpString != null) {
+                    if (!readOnly) {
+                        GroupActivity.launchForSaveResult(
+                            this,
+                            openedDatabase,
+                            searchInfo,
+                            false
+                        )
+                    } else {
+                        Toast.makeText(
+                            applicationContext,
+                            R.string.autofill_read_only_save,
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+                } else if (searchShareForMagikeyboard) {
+                    MagikeyboardService.performSelection(
+                        items,
+                        { entryInfo ->
+                            // Automatically populate keyboard
+                            MagikeyboardService.populateKeyboardAndMoveAppToBackground(
+                                this,
+                                entryInfo
+                            )
+                        },
+                        { autoSearch ->
+                            GroupActivity.launchForKeyboardSelectionResult(
                                 this,
                                 openedDatabase,
                                 searchInfo,
-                                false)
-                        } else {
-                            Toast.makeText(applicationContext,
-                                    R.string.autofill_read_only_save,
-                                    Toast.LENGTH_LONG)
-                                    .show()
+                                autoSearch
+                            )
                         }
-                    } else if (searchShareForMagikeyboard) {
-                        MagikeyboardService.performSelection(
-                            items,
-                            { entryInfo ->
-                                // Automatically populate keyboard
-                                MagikeyboardService.populateKeyboardAndMoveAppToBackground(
-                                    this,
-                                    entryInfo
-                                )
-                            },
-                            { autoSearch ->
-                                GroupActivity.launchForKeyboardSelectionResult(this,
-                                    openedDatabase,
-                                    searchInfo,
-                                    autoSearch)
-                            }
+                    )
+                } else {
+                    GroupActivity.launchForSearchResult(
+                        this,
+                        openedDatabase,
+                        searchInfo,
+                        true
+                    )
+                }
+            },
+            { openedDatabase ->
+                // Show the database UI to select the entry
+                if (searchInfo.otpString != null) {
+                    if (!readOnly) {
+                        GroupActivity.launchForSaveResult(
+                            this,
+                            openedDatabase,
+                            searchInfo,
+                            false
                         )
                     } else {
-                        GroupActivity.launchForSearchResult(this,
-                            openedDatabase,
-                            searchInfo,
-                            true)
+                        Toast.makeText(
+                            applicationContext,
+                            R.string.autofill_read_only_save,
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
                     }
-                },
-                { openedDatabase ->
-                    // Show the database UI to select the entry
-                    if (searchInfo.otpString != null) {
-                        if (!readOnly) {
-                            GroupActivity.launchForSaveResult(this,
-                                openedDatabase,
-                                searchInfo,
-                                false)
-                        } else {
-                            Toast.makeText(applicationContext,
-                                    R.string.autofill_read_only_save,
-                                    Toast.LENGTH_LONG)
-                                    .show()
-                        }
-                    } else if (searchShareForMagikeyboard) {
-                        GroupActivity.launchForKeyboardSelectionResult(this,
-                            openedDatabase,
-                            searchInfo,
-                            false)
-                    } else {
-                        GroupActivity.launchForSearchResult(this,
-                            openedDatabase,
-                            searchInfo,
-                            false)
-                    }
-                },
-                {
-                    // If database not open
-                    if (searchInfo.otpString != null) {
-                        FileDatabaseSelectActivity.launchForSaveResult(this,
-                                searchInfo)
-                    } else if (searchShareForMagikeyboard) {
-                        FileDatabaseSelectActivity.launchForKeyboardSelectionResult(this,
-                                searchInfo)
-                    } else {
-                        FileDatabaseSelectActivity.launchForSearchResult(this,
-                                searchInfo)
-                    }
+                } else if (searchShareForMagikeyboard) {
+                    GroupActivity.launchForKeyboardSelectionResult(
+                        this,
+                        openedDatabase,
+                        searchInfo,
+                        false
+                    )
+                } else {
+                    GroupActivity.launchForSearchResult(
+                        this,
+                        openedDatabase,
+                        searchInfo,
+                        false
+                    )
                 }
+            },
+            {
+                // If database not open
+                if (searchInfo.otpString != null) {
+                    FileDatabaseSelectActivity.launchForSaveResult(
+                        this,
+                        searchInfo
+                    )
+                } else if (searchShareForMagikeyboard) {
+                    FileDatabaseSelectActivity.launchForKeyboardSelectionResult(
+                        this,
+                        searchInfo
+                    )
+                } else {
+                    FileDatabaseSelectActivity.launchForSearchResult(
+                        this,
+                        searchInfo
+                    )
+                }
+            }
         )
     }
 
@@ -187,8 +215,10 @@ class EntrySelectionLauncherActivity : DatabaseModeActivity() {
         private const val KEY_SELECTION_BUNDLE = "KEY_SELECTION_BUNDLE"
         private const val KEY_SEARCH_INFO = "KEY_SEARCH_INFO"
 
-        fun launch(context: Context,
-                   searchInfo: SearchInfo? = null) {
+        fun launch(
+            context: Context,
+            searchInfo: SearchInfo? = null
+        ) {
             val intent = Intent(context, EntrySelectionLauncherActivity::class.java).apply {
                 putExtra(KEY_SELECTION_BUNDLE, Bundle().apply {
                     putParcelable(KEY_SEARCH_INFO, searchInfo)

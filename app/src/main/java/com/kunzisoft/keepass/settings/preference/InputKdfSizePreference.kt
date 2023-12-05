@@ -5,11 +5,12 @@ import android.util.AttributeSet
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.utils.DataByte
 
-class InputKdfSizePreference @JvmOverloads constructor(context: Context,
-                                                       attrs: AttributeSet? = null,
-                                                       defStyleAttr: Int = R.attr.dialogPreferenceStyle,
-                                                       defStyleRes: Int = defStyleAttr)
-    : InputKdfNumberPreference(context, attrs, defStyleAttr, defStyleRes) {
+class InputKdfSizePreference @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = R.attr.dialogPreferenceStyle,
+    defStyleRes: Int = defStyleAttr
+) : InputKdfNumberPreference(context, attrs, defStyleAttr, defStyleRes) {
 
     override fun setSummary(summary: CharSequence?) {
         if (summary == UNKNOWN_VALUE_STRING) {
@@ -21,7 +22,7 @@ class InputKdfSizePreference @JvmOverloads constructor(context: Context,
                 summaryString = if (memorySize > 0) {
                     // To convert bytes to mebibytes
                     DataByte(memorySize, DataByte.ByteFormat.BYTE)
-                            .toBetterByteFormat().toString(context)
+                        .toBetterByteFormat().toString(context)
                 } else {
                     memorySize.toString()
                 }

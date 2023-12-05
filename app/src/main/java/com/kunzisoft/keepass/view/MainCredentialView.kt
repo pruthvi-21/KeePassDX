@@ -22,10 +22,11 @@ import com.kunzisoft.keepass.hardware.HardwareKey
 import com.kunzisoft.keepass.model.CredentialStorage
 import com.kunzisoft.keepass.utils.KeyboardUtil.showKeyboard
 
-class MainCredentialView @JvmOverloads constructor(context: Context,
-                                                   attrs: AttributeSet? = null,
-                                                   defStyle: Int = 0)
-    : FrameLayout(context, attrs, defStyle) {
+class MainCredentialView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : FrameLayout(context, attrs, defStyle) {
 
     private var checkboxPasswordView: CompoundButton
     private var passwordTextView: EditText

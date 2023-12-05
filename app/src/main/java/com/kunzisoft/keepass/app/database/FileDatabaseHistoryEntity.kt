@@ -6,21 +6,21 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "file_database_history")
 data class FileDatabaseHistoryEntity(
-        @PrimaryKey
-        @ColumnInfo(name = "database_uri")
-            val databaseUri: String,
+    @PrimaryKey
+    @ColumnInfo(name = "database_uri")
+    val databaseUri: String,
 
-        @ColumnInfo(name = "database_alias")
-            var databaseAlias: String,
+    @ColumnInfo(name = "database_alias")
+    var databaseAlias: String,
 
-        @ColumnInfo(name = "keyfile_uri")
-            var keyFileUri: String?,
+    @ColumnInfo(name = "keyfile_uri")
+    var keyFileUri: String?,
 
-        @ColumnInfo(name = "hardware_key")
-            var hardwareKey: String?,
+    @ColumnInfo(name = "hardware_key")
+    var hardwareKey: String?,
 
-        @ColumnInfo(name = "updated")
-            val updated: Long
+    @ColumnInfo(name = "updated")
+    val updated: Long
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

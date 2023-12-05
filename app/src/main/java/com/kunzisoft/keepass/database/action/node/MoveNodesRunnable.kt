@@ -19,13 +19,19 @@ class MoveNodesRunnable constructor(
     save: Boolean,
     afterActionNodesFinish: AfterActionNodesFinish?,
     challengeResponseRetriever: (HardwareKey, ByteArray?) -> ByteArray
-) : ActionNodeDatabaseRunnable(context, database, afterActionNodesFinish, save, challengeResponseRetriever) {
+) : ActionNodeDatabaseRunnable(
+    context,
+    database,
+    afterActionNodesFinish,
+    save,
+    challengeResponseRetriever
+) {
 
     private var mOldParent: Group? = null
 
     override fun nodeAction() {
 
-        foreachNode@ for(nodeToMove in mNodesToMove) {
+        foreachNode@ for (nodeToMove in mNodesToMove) {
             // Move node in new parent
             mOldParent = nodeToMove.parent
             nodeToMove.touch(modified = true, touchParents = true)
@@ -35,9 +41,10 @@ class MoveNodesRunnable constructor(
                     val groupToMove = nodeToMove as Group
                     // Move group if the parent change
                     if (mOldParent != mNewParent
-                            // and if not in the current group
-                            && groupToMove != mNewParent
-                            && !mNewParent.isContainedIn(groupToMove)) {
+                        // and if not in the current group
+                        && groupToMove != mNewParent
+                        && !mNewParent.isContainedIn(groupToMove)
+                    ) {
                         database.moveGroupTo(groupToMove, mNewParent)
                         groupToMove.setPreviousParentGroup(mOldParent)
                         groupToMove.touch(modified = true, touchParents = true)
@@ -47,12 +54,14 @@ class MoveNodesRunnable constructor(
                         break@foreachNode
                     }
                 }
+
                 Type.ENTRY -> {
                     val entryToMove = nodeToMove as Entry
                     // Move only if the parent change
                     if (mOldParent != mNewParent
-                            // and root can contains entry
-                            && (mNewParent != database.rootGroup || database.rootCanContainsEntry())) {
+                        // and root can contains entry
+                        && (mNewParent != database.rootGroup || database.rootCanContainsEntry())
+                    ) {
                         database.moveEntryTo(entryToMove, mNewParent)
                         entryToMove.setPreviousParentGroup(mOldParent)
                         entryToMove.touch(modified = true, touchParents = true)
@@ -72,7 +81,8 @@ class MoveNodesRunnable constructor(
                 mNodesToMove.forEach { nodeToMove ->
                     // If we fail to save, try to move in the first place
                     if (mOldParent != null &&
-                            mOldParent != nodeToMove.parent) {
+                        mOldParent != nodeToMove.parent
+                    ) {
                         when (nodeToMove.type) {
                             Type.GROUP -> database.moveGroupTo(nodeToMove as Group, mOldParent!!)
                             Type.ENTRY -> database.moveEntryTo(nodeToMove as Entry, mOldParent!!)

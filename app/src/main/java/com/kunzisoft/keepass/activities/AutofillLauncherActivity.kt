@@ -23,10 +23,9 @@ import com.kunzisoft.keepass.database.helper.SearchHelper
 import com.kunzisoft.keepass.model.RegisterInfo
 import com.kunzisoft.keepass.model.SearchInfo
 import com.kunzisoft.keepass.settings.PreferencesUtil
+import com.kunzisoft.keepass.utils.WebDomain
 import com.kunzisoft.keepass.utils.getParcelableCompat
 import com.kunzisoft.keepass.utils.getParcelableExtraCompat
-import com.kunzisoft.keepass.utils.WebDomain
-import java.lang.RuntimeException
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 class AutofillLauncherActivity : DatabaseModeActivity() {
@@ -51,7 +50,8 @@ class AutofillLauncherActivity : DatabaseModeActivity() {
                         // To pass extra inline request
                         var compatInlineSuggestionsRequest: CompatInlineSuggestionsRequest? = null
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                            compatInlineSuggestionsRequest = bundle.getParcelableCompat(KEY_INLINE_SUGGESTION)
+                            compatInlineSuggestionsRequest =
+                                bundle.getParcelableCompat(KEY_INLINE_SUGGESTION)
                         }
                         // Build search param
                         bundle.getParcelableCompat<SearchInfo>(KEY_SEARCH_INFO)?.let { searchInfo ->
@@ -79,15 +79,21 @@ class AutofillLauncherActivity : DatabaseModeActivity() {
                     // Remove bundle
                     intent.removeExtra(KEY_SELECTION_BUNDLE)
                 }
+
                 SpecialMode.REGISTRATION -> {
                     // To register info
-                    val registerInfo = intent.getParcelableExtraCompat<RegisterInfo>(KEY_REGISTER_INFO)
+                    val registerInfo =
+                        intent.getParcelableExtraCompat<RegisterInfo>(KEY_REGISTER_INFO)
                     val searchInfo = SearchInfo(registerInfo?.searchInfo)
-                    WebDomain.getConcreteWebDomain(this, searchInfo.webDomain) { concreteWebDomain ->
+                    WebDomain.getConcreteWebDomain(
+                        this,
+                        searchInfo.webDomain
+                    ) { concreteWebDomain ->
                         searchInfo.webDomain = concreteWebDomain
                         launchRegistration(database, searchInfo, registerInfo)
                     }
                 }
+
                 else -> {
                     // Not an autofill call
                     setResult(Activity.RESULT_CANCELED)
@@ -97,88 +103,112 @@ class AutofillLauncherActivity : DatabaseModeActivity() {
         }
     }
 
-    private fun launchSelection(database: ContextualDatabase?,
-                                autofillComponent: AutofillComponent?,
-                                searchInfo: SearchInfo) {
+    private fun launchSelection(
+        database: ContextualDatabase?,
+        autofillComponent: AutofillComponent?,
+        searchInfo: SearchInfo
+    ) {
         if (autofillComponent == null) {
             setResult(Activity.RESULT_CANCELED)
             finish()
-        } else if (!KeeAutofillService.autofillAllowedFor(searchInfo.applicationId,
-                        PreferencesUtil.applicationIdBlocklist(this))
-                || !KeeAutofillService.autofillAllowedFor(searchInfo.webDomain,
-                        PreferencesUtil.webDomainBlocklist(this))) {
+        } else if (!KeeAutofillService.autofillAllowedFor(
+                searchInfo.applicationId,
+                PreferencesUtil.applicationIdBlocklist(this)
+            )
+            || !KeeAutofillService.autofillAllowedFor(
+                searchInfo.webDomain,
+                PreferencesUtil.webDomainBlocklist(this)
+            )
+        ) {
             showBlockRestartMessage()
             setResult(Activity.RESULT_CANCELED)
             finish()
         } else {
             // If database is open
             SearchHelper.checkAutoSearchInfo(this,
-                    database,
-                    searchInfo,
-                    { openedDatabase, items ->
-                        // Items found
-                        AutofillHelper.buildResponseAndSetResult(this, openedDatabase, items)
-                        finish()
-                    },
-                    { openedDatabase ->
-                        // Show the database UI to select the entry
-                        GroupActivity.launchForAutofillResult(this,
-                            openedDatabase,
-                            mAutofillActivityResultLauncher,
-                            autofillComponent,
-                            searchInfo,
-                            false)
-                    },
-                    {
-                        // If database not open
-                        FileDatabaseSelectActivity.launchForAutofillResult(this,
-                                mAutofillActivityResultLauncher,
-                                autofillComponent,
-                                searchInfo)
-                    }
+                database,
+                searchInfo,
+                { openedDatabase, items ->
+                    // Items found
+                    AutofillHelper.buildResponseAndSetResult(this, openedDatabase, items)
+                    finish()
+                },
+                { openedDatabase ->
+                    // Show the database UI to select the entry
+                    GroupActivity.launchForAutofillResult(
+                        this,
+                        openedDatabase,
+                        mAutofillActivityResultLauncher,
+                        autofillComponent,
+                        searchInfo,
+                        false
+                    )
+                },
+                {
+                    // If database not open
+                    FileDatabaseSelectActivity.launchForAutofillResult(
+                        this,
+                        mAutofillActivityResultLauncher,
+                        autofillComponent,
+                        searchInfo
+                    )
+                }
             )
         }
     }
 
-    private fun launchRegistration(database: ContextualDatabase?,
-                                   searchInfo: SearchInfo,
-                                   registerInfo: RegisterInfo?) {
-        if (!KeeAutofillService.autofillAllowedFor(searchInfo.applicationId,
-                        PreferencesUtil.applicationIdBlocklist(this))
-                || !KeeAutofillService.autofillAllowedFor(searchInfo.webDomain,
-                        PreferencesUtil.webDomainBlocklist(this))) {
+    private fun launchRegistration(
+        database: ContextualDatabase?,
+        searchInfo: SearchInfo,
+        registerInfo: RegisterInfo?
+    ) {
+        if (!KeeAutofillService.autofillAllowedFor(
+                searchInfo.applicationId,
+                PreferencesUtil.applicationIdBlocklist(this)
+            )
+            || !KeeAutofillService.autofillAllowedFor(
+                searchInfo.webDomain,
+                PreferencesUtil.webDomainBlocklist(this)
+            )
+        ) {
             showBlockRestartMessage()
             setResult(Activity.RESULT_CANCELED)
         } else {
             val readOnly = database?.isReadOnly != false
             SearchHelper.checkAutoSearchInfo(this,
-                    database,
-                    searchInfo,
-                    { openedDatabase, _ ->
-                        if (!readOnly) {
-                            // Show the database UI to select the entry
-                            GroupActivity.launchForRegistration(this,
-                                openedDatabase,
-                                registerInfo)
-                        } else {
-                            showReadOnlySaveMessage()
-                        }
-                    },
-                    { openedDatabase ->
-                        if (!readOnly) {
-                            // Show the database UI to select the entry
-                            GroupActivity.launchForRegistration(this,
-                                openedDatabase,
-                                registerInfo)
-                        } else {
-                            showReadOnlySaveMessage()
-                        }
-                    },
-                    {
-                        // If database not open
-                        FileDatabaseSelectActivity.launchForRegistration(this,
-                                registerInfo)
+                database,
+                searchInfo,
+                { openedDatabase, _ ->
+                    if (!readOnly) {
+                        // Show the database UI to select the entry
+                        GroupActivity.launchForRegistration(
+                            this,
+                            openedDatabase,
+                            registerInfo
+                        )
+                    } else {
+                        showReadOnlySaveMessage()
                     }
+                },
+                { openedDatabase ->
+                    if (!readOnly) {
+                        // Show the database UI to select the entry
+                        GroupActivity.launchForRegistration(
+                            this,
+                            openedDatabase,
+                            registerInfo
+                        )
+                    } else {
+                        showReadOnlySaveMessage()
+                    }
+                },
+                {
+                    // If database not open
+                    FileDatabaseSelectActivity.launchForRegistration(
+                        this,
+                        registerInfo
+                    )
+                }
             )
         }
         finish()
@@ -186,11 +216,13 @@ class AutofillLauncherActivity : DatabaseModeActivity() {
 
     private fun showBlockRestartMessage() {
         // If item not allowed, show a toast
-        Toast.makeText(this.applicationContext, R.string.autofill_block_restart, Toast.LENGTH_LONG).show()
+        Toast.makeText(this.applicationContext, R.string.autofill_block_restart, Toast.LENGTH_LONG)
+            .show()
     }
 
     private fun showReadOnlySaveMessage() {
-        Toast.makeText(this.applicationContext, R.string.autofill_read_only_save, Toast.LENGTH_LONG).show()
+        Toast.makeText(this.applicationContext, R.string.autofill_read_only_save, Toast.LENGTH_LONG)
+            .show()
     }
 
     companion object {
@@ -203,9 +235,11 @@ class AutofillLauncherActivity : DatabaseModeActivity() {
 
         private const val KEY_REGISTER_INFO = "KEY_REGISTER_INFO"
 
-        fun getPendingIntentForSelection(context: Context,
-                                         searchInfo: SearchInfo? = null,
-                                         compatInlineSuggestionsRequest: CompatInlineSuggestionsRequest? = null): PendingIntent? {
+        fun getPendingIntentForSelection(
+            context: Context,
+            searchInfo: SearchInfo? = null,
+            compatInlineSuggestionsRequest: CompatInlineSuggestionsRequest? = null
+        ): PendingIntent? {
             try {
                 return PendingIntent.getActivity(
                     context, 0,
@@ -231,8 +265,10 @@ class AutofillLauncherActivity : DatabaseModeActivity() {
             }
         }
 
-        fun getPendingIntentForRegistration(context: Context,
-                                            registerInfo: RegisterInfo): PendingIntent? {
+        fun getPendingIntentForRegistration(
+            context: Context,
+            registerInfo: RegisterInfo
+        ): PendingIntent? {
             try {
                 return PendingIntent.getActivity(
                     context, 0,
@@ -252,8 +288,10 @@ class AutofillLauncherActivity : DatabaseModeActivity() {
             }
         }
 
-        fun launchForRegistration(context: Context,
-                                  registerInfo: RegisterInfo) {
+        fun launchForRegistration(
+            context: Context,
+            registerInfo: RegisterInfo
+        ) {
             val intent = Intent(context, AutofillLauncherActivity::class.java)
             EntrySelectionHelper.addSpecialModeInIntent(intent, SpecialMode.REGISTRATION)
             intent.putExtra(KEY_REGISTER_INFO, registerInfo)

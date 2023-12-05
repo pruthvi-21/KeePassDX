@@ -3,7 +3,6 @@ package com.kunzisoft.keepass.activities
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,7 +13,6 @@ import android.view.View.VISIBLE
 import android.view.WindowManager.LayoutParams.FLAG_SECURE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
-import com.google.android.material.color.DynamicColors
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.settings.NestedAppSettingsFragment.Companion.DATABASE_PREFERENCE_CHANGED
 import com.kunzisoft.keepass.settings.PreferencesUtil

@@ -35,7 +35,8 @@ class DatabaseRoundsPreferenceDialogFragmentCompat : DatabaseSavePreferenceDialo
                 try {
                     database.numberKeyEncryptionRounds = rounds
                 } catch (e: NumberFormatException) {
-                    Toast.makeText(context, R.string.error_rounds_too_large, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.error_rounds_too_large, Toast.LENGTH_LONG)
+                        .show()
                     database.numberKeyEncryptionRounds = Long.MAX_VALUE
                 }
 

@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
-        android:key="@string/settings_database_change_credentials_key"
-        android:title="@string/menu_change_key_settings"
         android:icon="@drawable/prefs_autorenew_24dp"
-        android:persistent="false" />
+        android:key="@string/settings_database_change_credentials_key"
+        android:persistent="false"
+        android:title="@string/menu_change_key_settings" />
 
-    <PreferenceCategory
-        android:title="@string/master_key">
+    <PreferenceCategory android:title="@string/master_key">
 
         <com.kunzisoft.keepass.settings.preference.InputTextPreference
+            android:enabled="false"
             android:key="@string/settings_database_recommend_changing_master_key_key"
-            android:title="@string/settings_database_recommend_changing_master_key_title"
-            android:enabled="false"
-            android:persistent="false" />
+            android:persistent="false"
+            android:title="@string/settings_database_recommend_changing_master_key_title" />
         <com.kunzisoft.keepass.settings.preference.InputTextPreference
+            android:enabled="false"
             android:key="@string/settings_database_force_changing_master_key_key"
-            android:title="@string/settings_database_force_changing_master_key_title"
-            android:enabled="false"
-            android:persistent="false" />
+            android:persistent="false"
+            android:title="@string/settings_database_force_changing_master_key_title" />
         <com.kunzisoft.keepass.settings.preference.InputTextPreference
-            android:key="@string/settings_database_force_changing_master_key_next_time_key"
-            android:title="@string/settings_database_force_changing_master_key_next_time_title"
             android:enabled="false"
-            android:persistent="false" />
+            android:key="@string/settings_database_force_changing_master_key_next_time_key"
+            android:persistent="false"
+            android:title="@string/settings_database_force_changing_master_key_next_time_title" />
 
     </PreferenceCategory>
 

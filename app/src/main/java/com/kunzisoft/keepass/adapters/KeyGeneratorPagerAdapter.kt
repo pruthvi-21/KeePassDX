@@ -2,12 +2,11 @@ package com.kunzisoft.keepass.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.kunzisoft.keepass.activities.fragments.KeyGeneratorFragment
 import com.kunzisoft.keepass.activities.fragments.PassphraseGeneratorFragment
 import com.kunzisoft.keepass.activities.fragments.PasswordGeneratorFragment
-import com.kunzisoft.keepass.activities.fragments.KeyGeneratorFragment
 
-class KeyGeneratorPagerAdapter(fragment: Fragment)
-    : FragmentStateAdapter(fragment) {
+class KeyGeneratorPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     private val passwordGeneratorFragment = PasswordGeneratorFragment()
     private val passphraseGeneratorFragment = PassphraseGeneratorFragment()

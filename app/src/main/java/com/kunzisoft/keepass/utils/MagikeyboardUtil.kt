@@ -22,6 +22,10 @@ object MagikeyboardUtil {
         Log.d(TAG, "Setting service state: $enabled")
 
         val component = ComponentName(context, MagikeyboardService::class.java)
-        context.packageManager.setComponentEnabledSetting(component, componentState, PackageManager.DONT_KILL_APP)
+        context.packageManager.setComponentEnabledSetting(
+            component,
+            componentState,
+            PackageManager.DONT_KILL_APP
+        )
     }
 }

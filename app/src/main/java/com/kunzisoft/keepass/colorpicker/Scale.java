@@ -46,14 +46,6 @@ public class Scale extends View {
 
     private Point mStartTouchPoint = null;
 
-    public interface OnValueUpdateListener {
-        void onValueUpdate(ScaleType type, float val);
-    }
-
-    public enum ScaleType {
-        HUE, SAT, VAL
-    }
-
     public Scale(Context context, int[] values, ScaleType type, float size) {
         super(context);
         mValues = values;
@@ -224,5 +216,13 @@ public class Scale extends View {
 
     public void setOnValueUpdateListener(OnValueUpdateListener listener) {
         mListener = listener;
+    }
+
+    public enum ScaleType {
+        HUE, SAT, VAL
+    }
+
+    public interface OnValueUpdateListener {
+        void onValueUpdate(ScaleType type, float val);
     }
 }

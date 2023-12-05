@@ -10,7 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.BaseAdapter
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.ContextCompat
@@ -23,10 +28,11 @@ import com.google.android.material.textfield.TextInputLayout
 import com.kunzisoft.keepass.R
 
 
-class TextSelectFieldView @JvmOverloads constructor(context: Context,
-                                                    attrs: AttributeSet? = null,
-                                                    defStyle: Int = 0)
-    : RelativeLayout(context, attrs, defStyle), GenericTextFieldView {
+class TextSelectFieldView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : RelativeLayout(context, attrs, defStyle), GenericTextFieldView {
 
     private var labelViewId = ViewCompat.generateViewId()
     private var valueViewId = ViewCompat.generateViewId()
@@ -37,15 +43,19 @@ class TextSelectFieldView @JvmOverloads constructor(context: Context,
     private val labelView = TextInputLayout(context).apply {
         layoutParams = LayoutParams(
             LayoutParams.MATCH_PARENT,
-            LayoutParams.WRAP_CONTENT)
+            LayoutParams.WRAP_CONTENT
+        )
     }
     private val valueView = TextInputEditText(
-        ContextThemeWrapper(context,
-            R.style.Theme_Keepass_TextInputLayout)
+        ContextThemeWrapper(
+            context,
+            R.style.Theme_Keepass_TextInputLayout
+        )
     ).apply {
         layoutParams = LinearLayout.LayoutParams(
             LayoutParams.MATCH_PARENT,
-            LayoutParams.WRAP_CONTENT)
+            LayoutParams.WRAP_CONTENT
+        )
         inputType = EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             imeOptions = EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING
@@ -84,14 +94,16 @@ class TextSelectFieldView @JvmOverloads constructor(context: Context,
         )
     }
     private var actionImageButton = AppCompatImageButton(
-            ContextThemeWrapper(context, R.style.Theme_Keepass_ImageButton_Simple), null, 0).apply {
+        ContextThemeWrapper(context, R.style.Theme_Keepass_ImageButton_Simple), null, 0
+    ).apply {
         layoutParams = LayoutParams(
-                LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT).also {
+            LayoutParams.WRAP_CONTENT,
+            LayoutParams.WRAP_CONTENT
+        ).also {
             it.topMargin = TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP,
-                    8f,
-                    resources.displayMetrics
+                TypedValue.COMPLEX_UNIT_DIP,
+                8f,
+                resources.displayMetrics
             ).toInt()
             it.addRule(ALIGN_PARENT_RIGHT)
             it.addRule(ALIGN_PARENT_END)
@@ -116,10 +128,16 @@ class TextSelectFieldView @JvmOverloads constructor(context: Context,
         valueSpinnerView.apply {
             adapter = valueSpinnerAdapter
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
                     val stringValue = valueSpinnerAdapter.getItem(position)
                     valueView.setText(stringValue)
                 }
+
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         }
@@ -195,13 +213,16 @@ class TextSelectFieldView @JvmOverloads constructor(context: Context,
             valueSpinnerAdapter.notifyDataSetChanged()
         }
 
-    override fun setOnActionClickListener(onActionClickListener: OnClickListener?,
-                                          @DrawableRes actionImageId: Int?) {
+    override fun setOnActionClickListener(
+        onActionClickListener: OnClickListener?,
+        @DrawableRes actionImageId: Int?
+    ) {
         actionImageId?.let {
             actionImageButton.setImageDrawable(ContextCompat.getDrawable(context, it))
         }
         actionImageButton.setOnClickListener(onActionClickListener)
-        actionImageButton.visibility = if (onActionClickListener == null) View.GONE else View.VISIBLE
+        actionImageButton.visibility =
+            if (onActionClickListener == null) View.GONE else View.VISIBLE
     }
 
     override var isFieldVisible: Boolean
@@ -215,7 +236,7 @@ class TextSelectFieldView @JvmOverloads constructor(context: Context,
     private class ValueSpinnerAdapter(context: Context) : BaseAdapter() {
 
         private val inflater: LayoutInflater = LayoutInflater.from(context)
-        private var listItems: MutableList<String> = mutableListOf<String>().apply{
+        private var listItems: MutableList<String> = mutableListOf<String>().apply {
             // Don't know why but must be init with at least one item, else no view
             add("")
         }

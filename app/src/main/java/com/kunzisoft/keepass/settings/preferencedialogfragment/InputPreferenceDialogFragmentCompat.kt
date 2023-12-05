@@ -98,7 +98,10 @@ abstract class InputPreferenceDialogFragmentCompat : PreferenceDialogFragmentCom
         }
     }
 
-    fun setExplanationButton(@StringRes explanationButtonTextId: Int, clickListener: View.OnClickListener) {
+    fun setExplanationButton(
+        @StringRes explanationButtonTextId: Int,
+        clickListener: View.OnClickListener
+    ) {
         setExplanationButton(getString(explanationButtonTextId), clickListener)
     }
 
@@ -116,13 +119,14 @@ abstract class InputPreferenceDialogFragmentCompat : PreferenceDialogFragmentCom
                             dialog?.dismiss()
                             true
                         }
+
                         else -> {
                             false
                         }
                     }
                 } else {
                     mOnInputTextEditorActionListener?.onEditorAction(v, actionId, event)
-                            ?: false
+                        ?: false
                 }
             }
         }
@@ -136,7 +140,7 @@ abstract class InputPreferenceDialogFragmentCompat : PreferenceDialogFragmentCom
         switchElementView?.visibility = View.GONE
     }
 
-    fun setSwitchAction(onCheckedChange: ((isChecked: Boolean)-> Unit)?, defaultChecked: Boolean) {
+    fun setSwitchAction(onCheckedChange: ((isChecked: Boolean) -> Unit)?, defaultChecked: Boolean) {
         switchElementView?.visibility = if (onCheckedChange == null) View.GONE else View.VISIBLE
         switchElementView?.isChecked = defaultChecked
         inputTextView?.visibility = if (defaultChecked) View.VISIBLE else View.GONE

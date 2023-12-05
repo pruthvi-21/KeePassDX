@@ -19,21 +19,22 @@ import com.kunzisoft.keepass.utils.readEnum
 import com.kunzisoft.keepass.utils.writeEnum
 
 
-class HardwareKeySelectionView @JvmOverloads constructor(context: Context,
-                                                         attrs: AttributeSet? = null,
-                                                         defStyle: Int = 0)
-    : ConstraintLayout(context, attrs, defStyle) {
+class HardwareKeySelectionView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : ConstraintLayout(context, attrs, defStyle) {
 
     private var mHardwareKey: HardwareKey? = null
 
     private val hardwareKeyLayout: TextInputLayout
     private val hardwareKeyCompletion: AppCompatAutoCompleteTextView
-    var selectionListener: ((HardwareKey)-> Unit)? = null
+    var selectionListener: ((HardwareKey) -> Unit)? = null
 
     private val mHardwareKeyAdapter = ArrayAdapterNoFilter(context)
 
-    private class ArrayAdapterNoFilter(context: Context)
-        : ArrayAdapter<String>(context, android.R.layout.simple_list_item_1) {
+    private class ArrayAdapterNoFilter(context: Context) :
+        ArrayAdapter<String>(context, android.R.layout.simple_list_item_1) {
         val hardwareKeys = HardwareKey.values()
 
         override fun getCount(): Int {

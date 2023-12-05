@@ -6,11 +6,12 @@ import android.util.AttributeSet
 import androidx.preference.DialogPreference
 import com.kunzisoft.keepass.R
 
-class DurationDialogPreference @JvmOverloads constructor(context: Context,
-                                                         attrs: AttributeSet? = null,
-                                                         defStyleAttr: Int = R.attr.dialogPreferenceStyle,
-                                                         defStyleRes: Int = defStyleAttr)
-    : DialogPreference(context, attrs, defStyleAttr, defStyleRes) {
+class DurationDialogPreference @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = R.attr.dialogPreferenceStyle,
+    defStyleRes: Int = defStyleAttr
+) : DialogPreference(context, attrs, defStyleAttr, defStyleRes) {
 
     private var mDuration: Long = 0L
 

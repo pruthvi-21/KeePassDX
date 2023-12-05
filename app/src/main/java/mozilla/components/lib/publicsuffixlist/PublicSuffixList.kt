@@ -81,6 +81,7 @@ class PublicSuffixList(
                 .split('.')
                 .drop(offset.value)
                 .joinToString(separator = ".")
+
             else -> null
         }
     }
@@ -105,6 +106,7 @@ class PublicSuffixList(
                 .split('.')
                 .drop(offset.value + 1)
                 .joinToString(separator = ".")
+
             else -> null
         }
     }
@@ -129,6 +131,7 @@ class PublicSuffixList(
                 .split('.')
                 .joinToString(separator = ".", limit = offset.value + 1, truncated = "")
                 .dropLast(1)
+
             else -> domain
         }
     }

@@ -4,8 +4,7 @@ import android.content.Context
 import com.kunzisoft.keepass.database.element.Tags
 import com.tokenautocomplete.FilteredArrayAdapter
 
-class TagsProposalAdapter(context: Context, proposal: Tags?)
-    : FilteredArrayAdapter<String>(
+class TagsProposalAdapter(context: Context, proposal: Tags?) : FilteredArrayAdapter<String>(
     context,
     android.R.layout.simple_list_item_1,
     (proposal ?: Tags()).toList()

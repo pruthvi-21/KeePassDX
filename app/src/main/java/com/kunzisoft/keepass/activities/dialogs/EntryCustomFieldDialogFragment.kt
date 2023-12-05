@@ -19,7 +19,7 @@ import com.kunzisoft.keepass.database.element.security.ProtectedString
 import com.kunzisoft.keepass.utils.getParcelableCompat
 
 
-class EntryCustomFieldDialogFragment: DatabaseDialogFragment() {
+class EntryCustomFieldDialogFragment : DatabaseDialogFragment() {
 
     private var oldField: Field? = null
 
@@ -36,8 +36,10 @@ class EntryCustomFieldDialogFragment: DatabaseDialogFragment() {
             entryCustomFieldListener = context as EntryCustomFieldListener
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
-            throw ClassCastException(context.toString()
-                    + " must implement " + EntryCustomFieldListener::class.java.name)
+            throw ClassCastException(
+                context.toString()
+                        + " must implement " + EntryCustomFieldListener::class.java.name
+            )
         }
     }
 
@@ -70,8 +72,8 @@ class EntryCustomFieldDialogFragment: DatabaseDialogFragment() {
 
             val builder = AlertDialog.Builder(activity)
             builder.setView(root)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .setNegativeButton(android.R.string.cancel) { _, _ -> }
+                .setPositiveButton(android.R.string.ok, null)
+                .setNegativeButton(android.R.string.cancel) { _, _ -> }
             val dialogCreated = builder.create()
 
             customFieldLabel?.requestFocus()
@@ -107,15 +109,22 @@ class EntryCustomFieldDialogFragment: DatabaseDialogFragment() {
         if (isValid()) {
             oldField?.let {
                 // New property with old value
-                entryCustomFieldListener?.onEditCustomFieldApproved(it,
-                        Field(customFieldLabel?.text?.toString() ?: "",
-                                ProtectedString(customFieldProtectionButton?.isChecked == true,
-                                        it.protectedValue.stringValue))
+                entryCustomFieldListener?.onEditCustomFieldApproved(
+                    it,
+                    Field(
+                        customFieldLabel?.text?.toString() ?: "",
+                        ProtectedString(
+                            customFieldProtectionButton?.isChecked == true,
+                            it.protectedValue.stringValue
+                        )
+                    )
                 )
             } ?: run {
                 entryCustomFieldListener?.onNewCustomFieldApproved(
-                        Field(customFieldLabel?.text?.toString() ?: "",
-                                ProtectedString(customFieldProtectionButton?.isChecked == true))
+                    Field(
+                        customFieldLabel?.text?.toString() ?: "",
+                        ProtectedString(customFieldProtectionButton?.isChecked == true)
+                    )
                 )
             }
             (dialog as AlertDialog?)?.dismiss()

@@ -23,8 +23,10 @@ class FileTooBigDialogFragment : DialogFragment() {
         try {
             mActionChooseListener = context as ActionChooseListener
         } catch (e: ClassCastException) {
-            throw ClassCastException(context.toString()
-                    + " must implement " + ActionChooseListener::class.java.name)
+            throw ClassCastException(
+                context.toString()
+                        + " must implement " + ActionChooseListener::class.java.name
+            )
         }
     }
 
@@ -45,8 +47,9 @@ class FileTooBigDialogFragment : DialogFragment() {
             })
             builder.setPositiveButton(android.R.string.ok) { _, _ ->
                 mActionChooseListener?.onValidateUploadFileTooBig(
-                        arguments?.getParcelableCompat(KEY_FILE_URI),
-                        arguments?.getString(KEY_FILE_NAME))
+                    arguments?.getParcelableCompat(KEY_FILE_URI),
+                    arguments?.getString(KEY_FILE_NAME)
+                )
             }
             builder.setNegativeButton(android.R.string.cancel) { _, _ ->
                 dismiss()
@@ -67,8 +70,10 @@ class FileTooBigDialogFragment : DialogFragment() {
         private const val KEY_FILE_URI = "KEY_FILE_URI"
         private const val KEY_FILE_NAME = "KEY_FILE_NAME"
 
-        fun build(attachmentToUploadUri: Uri,
-                  fileName: String): FileTooBigDialogFragment {
+        fun build(
+            attachmentToUploadUri: Uri,
+            fileName: String
+        ): FileTooBigDialogFragment {
             val fragment = FileTooBigDialogFragment()
             fragment.arguments = Bundle().apply {
                 putParcelable(KEY_FILE_URI, attachmentToUploadUri)

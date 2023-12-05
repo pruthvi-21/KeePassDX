@@ -6,7 +6,8 @@ import android.view.View
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.ContextualDatabase
 
-class DatabaseRemoveUnlinkedDataPreferenceDialogFragmentCompat : DatabaseSavePreferenceDialogFragmentCompat() {
+class DatabaseRemoveUnlinkedDataPreferenceDialogFragmentCompat :
+    DatabaseSavePreferenceDialogFragmentCompat() {
 
     override fun onBindDialogView(view: View) {
         super.onBindDialogView(view)

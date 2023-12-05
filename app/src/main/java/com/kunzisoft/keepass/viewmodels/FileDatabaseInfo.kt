@@ -4,12 +4,12 @@ import android.content.Context
 import android.net.Uri
 import android.text.format.Formatter
 import androidx.documentfile.provider.DocumentFile
-import com.kunzisoft.keepass.utils.parseUri
 import com.kunzisoft.keepass.utils.UriUtil.getDocumentFile
 import com.kunzisoft.keepass.utils.UriUtil.takeUriPermission
+import com.kunzisoft.keepass.utils.parseUri
 import java.io.Serializable
 import java.text.DateFormat
-import java.util.*
+import java.util.Date
 
 class FileDatabaseInfo : Serializable {
 
@@ -50,7 +50,7 @@ class FileDatabaseInfo : Serializable {
         return documentFile?.lastModified()?.let {
             if (it != 0L) {
                 DateFormat.getDateTimeInstance()
-                        .format(Date(it))
+                    .format(Date(it))
             } else {
                 null
             }

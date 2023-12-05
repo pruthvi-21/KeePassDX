@@ -37,95 +37,129 @@ object PreferencesUtil {
         return prefs.getString(context.getString(R.string.default_database_path_key), "")
     }
 
-    fun saveNodeSort(context: Context,
-                     sortNodeEnum: SortNodeEnum,
-                     sortNodeParameters: SortNodeEnum.SortNodeParameters) {
+    fun saveNodeSort(
+        context: Context,
+        sortNodeEnum: SortNodeEnum,
+        sortNodeParameters: SortNodeEnum.SortNodeParameters
+    ) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         prefs?.edit()?.apply {
             putString(context.getString(R.string.sort_node_key), sortNodeEnum.name)
             putBoolean(context.getString(R.string.sort_ascending_key), sortNodeParameters.ascending)
-            putBoolean(context.getString(R.string.sort_group_before_key), sortNodeParameters.groupsBefore)
-            putBoolean(context.getString(R.string.sort_recycle_bin_bottom_key), sortNodeParameters.recycleBinBottom)
+            putBoolean(
+                context.getString(R.string.sort_group_before_key),
+                sortNodeParameters.groupsBefore
+            )
+            putBoolean(
+                context.getString(R.string.sort_recycle_bin_bottom_key),
+                sortNodeParameters.recycleBinBottom
+            )
             apply()
         }
     }
 
     fun rememberDatabaseLocations(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.remember_database_locations_key),
-            context.resources.getBoolean(R.bool.remember_database_locations_default))
+        return prefs.getBoolean(
+            context.getString(R.string.remember_database_locations_key),
+            context.resources.getBoolean(R.bool.remember_database_locations_default)
+        )
     }
 
     fun showRecentFiles(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.show_recent_files_key),
-            context.resources.getBoolean(R.bool.show_recent_files_default))
+        return prefs.getBoolean(
+            context.getString(R.string.show_recent_files_key),
+            context.resources.getBoolean(R.bool.show_recent_files_default)
+        )
     }
 
     fun hideBrokenLocations(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.hide_broken_locations_key),
-            context.resources.getBoolean(R.bool.hide_broken_locations_default))
+        return prefs.getBoolean(
+            context.getString(R.string.hide_broken_locations_key),
+            context.resources.getBoolean(R.bool.hide_broken_locations_default)
+        )
     }
 
     fun rememberKeyFileLocations(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.remember_keyfile_locations_key),
-            context.resources.getBoolean(R.bool.remember_keyfile_locations_default))
+        return prefs.getBoolean(
+            context.getString(R.string.remember_keyfile_locations_key),
+            context.resources.getBoolean(R.bool.remember_keyfile_locations_default)
+        )
     }
 
     fun rememberHardwareKey(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.remember_hardware_key_key),
-            context.resources.getBoolean(R.bool.remember_hardware_key_default))
+        return prefs.getBoolean(
+            context.getString(R.string.remember_hardware_key_key),
+            context.resources.getBoolean(R.bool.remember_hardware_key_default)
+        )
     }
 
     fun automaticallyFocusSearch(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.auto_focus_search_key),
-            context.resources.getBoolean(R.bool.auto_focus_search_default))
+        return prefs.getBoolean(
+            context.getString(R.string.auto_focus_search_key),
+            context.resources.getBoolean(R.bool.auto_focus_search_default)
+        )
     }
 
     fun searchSubdomains(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.subdomain_search_key),
-            context.resources.getBoolean(R.bool.subdomain_search_default))
+        return prefs.getBoolean(
+            context.getString(R.string.subdomain_search_key),
+            context.resources.getBoolean(R.bool.subdomain_search_default)
+        )
     }
 
     fun showEntryColors(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.show_entry_colors_key),
-            context.resources.getBoolean(R.bool.show_entry_colors_default))
+        return prefs.getBoolean(
+            context.getString(R.string.show_entry_colors_key),
+            context.resources.getBoolean(R.bool.show_entry_colors_default)
+        )
     }
 
     fun hideProtectedValue(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.hide_password_key),
-            context.resources.getBoolean(R.bool.hide_password_default))
+        return prefs.getBoolean(
+            context.getString(R.string.hide_password_key),
+            context.resources.getBoolean(R.bool.hide_password_default)
+        )
     }
 
     fun colorizePassword(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.colorize_password_key),
-            context.resources.getBoolean(R.bool.colorize_password_default))
+        return prefs.getBoolean(
+            context.getString(R.string.colorize_password_key),
+            context.resources.getBoolean(R.bool.colorize_password_default)
+        )
     }
 
     fun showUsernamesListEntries(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.list_entries_show_username_key),
-            context.resources.getBoolean(R.bool.list_entries_show_username_default))
+        return prefs.getBoolean(
+            context.getString(R.string.list_entries_show_username_key),
+            context.resources.getBoolean(R.bool.list_entries_show_username_default)
+        )
     }
 
     fun showNumberEntries(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.list_groups_show_number_entries_key),
-            context.resources.getBoolean(R.bool.list_groups_show_number_entries_default))
+        return prefs.getBoolean(
+            context.getString(R.string.list_groups_show_number_entries_key),
+            context.resources.getBoolean(R.bool.list_groups_show_number_entries_default)
+        )
     }
 
     fun showOTPToken(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.show_otp_token_key),
-            context.resources.getBoolean(R.bool.show_otp_token_default))
+        return prefs.getBoolean(
+            context.getString(R.string.show_otp_token_key),
+            context.resources.getBoolean(R.bool.show_otp_token_default)
+        )
     }
 
     fun showUUID(context: Context): Boolean {
@@ -150,9 +184,12 @@ object PreferencesUtil {
     fun getListTextSize(context: Context): Float {
         val index = try {
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-            val listSizeString = prefs.getString(context.getString(R.string.list_size_key),
-                context.getString(R.string.list_size_string_medium))
-            context.resources.getStringArray(R.array.list_size_string_values).indexOf(listSizeString)
+            val listSizeString = prefs.getString(
+                context.getString(R.string.list_size_key),
+                context.getString(R.string.list_size_string_medium)
+            )
+            context.resources.getStringArray(R.array.list_size_string_values)
+                .indexOf(listSizeString)
         } catch (e: Exception) {
             1
         }
@@ -164,8 +201,10 @@ object PreferencesUtil {
 
     fun getDefaultPasswordLength(context: Context): Int {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getInt(context.getString(R.string.password_generator_length_key),
-            context.resources.getInteger(R.integer.password_generator_length_default))
+        return prefs.getInt(
+            context.getString(R.string.password_generator_length_key),
+            context.resources.getInteger(R.integer.password_generator_length_default)
+        )
     }
 
     fun setDefaultPasswordLength(context: Context, passwordLength: Int) {
@@ -180,9 +219,15 @@ object PreferencesUtil {
 
     fun getDefaultPasswordOptions(context: Context): Set<String> {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getStringSet(context.getString(R.string.password_generator_options_key),
-            HashSet(listOf(*context.resources
-                .getStringArray(R.array.list_password_generator_options_default_values)))) ?: setOf()
+        return prefs.getStringSet(
+            context.getString(R.string.password_generator_options_key),
+            HashSet(
+                listOf(
+                    *context.resources
+                        .getStringArray(R.array.list_password_generator_options_default_values)
+                )
+            )
+        ) ?: setOf()
     }
 
     fun setDefaultPasswordOptions(context: Context, passwordOptionsSet: Set<String>) {
@@ -197,8 +242,10 @@ object PreferencesUtil {
 
     fun getDefaultPasswordConsiderChars(context: Context): String {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getString(context.getString(R.string.password_generator_consider_chars_key),
-            context.getString(R.string.password_generator_consider_chars_default)) ?: ""
+        return prefs.getString(
+            context.getString(R.string.password_generator_consider_chars_key),
+            context.getString(R.string.password_generator_consider_chars_default)
+        ) ?: ""
     }
 
     fun setDefaultPasswordConsiderChars(context: Context, considerChars: String) {
@@ -213,8 +260,10 @@ object PreferencesUtil {
 
     fun getDefaultPasswordIgnoreChars(context: Context): String {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getString(context.getString(R.string.password_generator_ignore_chars_key),
-            context.getString(R.string.password_generator_ignore_chars_default)) ?: ""
+        return prefs.getString(
+            context.getString(R.string.password_generator_ignore_chars_key),
+            context.getString(R.string.password_generator_ignore_chars_default)
+        ) ?: ""
     }
 
     fun setDefaultPasswordIgnoreChars(context: Context, ignoreChars: String) {
@@ -229,8 +278,10 @@ object PreferencesUtil {
 
     fun getDefaultPassphraseWordCount(context: Context): Int {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getInt(context.getString(R.string.passphrase_generator_word_count_key),
-            context.resources.getInteger(R.integer.passphrase_generator_word_count_default))
+        return prefs.getInt(
+            context.getString(R.string.passphrase_generator_word_count_key),
+            context.resources.getInteger(R.integer.passphrase_generator_word_count_default)
+        )
     }
 
     fun setDefaultPassphraseWordCount(context: Context, passphraseWordCount: Int) {
@@ -246,9 +297,12 @@ object PreferencesUtil {
     fun getDefaultPassphraseWordCase(context: Context): PassphraseGenerator.WordCase {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         return PassphraseGenerator.WordCase
-            .getByOrdinal(prefs.getInt(context
-                .getString(R.string.passphrase_generator_word_case_key),
-                0)
+            .getByOrdinal(
+                prefs.getInt(
+                    context
+                        .getString(R.string.passphrase_generator_word_case_key),
+                    0
+                )
             )
     }
 
@@ -264,8 +318,10 @@ object PreferencesUtil {
 
     fun getDefaultPassphraseSeparator(context: Context): String {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getString(context.getString(R.string.passphrase_generator_separator_key),
-            context.getString(R.string.passphrase_generator_separator_default)) ?: ""
+        return prefs.getString(
+            context.getString(R.string.passphrase_generator_separator_key),
+            context.getString(R.string.passphrase_generator_separator_default)
+        ) ?: ""
     }
 
     fun setDefaultPassphraseSeparator(context: Context, separator: String) {
@@ -281,83 +337,149 @@ object PreferencesUtil {
     fun getDefaultSearchParameters(context: Context): SearchParameters {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         return SearchParameters().apply {
-            caseSensitive = prefs.getBoolean(context.getString(R.string.search_option_case_sensitive_key),
-                context.resources.getBoolean(R.bool.search_option_case_sensitive_default))
-            isRegex = prefs.getBoolean(context.getString(R.string.search_option_regex_key),
-                context.resources.getBoolean(R.bool.search_option_regex_default))
-            searchInTitles = prefs.getBoolean(context.getString(R.string.search_option_title_key),
-                context.resources.getBoolean(R.bool.search_option_title_default))
-            searchInUsernames = prefs.getBoolean(context.getString(R.string.search_option_username_key),
-                context.resources.getBoolean(R.bool.search_option_username_default))
-            searchInPasswords = prefs.getBoolean(context.getString(R.string.search_option_password_key),
-                context.resources.getBoolean(R.bool.search_option_password_default))
-            searchInUrls = prefs.getBoolean(context.getString(R.string.search_option_url_key),
-                context.resources.getBoolean(R.bool.search_option_url_default))
-            searchInExpired = prefs.getBoolean(context.getString(R.string.search_option_expired_key),
-                context.resources.getBoolean(R.bool.search_option_expired_default))
-            searchInNotes = prefs.getBoolean(context.getString(R.string.search_option_note_key),
-                context.resources.getBoolean(R.bool.search_option_note_default))
-            searchInOTP = prefs.getBoolean(context.getString(R.string.search_option_otp_key),
-                context.resources.getBoolean(R.bool.search_option_otp_default))
-            searchInOther = prefs.getBoolean(context.getString(R.string.search_option_other_key),
-                context.resources.getBoolean(R.bool.search_option_other_default))
-            searchInUUIDs = prefs.getBoolean(context.getString(R.string.search_option_uuid_key),
-                context.resources.getBoolean(R.bool.search_option_uuid_default))
-            searchInTags = prefs.getBoolean(context.getString(R.string.search_option_tag_key),
-                context.resources.getBoolean(R.bool.search_option_tag_default))
-            searchInCurrentGroup = prefs.getBoolean(context.getString(R.string.search_option_current_group_key),
-                context.resources.getBoolean(R.bool.search_option_current_group_default))
-            searchInSearchableGroup = prefs.getBoolean(context.getString(R.string.search_option_searchable_group_key),
-                context.resources.getBoolean(R.bool.search_option_searchable_group_default))
-            searchInRecycleBin = prefs.getBoolean(context.getString(R.string.search_option_recycle_bin_key),
-                context.resources.getBoolean(R.bool.search_option_recycle_bin_default))
-            searchInTemplates = prefs.getBoolean(context.getString(R.string.search_option_templates_key),
-                context.resources.getBoolean(R.bool.search_option_templates_default))
+            caseSensitive = prefs.getBoolean(
+                context.getString(R.string.search_option_case_sensitive_key),
+                context.resources.getBoolean(R.bool.search_option_case_sensitive_default)
+            )
+            isRegex = prefs.getBoolean(
+                context.getString(R.string.search_option_regex_key),
+                context.resources.getBoolean(R.bool.search_option_regex_default)
+            )
+            searchInTitles = prefs.getBoolean(
+                context.getString(R.string.search_option_title_key),
+                context.resources.getBoolean(R.bool.search_option_title_default)
+            )
+            searchInUsernames = prefs.getBoolean(
+                context.getString(R.string.search_option_username_key),
+                context.resources.getBoolean(R.bool.search_option_username_default)
+            )
+            searchInPasswords = prefs.getBoolean(
+                context.getString(R.string.search_option_password_key),
+                context.resources.getBoolean(R.bool.search_option_password_default)
+            )
+            searchInUrls = prefs.getBoolean(
+                context.getString(R.string.search_option_url_key),
+                context.resources.getBoolean(R.bool.search_option_url_default)
+            )
+            searchInExpired = prefs.getBoolean(
+                context.getString(R.string.search_option_expired_key),
+                context.resources.getBoolean(R.bool.search_option_expired_default)
+            )
+            searchInNotes = prefs.getBoolean(
+                context.getString(R.string.search_option_note_key),
+                context.resources.getBoolean(R.bool.search_option_note_default)
+            )
+            searchInOTP = prefs.getBoolean(
+                context.getString(R.string.search_option_otp_key),
+                context.resources.getBoolean(R.bool.search_option_otp_default)
+            )
+            searchInOther = prefs.getBoolean(
+                context.getString(R.string.search_option_other_key),
+                context.resources.getBoolean(R.bool.search_option_other_default)
+            )
+            searchInUUIDs = prefs.getBoolean(
+                context.getString(R.string.search_option_uuid_key),
+                context.resources.getBoolean(R.bool.search_option_uuid_default)
+            )
+            searchInTags = prefs.getBoolean(
+                context.getString(R.string.search_option_tag_key),
+                context.resources.getBoolean(R.bool.search_option_tag_default)
+            )
+            searchInCurrentGroup = prefs.getBoolean(
+                context.getString(R.string.search_option_current_group_key),
+                context.resources.getBoolean(R.bool.search_option_current_group_default)
+            )
+            searchInSearchableGroup = prefs.getBoolean(
+                context.getString(R.string.search_option_searchable_group_key),
+                context.resources.getBoolean(R.bool.search_option_searchable_group_default)
+            )
+            searchInRecycleBin = prefs.getBoolean(
+                context.getString(R.string.search_option_recycle_bin_key),
+                context.resources.getBoolean(R.bool.search_option_recycle_bin_default)
+            )
+            searchInTemplates = prefs.getBoolean(
+                context.getString(R.string.search_option_templates_key),
+                context.resources.getBoolean(R.bool.search_option_templates_default)
+            )
         }
     }
 
     fun setDefaultSearchParameters(context: Context, searchParameters: SearchParameters) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().apply {
-            putBoolean(context.getString(R.string.search_option_case_sensitive_key),
-                searchParameters.caseSensitive)
-            putBoolean(context.getString(R.string.search_option_regex_key),
-                searchParameters.isRegex)
-            putBoolean(context.getString(R.string.search_option_title_key),
-                searchParameters.searchInTitles)
-            putBoolean(context.getString(R.string.search_option_username_key),
-                searchParameters.searchInUsernames)
-            putBoolean(context.getString(R.string.search_option_password_key),
-                searchParameters.searchInPasswords)
-            putBoolean(context.getString(R.string.search_option_url_key),
-                searchParameters.searchInUrls)
-            putBoolean(context.getString(R.string.search_option_expired_key),
-                searchParameters.searchInExpired)
-            putBoolean(context.getString(R.string.search_option_note_key),
-                searchParameters.searchInNotes)
-            putBoolean(context.getString(R.string.search_option_otp_key),
-                searchParameters.searchInOTP)
-            putBoolean(context.getString(R.string.search_option_other_key),
-                searchParameters.searchInOther)
-            putBoolean(context.getString(R.string.search_option_uuid_key),
-                searchParameters.searchInUUIDs)
-            putBoolean(context.getString(R.string.search_option_tag_key),
-                searchParameters.searchInTags)
-            putBoolean(context.getString(R.string.search_option_current_group_key),
-                searchParameters.searchInCurrentGroup)
-            putBoolean(context.getString(R.string.search_option_searchable_group_key),
-                searchParameters.searchInSearchableGroup)
-            putBoolean(context.getString(R.string.search_option_recycle_bin_key),
-                searchParameters.searchInRecycleBin)
-            putBoolean(context.getString(R.string.search_option_templates_key),
-                searchParameters.searchInTemplates)
+            putBoolean(
+                context.getString(R.string.search_option_case_sensitive_key),
+                searchParameters.caseSensitive
+            )
+            putBoolean(
+                context.getString(R.string.search_option_regex_key),
+                searchParameters.isRegex
+            )
+            putBoolean(
+                context.getString(R.string.search_option_title_key),
+                searchParameters.searchInTitles
+            )
+            putBoolean(
+                context.getString(R.string.search_option_username_key),
+                searchParameters.searchInUsernames
+            )
+            putBoolean(
+                context.getString(R.string.search_option_password_key),
+                searchParameters.searchInPasswords
+            )
+            putBoolean(
+                context.getString(R.string.search_option_url_key),
+                searchParameters.searchInUrls
+            )
+            putBoolean(
+                context.getString(R.string.search_option_expired_key),
+                searchParameters.searchInExpired
+            )
+            putBoolean(
+                context.getString(R.string.search_option_note_key),
+                searchParameters.searchInNotes
+            )
+            putBoolean(
+                context.getString(R.string.search_option_otp_key),
+                searchParameters.searchInOTP
+            )
+            putBoolean(
+                context.getString(R.string.search_option_other_key),
+                searchParameters.searchInOther
+            )
+            putBoolean(
+                context.getString(R.string.search_option_uuid_key),
+                searchParameters.searchInUUIDs
+            )
+            putBoolean(
+                context.getString(R.string.search_option_tag_key),
+                searchParameters.searchInTags
+            )
+            putBoolean(
+                context.getString(R.string.search_option_current_group_key),
+                searchParameters.searchInCurrentGroup
+            )
+            putBoolean(
+                context.getString(R.string.search_option_searchable_group_key),
+                searchParameters.searchInSearchableGroup
+            )
+            putBoolean(
+                context.getString(R.string.search_option_recycle_bin_key),
+                searchParameters.searchInRecycleBin
+            )
+            putBoolean(
+                context.getString(R.string.search_option_templates_key),
+                searchParameters.searchInTemplates
+            )
             apply()
         }
     }
 
     fun isClipboardNotificationsEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.clipboard_notifications_key),
-            context.resources.getBoolean(R.bool.clipboard_notifications_default))
+        return prefs.getBoolean(
+            context.getString(R.string.clipboard_notifications_key),
+            context.resources.getBoolean(R.bool.clipboard_notifications_default)
+        )
     }
 
     /**
@@ -375,8 +497,10 @@ object PreferencesUtil {
      */
     fun getTimeSaved(context: Context): Long {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getLong(context.getString(R.string.timeout_backup_key),
-            TimeoutHelper.NEVER)
+        return prefs.getLong(
+            context.getString(R.string.timeout_backup_key),
+            TimeoutHelper.NEVER
+        )
     }
 
     /**
@@ -385,8 +509,10 @@ object PreferencesUtil {
     fun getAppTimeout(context: Context): Long {
         return try {
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-            (prefs.getString(context.getString(R.string.app_timeout_key),
-                context.getString(R.string.timeout_default)) ?: "300000").toLong()
+            (prefs.getString(
+                context.getString(R.string.app_timeout_key),
+                context.getString(R.string.timeout_default)
+            ) ?: "300000").toLong()
         } catch (e: NumberFormatException) {
             TimeoutHelper.DEFAULT_TIMEOUT
         }
@@ -394,52 +520,68 @@ object PreferencesUtil {
 
     fun getClipboardTimeout(context: Context): Long {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getString(context.getString(R.string.clipboard_timeout_key),
-            context.getString(R.string.clipboard_timeout_default))?.toLong()
+        return prefs.getString(
+            context.getString(R.string.clipboard_timeout_key),
+            context.getString(R.string.clipboard_timeout_default)
+        )?.toLong()
             ?: TimeoutHelper.DEFAULT_TIMEOUT
     }
 
     fun getAdvancedUnlockTimeout(context: Context): Long {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getString(context.getString(R.string.temp_advanced_unlock_timeout_key),
-            context.getString(R.string.temp_advanced_unlock_timeout_default))?.toLong()
+        return prefs.getString(
+            context.getString(R.string.temp_advanced_unlock_timeout_key),
+            context.getString(R.string.temp_advanced_unlock_timeout_default)
+        )?.toLong()
             ?: TimeoutHelper.DEFAULT_TIMEOUT
     }
 
     fun isLockDatabaseWhenScreenShutOffEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.lock_database_screen_off_key),
-            context.resources.getBoolean(R.bool.lock_database_screen_off_default))
+        return prefs.getBoolean(
+            context.getString(R.string.lock_database_screen_off_key),
+            context.resources.getBoolean(R.bool.lock_database_screen_off_default)
+        )
     }
 
     fun isLockDatabaseWhenBackButtonOnRootClicked(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.lock_database_back_root_key),
-            context.resources.getBoolean(R.bool.lock_database_back_root_default))
+        return prefs.getBoolean(
+            context.getString(R.string.lock_database_back_root_key),
+            context.resources.getBoolean(R.bool.lock_database_back_root_default)
+        )
     }
 
     fun showLockDatabaseButton(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.lock_database_show_button_key),
-            context.resources.getBoolean(R.bool.lock_database_show_button_default))
+        return prefs.getBoolean(
+            context.getString(R.string.lock_database_show_button_key),
+            context.resources.getBoolean(R.bool.lock_database_show_button_default)
+        )
     }
 
     fun isAutoSaveDatabaseEnabled(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.enable_auto_save_database_key),
-            context.resources.getBoolean(R.bool.enable_auto_save_database_default))
+        return prefs.getBoolean(
+            context.getString(R.string.enable_auto_save_database_key),
+            context.resources.getBoolean(R.bool.enable_auto_save_database_default)
+        )
     }
 
     fun isKeepScreenOnEnabled(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.enable_keep_screen_on_key),
-            context.resources.getBoolean(R.bool.enable_keep_screen_on_default))
+        return prefs.getBoolean(
+            context.getString(R.string.enable_keep_screen_on_key),
+            context.resources.getBoolean(R.bool.enable_keep_screen_on_default)
+        )
     }
 
     fun isScreenshotModeEnabled(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.enable_screenshot_mode_key),
-            context.resources.getBoolean(R.bool.enable_screenshot_mode_key_default))
+        return prefs.getBoolean(
+            context.getString(R.string.enable_screenshot_mode_key),
+            context.resources.getBoolean(R.bool.enable_screenshot_mode_key_default)
+        )
     }
 
     fun isAdvancedUnlockEnable(context: Context): Boolean {
@@ -448,8 +590,10 @@ object PreferencesUtil {
 
     fun isBiometricUnlockEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.biometric_unlock_enable_key),
-            context.resources.getBoolean(R.bool.biometric_unlock_enable_default))
+        return prefs.getBoolean(
+            context.getString(R.string.biometric_unlock_enable_key),
+            context.resources.getBoolean(R.bool.biometric_unlock_enable_default)
+        )
                 && (if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             AdvancedUnlockManager.biometricUnlockSupported(context)
         } else {
@@ -460,80 +604,105 @@ object PreferencesUtil {
     fun isDeviceCredentialUnlockEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         // Priority to biometric unlock
-        return prefs.getBoolean(context.getString(R.string.device_credential_unlock_enable_key),
-            context.resources.getBoolean(R.bool.device_credential_unlock_enable_default))
+        return prefs.getBoolean(
+            context.getString(R.string.device_credential_unlock_enable_key),
+            context.resources.getBoolean(R.bool.device_credential_unlock_enable_default)
+        )
                 && !isBiometricUnlockEnable(context)
     }
 
     fun isTempAdvancedUnlockEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.temp_advanced_unlock_enable_key),
-            context.resources.getBoolean(R.bool.temp_advanced_unlock_enable_default))
+        return prefs.getBoolean(
+            context.getString(R.string.temp_advanced_unlock_enable_key),
+            context.resources.getBoolean(R.bool.temp_advanced_unlock_enable_default)
+        )
     }
 
     fun isAdvancedUnlockPromptAutoOpenEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.biometric_auto_open_prompt_key),
-            context.resources.getBoolean(R.bool.biometric_auto_open_prompt_default))
+        return prefs.getBoolean(
+            context.getString(R.string.biometric_auto_open_prompt_key),
+            context.resources.getBoolean(R.bool.biometric_auto_open_prompt_default)
+        )
     }
 
     fun getListSort(context: Context): SortNodeEnum {
         try {
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-            prefs.getString(context.getString(R.string.sort_node_key),
-                SortNodeEnum.DB.name)?.let {
+            prefs.getString(
+                context.getString(R.string.sort_node_key),
+                SortNodeEnum.DB.name
+            )?.let {
                 return SortNodeEnum.valueOf(it)
             }
-        } catch (e: Exception) {}
+        } catch (e: Exception) {
+        }
         return SortNodeEnum.DB
     }
 
     fun getGroupsBeforeSort(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.sort_group_before_key),
-            context.resources.getBoolean(R.bool.sort_group_before_default))
+        return prefs.getBoolean(
+            context.getString(R.string.sort_group_before_key),
+            context.resources.getBoolean(R.bool.sort_group_before_default)
+        )
     }
 
     fun getAscendingSort(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.sort_ascending_key),
-            context.resources.getBoolean(R.bool.sort_ascending_default))
+        return prefs.getBoolean(
+            context.getString(R.string.sort_ascending_key),
+            context.resources.getBoolean(R.bool.sort_ascending_default)
+        )
     }
 
     fun getRecycleBinBottomSort(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.sort_recycle_bin_bottom_key),
-            context.resources.getBoolean(R.bool.sort_recycle_bin_bottom_default))
+        return prefs.getBoolean(
+            context.getString(R.string.sort_recycle_bin_bottom_key),
+            context.resources.getBoolean(R.bool.sort_recycle_bin_bottom_default)
+        )
     }
 
     fun fieldFontIsInVisibility(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.monospace_font_fields_enable_key),
-            context.resources.getBoolean(R.bool.monospace_font_fields_enable_default))
+        return prefs.getBoolean(
+            context.getString(R.string.monospace_font_fields_enable_key),
+            context.resources.getBoolean(R.bool.monospace_font_fields_enable_default)
+        )
     }
 
     fun isFirstTimeAskAllowCopyProtectedFields(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.allow_copy_password_first_time_key),
-            context.resources.getBoolean(R.bool.allow_copy_password_first_time_default))
+        return prefs.getBoolean(
+            context.getString(R.string.allow_copy_password_first_time_key),
+            context.resources.getBoolean(R.bool.allow_copy_password_first_time_default)
+        )
     }
 
     fun allowCopyProtectedFields(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.allow_copy_password_key),
-            context.resources.getBoolean(R.bool.allow_copy_password_default))
+        return prefs.getBoolean(
+            context.getString(R.string.allow_copy_password_key),
+            context.resources.getBoolean(R.bool.allow_copy_password_default)
+        )
     }
 
     fun isClearClipboardNotificationEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.clear_clipboard_notification_key),
-            context.resources.getBoolean(R.bool.clear_clipboard_notification_default))
+        return prefs.getBoolean(
+            context.getString(R.string.clear_clipboard_notification_key),
+            context.resources.getBoolean(R.bool.clear_clipboard_notification_default)
+        )
     }
 
     fun isClearKeyboardNotificationEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.keyboard_notification_entry_clear_close_key),
-            context.resources.getBoolean(R.bool.keyboard_notification_entry_clear_close_default))
+        return prefs.getBoolean(
+            context.getString(R.string.keyboard_notification_entry_clear_close_key),
+            context.resources.getBoolean(R.bool.keyboard_notification_entry_clear_close_default)
+        )
     }
 
     fun setAllowCopyPasswordAndProtectedFields(context: Context, allowCopy: Boolean) {
@@ -548,117 +717,154 @@ object PreferencesUtil {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         return prefs.getString(
             context.getString(R.string.setting_icon_pack_choose_key),
-            context.getString(R.string.setting_icon_pack_choose_default))
+            context.getString(R.string.setting_icon_pack_choose_default)
+        )
     }
 
     fun emptyPasswordAllowed(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.allow_no_password_key),
-            context.resources.getBoolean(R.bool.allow_no_password_default))
+        return prefs.getBoolean(
+            context.getString(R.string.allow_no_password_key),
+            context.resources.getBoolean(R.bool.allow_no_password_default)
+        )
     }
 
     fun enableReadOnlyDatabase(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.enable_read_only_key),
-            context.resources.getBoolean(R.bool.enable_read_only_default))
+        return prefs.getBoolean(
+            context.getString(R.string.enable_read_only_key),
+            context.resources.getBoolean(R.bool.enable_read_only_default)
+        )
     }
 
     fun deletePasswordAfterConnexionAttempt(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.delete_entered_password_key),
-            context.resources.getBoolean(R.bool.delete_entered_password_default))
+        return prefs.getBoolean(
+            context.getString(R.string.delete_entered_password_key),
+            context.resources.getBoolean(R.bool.delete_entered_password_default)
+        )
     }
 
     fun isKeyboardNotificationEntryEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.keyboard_notification_entry_key),
-            context.resources.getBoolean(R.bool.keyboard_notification_entry_default))
+        return prefs.getBoolean(
+            context.getString(R.string.keyboard_notification_entry_key),
+            context.resources.getBoolean(R.bool.keyboard_notification_entry_default)
+        )
     }
 
     fun isKeyboardEntrySelectionEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.keyboard_selection_entry_key),
-            context.resources.getBoolean(R.bool.keyboard_selection_entry_default))
+        return prefs.getBoolean(
+            context.getString(R.string.keyboard_selection_entry_key),
+            context.resources.getBoolean(R.bool.keyboard_selection_entry_default)
+        )
     }
 
     fun isKeyboardSaveSearchInfoEnable(context: Context): Boolean {
         if (!context.isKeyboardActivatedInSettings())
             return false
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.keyboard_save_search_info_key),
-            context.resources.getBoolean(R.bool.keyboard_save_search_info_default))
+        return prefs.getBoolean(
+            context.getString(R.string.keyboard_save_search_info_key),
+            context.resources.getBoolean(R.bool.keyboard_save_search_info_default)
+        )
     }
 
     fun isAutoGoActionEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.keyboard_auto_go_action_key),
-            context.resources.getBoolean(R.bool.keyboard_auto_go_action_default))
+        return prefs.getBoolean(
+            context.getString(R.string.keyboard_auto_go_action_key),
+            context.resources.getBoolean(R.bool.keyboard_auto_go_action_default)
+        )
     }
 
     fun isKeyboardVibrationEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.keyboard_key_vibrate_key),
-            context.resources.getBoolean(R.bool.keyboard_key_vibrate_default))
+        return prefs.getBoolean(
+            context.getString(R.string.keyboard_key_vibrate_key),
+            context.resources.getBoolean(R.bool.keyboard_key_vibrate_default)
+        )
     }
 
     fun isKeyboardSoundEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.keyboard_key_sound_key),
-            context.resources.getBoolean(R.bool.keyboard_key_sound_default))
+        return prefs.getBoolean(
+            context.getString(R.string.keyboard_key_sound_key),
+            context.resources.getBoolean(R.bool.keyboard_key_sound_default)
+        )
     }
 
     fun isKeyboardPreviousDatabaseCredentialsEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.keyboard_previous_database_credentials_key),
-            context.resources.getBoolean(R.bool.keyboard_previous_database_credentials_default))
+        return prefs.getBoolean(
+            context.getString(R.string.keyboard_previous_database_credentials_key),
+            context.resources.getBoolean(R.bool.keyboard_previous_database_credentials_default)
+        )
     }
 
     fun isKeyboardPreviousSearchEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.keyboard_previous_search_key),
-            context.resources.getBoolean(R.bool.keyboard_previous_search_default))
+        return prefs.getBoolean(
+            context.getString(R.string.keyboard_previous_search_key),
+            context.resources.getBoolean(R.bool.keyboard_previous_search_default)
+        )
     }
 
     fun isKeyboardPreviousFillInEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.keyboard_previous_fill_in_key),
-            context.resources.getBoolean(R.bool.keyboard_previous_fill_in_default))
+        return prefs.getBoolean(
+            context.getString(R.string.keyboard_previous_fill_in_key),
+            context.resources.getBoolean(R.bool.keyboard_previous_fill_in_default)
+        )
     }
 
     fun isKeyboardPreviousLockEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.keyboard_previous_lock_key),
-            context.resources.getBoolean(R.bool.keyboard_previous_lock_default))
+        return prefs.getBoolean(
+            context.getString(R.string.keyboard_previous_lock_key),
+            context.resources.getBoolean(R.bool.keyboard_previous_lock_default)
+        )
     }
 
     fun isAutofillCloseDatabaseEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.autofill_close_database_key),
-            context.resources.getBoolean(R.bool.autofill_close_database_default))
+        return prefs.getBoolean(
+            context.getString(R.string.autofill_close_database_key),
+            context.resources.getBoolean(R.bool.autofill_close_database_default)
+        )
     }
 
     fun isAutofillInlineSuggestionsEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.autofill_inline_suggestions_key),
-            context.resources.getBoolean(R.bool.autofill_inline_suggestions_default))
+        return prefs.getBoolean(
+            context.getString(R.string.autofill_inline_suggestions_key),
+            context.resources.getBoolean(R.bool.autofill_inline_suggestions_default)
+        )
     }
 
     fun isAutofillManualSelectionEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.autofill_manual_selection_key),
-            context.resources.getBoolean(R.bool.autofill_manual_selection_default))
+        return prefs.getBoolean(
+            context.getString(R.string.autofill_manual_selection_key),
+            context.resources.getBoolean(R.bool.autofill_manual_selection_default)
+        )
     }
 
     fun isAutofillSaveSearchInfoEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.autofill_save_search_info_key),
-            context.resources.getBoolean(R.bool.autofill_save_search_info_default))
+        return prefs.getBoolean(
+            context.getString(R.string.autofill_save_search_info_key),
+            context.resources.getBoolean(R.bool.autofill_save_search_info_default)
+        )
     }
 
     fun askToSaveAutofillData(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.autofill_ask_to_save_data_key),
-            context.resources.getBoolean(R.bool.autofill_ask_to_save_data_default))
+        return prefs.getBoolean(
+            context.getString(R.string.autofill_ask_to_save_data_key),
+            context.resources.getBoolean(R.bool.autofill_ask_to_save_data_default)
+        )
     }
 
     /**
@@ -673,15 +879,20 @@ object PreferencesUtil {
 
     fun applicationIdBlocklist(context: Context): Set<String> {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getStringSet(context.getString(R.string.autofill_application_id_blocklist_key),
-            getDefaultApplicationIdBlocklist(context.resources))
+        return prefs.getStringSet(
+            context.getString(R.string.autofill_application_id_blocklist_key),
+            getDefaultApplicationIdBlocklist(context.resources)
+        )
             ?: emptySet()
     }
 
     fun webDomainBlocklist(context: Context): Set<String> {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getStringSet(context.getString(R.string.autofill_web_domain_blocklist_key),
-            context.resources.getStringArray(R.array.autofill_web_domain_blocklist_default).toMutableSet())
+        return prefs.getStringSet(
+            context.getString(R.string.autofill_web_domain_blocklist_key),
+            context.resources.getStringArray(R.array.autofill_web_domain_blocklist_default)
+                .toMutableSet()
+        )
             ?: emptySet()
     }
 
@@ -690,7 +901,10 @@ object PreferencesUtil {
         val setItems: MutableSet<String> = applicationIdBlocklist(context).toMutableSet()
         setItems.add(applicationId)
         prefs.edit()
-            .putStringSet(context.getString(R.string.autofill_application_id_blocklist_key), setItems)
+            .putStringSet(
+                context.getString(R.string.autofill_application_id_blocklist_key),
+                setItems
+            )
             .apply()
     }
 
@@ -718,98 +932,367 @@ object PreferencesUtil {
             .toSet()
     }
 
-    private fun putPropertiesInPreferences(properties: Properties,
-                                           preferences: SharedPreferences,
-                                           putProperty: (editor: SharedPreferences.Editor,
-                                                         name: String,
-                                                         value: String) -> Unit) {
+    private fun putPropertiesInPreferences(
+        properties: Properties,
+        preferences: SharedPreferences,
+        putProperty: (
+            editor: SharedPreferences.Editor,
+            name: String,
+            value: String
+        ) -> Unit
+    ) {
         preferences.edit().apply {
             for ((name, value) in properties) {
                 try {
                     putProperty(this, name as String, value as String)
-                } catch (e:Exception) {
-                    Log.e("PreferencesUtil", "Error when trying to parse app property $name=$value", e)
+                } catch (e: Exception) {
+                    Log.e(
+                        "PreferencesUtil",
+                        "Error when trying to parse app property $name=$value",
+                        e
+                    )
                 }
             }
         }.apply()
     }
 
     fun setAppProperties(context: Context, properties: Properties) {
-        putPropertiesInPreferences(properties,
-            PreferenceManager.getDefaultSharedPreferences(context)) { editor, name, value ->
+        putPropertiesInPreferences(
+            properties,
+            PreferenceManager.getDefaultSharedPreferences(context)
+        ) { editor, name, value ->
             when (name) {
-                context.getString(R.string.allow_no_password_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.delete_entered_password_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.enable_read_only_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.enable_auto_save_database_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.enable_keep_screen_on_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.auto_focus_search_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.subdomain_search_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.app_timeout_key) -> editor.putString(name, value.toLong().toString())
-                context.getString(R.string.lock_database_screen_off_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.lock_database_back_root_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.lock_database_show_button_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.allow_copy_password_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.remember_database_locations_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.show_recent_files_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.hide_broken_locations_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.remember_keyfile_locations_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.biometric_unlock_enable_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.device_credential_unlock_enable_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.biometric_auto_open_prompt_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.temp_advanced_unlock_enable_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.temp_advanced_unlock_timeout_key) -> editor.putString(name, value.toLong().toString())
+                context.getString(R.string.allow_no_password_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
 
-                context.getString(R.string.magic_keyboard_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.clipboard_notifications_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.clear_clipboard_notification_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.clipboard_timeout_key) -> editor.putString(name, value.toLong().toString())
-                context.getString(R.string.settings_autofill_enable_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.keyboard_notification_entry_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.keyboard_notification_entry_clear_close_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.keyboard_entry_timeout_key) -> editor.putString(name, value.toLong().toString())
-                context.getString(R.string.keyboard_selection_entry_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.keyboard_save_search_info_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.keyboard_auto_go_action_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.keyboard_key_vibrate_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.keyboard_key_sound_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.keyboard_previous_database_credentials_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.keyboard_previous_search_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.keyboard_previous_fill_in_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.keyboard_previous_lock_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.autofill_close_database_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.autofill_inline_suggestions_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.autofill_manual_selection_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.autofill_save_search_info_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.autofill_ask_to_save_data_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.autofill_application_id_blocklist_key) -> editor.putStringSet(name, getStringSetFromProperties(value))
-                context.getString(R.string.autofill_web_domain_blocklist_key) -> editor.putStringSet(name, getStringSetFromProperties(value))
+                context.getString(R.string.delete_entered_password_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
 
-                context.getString(R.string.setting_icon_pack_choose_key) -> editor.putString(name, value)
-                context.getString(R.string.show_entry_colors_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.hide_password_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.colorize_password_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.list_entries_show_username_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.list_groups_show_number_entries_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.show_otp_token_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.show_uuid_key) -> editor.putBoolean(name, value.toBoolean())
+                context.getString(R.string.enable_read_only_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.enable_auto_save_database_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.enable_keep_screen_on_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.auto_focus_search_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.subdomain_search_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.app_timeout_key) -> editor.putString(
+                    name,
+                    value.toLong().toString()
+                )
+
+                context.getString(R.string.lock_database_screen_off_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.lock_database_back_root_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.lock_database_show_button_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.allow_copy_password_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.remember_database_locations_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.show_recent_files_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.hide_broken_locations_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.remember_keyfile_locations_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.biometric_unlock_enable_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.device_credential_unlock_enable_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.biometric_auto_open_prompt_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.temp_advanced_unlock_enable_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.temp_advanced_unlock_timeout_key) -> editor.putString(
+                    name,
+                    value.toLong().toString()
+                )
+
+                context.getString(R.string.magic_keyboard_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.clipboard_notifications_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.clear_clipboard_notification_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.clipboard_timeout_key) -> editor.putString(
+                    name,
+                    value.toLong().toString()
+                )
+
+                context.getString(R.string.settings_autofill_enable_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.keyboard_notification_entry_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.keyboard_notification_entry_clear_close_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.keyboard_entry_timeout_key) -> editor.putString(
+                    name,
+                    value.toLong().toString()
+                )
+
+                context.getString(R.string.keyboard_selection_entry_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.keyboard_save_search_info_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.keyboard_auto_go_action_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.keyboard_key_vibrate_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.keyboard_key_sound_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.keyboard_previous_database_credentials_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.keyboard_previous_search_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.keyboard_previous_fill_in_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.keyboard_previous_lock_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.autofill_close_database_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.autofill_inline_suggestions_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.autofill_manual_selection_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.autofill_save_search_info_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.autofill_ask_to_save_data_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.autofill_application_id_blocklist_key) -> editor.putStringSet(
+                    name,
+                    getStringSetFromProperties(value)
+                )
+
+                context.getString(R.string.autofill_web_domain_blocklist_key) -> editor.putStringSet(
+                    name,
+                    getStringSetFromProperties(value)
+                )
+
+                context.getString(R.string.setting_icon_pack_choose_key) -> editor.putString(
+                    name,
+                    value
+                )
+
+                context.getString(R.string.show_entry_colors_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.hide_password_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.colorize_password_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.list_entries_show_username_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.list_groups_show_number_entries_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.show_otp_token_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.show_uuid_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
                 context.getString(R.string.list_size_key) -> editor.putString(name, value)
-                context.getString(R.string.monospace_font_fields_enable_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.hide_expired_entries_key) -> editor.putBoolean(name, value.toBoolean())
+                context.getString(R.string.monospace_font_fields_enable_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
 
-                context.getString(R.string.password_generator_length_key) -> editor.putInt(name, value.toInt())
-                context.getString(R.string.password_generator_options_key) -> editor.putStringSet(name, getStringSetFromProperties(value))
-                context.getString(R.string.password_generator_consider_chars_key) -> editor.putString(name, value)
-                context.getString(R.string.password_generator_ignore_chars_key) -> editor.putString(name, value)
-                context.getString(R.string.passphrase_generator_word_count_key) -> editor.putInt(name, value.toInt())
-                context.getString(R.string.passphrase_generator_word_case_key) -> editor.putInt(name, value.toInt())
-                context.getString(R.string.passphrase_generator_separator_key) -> editor.putString(name, value)
+                context.getString(R.string.hide_expired_entries_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.password_generator_length_key) -> editor.putInt(
+                    name,
+                    value.toInt()
+                )
+
+                context.getString(R.string.password_generator_options_key) -> editor.putStringSet(
+                    name,
+                    getStringSetFromProperties(value)
+                )
+
+                context.getString(R.string.password_generator_consider_chars_key) -> editor.putString(
+                    name,
+                    value
+                )
+
+                context.getString(R.string.password_generator_ignore_chars_key) -> editor.putString(
+                    name,
+                    value
+                )
+
+                context.getString(R.string.passphrase_generator_word_count_key) -> editor.putInt(
+                    name,
+                    value.toInt()
+                )
+
+                context.getString(R.string.passphrase_generator_word_case_key) -> editor.putInt(
+                    name,
+                    value.toInt()
+                )
+
+                context.getString(R.string.passphrase_generator_separator_key) -> editor.putString(
+                    name,
+                    value
+                )
 
                 context.getString(R.string.sort_node_key) -> editor.putString(name, value)
-                context.getString(R.string.sort_group_before_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.sort_ascending_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.sort_recycle_bin_bottom_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.allow_copy_password_first_time_key) -> editor.putBoolean(name, value.toBoolean())
+                context.getString(R.string.sort_group_before_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.sort_ascending_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.sort_recycle_bin_bottom_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.allow_copy_password_first_time_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
             }
         }
     }

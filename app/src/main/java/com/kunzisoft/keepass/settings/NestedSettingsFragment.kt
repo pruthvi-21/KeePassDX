@@ -20,12 +20,17 @@ abstract class NestedSettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         onCreateScreenPreference(
-                getScreen(),
-                savedInstanceState,
-                rootKey)
+            getScreen(),
+            savedInstanceState,
+            rootKey
+        )
     }
 
-    abstract fun onCreateScreenPreference(screen: Screen, savedInstanceState: Bundle?, rootKey: String?)
+    abstract fun onCreateScreenPreference(
+        screen: Screen,
+        savedInstanceState: Bundle?,
+        rootKey: String?
+    )
 
     protected fun preferenceInDevelopment(preferenceInDev: Preference) {
         preferenceInDev.setOnPreferenceClickListener { preference ->
@@ -33,7 +38,10 @@ abstract class NestedSettingsFragment : PreferenceFragmentCompat() {
                 (preference as TwoStatePreference).isChecked = false
             } catch (ignored: Exception) {
             }
-            UnderDevelopmentFeatureDialogFragment().show(parentFragmentManager, "underDevFeatureDialog")
+            UnderDevelopmentFeatureDialogFragment().show(
+                parentFragmentManager,
+                "underDevFeatureDialog"
+            )
             false
         }
     }
@@ -49,6 +57,7 @@ abstract class NestedSettingsFragment : PreferenceFragmentCompat() {
                 Screen.FORM_FILLING,
                 Screen.ADVANCED_UNLOCK,
                 Screen.APPEARANCE -> NestedAppSettingsFragment()
+
                 Screen.DATABASE,
                 Screen.DATABASE_SECURITY,
                 Screen.DATABASE_MASTER_KEY -> NestedDatabaseSettingsFragment()

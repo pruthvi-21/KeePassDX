@@ -55,7 +55,7 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
     private var mNoKeyConfirmationDialog: AlertDialog? = null
     private var mEmptyKeyFileConfirmationDialog: AlertDialog? = null
 
-    private var mAllowNoMasterKey: Boolean  = false
+    private var mAllowNoMasterKey: Boolean = false
 
     private val passwordTextWatcher = object : TextWatcher {
         override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
@@ -77,8 +77,10 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
         try {
             mListener = activity as AssignMainCredentialDialogListener
         } catch (e: ClassCastException) {
-            throw ClassCastException(activity.toString()
-                    + " must implement " + AssignMainCredentialDialogListener::class.java.name)
+            throw ClassCastException(
+                activity.toString()
+                        + " must implement " + AssignMainCredentialDialogListener::class.java.name
+            )
         }
     }
 
@@ -113,9 +115,9 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
 
             rootView = inflater.inflate(R.layout.fragment_set_main_credential, null)
             builder.setView(rootView)
-                    // Add action buttons
-                    .setPositiveButton(android.R.string.ok) { _, _ -> }
-                    .setNegativeButton(android.R.string.cancel) { _, _ -> }
+                // Add action buttons
+                .setPositiveButton(android.R.string.ok) { _, _ -> }
+                .setNegativeButton(android.R.string.cancel) { _, _ -> }
 
             rootView.findViewById<View>(R.id.credentials_information)?.setOnClickListener {
                 activity.openUrl(R.string.credentials_explanation_url)
@@ -151,7 +153,11 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
             hardwareKeySelectionView.selectionListener = { hardwareKey ->
                 hardwareKeyCheckBox.isChecked = true
                 hardwareKeySelectionView.error =
-                    if (!HardwareKeyActivity.isHardwareKeyAvailable(requireActivity(), hardwareKey)) {
+                    if (!HardwareKeyActivity.isHardwareKeyAvailable(
+                            requireActivity(),
+                            hardwareKey
+                        )
+                    ) {
                         // show hardware driver dialog if required
                         getString(R.string.error_driver_required, hardwareKey.toString())
                     } else {
@@ -161,7 +167,8 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
 
             val dialog = builder.create()
             dialog.setOnShowListener { dialog1 ->
-                val positiveButton = (dialog1 as AlertDialog).getButton(DialogInterface.BUTTON_POSITIVE)
+                val positiveButton =
+                    (dialog1 as AlertDialog).getButton(DialogInterface.BUTTON_POSITIVE)
                 positiveButton.setOnClickListener {
 
                     mMasterPassword = ""
@@ -214,7 +221,8 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
         } else if (!error
             && hardwareKey != null
             && !HardwareKeyActivity.isHardwareKeyAvailable(
-                requireActivity(), hardwareKey, false)
+                requireActivity(), hardwareKey, false
+            )
         ) {
             // show hardware driver dialog if required
             error = true
@@ -298,11 +306,11 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
             builder
                 .setView(R.layout.alert_dialog_layout)
                 .setMessage(R.string.warning_empty_password)
-                    .setPositiveButton(android.R.string.ok) { _, _ ->
-                        mListener?.onAssignKeyDialogPositiveClick(retrieveMainCredential())
-                        this@SetMainCredentialDialogFragment.dismiss()
-                    }
-                    .setNegativeButton(android.R.string.cancel) { _, _ -> }
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    mListener?.onAssignKeyDialogPositiveClick(retrieveMainCredential())
+                    this@SetMainCredentialDialogFragment.dismiss()
+                }
+                .setNegativeButton(android.R.string.cancel) { _, _ -> }
             mEmptyPasswordConfirmationDialog = builder.create()
             mEmptyPasswordConfirmationDialog?.show()
         }
@@ -312,12 +320,12 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
         activity?.let {
             val builder = AlertDialog.Builder(it)
             builder.setMessage(R.string.warning_no_encryption_key)
-                    .setView(R.layout.alert_dialog_layout)
-                    .setPositiveButton(android.R.string.ok) { _, _ ->
-                        mListener?.onAssignKeyDialogPositiveClick(retrieveMainCredential())
-                        this@SetMainCredentialDialogFragment.dismiss()
-                    }
-                    .setNegativeButton(android.R.string.cancel) { _, _ -> }
+                .setView(R.layout.alert_dialog_layout)
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    mListener?.onAssignKeyDialogPositiveClick(retrieveMainCredential())
+                    this@SetMainCredentialDialogFragment.dismiss()
+                }
+                .setNegativeButton(android.R.string.cancel) { _, _ -> }
             mNoKeyConfirmationDialog = builder.create()
             mNoKeyConfirmationDialog?.show()
         }
@@ -329,17 +337,17 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
             builder
                 .setView(R.layout.alert_dialog_layout)
                 .setMessage(SpannableStringBuilder().apply {
-                append(getString(R.string.warning_empty_keyfile))
-                append("\n\n")
-                append(getString(R.string.warning_empty_keyfile_explanation))
-                append("\n\n")
-                append(getString(R.string.warning_sure_add_file))
+                    append(getString(R.string.warning_empty_keyfile))
+                    append("\n\n")
+                    append(getString(R.string.warning_empty_keyfile_explanation))
+                    append("\n\n")
+                    append(getString(R.string.warning_sure_add_file))
                 })
-                    .setPositiveButton(android.R.string.ok) { _, _ -> }
-                    .setNegativeButton(android.R.string.cancel) { _, _ ->
-                        keyFileCheckBox.isChecked = false
-                        keyFileSelectionView.uri = null
-                    }
+                .setPositiveButton(android.R.string.ok) { _, _ -> }
+                .setNegativeButton(android.R.string.cancel) { _, _ ->
+                    keyFileCheckBox.isChecked = false
+                    keyFileSelectionView.uri = null
+                }
             mEmptyKeyFileConfirmationDialog = builder.create()
             mEmptyKeyFileConfirmationDialog?.show()
         }

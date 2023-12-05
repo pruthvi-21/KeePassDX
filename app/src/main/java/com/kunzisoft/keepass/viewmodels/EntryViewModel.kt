@@ -15,33 +15,37 @@ import com.kunzisoft.keepass.utils.IOActionTask
 import java.util.UUID
 
 
-class EntryViewModel: ViewModel() {
+class EntryViewModel : ViewModel() {
 
     private var mMainEntryId: NodeId<UUID>? = null
     private var mHistoryPosition: Int = -1
 
-    val entryInfoHistory : LiveData<EntryInfoHistory?> get() = _entryInfoHistory
+    val entryInfoHistory: LiveData<EntryInfoHistory?> get() = _entryInfoHistory
     private val _entryInfoHistory = MutableLiveData<EntryInfoHistory?>()
 
-    val entryHistory : LiveData<List<EntryInfo>?> get() = _entryHistory
+    val entryHistory: LiveData<List<EntryInfo>?> get() = _entryHistory
     private val _entryHistory = MutableLiveData<List<EntryInfo>?>()
 
-    val onOtpElementUpdated : LiveData<OtpElement?> get() = _onOtpElementUpdated
+    val onOtpElementUpdated: LiveData<OtpElement?> get() = _onOtpElementUpdated
     private val _onOtpElementUpdated = SingleLiveEvent<OtpElement?>()
 
-    val attachmentSelected : LiveData<Attachment> get() = _attachmentSelected
+    val attachmentSelected: LiveData<Attachment> get() = _attachmentSelected
     private val _attachmentSelected = SingleLiveEvent<Attachment>()
-    val onAttachmentAction : LiveData<EntryAttachmentState?> get() = _onAttachmentAction
+    val onAttachmentAction: LiveData<EntryAttachmentState?> get() = _onAttachmentAction
     private val _onAttachmentAction = MutableLiveData<EntryAttachmentState?>()
 
-    val historySelected : LiveData<EntryHistory> get() = _historySelected
+    val historySelected: LiveData<EntryHistory> get() = _historySelected
     private val _historySelected = SingleLiveEvent<EntryHistory>()
 
     fun loadDatabase(database: ContextualDatabase?) {
         loadEntry(database, mMainEntryId, mHistoryPosition)
     }
 
-    fun loadEntry(database: ContextualDatabase?, mainEntryId: NodeId<UUID>?, historyPosition: Int = -1) {
+    fun loadEntry(
+        database: ContextualDatabase?,
+        mainEntryId: NodeId<UUID>?,
+        historyPosition: Int = -1
+    ) {
         this.mMainEntryId = mainEntryId
         this.mHistoryPosition = historyPosition
 
@@ -105,16 +109,21 @@ class EntryViewModel: ViewModel() {
         _historySelected.value = EntryHistory(NodeIdUUID(item.id), null, item, position)
     }
 
-    data class EntryInfoHistory(var mainEntryId: NodeId<UUID>,
-                                var historyPosition: Int,
-                                val template: Template,
-                                val entryInfo: EntryInfo,
-                                val entryHistory: List<EntryInfo>)
+    data class EntryInfoHistory(
+        var mainEntryId: NodeId<UUID>,
+        var historyPosition: Int,
+        val template: Template,
+        val entryInfo: EntryInfo,
+        val entryHistory: List<EntryInfo>
+    )
+
     // Custom data class to manage entry to retrieve and define is it's an history item (!= -1)
-    data class EntryHistory(var nodeId: NodeId<UUID>,
-                            var template: Template?,
-                            var entryInfo: EntryInfo,
-                            var historyPosition: Int = -1)
+    data class EntryHistory(
+        var nodeId: NodeId<UUID>,
+        var template: Template?,
+        var entryInfo: EntryInfo,
+        var historyPosition: Int = -1
+    )
 
     companion object {
         private val TAG = EntryViewModel::class.java.name

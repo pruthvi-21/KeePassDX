@@ -22,8 +22,10 @@ class DatabaseChangedDialogFragment : DatabaseDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         activity?.let { activity ->
 
-            val oldSnapFileDatabaseInfo: SnapFileDatabaseInfo? = arguments?.getParcelableCompat(OLD_FILE_DATABASE_INFO)
-            val newSnapFileDatabaseInfo: SnapFileDatabaseInfo? = arguments?.getParcelableCompat(NEW_FILE_DATABASE_INFO)
+            val oldSnapFileDatabaseInfo: SnapFileDatabaseInfo? =
+                arguments?.getParcelableCompat(OLD_FILE_DATABASE_INFO)
+            val newSnapFileDatabaseInfo: SnapFileDatabaseInfo? =
+                arguments?.getParcelableCompat(NEW_FILE_DATABASE_INFO)
 
             if (oldSnapFileDatabaseInfo != null && newSnapFileDatabaseInfo != null) {
                 // Use the Builder class for convenient dialog construction
@@ -33,9 +35,11 @@ class DatabaseChangedDialogFragment : DatabaseDialogFragment() {
                 val stringBuilder = SpannableStringBuilder()
                 if (newSnapFileDatabaseInfo.exists) {
                     stringBuilder.append(getString(R.string.warning_database_info_changed))
-                    stringBuilder.append("\n\n" +oldSnapFileDatabaseInfo.toString(activity)
-                            + "\n→\n" +
-                            newSnapFileDatabaseInfo.toString(activity) + "\n\n")
+                    stringBuilder.append(
+                        "\n\n" + oldSnapFileDatabaseInfo.toString(activity)
+                                + "\n→\n" +
+                                newSnapFileDatabaseInfo.toString(activity) + "\n\n"
+                    )
                     stringBuilder.append(getString(R.string.warning_database_info_changed_options))
                 } else {
                     stringBuilder.append(getString(R.string.warning_database_revoked))
@@ -60,10 +64,11 @@ class DatabaseChangedDialogFragment : DatabaseDialogFragment() {
         private const val OLD_FILE_DATABASE_INFO = "OLD_FILE_DATABASE_INFO"
         private const val NEW_FILE_DATABASE_INFO = "NEW_FILE_DATABASE_INFO"
 
-        fun getInstance(oldSnapFileDatabaseInfo: SnapFileDatabaseInfo,
-                        newSnapFileDatabaseInfo: SnapFileDatabaseInfo
+        fun getInstance(
+            oldSnapFileDatabaseInfo: SnapFileDatabaseInfo,
+            newSnapFileDatabaseInfo: SnapFileDatabaseInfo
         )
-        : DatabaseChangedDialogFragment {
+                : DatabaseChangedDialogFragment {
             val fragment = DatabaseChangedDialogFragment()
             fragment.arguments = Bundle().apply {
                 putParcelable(OLD_FILE_DATABASE_INFO, oldSnapFileDatabaseInfo)

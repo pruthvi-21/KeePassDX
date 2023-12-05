@@ -7,7 +7,7 @@ import com.kunzisoft.keepass.icons.IconDrawableFactory
 import com.kunzisoft.keepass.utils.SingletonHolder
 import java.io.File
 
-class ContextualDatabase: Database() {
+class ContextualDatabase : Database() {
 
     var fileUri: Uri? = null
 

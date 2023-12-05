@@ -27,10 +27,10 @@ import com.kunzisoft.keepass.database.element.icon.IconImage
 import com.kunzisoft.keepass.database.element.icon.IconImageCustom
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.tasks.BinaryDatabaseManager
-import com.kunzisoft.keepass.utils.getParcelableCompat
-import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.utils.UriUtil.getDocumentFile
 import com.kunzisoft.keepass.utils.UriUtil.openUrl
+import com.kunzisoft.keepass.utils.getParcelableCompat
+import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.view.asError
 import com.kunzisoft.keepass.view.updateLockPaddingLeft
 import com.kunzisoft.keepass.viewmodels.IconPickerViewModel
@@ -92,13 +92,15 @@ class IconPickerActivity : DatabaseLockActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add(R.id.icon_picker_fragment, IconPickerFragment.getInstance(
+                add(
+                    R.id.icon_picker_fragment, IconPickerFragment.getInstance(
                         // Default selection tab
                         if (mIconImage.custom.isUnknown)
                             IconPickerFragment.IconTab.STANDARD
                         else
                             IconPickerFragment.IconTab.CUSTOM
-                ), ICON_PICKER_FRAGMENT_TAG)
+                    ), ICON_PICKER_FRAGMENT_TAG
+                )
             }
         } else {
             mIconImage = savedInstanceState.getParcelableCompat(EXTRA_ICON) ?: mIconImage
@@ -123,21 +125,33 @@ class IconPickerActivity : DatabaseLockActivity() {
         }
         iconPickerViewModel.customIconAdded.observe(this) { iconCustomAdded ->
             if (iconCustomAdded.error && !iconCustomAdded.errorConsumed) {
-                Snackbar.make(coordinatorLayout, iconCustomAdded.errorStringId, Snackbar.LENGTH_LONG).asError().show()
+                Snackbar.make(
+                    coordinatorLayout,
+                    iconCustomAdded.errorStringId,
+                    Snackbar.LENGTH_LONG
+                ).asError().show()
                 iconCustomAdded.errorConsumed = true
             }
             uploadButton.isEnabled = true
         }
         iconPickerViewModel.customIconRemoved.observe(this) { iconCustomRemoved ->
             if (iconCustomRemoved.error && !iconCustomRemoved.errorConsumed) {
-                Snackbar.make(coordinatorLayout, iconCustomRemoved.errorStringId, Snackbar.LENGTH_LONG).asError().show()
+                Snackbar.make(
+                    coordinatorLayout,
+                    iconCustomRemoved.errorStringId,
+                    Snackbar.LENGTH_LONG
+                ).asError().show()
                 iconCustomRemoved.errorConsumed = true
             }
             uploadButton.isEnabled = true
         }
         iconPickerViewModel.customIconUpdated.observe(this) { iconCustomUpdated ->
             if (iconCustomUpdated.error && !iconCustomUpdated.errorConsumed) {
-                Snackbar.make(coordinatorLayout, iconCustomUpdated.errorStringId, Snackbar.LENGTH_LONG).asError().show()
+                Snackbar.make(
+                    coordinatorLayout,
+                    iconCustomUpdated.errorStringId,
+                    Snackbar.LENGTH_LONG
+                ).asError().show()
                 iconCustomUpdated.errorConsumed = true
             }
             iconCustomUpdated.iconCustom?.let {
@@ -223,14 +237,17 @@ class IconPickerActivity : DatabaseLockActivity() {
                     onDatabaseBackPressed()
                 }
             }
+
             R.id.menu_edit -> {
                 updateCustomIcon(mIconsSelected[0])
             }
+
             R.id.menu_delete -> {
                 mIconsSelected.forEach { iconToRemove ->
                     removeCustomIcon(iconToRemove)
                 }
             }
+
             R.id.menu_external_icon -> {
                 this.openUrl(R.string.external_icon_url)
             }
@@ -245,40 +262,47 @@ class IconPickerActivity : DatabaseLockActivity() {
             withContext(Dispatchers.IO) {
                 // on Progress with thread
                 val asyncResult: Deferred<IconPickerViewModel.IconCustomState?> = async {
-                    val iconCustomState = IconPickerViewModel.IconCustomState(null, true, R.string.error_upload_file)
-                    iconToUploadUri?.getDocumentFile(this@IconPickerActivity)?.also { documentFile ->
-                        if (documentFile.length() > MAX_ICON_SIZE) {
-                            iconCustomState.errorStringId = R.string.error_file_to_big
-                        } else {
-                            mDatabase?.buildNewCustomIcon { customIcon, binary ->
-                                if (customIcon != null) {
-                                    iconCustomState.iconCustom = customIcon
-                                    mDatabase?.let { database ->
-                                        BinaryDatabaseManager.resizeBitmapAndStoreDataInBinaryFile(
+                    val iconCustomState =
+                        IconPickerViewModel.IconCustomState(null, true, R.string.error_upload_file)
+                    iconToUploadUri?.getDocumentFile(this@IconPickerActivity)
+                        ?.also { documentFile ->
+                            if (documentFile.length() > MAX_ICON_SIZE) {
+                                iconCustomState.errorStringId = R.string.error_file_to_big
+                            } else {
+                                mDatabase?.buildNewCustomIcon { customIcon, binary ->
+                                    if (customIcon != null) {
+                                        iconCustomState.iconCustom = customIcon
+                                        mDatabase?.let { database ->
+                                            BinaryDatabaseManager.resizeBitmapAndStoreDataInBinaryFile(
                                                 contentResolver,
                                                 database,
                                                 iconToUploadUri,
-                                                binary)
-                                        when {
-                                            binary == null -> {
-                                            }
-                                            binary.getSize() <= 0 -> {
-                                            }
-                                            database.isCustomIconBinaryDuplicate(binary) -> {
-                                                iconCustomState.errorStringId = R.string.error_duplicate_file
-                                            }
-                                            else -> {
-                                                iconCustomState.error = false
+                                                binary
+                                            )
+                                            when {
+                                                binary == null -> {
+                                                }
+
+                                                binary.getSize() <= 0 -> {
+                                                }
+
+                                                database.isCustomIconBinaryDuplicate(binary) -> {
+                                                    iconCustomState.errorStringId =
+                                                        R.string.error_duplicate_file
+                                                }
+
+                                                else -> {
+                                                    iconCustomState.error = false
+                                                }
                                             }
                                         }
-                                    }
-                                    if (iconCustomState.error) {
-                                        mDatabase?.removeCustomIcon(customIcon)
+                                        if (iconCustomState.error) {
+                                            mDatabase?.removeCustomIcon(customIcon)
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
                     iconCustomState
                 }
                 withContext(Dispatchers.Main) {
@@ -300,7 +324,7 @@ class IconPickerActivity : DatabaseLockActivity() {
         iconPickerViewModel.deselectAllCustomIcons()
         mDatabase?.removeCustomIcon(iconImageCustom)
         iconPickerViewModel.removeCustomIcon(
-                IconPickerViewModel.IconCustomState(iconImageCustom, false, R.string.error_remove_file)
+            IconPickerViewModel.IconCustomState(iconImageCustom, false, R.string.error_remove_file)
         )
     }
 
@@ -321,24 +345,30 @@ class IconPickerActivity : DatabaseLockActivity() {
         private const val EXTRA_ICON = "EXTRA_ICON"
         private const val MAX_ICON_SIZE = 5242880
 
-        fun registerIconSelectionForResult(context: FragmentActivity,
-                                           listener: (icon: IconImage) -> Unit): ActivityResultLauncher<Intent> {
+        fun registerIconSelectionForResult(
+            context: FragmentActivity,
+            listener: (icon: IconImage) -> Unit
+        ): ActivityResultLauncher<Intent> {
             return context.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
-                    listener.invoke(result.data?.getParcelableExtraCompat(EXTRA_ICON) ?: IconImage())
+                    listener.invoke(
+                        result.data?.getParcelableExtraCompat(EXTRA_ICON) ?: IconImage()
+                    )
                 }
             }
         }
 
-        fun launch(context: FragmentActivity,
-                   previousIcon: IconImage?,
-                   resultLauncher: ActivityResultLauncher<Intent>) {
+        fun launch(
+            context: FragmentActivity,
+            previousIcon: IconImage?,
+            resultLauncher: ActivityResultLauncher<Intent>
+        ) {
             // Create an instance to return the picker icon
             resultLauncher.launch(
                 Intent(context, IconPickerActivity::class.java).apply {
-                        if (previousIcon != null)
-                            putExtra(EXTRA_ICON, previousIcon)
-                    }
+                    if (previousIcon != null)
+                        putExtra(EXTRA_ICON, previousIcon)
+                }
             )
         }
     }

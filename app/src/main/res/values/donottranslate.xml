@@ -142,11 +142,9 @@
     <string name="autofill_ask_to_save_data_key" translatable="false">autofill_ask_to_save_data_key</string>
     <bool name="autofill_ask_to_save_data_default" translatable="false">true</bool>
     <string name="autofill_application_id_blocklist_key" translatable="false">autofill_application_id_blocklist_key</string>
-    <string-array name="autofill_application_id_blocklist_default">
-    </string-array>
+    <string-array name="autofill_application_id_blocklist_default"></string-array>
     <string name="autofill_web_domain_blocklist_key" translatable="false">autofill_web_domain_blocklist_key</string>
-    <string-array name="autofill_web_domain_blocklist_default">
-    </string-array>
+    <string-array name="autofill_web_domain_blocklist_default"></string-array>
 
     <!-- Advanced Unlock Settings -->
     <string name="settings_advanced_unlock_key" translatable="false">settings_advanced_unlock_key</string>
@@ -297,9 +295,9 @@
     <string name="list_size_string_medium" translatable="false">medium</string>
     <string name="list_size_string_large" translatable="false">large</string>
     <string-array name="list_size_string_values">
-    	<item translatable="false">@string/list_size_string_small</item>
-    	<item translatable="false">@string/list_size_string_medium</item>
-    	<item translatable="false">@string/list_size_string_large</item>
+        <item translatable="false">@string/list_size_string_small</item>
+        <item translatable="false">@string/list_size_string_medium</item>
+        <item translatable="false">@string/list_size_string_large</item>
     </string-array>
     <array name="list_size_values">
         <item translatable="false">0.8</item>

@@ -8,11 +8,12 @@ import com.kunzisoft.androidclearchroma.ChromaPreferenceCompat
 
 import com.kunzisoft.keepass.R
 
-class DialogColorPreference @JvmOverloads constructor(context: Context,
-                                                      attrs: AttributeSet? = null,
-                                                      defStyleAttr: Int = R.attr.dialogPreferenceStyle,
-                                                      defStyleRes: Int = defStyleAttr)
-    : ChromaPreferenceCompat(context, attrs, defStyleAttr, defStyleRes) {
+class DialogColorPreference @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = R.attr.dialogPreferenceStyle,
+    defStyleRes: Int = defStyleAttr
+) : ChromaPreferenceCompat(context, attrs, defStyleAttr, defStyleRes) {
 
     override fun setSummary(summary: CharSequence?) {
         if (color == DISABLE_COLOR)

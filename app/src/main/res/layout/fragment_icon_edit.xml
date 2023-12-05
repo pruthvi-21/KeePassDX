@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/default_margin"
-			android:src="@drawable/ic_blank_32dp" />
+            android:src="@drawable/ic_blank_32dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/icon_edit_name_container"
@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-				android:hint="@string/hint_icon_name"
+                android:hint="@string/hint_icon_name"
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true" />

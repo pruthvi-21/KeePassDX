@@ -27,9 +27,9 @@ internal object PublicSuffixListLoader {
 @Suppress("MagicNumber")
 private fun BufferedInputStream.readInt(): Int {
     return (read() and 0xff shl 24
-        or (read() and 0xff shl 16)
-        or (read() and 0xff shl 8)
-        or (read() and 0xff))
+            or (read() and 0xff shl 16)
+            or (read() and 0xff shl 8)
+            or (read() and 0xff))
 }
 
 private fun BufferedInputStream.readFully(size: Int): ByteArray {

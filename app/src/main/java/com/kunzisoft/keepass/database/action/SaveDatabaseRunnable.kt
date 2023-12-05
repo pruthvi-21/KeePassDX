@@ -36,7 +36,8 @@ open class SaveDatabaseRunnable(
                         .getUriOutputStream(databaseCopyUri ?: database.fileUri),
                     isNewLocation = databaseCopyUri == null,
                     mainCredential?.toMasterCredential(contentResolver),
-                    challengeResponseRetriever)
+                    challengeResponseRetriever
+                )
             } catch (e: DatabaseException) {
                 setError(e)
             }

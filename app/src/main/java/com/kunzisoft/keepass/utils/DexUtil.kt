@@ -12,7 +12,8 @@ object DexUtil {
         // This is the documented way to check this: https://developer.samsung.com/samsung-dex/modify-optimizing.html
         return try {
             val configClass = config.javaClass
-            val enabledConstant = configClass.getField("SEM_DESKTOP_MODE_ENABLED").getInt(configClass)
+            val enabledConstant =
+                configClass.getField("SEM_DESKTOP_MODE_ENABLED").getInt(configClass)
             val enabledField = configClass.getField("semDesktopModeEnabled").getInt(config)
             val isEnabled = enabledConstant == enabledField
 
