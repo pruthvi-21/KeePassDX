@@ -55,7 +55,6 @@ import com.kunzisoft.keepass.autofill.AutofillComponent
 import com.kunzisoft.keepass.autofill.AutofillHelper
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.MainCredential
-import com.kunzisoft.keepass.education.FileDatabaseSelectActivityEducation
 import com.kunzisoft.keepass.hardware.HardwareKey
 import com.kunzisoft.keepass.model.RegisterInfo
 import com.kunzisoft.keepass.model.SearchInfo
@@ -83,13 +82,10 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
 
     // Views
     private lateinit var coordinatorLayout: CoordinatorLayout
-    private var specialTitle: View? = null
     private var createDatabaseButtonView: View? = null
     private var openDatabaseButtonView: View? = null
 
     private val databaseFilesViewModel: DatabaseFilesViewModel by viewModels()
-
-    private val mFileDatabaseSelectActivityEducation = FileDatabaseSelectActivityEducation(this)
 
     // Adapter to manage database history list
     private var mAdapterDatabaseHistory: FileDatabaseHistoryAdapter? = null
@@ -120,11 +116,7 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
         coordinatorLayout = findViewById(R.id.activity_file_selection_coordinator_layout)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        toolbar.title = ""
         setSupportActionBar(toolbar)
-
-        // Special title
-        specialTitle = findViewById(R.id.file_selection_title_part_3)
 
         // Create database button
         createDatabaseButtonView = findViewById(R.id.create_database_button)
@@ -154,10 +146,13 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
         // History list
         val fileDatabaseHistoryRecyclerView = findViewById<RecyclerView>(R.id.file_list)
         fileDatabaseHistoryRecyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        val nonEmptyDatabaseHistoryView = findViewById<View>(R.id.recycler_view_container)
+        val emptyDatabaseHistoryView = findViewById<View>(R.id.empty_database_history_view)
+
         // Removes blinks
         (fileDatabaseHistoryRecyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         // Construct adapter with listeners
-        mAdapterDatabaseHistory = FileDatabaseHistoryAdapter(this)
+        mAdapterDatabaseHistory = FileDatabaseHistoryAdapter(this, nonEmptyDatabaseHistoryView, emptyDatabaseHistoryView)
         mAdapterDatabaseHistory?.setOnDefaultDatabaseListener { databaseFile ->
             databaseFilesViewModel.setDefaultDatabase(databaseFile)
         }
@@ -332,9 +327,6 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
     override fun onResume() {
         super.onResume()
 
-        // Define special title
-        specialTitle?.isVisible = this.isContributingUser()
-
         // Show open and create button or special mode
         when (mSpecialMode) {
             SpecialMode.DEFAULT -> {
@@ -394,41 +386,7 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
             MenuUtil.defaultMenuInflater(this, menuInflater, menu)
         }
 
-        Handler(Looper.getMainLooper()).post {
-            performedNextEducation()
-        }
-
         return true
-    }
-
-    private fun performedNextEducation() {
-        // If no recent files
-        val createDatabaseEducationPerformed =
-                createDatabaseButtonView != null
-                && createDatabaseButtonView!!.visibility == View.VISIBLE
-                && mFileDatabaseSelectActivityEducation.checkAndPerformedCreateDatabaseEducation(
-                        createDatabaseButtonView!!,
-                {
-                    createNewFile()
-                },
-                {
-                    // But if the user cancel, it can also select a database
-                    performedNextEducation()
-                })
-        if (!createDatabaseEducationPerformed) {
-            // selectDatabaseEducationPerformed
-            openDatabaseButtonView != null
-            && mFileDatabaseSelectActivityEducation.checkAndPerformedSelectDatabaseEducation(
-                openDatabaseButtonView!!,
-            { tapTargetView ->
-                tapTargetView?.let {
-                    mExternalFileHelper?.openDocument()
-                }
-            },
-            {
-
-            })
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

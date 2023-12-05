@@ -61,7 +61,7 @@ import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.activities.dialogs.GroupDialogFragment
 import com.kunzisoft.keepass.activities.dialogs.GroupEditDialogFragment
 import com.kunzisoft.keepass.activities.dialogs.MainCredentialDialogFragment
-import com.kunzisoft.keepass.activities.dialogs.SortDialogFragment
+import com.kunzisoft.keepass.activities.dialogs.SortBottomSheetFragment
 import com.kunzisoft.keepass.activities.fragments.GroupFragment
 import com.kunzisoft.keepass.activities.helpers.EntrySelectionHelper
 import com.kunzisoft.keepass.activities.helpers.ExternalFileHelper
@@ -82,7 +82,6 @@ import com.kunzisoft.keepass.database.element.node.NodeIdUUID
 import com.kunzisoft.keepass.database.element.node.Type
 import com.kunzisoft.keepass.database.helper.SearchHelper
 import com.kunzisoft.keepass.database.search.SearchParameters
-import com.kunzisoft.keepass.education.GroupActivityEducation
 import com.kunzisoft.keepass.magikeyboard.MagikeyboardService
 import com.kunzisoft.keepass.model.GroupInfo
 import com.kunzisoft.keepass.model.RegisterInfo
@@ -96,7 +95,6 @@ import com.kunzisoft.keepass.tasks.ActionRunnable
 import com.kunzisoft.keepass.timeout.TimeoutHelper
 import com.kunzisoft.keepass.utils.BACK_PREVIOUS_KEYBOARD_ACTION
 import com.kunzisoft.keepass.utils.KeyboardUtil.showKeyboard
-import com.kunzisoft.keepass.utils.UriUtil.openUrl
 import com.kunzisoft.keepass.utils.getParcelableCompat
 import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.utils.getParcelableList
@@ -121,7 +119,7 @@ class GroupActivity : DatabaseLockActivity(),
         GroupFragment.NodesActionMenuListener,
         GroupFragment.OnScrollListener,
         GroupFragment.GroupRefreshedListener,
-        SortDialogFragment.SortSelectionListener,
+    SortBottomSheetFragment.SortSelectionListener,
         MainCredentialDialogFragment.AskMainCredentialDialogListener {
 
     // Views
@@ -146,8 +144,6 @@ class GroupActivity : DatabaseLockActivity(),
 
     private val mGroupViewModel: GroupViewModel by viewModels()
     private val mGroupEditViewModel: GroupEditViewModel by viewModels()
-
-    private val mGroupActivityEducation = GroupActivityEducation(this)
 
     private var mBreadcrumbAdapter: BreadcrumbAdapter? = null
 
@@ -325,7 +321,6 @@ class GroupActivity : DatabaseLockActivity(),
 
         // Menu in drawer
         databaseNavView?.apply {
-            inflateMenu(R.menu.settings)
             inflateMenu(R.menu.database_extra)
             inflateMenu(R.menu.about)
             setNavigationItemSelectedListener { menuItem ->
@@ -345,9 +340,6 @@ class GroupActivity : DatabaseLockActivity(),
                     }
                     R.id.menu_lock_all -> {
                         lockAndExit()
-                    }
-                    R.id.menu_contribute -> {
-                        this@GroupActivity.openUrl(R.string.contribution_url)
                     }
                     R.id.menu_about -> {
                         startActivity(Intent(this@GroupActivity, AboutActivity::class.java))
@@ -1157,7 +1149,6 @@ class GroupActivity : DatabaseLockActivity(),
             menu.findItem(R.id.menu_merge_from)?.isVisible = mMergeDataAllowed && modeCondition
             menu.findItem(R.id.menu_save_copy_to)?.isVisible = modeCondition
             menu.findItem(R.id.menu_about)?.isVisible = modeCondition
-            menu.findItem(R.id.menu_contribute)?.isVisible = modeCondition
         }
     }
 
@@ -1218,70 +1209,7 @@ class GroupActivity : DatabaseLockActivity(),
 
         super.onCreateOptionsMenu(menu)
 
-        // Launch education screen
-        Handler(Looper.getMainLooper()).post {
-            performedNextEducation(menu)
-        }
-
         return true
-    }
-
-    private fun performedNextEducation(menu: Menu) {
-
-        // If no node, show education to add new one
-        val addNodeButtonEducationPerformed = actionNodeMode == null
-                && addNodeButtonView?.addButtonView != null
-                && addNodeButtonView!!.isEnable
-                && mGroupActivityEducation.checkAndPerformedAddNodeButtonEducation(
-            addNodeButtonView?.addButtonView!!,
-            {
-                addNodeButtonView?.openButtonIfClose()
-            },
-            {
-                performedNextEducation(menu)
-            }
-        )
-        if (!addNodeButtonEducationPerformed) {
-
-            val searchMenuEducationPerformed = toolbar != null
-                    && toolbar!!.findViewById<View>(R.id.menu_search) != null
-                    && mGroupActivityEducation.checkAndPerformedSearchMenuEducation(
-                toolbar!!.findViewById(R.id.menu_search),
-                {
-                    menu.findItem(R.id.menu_search).expandActionView()
-                },
-                {
-                    performedNextEducation(menu)
-                })
-
-            if (!searchMenuEducationPerformed) {
-
-                val sortMenuEducationPerformed = toolbar != null
-                        && toolbar!!.findViewById<View>(R.id.menu_sort) != null
-                        && mGroupActivityEducation.checkAndPerformedSortMenuEducation(
-                    toolbar!!.findViewById(R.id.menu_sort),
-                    {
-                        onOptionsItemSelected(menu.findItem(R.id.menu_sort))
-                    },
-                    {
-                        performedNextEducation(menu)
-                    })
-
-                if (!sortMenuEducationPerformed) {
-                    // lockMenuEducationPerformed
-                    val lockButtonView = findViewById<View>(R.id.lock_button)
-                    lockButtonView != null
-                            && mGroupActivityEducation.checkAndPerformedLockMenuEducation(
-                        lockButtonView,
-                        {
-                            lockAndExit()
-                        },
-                        {
-                            performedNextEducation(menu)
-                        })
-                }
-            }
-        }
     }
 
     override fun hideHomeButtonIfModeIsNotDefault(): Boolean {
@@ -1330,6 +1258,7 @@ class GroupActivity : DatabaseLockActivity(),
         sortNodeParameters: SortNodeEnum.SortNodeParameters
     ) {
         mGroupFragment?.onSortSelected(sortNodeEnum, sortNodeParameters)
+        Toast.makeText(this, "Sorted", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCancelSpecialMode() {

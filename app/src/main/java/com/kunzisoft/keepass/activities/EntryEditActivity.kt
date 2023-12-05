@@ -18,20 +18,25 @@
  */
 package com.kunzisoft.keepass.activities
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.AdapterView
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Spinner
 import androidx.activity.result.ActivityResultLauncher
@@ -40,6 +45,7 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
@@ -49,13 +55,12 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.activities.dialogs.ColorPickerDialogFragment
+import com.kunzisoft.keepass.activities.dialogs.ColorPicker2DialogFragment
 import com.kunzisoft.keepass.activities.dialogs.EntryCustomFieldDialogFragment
 import com.kunzisoft.keepass.activities.dialogs.FileTooBigDialogFragment
 import com.kunzisoft.keepass.activities.dialogs.FileTooBigDialogFragment.Companion.MAX_WARNING_BINARY_FILE
 import com.kunzisoft.keepass.activities.dialogs.ReplaceFileDialogFragment
 import com.kunzisoft.keepass.activities.dialogs.SetOTPDialogFragment
-import com.kunzisoft.keepass.activities.fragments.EntryEditFragment
 import com.kunzisoft.keepass.activities.helpers.EntrySelectionHelper
 import com.kunzisoft.keepass.activities.helpers.ExternalFileHelper
 import com.kunzisoft.keepass.activities.legacy.DatabaseLockActivity
@@ -70,7 +75,6 @@ import com.kunzisoft.keepass.database.element.Field
 import com.kunzisoft.keepass.database.element.node.Node
 import com.kunzisoft.keepass.database.element.node.NodeId
 import com.kunzisoft.keepass.database.element.template.Template
-import com.kunzisoft.keepass.education.EntryEditActivityEducation
 import com.kunzisoft.keepass.magikeyboard.MagikeyboardService
 import com.kunzisoft.keepass.model.AttachmentState
 import com.kunzisoft.keepass.model.EntryAttachmentState
@@ -87,25 +91,21 @@ import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.tasks.ActionRunnable
 import com.kunzisoft.keepass.tasks.AttachmentFileBinderManager
 import com.kunzisoft.keepass.timeout.TimeoutHelper
+import com.kunzisoft.keepass.utils.ColorUtils
 import com.kunzisoft.keepass.utils.UriUtil.getDocumentFile
 import com.kunzisoft.keepass.utils.getParcelableExtraCompat
-import com.kunzisoft.keepass.view.ToolbarAction
-import com.kunzisoft.keepass.view.WindowInsetPosition
-import com.kunzisoft.keepass.view.applyWindowInsets
 import com.kunzisoft.keepass.view.asError
 import com.kunzisoft.keepass.view.hideByFading
-import com.kunzisoft.keepass.view.setTransparentNavigationBar
 import com.kunzisoft.keepass.view.showActionErrorIfNeeded
-import com.kunzisoft.keepass.view.updateLockPaddingLeft
-import com.kunzisoft.keepass.viewmodels.ColorPickerViewModel
+import com.kunzisoft.keepass.viewmodels.ColorPicker2ViewModel
 import com.kunzisoft.keepass.viewmodels.EntryEditViewModel
 import java.util.UUID
 
 class EntryEditActivity : DatabaseLockActivity(),
-        EntryCustomFieldDialogFragment.EntryCustomFieldListener,
-        SetOTPDialogFragment.CreateOtpListener,
-        FileTooBigDialogFragment.ActionChooseListener,
-        ReplaceFileDialogFragment.ActionChooseListener {
+    EntryCustomFieldDialogFragment.EntryCustomFieldListener,
+    SetOTPDialogFragment.CreateOtpListener,
+    FileTooBigDialogFragment.ActionChooseListener,
+    ReplaceFileDialogFragment.ActionChooseListener {
 
     // Views
     private var footer: ViewGroup? = null
@@ -113,10 +113,13 @@ class EntryEditActivity : DatabaseLockActivity(),
     private var coordinatorLayout: CoordinatorLayout? = null
     private var scrollView: NestedScrollView? = null
     private var templateSelectorSpinner: Spinner? = null
-    private var entryEditAddToolBar: ToolbarAction? = null
+    private var entryEditToolbar: Toolbar? = null
     private var validateButton: View? = null
     private var lockView: View? = null
     private var loadingView: ProgressBar? = null
+    private var addCustomFieldView: View? = null
+    private var addOtpView: View? = null
+    private var addAttachmentView: View? = null
 
     private val mEntryEditViewModel: EntryEditViewModel by viewModels()
     private var mTemplate: Template? = null
@@ -124,7 +127,7 @@ class EntryEditActivity : DatabaseLockActivity(),
     private var mEntryLoaded: Boolean = false
     private var mTemplatesSelectorAdapter: TemplatesSelectorAdapter? = null
 
-    private val mColorPickerViewModel: ColorPickerViewModel by viewModels()
+    private val mColorPickerViewModel: ColorPicker2ViewModel by viewModels()
 
     private var mAllowCustomFields = false
     private var mAllowOTP = false
@@ -132,8 +135,6 @@ class EntryEditActivity : DatabaseLockActivity(),
     // To manage attachments
     private var mExternalFileHelper: ExternalFileHelper? = null
     private var mAttachmentFileBinderManager: AttachmentFileBinderManager? = null
-    // Education
-    private var mEntryEditActivityEducation = EntryEditActivityEducation(this)
 
     private var mIconSelectionActivityResultLauncher = IconPickerActivity.registerIconSelectionForResult(this) { icon ->
         mEntryEditViewModel.selectIcon(icon)
@@ -148,9 +149,6 @@ class EntryEditActivity : DatabaseLockActivity(),
             }
         }
         mPasswordField = null
-        Handler(Looper.getMainLooper()).post {
-            performedNextEducation()
-        }
     }
 
     // To ask data lost only one time
@@ -161,7 +159,7 @@ class EntryEditActivity : DatabaseLockActivity(),
         setContentView(R.layout.activity_entry_edit)
 
         // Bottom Bar
-        entryEditAddToolBar = findViewById(R.id.entry_edit_bottom_bar)
+        entryEditToolbar = findViewById(R.id.toolbar)
         footer = findViewById(R.id.activity_entry_edit_footer)
         container = findViewById(R.id.activity_entry_edit_container)
         coordinatorLayout = findViewById(R.id.entry_edit_coordinator_layout)
@@ -171,17 +169,17 @@ class EntryEditActivity : DatabaseLockActivity(),
         lockView = findViewById(R.id.lock_button)
         validateButton = findViewById(R.id.entry_edit_validate)
         loadingView = findViewById(R.id.loading)
+        addCustomFieldView = findViewById(R.id.add_custom_field)
+        addOtpView = findViewById(R.id.add_totp_field)
+        addAttachmentView = findViewById(R.id.add_attachment_field)
 
-        setSupportActionBar(entryEditAddToolBar)
+        addCustomFieldView?.setOnClickListener { addNewCustomField() }
+        addOtpView?.setOnClickListener { setupOtp() }
+        addAttachmentView?.setOnClickListener { addNewAttachment() }
+
+        setSupportActionBar(entryEditToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-
-        // To apply fit window with transparency
-        setTransparentNavigationBar(applyToStatusBar = true) {
-            container?.applyWindowInsets(WindowInsetPosition.TOP)
-            footer?.applyWindowInsets(WindowInsetPosition.BOTTOM)
-        }
 
         stopService(Intent(this, ClipboardEntryNotificationService::class.java))
         stopService(Intent(this, KeyboardEntryNotificationService::class.java))
@@ -199,6 +197,33 @@ class EntryEditActivity : DatabaseLockActivity(),
             intent.removeExtra(KEY_PARENT)
             parentId = parent
         }
+
+        supportActionBar?.title = when {
+            entryId != null -> "Edit entry"
+            parentId != null -> "Create entry"
+            else -> ""
+        }
+
+        var isNewToolbarColor = false
+        val defaultToolbarColor =
+            ColorUtils.getColorFromAttr(this, R.attr.colorSurface, Color.BLACK)
+        val newToolbarColor =
+            ColorUtils.getColorFromAttr(this, R.attr.colorSurfaceVariant2, Color.BLACK)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        scrollView?.viewTreeObserver
+            ?.addOnScrollChangedListener {
+                val scrollY = scrollView?.scrollY ?: return@addOnScrollChangedListener
+
+                if (scrollY > 0 && !isNewToolbarColor) {
+                    isNewToolbarColor = true
+                    animateToolbarColorChange(defaultToolbarColor, newToolbarColor)
+                }
+
+                if (scrollY == 0) {
+                    isNewToolbarColor = false
+                    animateToolbarColorChange(newToolbarColor, defaultToolbarColor)
+                }
+            }
 
         mEntryEditViewModel.loadTemplateEntry(
             mDatabase,
@@ -284,16 +309,21 @@ class EntryEditActivity : DatabaseLockActivity(),
 
         // View model listeners
         mEntryEditViewModel.requestIconSelection.observe(this) { iconImage ->
-            IconPickerActivity.launch(this@EntryEditActivity, iconImage, mIconSelectionActivityResultLauncher)
+            IconPickerActivity.launch(
+                this@EntryEditActivity,
+                iconImage,
+                mIconSelectionActivityResultLauncher
+            )
         }
 
-        mEntryEditViewModel.requestColorSelection.observe(this) { color ->
-            ColorPickerDialogFragment.newInstance(color)
+        mEntryEditViewModel.requestColorSelection.observe(this) { colors ->
+            ColorPicker2DialogFragment.newInstance(colors[0], colors[1])
                 .show(supportFragmentManager, "ColorPickerFragment")
         }
 
-        mColorPickerViewModel.colorPicked.observe(this) { color ->
-            mEntryEditViewModel.selectColor(color)
+        mColorPickerViewModel.colorPicked.observe(this) { colors ->
+            mEntryEditViewModel.selectColors(colors)
+            updatePaletteIcon(colors)
         }
 
         mEntryEditViewModel.requestDateTimeSelection.observe(this) { dateInstant ->
@@ -390,6 +420,32 @@ class EntryEditActivity : DatabaseLockActivity(),
                     }
                 )
             }
+        }
+    }
+
+    private fun animateToolbarColorChange(fromColor: Int, toColor: Int) {
+        ValueAnimator.ofObject(ArgbEvaluator(), fromColor, toColor).apply {
+            duration = 200L
+            interpolator = AccelerateDecelerateInterpolator()
+            addUpdateListener { animator ->
+                val animatedColor = animator.animatedValue as Int
+                window.statusBarColor = animatedColor
+                entryEditToolbar?.backgroundTintList = ColorStateList.valueOf(animatedColor)
+            }
+            start()
+        }
+    }
+
+    private fun updatePaletteIcon(colors: Array<Int?>) {
+        findViewById<ImageView>(R.id.template_color_button)?.apply {
+            backgroundTintList = ColorStateList.valueOf(colors[0] ?: Color.TRANSPARENT)
+            imageTintList = ColorStateList.valueOf(
+                colors[1] ?: ColorUtils.getColorFromAttr(
+                    this@EntryEditActivity,
+                    android.R.attr.textColorSecondary,
+                    Color.WHITE
+                )
+            )
         }
     }
 
@@ -501,9 +557,6 @@ class EntryEditActivity : DatabaseLockActivity(),
             View.GONE
         }
 
-        // Padding if lock button visible
-        entryEditAddToolBar?.updateLockPaddingLeft()
-
         mAttachmentFileBinderManager?.apply {
             registerProgressTask()
             onActionTaskListener = object : AttachmentFileNotificationService.ActionTaskListener {
@@ -586,125 +639,24 @@ class EntryEditActivity : DatabaseLockActivity(),
         mEntryEditViewModel.requestEntryInfoUpdate(mDatabase)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        if (mEntryLoaded) {
-            menuInflater.inflate(R.menu.entry_edit, menu)
-            Handler(Looper.getMainLooper()).post {
-                performedNextEducation()
-            }
-        }
-        return true
-    }
-
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menu?.findItem(R.id.menu_add_field)?.apply {
+        addCustomFieldView?.apply {
             isEnabled = mAllowCustomFields
             isVisible = isEnabled
         }
-        menu?.findItem(R.id.menu_add_attachment)?.apply {
-            // Attachment not compatible below KitKat
+        addAttachmentView?.apply {
             isEnabled = !mIsTemplate
-                    && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
             isVisible = isEnabled
         }
-        menu?.findItem(R.id.menu_add_otp)?.apply {
-            // OTP not compatible below KitKat
-            isEnabled = mAllowOTP
-                    && !mIsTemplate
-                    && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+        addOtpView?.apply {
+            isEnabled = mAllowOTP && !mIsTemplate
             isVisible = isEnabled
         }
         return super.onPrepareOptionsMenu(menu)
     }
 
-    private fun performedNextEducation() {
-
-        val entryEditFragment = supportFragmentManager.findFragmentById(R.id.entry_edit_content)
-                as? EntryEditFragment?
-        val generatePasswordView = entryEditFragment?.getActionImageView()
-        val generatePasswordEductionPerformed = generatePasswordView != null
-                && mEntryEditActivityEducation.checkAndPerformedGeneratePasswordEducation(
-            generatePasswordView,
-            {
-                entryEditFragment.launchGeneratePasswordEductionAction()
-            },
-            {
-                performedNextEducation()
-            }
-        )
-
-        if (!generatePasswordEductionPerformed) {
-            val addNewFieldView: View? = entryEditAddToolBar?.findViewById(R.id.menu_add_field)
-            val addNewFieldEducationPerformed = mAllowCustomFields
-                    && addNewFieldView != null
-                    && addNewFieldView.isVisible
-                    && mEntryEditActivityEducation.checkAndPerformedEntryNewFieldEducation(
-                    addNewFieldView,
-                    {
-                        addNewCustomField()
-                    },
-                    {
-                        performedNextEducation()
-                    }
-            )
-            if (!addNewFieldEducationPerformed) {
-                val attachmentView: View? = entryEditAddToolBar?.findViewById(R.id.menu_add_attachment)
-                val addAttachmentEducationPerformed = attachmentView != null
-                        && attachmentView.isVisible
-                        && mEntryEditActivityEducation.checkAndPerformedAttachmentEducation(
-                        attachmentView,
-                        {
-                            addNewAttachment()
-                        },
-                        {
-                            performedNextEducation()
-                        }
-                )
-                if (!addAttachmentEducationPerformed) {
-                    val setupOtpView: View? = entryEditAddToolBar?.findViewById(R.id.menu_add_otp)
-                    val validateEntryEducationPerformed = setupOtpView != null
-                            && setupOtpView.isVisible
-                            && mEntryEditActivityEducation.checkAndPerformedSetUpOTPEducation(
-                            setupOtpView,
-                            {
-                                setupOtp()
-                            },
-                            {
-                                performedNextEducation()
-                            }
-                    )
-                    if (!validateEntryEducationPerformed) {
-                        val entryValidateView = validateButton
-                        mAllowCustomFields
-                                && entryValidateView != null
-                                && entryValidateView.isVisible
-                                && mEntryEditActivityEducation.checkAndPerformedValidateEntryEducation(
-                                entryValidateView,
-                                {
-                                    validateEntry()
-                                }
-                        )
-                    }
-                }
-            }
-        }
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_add_field -> {
-                addNewCustomField()
-                return true
-            }
-            R.id.menu_add_attachment -> {
-                addNewAttachment()
-                return true
-            }
-            R.id.menu_add_otp -> {
-                setupOtp()
-                return true
-            }
             android.R.id.home -> {
                 onDatabaseBackPressed()
             }
@@ -729,6 +681,7 @@ class EntryEditActivity : DatabaseLockActivity(),
     private fun onApprovedBackPressed(approved: () -> Unit) {
         if (!backPressedAlreadyApproved) {
             AlertDialog.Builder(this)
+                    .setView(R.layout.alert_dialog_layout)
                     .setMessage(R.string.discard_changes)
                     .setNegativeButton(android.R.string.cancel, null)
                     .setPositiveButton(R.string.discard) { _, _ ->

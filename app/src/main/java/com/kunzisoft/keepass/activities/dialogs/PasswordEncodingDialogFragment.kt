@@ -55,6 +55,7 @@ class PasswordEncodingDialogFragment : DialogFragment() {
 
         activity?.let { activity ->
             val builder = AlertDialog.Builder(activity)
+            builder.setView(R.layout.alert_dialog_layout)
             builder.setMessage(activity.getString(R.string.warning_password_encoding)).setTitle(R.string.warning)
             builder.setPositiveButton(android.R.string.ok) { _, _ ->
                 mListener?.onPasswordEncodingValidateListener(
@@ -82,8 +83,8 @@ class PasswordEncodingDialogFragment : DialogFragment() {
         fun getInstance(
             databaseUri: Uri,
             mainCredential: MainCredential
-        ): SortDialogFragment {
-            val fragment = SortDialogFragment()
+        ): SortBottomSheetFragment {
+            val fragment = SortBottomSheetFragment()
             fragment.arguments = Bundle().apply {
                 putParcelable(DATABASE_URI_KEY, databaseUri)
                 putParcelable(MAIN_CREDENTIAL, mainCredential)

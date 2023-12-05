@@ -34,23 +34,20 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.ListPreference
 import androidx.preference.Preference
+import androidx.preference.SwitchPreferenceCompat
 import androidx.preference.TwoStatePreference
-import com.kunzisoft.keepass.BuildConfig
+import com.google.android.material.color.DynamicColors
+import com.google.android.material.snackbar.Snackbar
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.activities.dialogs.ProFeatureDialogFragment
 import com.kunzisoft.keepass.activities.dialogs.UnavailableFeatureDialogFragment
-import com.kunzisoft.keepass.activities.stylish.Stylish
 import com.kunzisoft.keepass.app.database.FileDatabaseHistoryAction
 import com.kunzisoft.keepass.biometric.AdvancedUnlockManager
-import com.kunzisoft.keepass.education.Education
 import com.kunzisoft.keepass.icons.IconPackChooser
 import com.kunzisoft.keepass.services.ClipboardEntryNotificationService
 import com.kunzisoft.keepass.settings.preference.IconPackListPreference
 import com.kunzisoft.keepass.settings.preferencedialogfragment.DurationDialogFragmentCompat
-import com.kunzisoft.keepass.utils.UriUtil.isContributingUser
 import com.kunzisoft.keepass.utils.UriUtil.openUrl
 import com.kunzisoft.keepass.utils.UriUtil.releaseAllUnnecessaryPermissionUris
-
 
 class NestedAppSettingsFragment : NestedSettingsFragment() {
 
@@ -222,6 +219,7 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
                         getString(R.string.clipboard_warning)
                 AlertDialog.Builder(requireContext())
                         .setMessage(message)
+                        .setView(R.layout.alert_dialog_layout)
                         .create()
                         .apply {
                             setButton(AlertDialog.BUTTON_POSITIVE, getText(R.string.enable))
@@ -388,8 +386,10 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
             message += resources.getString(R.string.advanced_unlock_delete_all_key_warning)
         }
         warningAlertDialog = AlertDialog.Builder(activity)
+            .setView(R.layout.alert_dialog_layout)
             .setMessage(message)
-            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setTitle(R.string.warning)
+            .setIcon(R.drawable.ic_warning_white_24dp)
             .setPositiveButton(resources.getString(android.R.string.ok)
             ) { _, _ ->
                 validate?.invoke()
@@ -408,79 +408,18 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
         setPreferencesFromResource(R.xml.preferences_appearance, rootKey)
 
         activity?.let { activity ->
-            findPreference<ListPreference>(getString(R.string.setting_style_key))?.setOnPreferenceChangeListener { _, newValue ->
-                var styleEnabled = true
-                val styleIdString = newValue as String
-                if (!activity.isContributingUser()) {
-                    for (themeIdDisabled in BuildConfig.STYLES_DISABLED) {
-                        if (themeIdDisabled == styleIdString) {
-                            styleEnabled = false
-                            ProFeatureDialogFragment().show(
-                                parentFragmentManager,
-                                "pro_feature_dialog"
-                            )
-                        }
-                    }
-                }
-                if (styleEnabled) {
-                    Stylish.assignStyle(activity, styleIdString)
-                    // Relaunch the current activity to redraw theme
-                    (activity as? SettingsActivity?)?.apply {
-                        reloadActivity()
-                    }
-                }
-                styleEnabled
-            }
-
-            findPreference<ListPreference>(getString(R.string.setting_style_brightness_key))?.setOnPreferenceChangeListener { _, _ ->
-                (activity as? SettingsActivity?)?.apply {
-                    reloadActivity()
-                }
+            findPreference<IconPackListPreference>(getString(R.string.setting_icon_pack_choose_key))?.setOnPreferenceChangeListener { _, newValue ->
+                val iconPackId = newValue as String
+                IconPackChooser.setSelectedIconPack(iconPackId)
                 true
             }
 
-            findPreference<IconPackListPreference>(getString(R.string.setting_icon_pack_choose_key))?.setOnPreferenceChangeListener { _, newValue ->
-                var iconPackEnabled = true
-                val iconPackId = newValue as String
-                if (!activity.isContributingUser()) {
-                    for (iconPackIdDisabled in BuildConfig.ICON_PACKS_DISABLED) {
-                        if (iconPackIdDisabled == iconPackId) {
-                            iconPackEnabled = false
-                            ProFeatureDialogFragment().show(
-                                parentFragmentManager,
-                                "pro_feature_dialog"
-                            )
-                        }
-                    }
-                }
-                if (iconPackEnabled) {
-                    IconPackChooser.setSelectedIconPack(iconPackId)
-                }
-                iconPackEnabled
-            }
-
-            findPreference<Preference>(getString(R.string.reset_education_screens_key))?.setOnPreferenceClickListener {
-                // To allow only one toast
-                if (mCount == 0) {
-                    val sharedPreferences = Education.getEducationSharedPreferences(activity)
-                    val editor = sharedPreferences.edit()
-                    for (resourceId in Education.educationResourcesKeys) {
-                        editor.putBoolean(getString(resourceId), false)
-                    }
-                    editor.apply()
-                    Toast.makeText(context, R.string.reset_education_screens_text, Toast.LENGTH_SHORT).show()
-                }
-                mCount++
-                false
-            }
         }
     }
 
     override fun onPreferenceTreeClick(preference: Preference): Boolean {
         // To reload group when appearance settings are modified
         when (preference.key) {
-            getString(R.string.setting_style_key),
-            getString(R.string.setting_style_brightness_key),
             getString(R.string.setting_icon_pack_choose_key),
             getString(R.string.show_entry_colors_key),
             getString(R.string.list_entries_show_username_key),
@@ -489,9 +428,7 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
             getString(R.string.show_uuid_key),
             getString(R.string.list_size_key),
             getString(R.string.monospace_font_fields_enable_key),
-            getString(R.string.hide_expired_entries_key),
-            getString(R.string.enable_education_screens_key),
-            getString(R.string.reset_education_screens_key) -> {
+            getString(R.string.hide_expired_entries_key) -> {
                 DATABASE_PREFERENCE_CHANGED = true
             }
         }
@@ -540,16 +477,6 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
     override fun onPause() {
         warningAlertDialog?.dismiss()
         super.onPause()
-    }
-
-    private var mCount = 0
-    override fun onStop() {
-        super.onStop()
-        activity?.let { activity ->
-            if (mCount == 10 && !BuildConfig.CLOSED_STORE) {
-                Education.setEducationScreenReclickedPerformed(activity)
-            }
-        }
     }
 
     companion object {

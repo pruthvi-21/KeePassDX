@@ -28,15 +28,12 @@ import android.util.Log
 import androidx.preference.PreferenceManager
 import com.kunzisoft.keepass.BuildConfig
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.activities.stylish.Stylish
 import com.kunzisoft.keepass.biometric.AdvancedUnlockManager
 import com.kunzisoft.keepass.database.element.SortNodeEnum
 import com.kunzisoft.keepass.database.search.SearchParameters
-import com.kunzisoft.keepass.education.Education
 import com.kunzisoft.keepass.password.PassphraseGenerator
 import com.kunzisoft.keepass.timeout.TimeoutHelper
 import com.kunzisoft.keepass.utils.KeyboardUtil.isKeyboardActivatedInSettings
-import com.kunzisoft.keepass.utils.UriUtil.isContributingUser
 import java.util.Properties
 
 object PreferencesUtil {
@@ -152,45 +149,18 @@ object PreferencesUtil {
 
     fun showUUID(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.show_uuid_key),
-            context.resources.getBoolean(R.bool.show_uuid_default))
+        return prefs.getBoolean(
+            context.getString(R.string.show_uuid_key),
+            context.resources.getBoolean(R.bool.show_uuid_default)
+        )
     }
 
     fun showExpiredEntries(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return ! prefs.getBoolean(context.getString(R.string.hide_expired_entries_key),
-            context.resources.getBoolean(R.bool.hide_expired_entries_default))
-    }
-
-    fun getStyle(context: Context): String {
-        val defaultStyleString = Stylish.defaultStyle(context)
-        val styleString = PreferenceManager.getDefaultSharedPreferences(context)
-            .getString(context.getString(R.string.setting_style_key), defaultStyleString)
-            ?: defaultStyleString
-        // Return the system style
-        return Stylish.retrieveEquivalentSystemStyle(context, styleString)
-    }
-
-    fun setStyle(context: Context, styleString: String) {
-        var tempThemeString = styleString
-        if (!context.isContributingUser()) {
-            if (tempThemeString in BuildConfig.STYLES_DISABLED) {
-                tempThemeString = Stylish.defaultStyle(context)
-            }
-        }
-        // Store light style to show selection in array list
-        tempThemeString = Stylish.retrieveEquivalentLightStyle(context, tempThemeString)
-        PreferenceManager.getDefaultSharedPreferences(context)
-            .edit()
-            .putString(context.getString(R.string.setting_style_key), tempThemeString)
-            .apply()
-        Stylish.load(context)
-    }
-
-    fun getStyleBrightness(context: Context): String? {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getString(context.getString(R.string.setting_style_brightness_key),
-            context.getString(R.string.list_style_brightness_follow_system))
+        return !prefs.getBoolean(
+            context.getString(R.string.hide_expired_entries_key),
+            context.resources.getBoolean(R.bool.hide_expired_entries_default)
+        )
     }
 
     /**
@@ -757,9 +727,6 @@ object PreferencesUtil {
         for ((name, value) in PreferenceManager.getDefaultSharedPreferences(context).all) {
             properties[name] = value.toString()
         }
-        for ((name, value) in Education.getEducationSharedPreferences(context).all) {
-            properties[name] = value.toString()
-        }
         return properties
     }
 
@@ -837,8 +804,6 @@ object PreferencesUtil {
                 context.getString(R.string.autofill_application_id_blocklist_key) -> editor.putStringSet(name, getStringSetFromProperties(value))
                 context.getString(R.string.autofill_web_domain_blocklist_key) -> editor.putStringSet(name, getStringSetFromProperties(value))
 
-                context.getString(R.string.setting_style_key) -> setStyle(context, value)
-                context.getString(R.string.setting_style_brightness_key) -> editor.putString(name, value)
                 context.getString(R.string.setting_icon_pack_choose_key) -> editor.putString(name, value)
                 context.getString(R.string.show_entry_colors_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.hide_password_key) -> editor.putBoolean(name, value.toBoolean())
@@ -850,7 +815,6 @@ object PreferencesUtil {
                 context.getString(R.string.list_size_key) -> editor.putString(name, value)
                 context.getString(R.string.monospace_font_fields_enable_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.hide_expired_entries_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.enable_education_screens_key) -> editor.putBoolean(name, value.toBoolean())
 
                 context.getString(R.string.password_generator_length_key) -> editor.putInt(name, value.toInt())
                 context.getString(R.string.password_generator_options_key) -> editor.putStringSet(name, getStringSetFromProperties(value))
@@ -866,11 +830,6 @@ object PreferencesUtil {
                 context.getString(R.string.sort_recycle_bin_bottom_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.allow_copy_password_first_time_key) -> editor.putBoolean(name, value.toBoolean())
             }
-        }
-
-        putPropertiesInPreferences(properties,
-            Education.getEducationSharedPreferences(context)) { editor, name, value ->
-            Education.putPropertiesInEducationPreferences(context, editor, name, value)
         }
     }
 }

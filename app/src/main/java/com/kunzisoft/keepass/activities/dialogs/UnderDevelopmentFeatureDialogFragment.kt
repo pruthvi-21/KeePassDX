@@ -37,6 +37,7 @@ class UnderDevelopmentFeatureDialogFragment : DialogFragment() {
         activity?.let { activity ->
             // Use the Builder class for convenient dialog construction
             val builder = AlertDialog.Builder(activity)
+            builder.setView(R.layout.alert_dialog_layout)
 
             val stringBuilder = SpannableStringBuilder()
             /*
@@ -51,9 +52,6 @@ class UnderDevelopmentFeatureDialogFragment : DialogFragment() {
                 stringBuilder.append(HtmlCompat.fromHtml(getString(R.string.html_text_dev_feature), HtmlCompat.FROM_HTML_MODE_LEGACY)).append("\n\n")
                         .append(HtmlCompat.fromHtml(getString(R.string.html_text_dev_feature_contibute), HtmlCompat.FROM_HTML_MODE_LEGACY)).append(" ")
                         .append(HtmlCompat.fromHtml(getString(R.string.html_text_dev_feature_encourage), HtmlCompat.FROM_HTML_MODE_LEGACY))
-                builder.setPositiveButton(R.string.contribute) { _, _ ->
-                    context?.openUrl(R.string.contribution_url)
-                }
             //}
             builder.setMessage(stringBuilder)
             // Create the AlertDialog object and return it

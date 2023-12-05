@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  Copyright 2019 Jeremy Jamet / Kunzisoft.
      
  This file is part of KeePassDX.
@@ -17,27 +16,22 @@
   You should have received a copy of the GNU General Public License
   along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/selectable_margin_top"
-    android:paddingHorizontal="@dimen/selectable_margin_horizontal">
+    android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/node_container"
-        android:layout_width="0dp"
+        style="@style/Theme.Keepass.Selectable.Item"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:minHeight="@dimen/selectable_min_height"
-        style="@style/KeepassDXStyle.Selectable.Item"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="@dimen/content_percent">
+        android:paddingHorizontal="@dimen/selectable_margin_horizontal"
+        android:paddingVertical="8dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/node_icon"
@@ -57,14 +51,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/node_selected_icon"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_alignBottom="@id/node_icon"
+            android:layout_marginStart="36dp"
+            android:background="@drawable/background_entry_selected_icon"
+            android:backgroundTint="?colorPrimary"
+            android:padding="3dp"
+            android:src="@drawable/ic_check_white_24dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/node_icon"
+            app:layout_constraintEnd_toEndOf="@id/node_icon"
+            app:tint="?colorOnSecondary"
+            tools:visibility="visible" />
+
         <LinearLayout
             android:id="@+id/node_container_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/image_list_margin_vertical"
-            android:layout_marginLeft="@dimen/image_list_margin_vertical"
             android:layout_marginEnd="12dp"
-            android:layout_marginRight="12dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/node_path"
             app:layout_constraintEnd_toStartOf="@+id/node_options"
@@ -75,7 +83,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/node_text"
-                style="@style/KeepassDXStyle.Title.Entry"
+                style="@style/Theme.Keepass.Title.Entry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -84,7 +92,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/node_subtext"
-                style="@style/KeepassDXStyle.SubTitle.Entry"
+                style="@style/Theme.Keepass.SubTitle.Entry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-4dp"
@@ -94,7 +102,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/node_meta"
-                style="@style/KeepassDXStyle.Meta.Entry"
+                style="@style/Theme.Keepass.Meta.Entry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lines="1"
@@ -112,25 +120,23 @@
             android:layout_marginRight="12dp"
             android:gravity="end"
             android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="@+id/node_container_info"
             app:layout_constraintBottom_toTopOf="@+id/node_path"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/node_container_info">
 
             <LinearLayout
                 android:id="@+id/node_otp_container"
+                style="@style/Theme.Keepass.Selectable.Item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/KeepassDXStyle.Selectable.Item"
                 android:orientation="horizontal"
+                android:paddingVertical="4dp"
                 android:paddingStart="8dp"
-                android:paddingLeft="8dp"
-                android:paddingEnd="4dp"
-                android:paddingRight="4dp"
-                android:paddingVertical="4dp">
+                android:paddingEnd="4dp">
 
                 <TextView
                     android:id="@+id/node_otp_token"
-                    style="@style/KeepassDXStyle.Info.Entry"
+                    style="@style/Theme.Keepass.Info.Entry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -145,16 +151,16 @@
                         android:id="@+id/node_otp_progress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:indicatorSize="16dp"
-                        app:trackThickness="2dp"
+                        android:layout_gravity="center"
                         app:indicatorDirectionCircular="counterclockwise"
-                        android:layout_gravity="center" />
+                        app:indicatorSize="16dp"
+                        app:trackThickness="2dp" />
                 </FrameLayout>
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/node_attachment_icon"
-                style="@style/KeepassDXStyle.Icon.Entry"
+                style="@style/Theme.Keepass.Icon.Entry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -164,10 +170,9 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/node_path"
-            style="@style/KeepassDXStyle.Meta.Entry.Important"
+            style="@style/Theme.Keepass.Meta.Entry.Important"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="12dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="2dp"
             android:maxLines="2"
@@ -179,4 +184,10 @@
             tools:text="Database / Group A / Group B" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:alpha="0.15"
+        android:background="?android:textColorSecondary" />
+</LinearLayout>

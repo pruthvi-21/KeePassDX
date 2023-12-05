@@ -23,7 +23,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -32,19 +31,17 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
@@ -61,7 +58,6 @@ import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.Attachment
 import com.kunzisoft.keepass.database.element.icon.IconImage
 import com.kunzisoft.keepass.database.element.node.NodeId
-import com.kunzisoft.keepass.education.EntryActivityEducation
 import com.kunzisoft.keepass.magikeyboard.MagikeyboardService
 import com.kunzisoft.keepass.model.EntryAttachmentState
 import com.kunzisoft.keepass.otp.OtpType
@@ -94,7 +90,6 @@ class EntryActivity : DatabaseLockActivity() {
     private var titleIconView: ImageView? = null
     private var historyView: View? = null
     private var tagsListView: RecyclerView? = null
-    private var entryContentTab: TabLayout? = null
     private var tagsAdapter: TagsAdapter? = null
     private var entryProgress: LinearProgressIndicator? = null
     private var lockView: View? = null
@@ -102,8 +97,6 @@ class EntryActivity : DatabaseLockActivity() {
     private var loadingView: ProgressBar? = null
 
     private val mEntryViewModel: EntryViewModel by viewModels()
-
-    private val mEntryActivityEducation = EntryActivityEducation(this)
 
     private var mMainEntryId: NodeId<UUID>? = null
     private var mHistoryPosition: Int = -1
@@ -132,6 +125,8 @@ class EntryActivity : DatabaseLockActivity() {
 
         setContentView(R.layout.activity_entry)
 
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -145,7 +140,6 @@ class EntryActivity : DatabaseLockActivity() {
         titleIconView = findViewById(R.id.entry_icon)
         historyView = findViewById(R.id.history_container)
         tagsListView = findViewById(R.id.entry_tags_list_view)
-        entryContentTab = findViewById(R.id.entry_content_tab)
         entryProgress = findViewById(R.id.entry_progress)
         lockView = findViewById(R.id.lock_button)
         loadingView = findViewById(R.id.loading)
@@ -183,19 +177,6 @@ class EntryActivity : DatabaseLockActivity() {
             adapter = tagsAdapter
         }
 
-        // Init content tab
-        entryContentTab?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                mEntryViewModel.selectSection(EntryViewModel.EntrySection.
-                    getEntrySectionByPosition(tab?.position ?: 0)
-                )
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        })
-
         // Get Entry from UUID
         try {
             intent.getParcelableExtraCompat<NodeId<UUID>>(KEY_ENTRY)?.let { mainEntryId ->
@@ -225,10 +206,6 @@ class EntryActivity : DatabaseLockActivity() {
 
         lockView?.setOnClickListener {
             lockAndExit()
-        }
-
-        mEntryViewModel.sectionSelected.observe(this) { entrySection ->
-            entryContentTab?.getTabAt(entrySection.position)?.select()
         }
 
         mEntryViewModel.entryInfoHistory.observe(this) { entryInfoHistory ->
@@ -272,6 +249,9 @@ class EntryActivity : DatabaseLockActivity() {
                 val showEntryColors = PreferencesUtil.showEntryColors(this)
                 mBackgroundColor = if (showEntryColors) entryInfo.backgroundColor else null
                 mForegroundColor = if (showEntryColors) entryInfo.foregroundColor else null
+                if(showEntryColors && mBackgroundColor != null) {
+                    window.statusBarColor = mBackgroundColor!!
+                }
 
                 loadingView?.hideByFading()
                 mEntryLoaded = true
@@ -415,11 +395,6 @@ class EntryActivity : DatabaseLockActivity() {
             if (mEntryIsHistory && !mDatabaseReadOnly) {
                 inflater.inflate(R.menu.entry_history, menu)
             }
-
-            // Show education views
-            Handler(Looper.getMainLooper()).post {
-                performedNextEducation(menu)
-            }
         }
         return true
     }
@@ -439,35 +414,6 @@ class EntryActivity : DatabaseLockActivity() {
         }
         applyToolbarColors()
         return super.onPrepareOptionsMenu(menu)
-    }
-
-    private fun performedNextEducation(menu: Menu) {
-        val entryFragment = supportFragmentManager.findFragmentByTag(ENTRY_FRAGMENT_TAG)
-                as? EntryFragment?
-        val entryFieldCopyView: View? = entryFragment?.firstEntryFieldCopyView()
-        val entryCopyEducationPerformed = entryFieldCopyView != null
-                && mEntryActivityEducation.checkAndPerformedEntryCopyEducation(
-                entryFieldCopyView,
-                {
-                    entryFragment.launchEntryCopyEducationAction()
-                },
-                {
-                    performedNextEducation(menu)
-                })
-
-        if (!entryCopyEducationPerformed) {
-            val menuEditView = toolbar?.findViewById<View>(R.id.menu_edit)
-            // entryEditEducationPerformed
-            menuEditView != null && mEntryActivityEducation.checkAndPerformedEntryEditEducation(
-                    menuEditView,
-                    {
-                        onOptionsItemSelected(menu.findItem(R.id.menu_edit))
-                    },
-                    {
-                        performedNextEducation(menu)
-                    }
-            )
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

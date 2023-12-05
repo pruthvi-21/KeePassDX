@@ -26,6 +26,7 @@ import android.content.Context
 import android.content.Context.BIND_ABOVE_CLIENT
 import android.content.Context.BIND_AUTO_CREATE
 import android.content.Context.BIND_IMPORTANT
+import android.content.Context.RECEIVER_EXPORTED
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.ServiceConnection
@@ -319,6 +320,7 @@ class DatabaseTaskProvider(
                         // Bind to the service when is starting
                         bindService()
                     }
+
                     DATABASE_STOP_TASK_ACTION -> {
                         // Remove the progress task
                         unBindService()
@@ -326,12 +328,17 @@ class DatabaseTaskProvider(
                 }
             }
         }
-        context.registerReceiver(databaseTaskBroadcastReceiver,
-            IntentFilter().apply {
-                addAction(DATABASE_START_TASK_ACTION)
-                addAction(DATABASE_STOP_TASK_ACTION)
-            }
-        )
+
+        val intentFilter = IntentFilter().apply {
+            addAction(DATABASE_START_TASK_ACTION)
+            addAction(DATABASE_STOP_TASK_ACTION)
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.registerReceiver(databaseTaskBroadcastReceiver, intentFilter, RECEIVER_EXPORTED)
+        } else {
+            context.registerReceiver(databaseTaskBroadcastReceiver, intentFilter)
+        }
 
         // Check if a service is currently running else do nothing
         bindService()
@@ -377,6 +384,7 @@ class DatabaseTaskProvider(
                 startService(bundle, actionTask)
             } else {
                 AlertDialog.Builder(context)
+                    .setView(R.layout.alert_dialog_layout)
                     .setMessage(R.string.warning_database_notification_permission)
                     .setNegativeButton(R.string.later) { _, _ ->
                         // Refuses the notification, so start the service
@@ -457,6 +465,7 @@ class DatabaseTaskProvider(
     fun askToStartDatabaseReload(conditionToAsk: Boolean, approved: () -> Unit) {
         if (conditionToAsk) {
             AlertDialog.Builder(context)
+                .setView(R.layout.alert_dialog_layout)
                 .setMessage(R.string.warning_database_info_reloaded)
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(android.R.string.ok) { _, _ ->

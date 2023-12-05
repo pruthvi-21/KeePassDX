@@ -22,6 +22,7 @@ package com.kunzisoft.keepass.settings
 import android.app.Activity
 import android.app.backup.BackupManager
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -40,6 +41,7 @@ import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.MainCredential
 import com.kunzisoft.keepass.tasks.ActionRunnable
 import com.kunzisoft.keepass.timeout.TimeoutHelper
+import com.kunzisoft.keepass.utils.ColorUtils
 import com.kunzisoft.keepass.view.showActionErrorIfNeeded
 import org.joda.time.DateTime
 import java.util.Properties
@@ -115,6 +117,10 @@ open class SettingsActivity
             toolbar?.setTitle(R.string.settings)
         else
             toolbar?.title = savedInstanceState?.getString(TITLE_KEY)
+        val toolbarColor =
+            ColorUtils.getColorFromAttr(this, R.attr.colorSurfaceVariant, Color.BLACK)
+        if (toolbarColor != Color.BLACK)
+            toolbar?.setBackgroundColor(toolbarColor)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
