@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import com.google.android.material.textfield.TextInputLayout
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.activities.helpers.ExternalFileHelper
@@ -20,6 +21,7 @@ import com.kunzisoft.keepass.database.MainCredential
 import com.kunzisoft.keepass.hardware.HardwareKey
 import com.kunzisoft.keepass.hardware.HardwareKeyActivity
 import com.kunzisoft.keepass.password.PasswordEntropy
+import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.utils.UriUtil.getDocumentFile
 import com.kunzisoft.keepass.utils.UriUtil.openUrl
 import com.kunzisoft.keepass.view.HardwareKeySelectionView
@@ -134,6 +136,9 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
 
             hardwareKeyCheckBox = rootView.findViewById(R.id.hardware_key_checkbox)
             hardwareKeySelectionView = rootView.findViewById(R.id.hardware_key_selection)
+
+            val hardwareKeyContainer = rootView.findViewById<View>(R.id.card_view_hardware_key)
+            hardwareKeyContainer.isVisible = PreferencesUtil.allowHardwareKey(requireContext())
 
             mExternalFileHelper = ExternalFileHelper(this)
             mExternalFileHelper?.buildOpenDocument { uri ->
@@ -268,6 +273,7 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
 
     private fun verifyHardwareKey(): Boolean {
         var error = false
+        if (PreferencesUtil.allowHardwareKey(requireContext())) return false
         hardwareKeySelectionView.error = null
         if (hardwareKeyCheckBox.isChecked) {
             hardwareKeySelectionView.hardwareKey?.let { hardwareKey ->

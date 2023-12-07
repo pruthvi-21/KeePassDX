@@ -248,6 +248,9 @@ class MainCredentialActivity : DatabaseModeActivity(), AdvancedUnlockFragment.Bu
             mAdvancedUnlockViewModel.allowAutoOpenBiometricPrompt = false
         }
 
+        //hide hardware key layout
+        mainCredentialView?.showHardwareKeyLayout(PreferencesUtil.allowHardwareKey(this))
+
         mDatabaseFileUri?.let { databaseFileUri ->
             mDatabaseFileViewModel.loadDatabaseFile(databaseFileUri)
         }

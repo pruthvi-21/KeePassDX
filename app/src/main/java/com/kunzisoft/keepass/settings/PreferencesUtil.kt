@@ -745,6 +745,14 @@ object PreferencesUtil {
         )
     }
 
+    fun allowHardwareKey(context: Context): Boolean {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getBoolean(
+            context.getString(R.string.allow_hardware_key_key),
+            context.resources.getBoolean(R.bool.allow_hardware_key_default)
+        )
+    }
+
     fun isKeyboardNotificationEntryEnable(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         return prefs.getBoolean(
@@ -968,6 +976,11 @@ object PreferencesUtil {
                 )
 
                 context.getString(R.string.delete_entered_password_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
+                context.getString(R.string.allow_hardware_key_key) -> editor.putBoolean(
                     name,
                     value.toBoolean()
                 )

@@ -485,6 +485,8 @@
     <string name="allow_no_password_summary">Allows tapping the \"Open\" button if no credentials are selected</string>
     <string name="delete_entered_password_title">Delete password</string>
     <string name="delete_entered_password_summary">Deletes the password entered after a connection attempt to a database</string>
+    <string name="allow_hardware_key_title">Allow hardware key</string>
+    <string name="allow_hardware_key_summary">Enable this to use a hardware key to encrypt and decrypt your database</string>
     <string name="enable_read_only_title">Write-protected</string>
     <string name="enable_read_only_summary">Open the database read-only by default</string>
     <string name="enable_auto_save_database_title">Autosave database</string>

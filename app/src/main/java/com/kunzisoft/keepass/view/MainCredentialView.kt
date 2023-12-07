@@ -9,17 +9,20 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.core.view.isVisible
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.activities.helpers.ExternalFileHelper
 import com.kunzisoft.keepass.activities.helpers.setOpenDocumentClickListener
 import com.kunzisoft.keepass.database.MainCredential
 import com.kunzisoft.keepass.hardware.HardwareKey
 import com.kunzisoft.keepass.model.CredentialStorage
+import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.utils.KeyboardUtil.showKeyboard
 
 class MainCredentialView @JvmOverloads constructor(
@@ -27,6 +30,8 @@ class MainCredentialView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyle: Int = 0
 ) : FrameLayout(context, attrs, defStyle) {
+
+    private var hardwareKeyContainerView: View
 
     private var checkboxPasswordView: CompoundButton
     private var passwordTextView: EditText
@@ -45,6 +50,8 @@ class MainCredentialView @JvmOverloads constructor(
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater?
         inflater?.inflate(R.layout.view_main_credentials, this)
+
+        hardwareKeyContainerView = findViewById(R.id.container_hardware_key)
 
         checkboxPasswordView = findViewById(R.id.password_checkbox)
         passwordTextView = findViewById(R.id.password_text_view)
@@ -101,18 +108,7 @@ class MainCredentialView @JvmOverloads constructor(
         keyFileSelectionView.fileSelectListener = {
             checkboxKeyFileView.isChecked = it
         }
-        checkboxHardwareView.setOnCheckedChangeListener { view, checked ->
-            if (checked) {
-                if (hardwareKeySelectionView.hardwareKey == null) {
-                    checkboxHardwareView.isChecked = false
-                }
-            }
-            onHardwareKeyChecked?.onCheckedChanged(view, checked)
-        }
-
-        hardwareKeySelectionView.selectionListener = { _ ->
-            checkboxHardwareView.isChecked = true
-        }
+        showHardwareKeyLayout(PreferencesUtil.allowHardwareKey(context))
     }
 
     fun validateCredential() {
@@ -171,8 +167,9 @@ class MainCredentialView @JvmOverloads constructor(
                 passwordTextView.text?.toString() else null
             this.keyFileUri = if (checkboxKeyFileView.isChecked)
                 keyFileSelectionView.uri else null
-            this.hardwareKey = if (checkboxHardwareView.isChecked)
-                hardwareKeySelectionView.hardwareKey else null
+            this.hardwareKey =
+                if (checkboxHardwareView.isChecked && PreferencesUtil.allowHardwareKey(context))
+                    hardwareKeySelectionView.hardwareKey else null
         }
     }
 
@@ -218,6 +215,26 @@ class MainCredentialView @JvmOverloads constructor(
             passwordTextView.requestFocusFromTouch()
             passwordTextView.showKeyboard()
         }, 100)
+    }
+
+    fun showHardwareKeyLayout(show: Boolean) {
+        if (!show) {
+            hardwareKeyContainerView.isVisible = false
+        } else {
+            hardwareKeyContainerView.isVisible = true
+            checkboxHardwareView.setOnCheckedChangeListener { view, checked ->
+                if (checked) {
+                    if (hardwareKeySelectionView.hardwareKey == null) {
+                        checkboxHardwareView.isChecked = false
+                    }
+                }
+                onHardwareKeyChecked?.onCheckedChanged(view, checked)
+            }
+
+            hardwareKeySelectionView.selectionListener = { _ ->
+                checkboxHardwareView.isChecked = true
+            }
+        }
     }
 
     override fun onSaveInstanceState(): Parcelable {
