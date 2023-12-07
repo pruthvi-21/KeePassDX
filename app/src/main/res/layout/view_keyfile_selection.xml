@@ -12,6 +12,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_entry_keyfile"
+        style="@style/Theme.Keepass.Credentials.TextInputStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:endIconMode="password_toggle"
