@@ -63,6 +63,7 @@
     <string name="entry_show_history">Show history</string>
     <string name="entry_hide_history">Hide history</string>
     <string name="entry_attachments">Attachments</string>
+    <string name="additional_options">Additional Options</string>
     <string name="master_password">Master Password</string>
     <string name="entry_keyfile">Keyfile</string>
     <string name="hardware_key">Hardware key</string>
