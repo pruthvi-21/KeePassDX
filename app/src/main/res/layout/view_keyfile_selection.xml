@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         app:endIconMode="password_toggle"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/keyfile_selection_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -29,8 +29,24 @@
             android:focusableInTouchMode="false"
             android:hint="@string/entry_keyfile"
             android:imeOptions="actionDone"
-            android:inputType="textPassword"
+            android:inputType="text"
             android:maxLines="1"
             android:minHeight="48dp" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/keyfile_selection_icon"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="12dp"
+        android:background="@drawable/background_keyfile_selector"
+        android:backgroundTint="?colorSecondary"
+        android:padding="8dp"
+        android:src="@drawable/ic_open_folder_white_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/input_entry_keyfile"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?colorSurfaceVariant" />
 </androidx.constraintlayout.widget.ConstraintLayout>

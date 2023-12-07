@@ -8,13 +8,14 @@ import android.os.Parcelable
 import android.os.Parcelable.Creator
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.textfield.TextInputLayout
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.utils.UriUtil.getDocumentFile
 import com.kunzisoft.keepass.utils.readParcelableCompat
-
 
 class KeyFileSelectionView @JvmOverloads constructor(
     context: Context,
@@ -26,6 +27,9 @@ class KeyFileSelectionView @JvmOverloads constructor(
 
     private val keyFileNameInputLayout: TextInputLayout
     private val keyFileNameView: TextView
+    val keyFileSelectionButton: ImageView
+
+    var fileSelectListener: ((selected: Boolean) -> Unit)? = null
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater?
@@ -33,6 +37,12 @@ class KeyFileSelectionView @JvmOverloads constructor(
 
         keyFileNameInputLayout = findViewById(R.id.input_entry_keyfile)
         keyFileNameView = findViewById(R.id.keyfile_name)
+        keyFileSelectionButton = findViewById(R.id.keyfile_selection_icon)
+
+        keyFileNameInputLayout.setEndIconOnClickListener {
+            uri = null
+            fileSelectListener?.invoke(false)
+        }
     }
 
     override fun setOnClickListener(l: OnClickListener?) {
@@ -70,6 +80,12 @@ class KeyFileSelectionView @JvmOverloads constructor(
             keyFileNameView.text = value?.let {
                 value.getDocumentFile(context)?.name ?: value.path
             } ?: ""
+
+            keyFileNameInputLayout.setEndIconDrawable(
+                if (keyFileNameView.text.isNullOrEmpty()) 0
+                else R.drawable.ic_close_white_24dp
+            )
+            fileSelectListener?.invoke(value != null)
         }
 
     override fun onSaveInstanceState(): Parcelable {

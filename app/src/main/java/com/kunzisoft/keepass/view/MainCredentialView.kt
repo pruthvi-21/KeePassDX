@@ -93,8 +93,13 @@ class MainCredentialView @JvmOverloads constructor(
                 if (keyFileSelectionView.uri == null) {
                     checkboxKeyFileView.isChecked = false
                 }
+            } else {
+                keyFileSelectionView.uri = null
             }
             onKeyFileChecked?.onCheckedChanged(view, checked)
+        }
+        keyFileSelectionView.fileSelectListener = {
+            checkboxKeyFileView.isChecked = it
         }
         checkboxHardwareView.setOnCheckedChangeListener { view, checked ->
             if (checked) {
@@ -151,7 +156,7 @@ class MainCredentialView @JvmOverloads constructor(
     }
 
     fun setOpenKeyfileClickListener(externalFileHelper: ExternalFileHelper?) {
-        keyFileSelectionView.setOpenDocumentClickListener(externalFileHelper)
+        keyFileSelectionView.keyFileSelectionButton.setOpenDocumentClickListener(externalFileHelper)
     }
 
     fun isFill(): Boolean {
