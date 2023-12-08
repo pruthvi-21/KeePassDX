@@ -70,6 +70,7 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
     private var mFileDatabaseHistoryAction: FileDatabaseHistoryAction? = null
 
     private var mDatabaseFileUri: Uri? = null
+    private var mMainCredentials: MainCredential? = null
 
     private var mExternalFileHelper: ExternalFileHelper? = null
 
@@ -97,7 +98,10 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
 
         // Create database button
         createDatabaseButtonView = findViewById(R.id.create_database_button)
-        createDatabaseButtonView?.setOnClickListener { createNewFile() }
+        createDatabaseButtonView?.setOnClickListener {
+            SetMainCredentialDialogFragment.getInstance(true)
+                .show(supportFragmentManager, "passwordDialog")
+        }
 
         // Open database button
         mExternalFileHelper = ExternalFileHelper(this)
@@ -108,9 +112,15 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
         }
         mExternalFileHelper?.buildCreateDocument("application/x-keepass") { databaseFileCreatedUri ->
             mDatabaseFileUri = databaseFileCreatedUri
-            if (mDatabaseFileUri != null) {
-                SetMainCredentialDialogFragment.getInstance(true)
-                    .show(supportFragmentManager, "passwordDialog")
+            if (mDatabaseFileUri != null && mMainCredentials != null) {
+                try {
+                    // Create the new database
+                    createDatabase(mDatabaseFileUri!!, mMainCredentials!!)
+                } catch (e: Exception) {
+                    val error = getString(R.string.error_create_database_file)
+                    Snackbar.make(coordinatorLayout, error, Snackbar.LENGTH_LONG).asError().show()
+                    Log.e(TAG, error, e)
+                }
             } else {
                 val error = getString(R.string.error_create_database)
                 Snackbar.make(coordinatorLayout, error, Snackbar.LENGTH_LONG).asError().show()
@@ -357,16 +367,8 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
     }
 
     override fun onAssignKeyDialogPositiveClick(mainCredential: MainCredential) {
-        try {
-            mDatabaseFileUri?.let { databaseUri ->
-                // Create the new database
-                createDatabase(databaseUri, mainCredential)
-            }
-        } catch (e: Exception) {
-            val error = getString(R.string.error_create_database_file)
-            Snackbar.make(coordinatorLayout, error, Snackbar.LENGTH_LONG).asError().show()
-            Log.e(TAG, error, e)
-        }
+        mMainCredentials = mainCredential
+        createNewFile()
     }
 
     override fun onAssignKeyDialogNegativeClick(mainCredential: MainCredential) {}
