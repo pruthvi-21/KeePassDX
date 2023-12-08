@@ -15,7 +15,7 @@
         style="@style/Theme.Keepass.Credentials.TextInputStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:endIconMode="password_toggle"
+        app:endIconMode="custom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/keyfile_selection_icon"
         app:layout_constraintStart_toStartOf="parent"

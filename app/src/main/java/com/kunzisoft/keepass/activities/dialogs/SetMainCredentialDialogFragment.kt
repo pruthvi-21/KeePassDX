@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.TextView
@@ -42,7 +43,6 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
     private lateinit var passwordRepeatTextInputLayout: TextInputLayout
     private lateinit var passwordRepeatView: TextView
 
-    private lateinit var keyFileCheckBox: CompoundButton
     private lateinit var keyFileSelectionView: KeyFileSelectionView
 
     private lateinit var hardwareKeyCheckBox: CompoundButton
@@ -131,7 +131,6 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
             passwordRepeatView = rootView.findViewById(R.id.password_confirmation)
             passwordRepeatView.applyFontVisibility()
 
-            keyFileCheckBox = rootView.findViewById(R.id.keyfile_checkbox)
             keyFileSelectionView = rootView.findViewById(R.id.keyfile_selection)
 
             hardwareKeyCheckBox = rootView.findViewById(R.id.hardware_key_checkbox)
@@ -145,15 +144,17 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
                 uri?.let { pathUri ->
                     pathUri.getDocumentFile(requireContext())?.length()?.let { lengthFile ->
                         keyFileSelectionView.error = null
-                        keyFileCheckBox.isChecked = true
                         keyFileSelectionView.uri = pathUri
+                        mKeyFileUri = pathUri
                         if (lengthFile <= 0L) {
                             showEmptyKeyFileConfirmationDialog()
                         }
                     }
                 }
             }
-            keyFileSelectionView.setOpenDocumentClickListener(mExternalFileHelper)
+            keyFileSelectionView.keyFileSelectionButton.setOpenDocumentClickListener(
+                mExternalFileHelper
+            )
 
             hardwareKeySelectionView.selectionListener = { hardwareKey ->
                 hardwareKeyCheckBox.isChecked = true
@@ -204,7 +205,7 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
         val hardwareKey = hardwareKeySelectionView.hardwareKey
         if (!error
             && (!passwordCheckBox.isChecked)
-            && (!keyFileCheckBox.isChecked)
+            && keyFileSelectionView.uri == null
             && (!hardwareKeyCheckBox.isChecked)
         ) {
             error = true
@@ -217,7 +218,7 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
             }
         } else if (!error
             && mMasterPassword.isNullOrEmpty()
-            && !keyFileCheckBox.isChecked
+            && keyFileSelectionView.uri == null
             && !hardwareKeyCheckBox.isChecked
         ) {
             // show empty password dialog if required
@@ -260,14 +261,6 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
     private fun verifyKeyFile(): Boolean {
         var error = false
         keyFileSelectionView.error = null
-        if (keyFileCheckBox.isChecked) {
-            keyFileSelectionView.uri?.let { uri ->
-                mKeyFileUri = uri
-            } ?: run {
-                error = true
-                keyFileSelectionView.error = getString(R.string.error_nokeyfile)
-            }
-        }
         return error
     }
 
@@ -288,8 +281,9 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
 
     private fun retrieveMainCredential(): MainCredential {
         val masterPassword = if (passwordCheckBox.isChecked) mMasterPassword else null
-        val keyFileUri = if (keyFileCheckBox.isChecked) mKeyFileUri else null
+        val keyFileUri = keyFileSelectionView.uri
         val hardwareKey = if (hardwareKeyCheckBox.isChecked) mHardwareKey else null
+        Log.e("TAG", "retrieveMainCredential: ${keyFileUri}")
         return MainCredential(masterPassword, keyFileUri, hardwareKey)
     }
 
@@ -351,7 +345,7 @@ class SetMainCredentialDialogFragment : DatabaseDialogFragment() {
                 })
                 .setPositiveButton(android.R.string.ok) { _, _ -> }
                 .setNegativeButton(android.R.string.cancel) { _, _ ->
-                    keyFileCheckBox.isChecked = false
+                    mKeyFileUri = null
                     keyFileSelectionView.uri = null
                 }
             mEmptyKeyFileConfirmationDialog = builder.create()

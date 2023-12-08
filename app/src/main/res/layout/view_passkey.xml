@@ -8,6 +8,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_input_layout"
+        style="@style/Theme.Keepass.Credentials.TextInputStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:importantForAccessibility="no"
