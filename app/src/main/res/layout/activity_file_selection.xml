@@ -127,17 +127,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="true"
-            android:text="@string/select_database_file"
-            app:cornerRadius="@dimen/card_radius" />
+            android:text="@string/select_database_file" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/create_database_button"
-            style="@style/Widget.Material3.Button.TextButton"
+            style="@style/Theme.Keepass.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="true"
-            android:text="@string/create_keepass_file"
-            app:cornerRadius="@dimen/card_radius" />
+            android:text="@string/create_keepass_file" />
     </LinearLayout>
 
     <include layout="@layout/view_screenshot_mode_banner" />

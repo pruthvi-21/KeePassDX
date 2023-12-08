@@ -13,9 +13,8 @@
         android:gravity="center"
         android:text="@string/file_manager_install_description" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/file_manager_button"
-        style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/button_margin"

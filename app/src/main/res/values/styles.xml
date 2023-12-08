@@ -86,7 +86,11 @@
 
         <!-- Snackbar -->
         <item name="snackbarStyle">@style/Theme.Keepass.SnackBar</item>
-    </style>
+
+        <!-- Button -->
+        <item name="materialButtonStyle">@style/Theme.Keepass.Button.Primary</item>
+        <item name="materialButtonOutlinedStyle">@style/Theme.Keepass.Button.Outlined</item>
+    </style>t ad
 
     <!-- Toolbar Style -->
     <style name="Theme.Keepass.Toolbar.Base" parent="Widget.Material3.Toolbar" />
@@ -317,11 +321,15 @@
 
     <!-- Button Style -->
     <style name="Theme.Keepass.Button.Primary" parent="Widget.Material3.Button">
-        <item name="android:layout_margin">8dp</item>
+        <item name="cornerRadius">@dimen/card_radius</item>
     </style>
 
-    <style name="Theme.Keepass.Button.Secondary" parent="Widget.Material3.Button.OutlinedButton">
-        <item name="android:layout_margin">8dp</item>
+    <style name="Theme.Keepass.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="cornerRadius">@dimen/card_radius</item>
+    </style>
+
+    <style name="Theme.Keepass.Button.TextButton" parent="Widget.Material3.Button.TextButton">
+        <item name="cornerRadius">@dimen/card_radius</item>
     </style>
 
     <style name="Theme.Keepass.Base.ImageButton" parent="Widget.AppCompat.ImageButton" />

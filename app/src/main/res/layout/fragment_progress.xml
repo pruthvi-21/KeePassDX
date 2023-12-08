@@ -38,8 +38,9 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/progress_dialog_cancel"
+        style="@style/Theme.Keepass.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
