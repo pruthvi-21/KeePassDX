@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.LibX.Checkbox" parent="Widget.Material3.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/btn_check</item>
+        <item name="buttonTint">@color/btn_check_tint</item>
+    </style>
+</resources>

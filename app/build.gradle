@@ -97,6 +97,7 @@ dependencies {
     // Modules import
     implementation project(path: ':database')
     implementation project(path: ':icon-pack')
+    implementation project(path: ':design-lib')
 
     // Tests
     androidTestImplementation "androidx.test:runner:$android_test_version"

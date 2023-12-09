@@ -81,6 +81,8 @@
         <item name="switchPreferenceStyle">@style/Theme.Keepass.SwitchPreference</item>
         <item name="switchPreferenceCompatStyle">@style/Theme.Keepass.SwitchPreference</item>
 
+        <item name="checkboxStyle">@style/Theme.LibX.Checkbox</item>
+
         <!-- Edit Text -->
         <item name="textInputStyle">@style/Theme.Keepass.TextInputLayout</item>
 
