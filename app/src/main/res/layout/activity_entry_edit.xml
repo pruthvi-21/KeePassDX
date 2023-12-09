@@ -26,12 +26,11 @@
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
+                style="?toolbarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 app:layout_constraintTop_toBottomOf="@id/special_mode_view"
-                app:navigationIcon="@drawable/ic_close_white_24dp"
-                app:navigationIconTint="@color/text_primary_color"
-                app:titleTextColor="@color/text_primary_color">
+                app:navigationIcon="@drawable/ic_close_white_24dp">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/entry_edit_validate"

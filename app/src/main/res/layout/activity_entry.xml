@@ -51,7 +51,8 @@
                     style="@style/Theme.Keepass.Toolbar.Transparent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_collapseMode="pin" />
+                    app:layout_collapseMode="pin"
+                    app:navigationIcon="@drawable/ic_toolbar_back_white_24dp" />
 
                 <com.google.android.material.progressindicator.LinearProgressIndicator
                     android:id="@+id/entry_progress"

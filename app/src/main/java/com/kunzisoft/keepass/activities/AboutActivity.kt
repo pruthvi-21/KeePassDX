@@ -22,8 +22,7 @@ class AboutActivity : StylishActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar.title = getString(R.string.about)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_white_24dp)
 
         val appName = getString(R.string.app_name)
         findViewById<TextView>(R.id.activity_about_app_name).text = appName

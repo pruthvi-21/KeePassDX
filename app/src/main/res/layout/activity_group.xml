@@ -26,6 +26,7 @@
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
+                style="?toolbarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?colorSurfaceVariant"
@@ -40,6 +41,7 @@
                     android:layout_marginStart="12dp"
                     android:ellipsize="end"
                     android:maxLines="2"
+                    android:textColor="?colorPrimary"
                     tools:text="Database" />
             </com.google.android.material.appbar.MaterialToolbar>
 

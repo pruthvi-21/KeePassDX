@@ -34,12 +34,11 @@ class ImageViewerActivity : DatabaseLockActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
         toolbar.setOnTouchListener { _, _ ->
             resetAppTimeout()
             false
         }
+        toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_white_24dp)
 
         imageContainerView = findViewById(R.id.image_viewer_container)
         imageView = findViewById(R.id.image_viewer_image)

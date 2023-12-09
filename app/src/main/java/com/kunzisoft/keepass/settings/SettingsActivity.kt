@@ -3,7 +3,6 @@ package com.kunzisoft.keepass.settings
 import android.app.Activity
 import android.app.backup.BackupManager
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -22,7 +21,6 @@ import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.MainCredential
 import com.kunzisoft.keepass.tasks.ActionRunnable
 import com.kunzisoft.keepass.timeout.TimeoutHelper
-import com.kunzisoft.keepass.utils.ColorUtils
 import com.kunzisoft.keepass.view.showActionErrorIfNeeded
 import org.joda.time.DateTime
 import java.util.Properties
@@ -101,7 +99,7 @@ open class SettingsActivity
         else
             toolbar?.title = savedInstanceState?.getString(TITLE_KEY)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar?.setNavigationIcon(R.drawable.ic_toolbar_back_white_24dp)
 
         lockView?.setOnClickListener {
             lockAndExit()

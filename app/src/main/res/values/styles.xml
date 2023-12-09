@@ -105,6 +105,13 @@
         <item name="elevation">0dp</item>
         <item name="background">@color/surface_color</item>
         <item name="android:background">@color/surface_color</item>
+        <item name="theme">@style/ActionMode.Theme</item>
+        <item name="titleTextColor">?colorPrimary</item>
+        <item name="navigationIconTint">?colorPrimary</item>
+    </style>
+
+    <style name="ActionMode.Theme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:textColorSecondary">?attr/colorPrimary</item>
     </style>
 
     <style name="Theme.Keepass.CollapsingLayout" parent="Widget.Design.CollapsingToolbar">
