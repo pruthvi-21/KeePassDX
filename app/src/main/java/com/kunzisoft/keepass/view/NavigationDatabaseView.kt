@@ -1,6 +1,7 @@
 package com.kunzisoft.keepass.view
 
 import android.content.Context
+import android.net.Uri
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
@@ -10,6 +11,7 @@ import androidx.core.graphics.BlendModeCompat
 import androidx.core.view.isVisible
 import com.google.android.material.navigation.NavigationView
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.utils.UriUtil
 
 class NavigationDatabaseView @JvmOverloads constructor(
     context: Context,
@@ -47,7 +49,7 @@ class NavigationDatabaseView @JvmOverloads constructor(
 
     fun setDatabasePath(path: String?) {
         if (path != null) {
-            databaseNavPathView?.text = path
+            databaseNavPathView?.text = UriUtil.getPathFromUri(context, Uri.parse(path))
             databaseNavPathView?.visibility = View.VISIBLE
         } else {
             databaseNavPathView?.visibility = View.GONE

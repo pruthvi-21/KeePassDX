@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
+import android.provider.DocumentsContract
 import android.util.Log
 import android.widget.Toast
 import androidx.documentfile.provider.DocumentFile
@@ -231,6 +233,53 @@ object UriUtil {
         } catch (e: Exception) {
             Log.e(TAG, "App cannot be open", e)
         }
+    }
+
+    fun getPathFromUri(context: Context, uri: Uri): String? {
+        var filePath: String? = null
+        if (DocumentsContract.isDocumentUri(context, uri)) {
+            if ("com.android.externalstorage.documents" == uri.authority) {
+                // External Storage Provider
+                val docId = DocumentsContract.getDocumentId(uri)
+                val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }
+                    .toTypedArray()
+                val type = split[0]
+                if ("primary".equals(type, ignoreCase = true)) {
+                    filePath =
+                        Environment.getExternalStorageDirectory().toString() + "/" + Uri.decode(
+                            split[1]
+                        )
+                }
+            }
+        } else if ("content".equals(uri.scheme, ignoreCase = true)) {
+            // MediaStore (and general)
+            filePath = getDataColumn(context, uri, null, null)
+        } else if ("file".equals(uri.scheme, ignoreCase = true)) {
+            // File
+            filePath = uri.path
+        }
+        return filePath
+    }
+
+    private fun getDataColumn(
+        context: Context,
+        uri: Uri,
+        selection: String?,
+        selectionArgs: Array<String>?
+    ): String? {
+        val contentResolver = context.contentResolver
+        val projection = arrayOf("_data")
+        try {
+            contentResolver.query(uri, projection, selection, selectionArgs, null).use { cursor ->
+                if (cursor != null && cursor.moveToFirst()) {
+                    val columnIndex = cursor.getColumnIndexOrThrow("_data")
+                    return cursor.getString(columnIndex)
+                }
+            }
+        } catch (e: java.lang.Exception) {
+            Log.e("UriUtils", "Error getting data column for URI $uri", e)
+        }
+        return null
     }
 
     private const val TAG = "UriUtil"
