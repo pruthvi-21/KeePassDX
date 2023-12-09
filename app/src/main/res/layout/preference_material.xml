@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground"
     android:baselineAligned="false"
     android:clipToPadding="false"
     android:gravity="center_vertical"
@@ -27,7 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="?preferenceTitleColor"
+            tools:text="Preference Title" />
 
         <TextView
             android:id="@android:id/summary"
@@ -39,8 +41,8 @@
             android:layout_gravity="start"
             android:maxLines="10"
             android:textAlignment="viewStart"
-            android:textColor="?android:attr/textColorSecondary" />
-
+            android:textColor="?preferenceSummaryColor"
+            tools:text="This is sample preference summary" />
     </RelativeLayout>
 
     <!-- Preference should place its actual preference widget here. -->

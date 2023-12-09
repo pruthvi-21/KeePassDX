@@ -3,6 +3,10 @@
     <attr name="toolbarSpecialStyle" format="reference" />
     <attr name="toolbarActionStyle" format="reference" />
     <attr name="colorSurfaceVariant2" format="color" />
+    <attr name="preferenceColor" format="color" />
+    <attr name="preferenceCornerRadius" format="dimension" />
+    <attr name="preferenceTitleColor" format="color" />
+    <attr name="preferenceSummaryColor" format="color" />
 
     <attr name="dialogBackgroundColor" format="color" />
 

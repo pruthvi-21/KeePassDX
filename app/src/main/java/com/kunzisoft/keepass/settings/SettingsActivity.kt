@@ -100,10 +100,6 @@ open class SettingsActivity
             toolbar?.setTitle(R.string.settings)
         else
             toolbar?.title = savedInstanceState?.getString(TITLE_KEY)
-        val toolbarColor =
-            ColorUtils.getColorFromAttr(this, R.attr.colorSurfaceVariant, Color.BLACK)
-        if (toolbarColor != Color.BLACK)
-            toolbar?.setBackgroundColor(toolbarColor)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 

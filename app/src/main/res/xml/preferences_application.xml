@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/general">
 
@@ -7,7 +8,8 @@
             android:defaultValue="@bool/allow_no_password_default"
             android:key="@string/allow_no_password_key"
             android:summary="@string/allow_no_password_summary"
-            android:title="@string/allow_no_password_title" />
+            android:title="@string/allow_no_password_title"
+            app:layout="@layout/preference_material_top" />
         <SwitchPreferenceCompat
             android:defaultValue="@bool/delete_entered_password_default"
             android:key="@string/delete_entered_password_key"
@@ -37,7 +39,8 @@
             android:defaultValue="@bool/enable_screenshot_mode_key_default"
             android:key="@string/enable_screenshot_mode_key"
             android:summary="@string/enable_screenshot_mode_summary"
-            android:title="@string/enable_screenshot_mode_title" />
+            android:title="@string/enable_screenshot_mode_title"
+            app:layout="@layout/preference_material_bottom" />
 
     </PreferenceCategory>
 
@@ -47,12 +50,14 @@
             android:defaultValue="@bool/auto_focus_search_default"
             android:key="@string/auto_focus_search_key"
             android:summary="@string/auto_focus_search_summary"
-            android:title="@string/auto_focus_search_title" />
+            android:title="@string/auto_focus_search_title"
+            app:layout="@layout/preference_material_top" />
         <SwitchPreferenceCompat
             android:defaultValue="@bool/subdomain_search_default"
             android:key="@string/subdomain_search_key"
             android:summary="@string/subdomain_search_summary"
-            android:title="@string/subdomain_search_title" />
+            android:title="@string/subdomain_search_title"
+            app:layout="@layout/preference_material_bottom" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/lock">
@@ -62,7 +67,8 @@
             android:dialogTitle="@string/app_timeout"
             android:key="@string/app_timeout_key"
             android:summary="@string/app_timeout_summary"
-            android:title="@string/app_timeout" />
+            android:title="@string/app_timeout"
+            app:layout="@layout/preference_material_top" />
         <SwitchPreferenceCompat
             android:defaultValue="@bool/lock_database_screen_off_default"
             android:key="@string/lock_database_screen_off_key"
@@ -77,7 +83,8 @@
             android:defaultValue="@bool/lock_database_show_button_default"
             android:key="@string/lock_database_show_button_key"
             android:summary="@string/lock_database_show_button_summary"
-            android:title="@string/lock_database_show_button_title" />
+            android:title="@string/lock_database_show_button_title"
+            app:layout="@layout/preference_material_bottom" />
 
     </PreferenceCategory>
 
@@ -87,7 +94,8 @@
             android:defaultValue="@bool/remember_database_locations_default"
             android:key="@string/remember_database_locations_key"
             android:summary="@string/remember_database_locations_summary"
-            android:title="@string/remember_database_locations_title" />
+            android:title="@string/remember_database_locations_title"
+            app:layout="@layout/preference_material_top" />
         <SwitchPreferenceCompat
             android:defaultValue="@bool/remember_keyfile_locations_default"
             android:dependency="@string/remember_database_locations_key"
@@ -111,7 +119,8 @@
             android:dependency="@string/show_recent_files_key"
             android:key="@string/hide_broken_locations_key"
             android:summary="@string/hide_broken_locations_summary"
-            android:title="@string/hide_broken_locations_title" />
+            android:title="@string/hide_broken_locations_title"
+            app:layout="@layout/preference_material_bottom" />
 
     </PreferenceCategory>
 
@@ -120,11 +129,13 @@
         <Preference
             android:key="@string/import_app_properties_key"
             android:summary="@string/import_app_properties_summary"
-            android:title="@string/import_app_properties_title" />
+            android:title="@string/import_app_properties_title"
+            app:layout="@layout/preference_material_top" />
         <Preference
             android:key="@string/export_app_properties_key"
             android:summary="@string/export_app_properties_summary"
-            android:title="@string/export_app_properties_title" />
+            android:title="@string/export_app_properties_title"
+            app:layout="@layout/preference_material_bottom" />
 
     </PreferenceCategory>
 

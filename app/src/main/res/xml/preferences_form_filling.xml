@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/keyboard">
         <Preference
             android:icon="@drawable/prefs_info_24dp"
             android:key="@string/magic_keyboard_explanation_key"
-            android:summary="@string/magic_keyboard_explanation_summary" />
+            android:summary="@string/magic_keyboard_explanation_summary"
+            app:layout="@layout/preference_material" />
         <Preference
             android:key="@string/magic_keyboard_key"
-            android:title="@string/device_keyboard_setting_title" />
+            android:title="@string/device_keyboard_setting_title"
+            app:layout="@layout/preference_material_top" />
         <Preference
             android:key="@string/magic_keyboard_preference_key"
-            android:title="@string/keyboard_setting_label" />
+            android:title="@string/keyboard_setting_label"
+            app:layout="@layout/preference_material_bottom" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -20,26 +24,31 @@
         <Preference
             android:icon="@drawable/prefs_info_24dp"
             android:key="@string/autofill_explanation_key"
-            android:summary="@string/autofill_explanation_summary" />
+            android:summary="@string/autofill_explanation_summary"
+            app:layout="@layout/preference_material" />
         <SwitchPreferenceCompat
             android:defaultValue="@bool/settings_autofill_enable_default"
             android:key="@string/settings_autofill_enable_key"
-            android:title="@string/set_autofill_service_title" />
+            android:title="@string/set_autofill_service_title"
+            app:layout="@layout/preference_material_top" />
         <Preference
             android:key="@string/settings_autofill_key"
-            android:title="@string/autofill_preference_title" />
+            android:title="@string/autofill_preference_title"
+            app:layout="@layout/preference_material_bottom" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/clipboard">
         <Preference
             android:icon="@drawable/prefs_info_24dp"
             android:key="@string/clipboard_explanation_key"
-            android:summary="@string/clipboard_explanation_summary" />
+            android:summary="@string/clipboard_explanation_summary"
+            app:layout="@layout/preference_material" />
         <SwitchPreferenceCompat
             android:defaultValue="@bool/clipboard_notifications_default"
             android:key="@string/clipboard_notifications_key"
             android:summary="@string/clipboard_notifications_summary"
-            android:title="@string/clipboard_notifications_title" />
+            android:title="@string/clipboard_notifications_title"
+            app:layout="@layout/preference_material_top" />
         <SwitchPreferenceCompat
             android:defaultValue="@bool/clear_clipboard_notification_default"
             android:dependency="@string/clipboard_notifications_key"
@@ -56,7 +65,7 @@
             android:defaultValue="@bool/allow_copy_password_default"
             android:key="@string/allow_copy_password_key"
             android:summary="@string/allow_copy_password_summary"
-            android:title="@string/allow_copy_password_title" />
+            android:title="@string/allow_copy_password_title"
+            app:layout="@layout/preference_material_bottom" />
     </PreferenceCategory>
-
 </PreferenceScreen>

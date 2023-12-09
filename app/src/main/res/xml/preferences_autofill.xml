@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory android:title="@string/general">
         <SwitchPreferenceCompat
             android:defaultValue="@bool/autofill_close_database_default"
             android:key="@string/autofill_close_database_key"
             android:summary="@string/autofill_close_database_summary"
-            android:title="@string/autofill_close_database_title" />
+            android:title="@string/autofill_close_database_title"
+            app:layout="@layout/preference_material_top" />
         <SwitchPreferenceCompat
             android:defaultValue="@bool/autofill_inline_suggestions_default"
             android:key="@string/autofill_inline_suggestions_key"
@@ -15,28 +17,34 @@
             android:defaultValue="@bool/autofill_manual_selection_default"
             android:key="@string/autofill_manual_selection_key"
             android:summary="@string/autofill_manual_selection_summary"
-            android:title="@string/autofill_manual_selection_title" />
+            android:title="@string/autofill_manual_selection_title"
+            app:layout="@layout/preference_material_bottom" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/save">
         <SwitchPreferenceCompat
             android:defaultValue="@bool/autofill_save_search_info_default"
             android:key="@string/autofill_save_search_info_key"
             android:summary="@string/autofill_save_search_info_summary"
-            android:title="@string/autofill_save_search_info_title" />
+            android:title="@string/autofill_save_search_info_title"
+            app:layout="@layout/preference_material_top" />
         <SwitchPreferenceCompat
             android:defaultValue="@bool/autofill_ask_to_save_data_default"
             android:key="@string/autofill_ask_to_save_data_key"
             android:summary="@string/autofill_ask_to_save_data_summary"
-            android:title="@string/autofill_ask_to_save_data_title" />
+            android:title="@string/autofill_ask_to_save_data_title"
+            app:layout="@layout/preference_material_bottom" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/filter">
         <com.kunzisoft.keepass.settings.preference.InputListPreference
             android:key="@string/autofill_application_id_blocklist_key"
             android:summary="@string/autofill_application_id_blocklist_summary"
-            android:title="@string/autofill_application_id_blocklist_title" />
+            android:title="@string/autofill_application_id_blocklist_title"
+            app:layout="@layout/preference_material_top" />
         <com.kunzisoft.keepass.settings.preference.InputListPreference
             android:key="@string/autofill_web_domain_blocklist_key"
             android:summary="@string/autofill_web_domain_blocklist_summary"
-            android:title="@string/autofill_web_domain_blocklist_title" />
+
+            android:title="@string/autofill_web_domain_blocklist_title"
+            app:layout="@layout/preference_material_bottom" />
     </PreferenceCategory>
 </PreferenceScreen>

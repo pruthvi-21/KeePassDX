@@ -7,12 +7,14 @@
         <com.kunzisoft.keepass.settings.preference.IconPackListPreference
             android:key="@string/setting_icon_pack_choose_key"
             android:title="@string/icon_pack_choose_title"
+            app:layout="@layout/preference_material_top"
             app:useSimpleSummaryProvider="true" />
         <SwitchPreferenceCompat
             android:defaultValue="@bool/show_entry_colors_default"
             android:key="@string/show_entry_colors_key"
             android:summary="@string/show_entry_colors_summary"
-            android:title="@string/show_entry_colors_title" />
+            android:title="@string/show_entry_colors_title"
+            app:layout="@layout/preference_material_bottom" />
 
     </PreferenceCategory>
 
@@ -22,12 +24,14 @@
             android:defaultValue="@bool/hide_password_default"
             android:key="@string/hide_password_key"
             android:summary="@string/hide_password_summary"
-            android:title="@string/hide_password_title" />
+            android:title="@string/hide_password_title"
+            app:layout="@layout/preference_material_top" />
         <SwitchPreferenceCompat
             android:defaultValue="@bool/colorize_password_default"
             android:key="@string/colorize_password_key"
             android:summary="@string/colorize_password_summary"
-            android:title="@string/colorize_password_title" />
+            android:title="@string/colorize_password_title"
+            app:layout="@layout/preference_material_bottom" />
 
     </PreferenceCategory>
 
@@ -37,7 +41,9 @@
             android:defaultValue="@bool/list_entries_show_username_default"
             android:key="@string/list_entries_show_username_key"
             android:summary="@string/list_entries_show_username_summary"
-            android:title="@string/list_entries_show_username_title" />
+
+            android:title="@string/list_entries_show_username_title"
+            app:layout="@layout/preference_material_top" />
         <SwitchPreferenceCompat
             android:defaultValue="@bool/list_groups_show_number_entries_default"
             android:key="@string/list_groups_show_number_entries_key"
@@ -65,7 +71,8 @@
             android:defaultValue="@bool/monospace_font_fields_enable_default"
             android:key="@string/monospace_font_fields_enable_key"
             android:summary="@string/monospace_font_fields_enable_summary"
-            android:title="@string/monospace_font_fields_enable_title" />
+            android:title="@string/monospace_font_fields_enable_title"
+            app:layout="@layout/preference_material_bottom" />
 
     </PreferenceCategory>
 
@@ -75,7 +82,8 @@
             android:defaultValue="@bool/hide_expired_entries_default"
             android:key="@string/hide_expired_entries_key"
             android:summary="@string/hide_expired_entries_summary"
-            android:title="@string/hide_expired_entries_title" />
+            android:title="@string/hide_expired_entries_title"
+            app:layout="@layout/preference_material_single" />
     </PreferenceCategory>
 
 </PreferenceScreen>

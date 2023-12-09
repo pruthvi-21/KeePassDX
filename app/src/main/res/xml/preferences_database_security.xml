@@ -7,7 +7,8 @@
         <com.kunzisoft.keepass.settings.preference.DialogListExplanationPreference
             android:key="@string/encryption_algorithm_key"
             android:persistent="false"
-            android:title="@string/encryption_algorithm" />
+            android:title="@string/encryption_algorithm"
+            custom:layout="@layout/preference_material_single" />
 
     </PreferenceCategory>
 
@@ -16,7 +17,8 @@
         <com.kunzisoft.keepass.settings.preference.DialogListExplanationPreference
             android:key="@string/key_derivation_function_key"
             android:persistent="false"
-            android:title="@string/key_derivation_function" />
+            android:title="@string/key_derivation_function"
+            custom:layout="@layout/preference_material_top" />
         <com.kunzisoft.keepass.settings.preference.InputKdfNumberPreference
             android:key="@string/transform_rounds_key"
             android:negativeButtonText="@string/entry_cancel"
@@ -37,8 +39,8 @@
             android:persistent="false"
             android:positiveButtonText="@string/save"
             android:title="@string/parallelism"
-            custom:explanations="@string/parallelism_explanation" />
-
+            custom:explanations="@string/parallelism_explanation"
+            custom:layout="@layout/preference_material_bottom" />
     </PreferenceCategory>
 
 </PreferenceScreen>
