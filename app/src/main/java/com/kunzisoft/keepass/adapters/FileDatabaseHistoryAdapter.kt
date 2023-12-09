@@ -12,6 +12,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ViewSwitcher
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SortedList
 import androidx.recyclerview.widget.SortedListAdapterCallback
@@ -170,6 +171,7 @@ class FileDatabaseHistoryAdapter(
 
         holder.fileDeleteButton.setOnClickListener {
             fileSelectClearListener?.invoke(databaseFile)
+            defaultDatabaseListener?.invoke(null)
         }
 
         if (isExpanded) {
