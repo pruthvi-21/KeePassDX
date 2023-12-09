@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="keepassxc_name">KeepassXC Icon Pack</string>
+    <string name="keepassxc_resource_id">keepassxc</string>
+    <string name="resource_id" tools:ignore="ResourceName">@string/keepassxc_resource_id</string>
+    <bool name="keepassxc_tintable">false</bool>
+</resources>

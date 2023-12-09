@@ -1,0 +1,14 @@
+apply plugin: 'com.android.library'
+
+android {
+    namespace 'com.kunzisoft.keepass.icon.keepassxc'
+    compileSdk 34
+    buildToolsVersion = '34.0.0'
+
+    defaultConfig {
+        minSdk 21
+        targetSdk 34
+    }
+
+    resourcePrefix 'keepassxc_'
+}

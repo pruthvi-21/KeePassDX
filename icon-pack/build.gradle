@@ -24,4 +24,5 @@ android {
 dependencies {
     implementation project(path: ':icon-pack:classic')
     implementation project(path: ':icon-pack:material')
+    implementation project(path: ':icon-pack:keepassxc')
 }

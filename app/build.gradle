@@ -19,7 +19,7 @@ android {
         testApplicationId = "com.kunzisoft.keepass.tests"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String[]", "ICON_PACKS", "{\"classic\",\"material\"}"
+        buildConfigField "String[]", "ICON_PACKS", "{\"classic\",\"material\",\"keepassxc\"}"
 
         kapt {
             arguments {

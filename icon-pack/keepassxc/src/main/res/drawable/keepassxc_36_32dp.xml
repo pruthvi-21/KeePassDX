@@ -1,0 +1,51 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="#FFA000"
+        android:pathData="M40 12H22L18 8H8C5.8 8 4 9.8 4 12v8H44V16c0 -2.2 -1.8 -4 -4 -4z"
+        android:strokeLineJoin="round"
+        android:strokeMiterLimit="2" />
+    <path
+        android:fillColor="#FFCA28"
+        android:pathData="M40 12H8c-2.2 0 -4 1.8 -4 4V36c0 2.2 1.8 4 4 4H40c2.2 0 4 -1.8 4 -4V16c0 -2.2 -1.8 -4 -4 -4z"
+        android:strokeLineJoin="round"
+        android:strokeMiterLimit="2" />
+    <group
+        android:translateX="0.0000945665"
+        android:translateY="1.57568">
+        <path
+            android:fillColor="#FF0025"
+            android:pathData="M20.492 13H27.507V15H20.492V13Z"
+            android:strokeLineJoin="round"
+            android:strokeMiterLimit="2" />
+        <path
+            android:fillColor="#FF0025"
+            android:pathData="M20.492 17.045H27.507V19.045H20.492V17.045Z"
+            android:strokeLineJoin="round"
+            android:strokeMiterLimit="2" />
+        <path
+            android:fillColor="#FF0025"
+            android:pathData="M20.492 21.09H27.507V23.09H20.492V21.09Z"
+            android:strokeLineJoin="round"
+            android:strokeMiterLimit="2" />
+        <path
+            android:fillColor="#FF0025"
+            android:pathData="M20.492 25.135H27.507V27.135H20.492V25.135Z"
+            android:strokeLineJoin="round"
+            android:strokeMiterLimit="2" />
+        <group
+            android:scaleX="0.941767"
+            android:scaleY="0.465036"
+            android:translateX="11.2143"
+            android:translateY="14.2783">
+            <path
+                android:fillColor="#FF0025"
+                android:pathData="M17.301 27.646l-3.725 6.451 -3.724 -6.451h7.449z"
+                android:strokeLineJoin="round"
+                android:strokeMiterLimit="2" />
+        </group>
+    </group>
+</vector>
