@@ -25,9 +25,7 @@ class AddNodeButtonView @JvmOverloads constructor(
 
     var addButtonView: FloatingActionButton? = null
     private lateinit var addEntryView: View
-    private lateinit var fabAddEntryView: View
     private lateinit var addGroupView: View
-    private lateinit var fabAddGroupView: View
 
     private var addEntryEnable: Boolean = false
     private var addGroupEnable: Boolean = false
@@ -61,10 +59,8 @@ class AddNodeButtonView @JvmOverloads constructor(
         addGroupEnable = true
 
         addButtonView = findViewById(R.id.add_button)
-        addEntryView = findViewById(R.id.container_add_entry)
-        fabAddEntryView = findViewById(R.id.fab_add_entry)
-        addGroupView = findViewById(R.id.container_add_group)
-        fabAddGroupView = findViewById(R.id.fab_add_group)
+        addEntryView = findViewById(R.id.add_entry_container)
+        addGroupView = findViewById(R.id.add_group_container)
 
         animationDuration = 300L
 
@@ -186,13 +182,13 @@ class AddNodeButtonView @JvmOverloads constructor(
 
     fun setAddGroupClickListener(onClickListener: OnClickListener) {
         if (addGroupEnable) {
-            fabAddGroupView.setOnClickListener(onButtonClickListener(onClickListener))
+            addGroupView.setOnClickListener(onButtonClickListener(onClickListener))
         }
     }
 
     fun setAddEntryClickListener(onClickListener: OnClickListener) {
         if (addEntryEnable) {
-            fabAddEntryView.setOnClickListener(onButtonClickListener(onClickListener))
+            addEntryView.setOnClickListener(onButtonClickListener(onClickListener))
         }
     }
 

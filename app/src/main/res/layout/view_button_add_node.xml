@@ -1,57 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:filterTouchesWhenObscured="true">
 
     <LinearLayout
-        android:id="@+id/container_add_entry"
+        android:id="@+id/add_entry_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/container_add_group"
-        android:layout_alignEnd="@+id/container_add_group"
-        android:layout_alignRight="@+id/container_add_group"
-        android:layout_marginBottom="-12dp"
-        android:descendantFocusability="blocksDescendants"
+        android:layout_above="@+id/add_group_container"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="5dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:padding="10dp"
+        android:visibility="invisible"
+        tools:visibility="visible">
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/fab_add_entry"
-            style="@style/Theme.Keepass.Fab.Menu"
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_small_size"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginEnd="@dimen/image_button_margin"
-            android:layout_marginRight="@dimen/image_button_margin"
-            android:contentDescription="@string/add_entry"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_fab_item_text"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
             android:text="@string/add_entry"
-            app:icon="@drawable/ic_key_white_24dp" />
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/bg_fab_item_icon"
+            android:backgroundTint="?colorSurfaceVariant2"
+            android:padding="8dp"
+            android:src="@drawable/ic_key_white_24dp" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/container_add_group"
+        android:id="@+id/add_group_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="5dp"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_above="@+id/add_button"
-        android:layout_alignEnd="@+id/add_button"
-        android:layout_alignRight="@+id/add_button"
-        android:layout_marginBottom="-12dp"
-        android:descendantFocusability="blocksDescendants"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:padding="10dp"
+        android:visibility="invisible"
+        tools:visibility="visible">
 
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/fab_add_group"
-            style="@style/Theme.Keepass.Fab.Menu"
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_small_size"
-            android:layout_marginEnd="@dimen/image_button_margin"
-            android:layout_marginRight="@dimen/image_button_margin"
-            android:contentDescription="@string/add_group"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_fab_item_text"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
             android:text="@string/add_group"
-            app:icon="@drawable/ic_folder_white_24dp" />
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/bg_fab_item_icon"
+            android:backgroundTint="?colorSurfaceVariant2"
+            android:padding="8dp"
+            android:src="@drawable/ic_folder_white_24dp" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -60,7 +82,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:contentDescription="@string/content_description_add_node"
         android:src="@drawable/ic_add_white_24dp"
