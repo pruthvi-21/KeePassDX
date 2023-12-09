@@ -93,6 +93,8 @@ class DatabaseColorPreferenceDialogFragmentCompat : DatabaseSavePreferenceDialog
                 initColor = DEFAULT_COLOR
             }
             currentColor = initColor
+            colorPickerView.setColor(initColor)
+            colorPreview.setBackgroundColor(initColor)
             arguments?.putInt(ARG_INITIAL_COLOR, initColor)
         }
     }
