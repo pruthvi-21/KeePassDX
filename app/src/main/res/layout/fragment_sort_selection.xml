@@ -136,6 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="OK" />
+            android:text="@android:string/ok"
+            app:cornerRadius="@dimen/card_radius" />
     </LinearLayout>
 </LinearLayout>
