@@ -167,7 +167,6 @@
     <string name="space">スペース</string>
     <string name="filter">フィルタ</string>
     <string name="sort_menu">並べ替え</string>
-    <string name="sort_ascending">昇順 ↓</string>
     <string name="sort_groups_before">グループを先に並べる</string>
     <string name="sort_recycle_bin_bottom">ゴミ箱を一番下にする</string>
     <string name="sort_db">並べ替えなし</string>

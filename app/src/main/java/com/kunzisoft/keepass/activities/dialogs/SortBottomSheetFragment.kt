@@ -68,9 +68,11 @@ class SortBottomSheetFragment : BottomSheetDialogFragment() {
 
         val rootView = inflater.inflate(R.layout.fragment_sort_selection, container, false)
 
-        val ascendingView = rootView.findViewById<CompoundButton>(R.id.sort_selection_ascending)
-        ascendingView.isChecked = mAscending
-        ascendingView.setOnCheckedChangeListener { _, isChecked -> mAscending = isChecked }
+        val sortOrderGroup = rootView.findViewById<ChipGroup>(R.id.sort_order_group)
+        sortOrderGroup.check(if (mAscending) R.id.sort_order_asc else R.id.sort_order_dsc)
+        sortOrderGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            mAscending = checkedIds.contains(R.id.sort_order_asc)
+        }
 
         val groupsBeforeView =
             rootView.findViewById<CompoundButton>(R.id.sort_selection_groups_before)

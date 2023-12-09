@@ -106,7 +106,6 @@
     <string name="parallelism">Párhuzamosság</string>
     <string name="parallelism_explanation">A kulcselőállítási függvény párhuzamosságának mértéke (azaz a szálak száma).</string>
     <string name="sort_menu">Rendezés</string>
-    <string name="sort_ascending">Legalacsonyabb elöl ↓</string>
     <string name="sort_groups_before">Csoportok elöl</string>
     <string name="sort_recycle_bin_bottom">Kuka alul</string>
     <string name="sort_title">Cím</string>

@@ -282,7 +282,8 @@
     <string name="space">Space</string>
     <string name="filter">Filter</string>
     <string name="sort_menu">Sort</string>
-    <string name="sort_ascending">Lowest first ↓</string>
+    <string name="sort_ascending">Ascending</string>
+    <string name="sort_descending">Descending</string>
     <string name="sort_groups_before">Groups before</string>
     <string name="sort_recycle_bin_bottom">Recycle bin at the bottom</string>
     <string name="sort_db">Natural order</string>

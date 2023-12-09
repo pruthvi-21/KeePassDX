@@ -134,7 +134,6 @@
     <string name="error_string_key">每个字符串必须有字段名。</string>
     <string name="field_name">字段名</string>
     <string name="copy_field">复制%1$s</string>
-    <string name="sort_ascending">最底的在前↓</string>
     <string name="warning_password_encoding">避免在数据库中保存编码格式外字符的密码（未识别的字符将转换为同一字符）。</string>
     <string name="sort_groups_before">群组在前</string>
     <string name="sort_recycle_bin_bottom">回收站在末尾</string>

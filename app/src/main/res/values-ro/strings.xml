@@ -145,7 +145,6 @@
     <string name="do_not_kill_app">Nu omori aplicația …</string>
     <string name="space">Spatiu</string>
     <string name="sort_menu">Sorteaza</string>
-    <string name="sort_ascending">Prima cea mai mică ↓</string>
     <string name="sort_groups_before">Grupuri înainte</string>
     <string name="sort_recycle_bin_bottom">Reciclați coșul din partea de jos</string>
     <string name="sort_db">Ordine naturală</string>

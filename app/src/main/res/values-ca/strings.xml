@@ -127,7 +127,6 @@
     <string name="sort_creation_time">Creació</string>
     <string name="sort_recycle_bin_bottom">La paperera de reciclatge es troba a la part inferior</string>
     <string name="sort_groups_before">Grups primer</string>
-    <string name="sort_ascending">El menor primer ↓</string>
     <string name="command_execution">S\'executa l\'ordre…</string>
     <string name="parallelism_explanation">Grau de paral·lelisme (és a dir, nombre de fils) fets servir per la funció de derivació de la clau.</string>
     <string name="parallelism">Paral·lelisme</string>

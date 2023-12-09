@@ -100,7 +100,6 @@
     <string name="parallelism">Parallelitet</string>
     <string name="parallelism_explanation">Grad af parallelitet (dvs. antallet af tråde), som anvendes af nøgleafledningsfunktion.</string>
     <string name="sort_menu">Sorter</string>
-    <string name="sort_ascending">Stigende ↓</string>
     <string name="sort_groups_before">Grupper først</string>
     <string name="sort_recycle_bin_bottom">Papirkurv nederst</string>
     <string name="sort_title">Titel</string>

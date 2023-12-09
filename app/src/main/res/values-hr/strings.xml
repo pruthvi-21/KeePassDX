@@ -106,7 +106,6 @@
     <string name="command_execution">Izvršavanje naredbe …</string>
     <string name="space">Razmak</string>
     <string name="sort_menu">Sortiraj po</string>
-    <string name="sort_ascending">Počevši s najnižim ↓</string>
     <string name="sort_groups_before">Grupe prije</string>
     <string name="sort_recycle_bin_bottom">Koš za smeće na dnu</string>
     <string name="sort_db">Prirodnom poretku</string>

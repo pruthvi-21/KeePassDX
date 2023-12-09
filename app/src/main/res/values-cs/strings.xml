@@ -101,7 +101,6 @@
     <string name="parallelism">Souběžné zpracovávání</string>
     <string name="parallelism_explanation">Stupeň souběžného zpracovávání (počet vláken) použitý funkcí pro odvození klíče.</string>
     <string name="sort_menu">Seřadit</string>
-    <string name="sort_ascending">Nejnižší první ↓</string>
     <string name="sort_groups_before">Skupiny první</string>
     <string name="sort_recycle_bin_bottom">Koš jako poslední</string>
     <string name="sort_title">Nadpis</string>

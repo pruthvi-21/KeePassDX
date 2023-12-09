@@ -96,7 +96,6 @@
     <string name="parallelism">Παραλληλισμός</string>
     <string name="parallelism_explanation">Βαθμός παραλληλισμού (δηλ. Αριθμός νημάτων) που χρησιμοποιείται από τη συνάρτηση παραγωγής κλειδιού.</string>
     <string name="sort_menu">Ταξινόμηση</string>
-    <string name="sort_ascending">Χαμηλότερα πρώτα ↓</string>
     <string name="sort_groups_before">Ομάδες πριν</string>
     <string name="sort_recycle_bin_bottom">Κάδος ανακύκλωσης στο τέλος</string>
     <string name="sort_title">Τίτλος</string>

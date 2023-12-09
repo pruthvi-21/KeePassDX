@@ -243,7 +243,6 @@
     <string name="field_name">Názov poľa</string>
     <string name="subdomain_search_title">Vyhľadávanie subdomény</string>
     <string name="subdomain_search_summary">Vyhľadávajte webové domény s obmedzeniami subdomén</string>
-    <string name="sort_ascending">Najnižšie prvé ↓</string>
     <string name="sort_last_modify_time">Zmenené</string>
     <string name="warning">Upozornenie</string>
     <string name="warning_database_link_revoked">Prístup k súboru odmietnutý správcom súborov</string>

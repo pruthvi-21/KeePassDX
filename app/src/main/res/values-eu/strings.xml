@@ -337,7 +337,6 @@
     <string name="menu_advanced_unlock_settings">Desblokeatze aurreratua</string>
     <string name="list_groups_show_number_entries_summary">Talde bateko sarrera kopurua erakusten du</string>
     <string name="invalid_db_same_uuid">%1$sk %2$sren UUID bera du.</string>
-    <string name="sort_ascending">Baxuena lehenbizi↓</string>
     <string name="compression_none">Bat ere ez</string>
     <string name="keyboard_change">Aldatu teklatua</string>
     <string name="menu_external_icon">Kanpoko ikonoa</string>

@@ -287,7 +287,6 @@
     <string name="sort_title">Назва</string>
     <string name="sort_recycle_bin_bottom">Кошик внизу</string>
     <string name="sort_groups_before">Спочатку групи</string>
-    <string name="sort_ascending">За зростанням ↓</string>
     <string name="sort_menu">Впорядкувати</string>
     <string name="memory_usage_explanation">Обсяг пам\'яті, необхідний для функції створення ключа.</string>
     <string name="kdf_explanation">Для створення ключа алгоритму шифрування, головний ключ перетворюється за допомогою функції створення випадково приготованого ключа.</string>

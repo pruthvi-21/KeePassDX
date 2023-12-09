@@ -236,7 +236,6 @@
     <string name="show_uuid_summary">Tampilkan UUID yang ditautkan ke entri atau grup</string>
     <string name="warning_password_encoding">Hindari karakter kata sandi di luar format pengkodean teks dalam file basis data (karakter yang tidak dikenal dikonversi ke huruf yang sama).</string>
     <string name="sort_creation_time">Penciptaan</string>
-    <string name="sort_ascending">Terendah pertama ↓</string>
     <string name="filter">Saring</string>
     <string name="parallelism_explanation">Derajat paralelisme (yaitu jumlah utas) yang digunakan oleh fungsi derivasi kunci.</string>
     <string name="parallelism">Paralelisme</string>

@@ -226,7 +226,6 @@
     <string name="sort_menu">เรียงลำดับ</string>
     <string name="space">ช่องว่าง</string>
     <string name="filter">ตัวกรอง</string>
-    <string name="sort_ascending">ต่ําสุดก่อน↓</string>
     <string name="sort_groups_before">กลุ่มก่อน</string>
     <string name="sort_username">ชื่อผู้ใช้</string>
     <string name="sort_last_modify_time">วันที่เปลี่ยนแปลงล่าสุด</string>

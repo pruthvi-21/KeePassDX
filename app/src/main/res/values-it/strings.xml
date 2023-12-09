@@ -102,7 +102,6 @@
     <string name="parallelism">Parallelismo</string>
     <string name="parallelism_explanation">Grado di parallelismo (cioè numero di thread) usato dalla funzione di derivazione della chiave.</string>
     <string name="sort_menu">Ordina</string>
-    <string name="sort_ascending">Prima il minore ↓</string>
     <string name="sort_groups_before">Prima i gruppi</string>
     <string name="sort_recycle_bin_bottom">Cestino in fondo</string>
     <string name="sort_title">Titolo</string>

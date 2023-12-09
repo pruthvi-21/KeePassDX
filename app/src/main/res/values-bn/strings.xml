@@ -174,7 +174,6 @@
     <string name="success_export_app_properties">অ্যাপের বৈশিষ্ট্য রপ্তানি করা হয়েছে</string>
     <string name="memory_usage_explanation">কী ডেরিভেশন ফাংশন দ্বারা ব্যবহৃত মেমরির পরিমাণ।</string>
     <string name="memory_usage">মেমরি ব্যবহার</string>
-    <string name="sort_ascending">সর্বনিম্ন প্রথম ↓</string>
     <string name="sort_groups_before">আগে দল</string>
     <string name="sort_recycle_bin_bottom">নীচে রিসাইকেল বিন</string>
     <string name="sort_db">প্রাকৃতিক নিয়ম</string>

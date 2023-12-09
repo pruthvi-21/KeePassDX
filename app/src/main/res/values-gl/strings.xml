@@ -267,7 +267,6 @@
     <string name="parallelism_explanation">Grao de paralelismo (p. ex. número de fíos) usados pola función de derivación de clave.</string>
     <string name="do_not_kill_app">Non feche a aplicación…</string>
     <string name="filter">Filtro</string>
-    <string name="sort_ascending">Mais baixo primeiro ↓</string>
     <string name="sort_groups_before">Grupos primeiro</string>
     <string name="sort_recycle_bin_bottom">Papeleira de reciclaxe ao fondo</string>
     <string name="sort_db">Orde natural</string>

@@ -217,7 +217,6 @@
     <string name="warning_replace_file">ഈ ഫയൽ അപ്‌ലോഡുചെയ്യുന്നത് നിലവിലുള്ള ഫയലിനെ മാറ്റിസ്ഥാപിക്കും.</string>
     <string name="warning_database_link_revoked">ഫയൽ മാനേജർ റദ്ദാക്കിയ ഫയലിലേക്കുള്ള ആക്സസ്</string>
     <string name="sort_groups_before">മുമ്പുള്ള ഗ്രൂപ്പുകൾ</string>
-    <string name="sort_ascending">ആദ്യത്തേത് ഏറ്റവും കുറഞ്ഞത്↓</string>
     <string name="parallelism_explanation">കീ ഡെറിവേഷൻ ഫംഗ്ഷൻ ഉപയോഗിക്കുന്ന സമാന്തരതയുടെ ബിരുദം (അതായത് ത്രെഡുകളുടെ എണ്ണം).</string>
     <string name="memory_usage_explanation">കീ ഡെറിവേഷൻ ഫംഗ്ഷൻ ഉപയോഗിക്കുന്ന മെമ്മറിയുടെ അളവ് .</string>
     <string name="encryption_explanation">എല്ലാ ഡാറ്റയ്ക്കും ഉപയോഗിക്കുന്ന ഡാറ്റാബേസ് എൻ‌ക്രിപ്ഷൻ അൽ‌ഗോരിതം.</string>

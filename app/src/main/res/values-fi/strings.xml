@@ -182,7 +182,6 @@
     <string name="sort_title">Otsikko</string>
     <string name="sort_recycle_bin_bottom">Roskakori viimeisenä</string>
     <string name="sort_groups_before">Ryhmät ensin</string>
-    <string name="sort_ascending">Alin ensin ↓</string>
     <string name="sort_menu">Järjestä</string>
     <string name="parallelism_explanation">Avaimen johtamisfunktion käyttämä rinnakkaisuuden aste (eli säikeiden määrä).</string>
     <string name="show_recent_files_title">Näytä viimeaikaiset tiedostot</string>

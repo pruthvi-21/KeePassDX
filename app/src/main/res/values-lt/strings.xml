@@ -213,7 +213,6 @@
     <string name="warning_empty_password">Tęsti be slaptažodžio atrakinimo apsaugos\?</string>
     <string name="menu_move">Perkelti</string>
     <string name="selection_mode">Pasirinkimo režimas</string>
-    <string name="sort_ascending">Žemiausi viršuje ↓</string>
     <string name="sort_groups_before">Grupės prieš</string>
     <string name="sort_username">Naudotojo vardas</string>
     <string name="menu_save_database">Išsaugoti duomenis</string>

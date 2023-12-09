@@ -94,7 +94,6 @@
     <string name="saving_database">Veri tabanı kaydediliyor…</string>
     <string name="space">Boşluk</string>
     <string name="sort_menu">Sırala</string>
-    <string name="sort_ascending">Önce en düşük ↓</string>
     <string name="sort_groups_before">Grup önce</string>
     <string name="sort_recycle_bin_bottom">Alttaki geri dönüşüm kutusu</string>
     <string name="sort_db">Doğal sıra</string>

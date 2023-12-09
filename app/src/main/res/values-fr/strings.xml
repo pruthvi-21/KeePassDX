@@ -87,7 +87,6 @@
     <string name="saving_database">Enregistrement de la base de données…</string>
     <string name="space">Espace</string>
     <string name="sort_menu">Trier</string>
-    <string name="sort_ascending">Ascendant ↓</string>
     <string name="sort_groups_before">Groupes avant</string>
     <string name="sort_recycle_bin_bottom">Corbeille à la fin</string>
     <string name="sort_db">Ordre naturel</string>

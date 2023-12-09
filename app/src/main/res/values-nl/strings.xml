@@ -105,7 +105,6 @@
     <string name="parallelism">Parallellen</string>
     <string name="parallelism_explanation">Het aantal parallellen (aantal threads) dat de afleidingsfunctie mag gebruiken.</string>
     <string name="sort_menu">Sorteren</string>
-    <string name="sort_ascending">Oplopend ↓</string>
     <string name="sort_groups_before">Groepen bovenaan</string>
     <string name="sort_recycle_bin_bottom">Prullenbak onderaan</string>
     <string name="sort_title">Titel</string>

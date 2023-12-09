@@ -96,7 +96,6 @@
     <string name="parallelism">Paralelismo</string>
     <string name="parallelism_explanation">Grado de paralelismo (p. ej. número de hilos) usado por la función de derivación de clave.</string>
     <string name="sort_menu">Ordenar</string>
-    <string name="sort_ascending">Más bajo primero ↓</string>
     <string name="sort_groups_before">Grupos antes</string>
     <string name="sort_recycle_bin_bottom">Papelera debajo</string>
     <string name="sort_title">Título</string>
