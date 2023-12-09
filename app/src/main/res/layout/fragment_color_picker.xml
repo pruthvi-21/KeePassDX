@@ -21,7 +21,7 @@
         android:paddingVertical="18dp"
         android:text="@string/enable" />
 
-    <com.kunzisoft.keepass.colorpicker.ColorPicker
+    <com.libx.ui.colorpicker.ColorPicker
         android:id="@+id/color_picker"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

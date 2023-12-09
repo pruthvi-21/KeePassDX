@@ -11,8 +11,8 @@ import android.widget.CompoundButton
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AlertDialog
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.colorpicker.ColorPicker
 import com.kunzisoft.keepass.database.ContextualDatabase
+import com.libx.ui.colorpicker.ColorPicker
 
 class DatabaseColorPreferenceDialogFragmentCompat : DatabaseSavePreferenceDialogFragmentCompat() {
 

@@ -11,8 +11,8 @@ import androidx.fragment.app.activityViewModels
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.tabs.TabLayout
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.colorpicker.ColorPicker
 import com.kunzisoft.keepass.viewmodels.ColorPicker2ViewModel
+import com.libx.ui.colorpicker.ColorPicker
 
 class ColorPicker2DialogFragment : DatabaseDialogFragment() {
 

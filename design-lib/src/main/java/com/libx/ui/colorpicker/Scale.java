@@ -1,4 +1,4 @@
-package com.kunzisoft.keepass.colorpicker;
+package com.libx.ui.colorpicker;
 
 import android.content.Context;
 import android.graphics.Canvas;
