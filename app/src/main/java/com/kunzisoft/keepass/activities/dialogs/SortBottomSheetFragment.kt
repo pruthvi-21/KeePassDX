@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
-import android.widget.RadioGroup
 import androidx.annotation.IdRes
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.chip.ChipGroup
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.SortNodeEnum
 
@@ -91,12 +91,13 @@ class SortBottomSheetFragment : BottomSheetDialogFragment() {
         }
 
         val sortSelectionRadioGroupView =
-            rootView.findViewById<RadioGroup>(R.id.sort_selection_radio_group)
+            rootView.findViewById<ChipGroup>(R.id.sort_selection_radio_group)
         sortSelectionRadioGroupView.check(mCheckedId)
         sortSelectionRadioGroupView.setOnCheckedChangeListener { _, checkedId ->
             mSortNodeEnum = retrieveSortEnumFromViewId(checkedId)
             disableRecycleBinBottomOptionIfNaturalOrder()
         }
+
 
         rootView.findViewById<View>(R.id.ok).setOnClickListener {
             mListener?.onSortSelected(

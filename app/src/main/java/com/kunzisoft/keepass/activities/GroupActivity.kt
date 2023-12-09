@@ -1276,7 +1276,6 @@ class GroupActivity : DatabaseLockActivity(),
         sortNodeParameters: SortNodeEnum.SortNodeParameters
     ) {
         mGroupFragment?.onSortSelected(sortNodeEnum, sortNodeParameters)
-        Toast.makeText(this, "Sorted", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCancelSpecialMode() {

@@ -177,6 +177,12 @@
         <item name="ensureMinTouchTargetSize">false</item>
     </style>
 
+    <style name="Theme.Keepass.Chip.Filter.Sort">
+        <item name="ensureMinTouchTargetSize">true</item>
+        <item name="chipBackgroundColor">@color/chip_background_color</item>
+        <item name="chipStrokeWidth">1dp</item>
+    </style>
+
     <!-- Dialog -->
     <style name="Theme.Keepass.Dialog" parent="ThemeOverlay.Material3.Dialog.Alert">
         <item name="android:background">?attr/dialogBackgroundColor</item>
