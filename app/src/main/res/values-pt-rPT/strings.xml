@@ -502,8 +502,6 @@
     <string name="enable_screenshot_mode_title">Modo de captura de ecrã</string>
     <string name="lower_case">minúsculas</string>
     <string name="content_description_nav_header">Cabeçalho de navegação</string>
-    <string name="navigation_drawer_open">Gaveta de navegação aberta</string>
-    <string name="navigation_drawer_close">Gaveta de navegação fechada</string>
     <string name="inherited">Herdar</string>
     <string name="searchable">Pesquisável</string>
     <string name="auto_type">Preenchimento automático</string>

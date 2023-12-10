@@ -467,9 +467,7 @@
     <string name="colorize_password_summary">تلوين أحرف كلمة المرور حسب النوع</string>
     <string name="enable_keep_screen_on_summary">استمر في تشغيل الشاشة عند مشاهدة إدخال أو تعديله</string>
     <string name="enable_screenshot_mode_title">وضع لقطة الشاشة</string>
-    <string name="navigation_drawer_open">درج التنقل مفتوح</string>
     <string name="waiting_challenge_request">في انتظار طلب التحدي…</string>
-    <string name="navigation_drawer_close">درج التنقل مقفول</string>
     <string name="error_XML_malformed">XML تالف.</string>
     <string name="error_otp_type">لم يتم التعرف على نوع OTP الحالي من خلال هذا النموذج، وقد لا يؤدي التحقق من صحته إلى إنشاء الرمز المميز بشكل صحيح.</string>
     <string name="error_response_already_provided">تقدم الرد بالفعل.</string>

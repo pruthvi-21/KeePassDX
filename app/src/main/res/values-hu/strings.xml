@@ -473,11 +473,9 @@
     <string name="menu_form_filling_settings_summary">Billentyűzet, automatikus kitöltés, vágólap</string>
     <string name="configure">Beállítás</string>
     <string name="content_description_nav_header">Navigációs fejléc</string>
-    <string name="navigation_drawer_close">A navigációs tálca bezárása</string>
     <string name="html_about_privacy">&lt;strong&gt;Nincsenek felhasználói adatok lekérve&lt;/strong&gt;, az alkalmazás nem kapcsolódik semmilyen külső kiszolgálóhoz, csak helyben működik, és teljes mértékben tiszteletben tartja a felhasználók adatvédelmét.</string>
     <string name="enable_keep_screen_on_summary">Képernyő bekapcsolva tartása egy bejegyzés megtekintésekor vagy szerkesztésekor</string>
     <string name="title_case">Nagy Kezdőbetűs</string>
-    <string name="navigation_drawer_open">A navigációs tálca kinyitása</string>
     <string name="content_description_hardware_key_checkbox">Hardverkulcs jelölőnégyzete</string>
     <string name="at_least_one_char">Legalább egy karakter mindegyikből</string>
     <string name="lower_case">kisbetűk</string>

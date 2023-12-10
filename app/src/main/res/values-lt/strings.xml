@@ -179,8 +179,6 @@
     <string name="validate">Patvirtinti</string>
     <string name="clipboard_timeout_summary">Laikymo iškarpinėje trukmė (jei tai palaiko jūsų prietaisas)</string>
     <string name="content_description_nav_header">Navigacijos antraštė</string>
-    <string name="navigation_drawer_open">Atidaryti navigacijos dėklą</string>
-    <string name="navigation_drawer_close">Uždaryti navigacijos dėklą</string>
     <string name="template_group_name">Šablonai</string>
     <string name="searchable">Galima paieška</string>
     <string name="inherited">Paveldėti</string>

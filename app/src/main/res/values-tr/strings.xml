@@ -452,8 +452,6 @@
     <string name="show_entry_colors_summary">Bir girdi için ön plan ve arka plan renklerini görüntüler</string>
     <string name="enable_keep_screen_on_summary">Bir girişi izlerken veya düzenlerken ekranı açık tutun</string>
     <string name="content_description_nav_header">Gezinme başlığı</string>
-    <string name="navigation_drawer_open">Gezinme çekmecesi açık</string>
-    <string name="navigation_drawer_close">Gezinme çekmecesi kapalı</string>
     <string name="searchable">Aranabilir</string>
     <string name="inherited">Aktar</string>
     <string name="auto_type_sequence">Otomatik yazma sırası</string>

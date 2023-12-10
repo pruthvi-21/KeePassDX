@@ -74,8 +74,6 @@
     <string name="content_description_keyfile_checkbox">কীফাইল চেকবক্স</string>
     <string name="content_description_repeat_toggle_password_visibility">টগল পাসওয়ার্ড দৃশ্যমানতা পুনরাবৃত্তি করুন</string>
     <string name="discard_changes">পরিবর্তন বাতিল\?</string>
-    <string name="navigation_drawer_open">নেভিগেশন ড্রয়ার খোলা</string>
-    <string name="navigation_drawer_close">নেভিগেশন ড্রয়ার বন্ধ</string>
     <string name="content_description_password_length">পাসওয়ার্ড দৈর্ঘ্য</string>
     <string name="entry_add_field">ক্ষেত্র যোগ করুন</string>
     <string name="entry_add_attachment">সংযুক্তি যোগ</string>

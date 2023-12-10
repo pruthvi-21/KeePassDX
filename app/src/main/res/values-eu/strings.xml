@@ -100,8 +100,6 @@
     <string name="content_description_entry_icon">Sartu ikonoa</string>
     <string name="content_description_keyfile_checkbox">fitxategi-gakoaren kontorl-laukia</string>
     <string name="content_description_nav_header">Nabigazio goiburua</string>
-    <string name="navigation_drawer_open">Nabigazio kutxa ireki</string>
-    <string name="navigation_drawer_close">Nabigazio kutxa itxi</string>
     <string name="validate">Baliozkotu</string>
     <string name="discard_changes">Ezeztatu aldaketak\?</string>
     <string name="discard">Ezeztatu</string>

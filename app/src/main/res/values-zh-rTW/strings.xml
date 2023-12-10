@@ -452,7 +452,6 @@
     <string name="permission">許可</string>
     <string name="content_description_database_color">資料庫顔色</string>
     <string name="hint_icon_name">圖標名稱</string>
-    <string name="navigation_drawer_open">打開導航抽屜</string>
     <string name="auto_type_sequence">自動輸入次序</string>
     <string name="search_filters">搜索過濾器</string>
     <string name="current_group">當前组别</string>
@@ -465,7 +464,6 @@
     <string name="enable_keep_screen_on_title">保持螢幕開啟</string>
     <string name="enable_keep_screen_on_summary">在查看條目時保持熒幕打開</string>
     <string name="regex">正則表達式</string>
-    <string name="navigation_drawer_close">關閉導航抽屜</string>
     <string name="searchable">可搜索</string>
     <string name="inherited">繼承</string>
     <string name="warning_database_already_opened">已經有一個資料庫打開了，先關閉它，才可以打開新的資料庫</string>

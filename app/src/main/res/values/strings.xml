@@ -28,8 +28,6 @@
     <string name="content_description_entry_icon">Entry icon</string>
     <string name="content_description_database_color">Database color</string>
     <string name="content_description_nav_header">Navigation header</string>
-    <string name="navigation_drawer_open">Navigation drawer open</string>
-    <string name="navigation_drawer_close">Navigation drawer close</string>
     <string name="validate">Validate</string>
     <string name="discard_changes">Discard changes?</string>
     <string name="discard">Discard</string>

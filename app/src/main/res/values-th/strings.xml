@@ -43,8 +43,6 @@
     <string name="content_description_entry_icon">ไอคอนรายการ</string>
     <string name="content_description_database_color">สีของฐานข้อมูล</string>
     <string name="content_description_nav_header">ส่วนหัวของการนำทาง</string>
-    <string name="navigation_drawer_open">เปิดลิ้นชักการนำทาง</string>
-    <string name="navigation_drawer_close">ปิดแถบลิ้นชักการนำทาง</string>
     <string name="validate">ตรวจสอบ</string>
     <string name="discard_changes">ละทิ้งการเปลี่ยนแปลง\?</string>
     <string name="discard">ละทิ้ง</string>

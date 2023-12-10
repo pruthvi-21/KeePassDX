@@ -366,7 +366,6 @@
     <string name="content_description_credentials_information">Informácie o údajoch</string>
     <string name="content_description_add_item">Pridať položku</string>
     <string name="content_description_add_node">Pridať uzol</string>
-    <string name="navigation_drawer_close">Zatvorenie navigačného panelu</string>
     <string name="entry_add_attachment">Pridať prílohu</string>
     <string name="entry_attachments">Prílohy</string>
     <string name="otp_type">OTP typ</string>
@@ -414,7 +413,6 @@
     <string name="error_move_group_here">Sem nemôžete presunúť skupinu.</string>
     <string name="error_file_to_big">Súbor, ktorý sa pokúšate nahrať, je príliš veľký.</string>
     <string name="error_upload_file">Pri nahrávaní údajov súboru sa vyskytla chyba.</string>
-    <string name="navigation_drawer_open">Otvorenie navigačneho panelu</string>
     <string name="discard_changes">Zrušiť zmeny\?</string>
     <string name="discard">Zrušiť</string>
     <string name="hardware_key">Hardvérový kľúč</string>

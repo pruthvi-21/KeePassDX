@@ -457,8 +457,6 @@
     <string name="tags">Мітки</string>
     <string name="warning_keyfile_integrity">Хеш файлу не гарантується, оскільки Android може змінювати свої дані на льоту. Змініть розширення файлу на .bin для збереження цілісності.</string>
     <string name="content_description_nav_header">Панель навігації</string>
-    <string name="navigation_drawer_open">Відкрити панель навігації</string>
-    <string name="navigation_drawer_close">Закрити панель навігації</string>
     <string name="searchable">Шукане</string>
     <string name="inherited">Успадкувати</string>
     <string name="current_group">Поточна група</string>

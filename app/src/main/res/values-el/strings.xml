@@ -462,8 +462,6 @@
     <string name="inherited">Κληρονομώ</string>
     <string name="search_filters">Αναζήτηση φίλτρων</string>
     <string name="content_description_nav_header">Κεφαλίδα πλοήγησης</string>
-    <string name="navigation_drawer_close">Κλείσιμο συρταριού πλοήγησης</string>
-    <string name="navigation_drawer_open">Άνοιγμα συρταριού πλοήγησης</string>
     <string name="auto_type_sequence">Αλληλουχία Αυτόματης-Πληκτρολόγησης</string>
     <string name="current_group">Τρέχουσα ομάδα</string>
     <string name="regex">Κοινή έκφραση</string>

@@ -459,8 +459,6 @@
     <string name="case_sensitive">Sensível a maiúsculas e minúsculas</string>
     <string name="regex">Expressão regular</string>
     <string name="menu_save_copy_to">Guardar uma cópia em…</string>
-    <string name="navigation_drawer_open">Gaveta de navegação aberta</string>
-    <string name="navigation_drawer_close">Gaveta de navegação fechada</string>
     <string name="inherited">Herdar</string>
     <string name="menu_merge_from">Unir de…</string>
     <string name="expired">Expirou</string>

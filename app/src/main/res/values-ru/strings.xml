@@ -456,7 +456,6 @@
     <string name="enable_keep_screen_on_summary">Не отключать экран при просмотре или редактировании записи</string>
     <string name="show_entry_colors_title">Цвета записей</string>
     <string name="show_entry_colors_summary">Показывать цвета текста и фона записи</string>
-    <string name="navigation_drawer_open">Открыть панель навигации</string>
     <string name="content_description_nav_header">Заголовок навигации</string>
     <string name="searchable">Доступно для поиска</string>
     <string name="inherited">Наследовать</string>
@@ -465,7 +464,6 @@
     <string name="menu_merge_from">Объединить с…</string>
     <string name="search_filters">Фильтры поиска</string>
     <string name="regex">Регулярное выражение</string>
-    <string name="navigation_drawer_close">Закрыть панель навигации</string>
     <string name="auto_type_sequence">Последовательность автонабора</string>
     <string name="current_group">Текущая группа</string>
     <string name="expired">Срок действия истёк</string>

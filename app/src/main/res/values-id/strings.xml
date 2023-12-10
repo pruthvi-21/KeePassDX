@@ -467,8 +467,6 @@
     <string name="autofill_inline_suggestions_summary">Coba tampilkan saran pengisian otomatis langsung dari keyboard yang kompatibel</string>
     <string name="show_entry_colors_title">Warna entri</string>
     <string name="show_entry_colors_summary">Menampilkan warna latar depan dan latar belakang untuk sebuah entri</string>
-    <string name="navigation_drawer_open">Laci navigasi terbuka</string>
-    <string name="navigation_drawer_close">Laci navigasi tertutup</string>
     <string name="inherited">Wariskan</string>
     <string name="auto_type_sequence">Urutan Pengetikan Otomatis</string>
     <string name="case_sensitive">Kepekaan kapital</string>

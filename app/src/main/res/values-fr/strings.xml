@@ -461,9 +461,7 @@
     <string name="show_entry_colors_title">Couleurs d\'entrée</string>
     <string name="current_group">Groupe actuel</string>
     <string name="content_description_nav_header">En-tête de navigation</string>
-    <string name="navigation_drawer_open">Tiroir de navigation ouvert</string>
     <string name="regex">Expression régulière</string>
-    <string name="navigation_drawer_close">Tiroir de navigation fermé</string>
     <string name="search_filters">Filtres de recherche</string>
     <string name="menu_save_copy_to">Sauvegarder une copie vers …</string>
     <string name="menu_merge_from">Fusionner depuis …</string>

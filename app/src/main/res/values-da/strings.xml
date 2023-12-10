@@ -497,9 +497,7 @@
     <string name="entropy">Entropi: %1$s bit</string>
     <string name="consider_chars_filter">Overvej tegn</string>
     <string name="html_about_privacy">&lt;strong&gt;Der hentes ingen brugerdata&lt;/strong&gt;, denne applikation opretter ikke forbindelse til nogen server, kører kun lokalt og respekterer fuldt ud brugernes privatliv.</string>
-    <string name="navigation_drawer_open">Navigationsskuffe åben</string>
     <string name="content_description_nav_header">Navigationsoverskrift</string>
-    <string name="navigation_drawer_close">Navigationsskuffe lukke</string>
     <string name="auto_type">Auto-indtastning</string>
     <string name="auto_type_sequence">Auto-indtastning-sekvens</string>
     <string name="menu_save_copy_to">Gem en kopi til …</string>

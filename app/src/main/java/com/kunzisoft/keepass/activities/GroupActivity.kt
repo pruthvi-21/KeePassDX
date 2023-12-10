@@ -288,10 +288,21 @@ class GroupActivity : DatabaseLockActivity(),
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar,
-            R.string.navigation_drawer_open, R.string.navigation_drawer_close
+            0, 0
         )
-        drawerLayout?.addDrawerListener(toggle)
         toggle.syncState()
+
+        val mainContainer = findViewById<View>(R.id.activity_group_container_view)
+        drawerLayout?.addDrawerListener(object : DrawerLayout.DrawerListener {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+                val slideX = drawerView.width * slideOffset
+                mainContainer.translationX = slideX
+            }
+
+            override fun onDrawerOpened(drawerView: View) {}
+            override fun onDrawerClosed(drawerView: View) {}
+            override fun onDrawerStateChanged(newState: Int) {}
+        })
 
         // Manage 'merge from" and "save to"
         mExternalFileHelper = ExternalFileHelper(this)

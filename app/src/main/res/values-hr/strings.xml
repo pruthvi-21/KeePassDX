@@ -461,8 +461,6 @@
     <string name="regex">Regularni izraz</string>
     <string name="menu_merge_from">Sjedini iz …</string>
     <string name="menu_save_copy_to">Spremi kopiju u …</string>
-    <string name="navigation_drawer_open">Ploča navigacije otvorena</string>
-    <string name="navigation_drawer_close">Ploča navigacije zatvorena</string>
     <string name="advanced_unlock_keystore_warning">Ova će funckija spremiti šifrirane podatke za prijavu u sigurni KeyStore tvog uređaja.
 \n
 \nOvisno o izvornoj API implementaciji operacijskog sustava, funcionalsnost možda neće biti potpuna.

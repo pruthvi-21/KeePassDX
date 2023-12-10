@@ -458,8 +458,6 @@
     <string name="show_entry_colors_title">Colori della voce</string>
     <string name="show_entry_colors_summary">Mostra colori in evidenza e in secondo piano per una voce</string>
     <string name="current_group">Gruppo attuale</string>
-    <string name="navigation_drawer_open">Apertura del cassetto di navigazione</string>
-    <string name="navigation_drawer_close">Chiusura del cassetto di navigazione</string>
     <string name="searchable">Ricercabile</string>
     <string name="content_description_nav_header">Intestazione di navigazione</string>
     <string name="inherited">Eredita</string>

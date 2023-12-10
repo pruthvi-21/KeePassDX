@@ -457,8 +457,6 @@
     <string name="enable_keep_screen_on_title">Nie wyłączaj ekranu</string>
     <string name="show_entry_colors_summary">Wyświetla kolory pierwszego planu i tła wpisu</string>
     <string name="content_description_nav_header">Nagłówek nawigacyjny</string>
-    <string name="navigation_drawer_open">Szuflada nawigacyjna otwarta</string>
-    <string name="navigation_drawer_close">Szuflada nawigacyjna zamknięta</string>
     <string name="case_sensitive">Wielkość liter</string>
     <string name="regex">Wyrażenie regularne</string>
     <string name="inherited">Dziedzicz</string>

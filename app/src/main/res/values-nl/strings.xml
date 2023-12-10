@@ -466,8 +466,6 @@
     <string name="search_filters">Zoekfilters</string>
     <string name="current_group">Huidige groep</string>
     <string name="menu_merge_from">Samenvoegen van…</string>
-    <string name="navigation_drawer_open">Navigatiepaneel openen</string>
-    <string name="navigation_drawer_close">Navigatiepaneel sluiten</string>
     <string name="advanced_unlock_keystore_warning">Deze functie slaat versleutelde gegevens op in de beveiligde KeyStore van uw apparaat.
 \n
 \nAfhankelijk van de specifieke API-implementatie van het besturingssysteem, is dit mogelijk niet volledig functioneel.

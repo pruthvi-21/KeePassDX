@@ -328,11 +328,9 @@
     <string name="error_string_type">Acest text nu se potrivește cu articolul solicitat.</string>
     <string name="error_registration_read_only">Salvarea unui element nou nu este permisă într-o bază de date numai pentru citire</string>
     <string name="error_field_name_already_exists">Numele câmpului există deja.</string>
-    <string name="navigation_drawer_open">Sertar de navigare deschis</string>
     <string name="html_about_privacy">&lt;strong&gt;Nu este colectat datele utilizatorilor &lt;/strong&gt;, această aplicație nu se conectează la niciun server, funcționează doar la local și respectă pe deplin confidențialitatea utilizatorilor.</string>
     <string name="current_group">Grup curent</string>
     <string name="search_filters">Filtre de căutare</string>
-    <string name="navigation_drawer_close">Sertar de navigare închis</string>
     <string name="content_description_nav_header">Antet de navigare</string>
     <string name="inherited">Moștenește</string>
     <string name="searchable">Căutabil</string>

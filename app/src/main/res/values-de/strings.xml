@@ -465,8 +465,6 @@
     <string name="menu_merge_from">Zusammenführen von …</string>
     <string name="menu_save_copy_to">Kopie speichern unter …</string>
     <string name="content_description_nav_header">Navigationskopfzeile</string>
-    <string name="navigation_drawer_close">Navigationsleiste schließen</string>
-    <string name="navigation_drawer_open">Navigationsleiste öffnen</string>
     <string name="expired">Abgelaufen</string>
     <string name="warning_database_already_opened">Eine Datenbank ist bereits geöffnet. Schließe sie, um eine neue zu öffnen</string>
     <string name="advanced_unlock_keystore_warning">Diese Funktion speichert verschlüsselte Anmeldedaten im sicheren Schlüsselspeicher deines Geräts.

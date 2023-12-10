@@ -464,8 +464,6 @@
     <string name="show_entry_colors_title">Barvy záznamu</string>
     <string name="regex">Běžný výraz</string>
     <string name="enable_keep_screen_on_summary">Při prohlížení nebo úpravě záznamu ponechat obrazovku zapnutou</string>
-    <string name="navigation_drawer_open">Otevření navigačního panelu</string>
-    <string name="navigation_drawer_close">Zavření navigačního panelu</string>
     <string name="inherited">Převzít</string>
     <string name="auto_type_sequence">Posloupnost automatického vyplňování</string>
     <string name="passphrase">Heslová fráze</string>

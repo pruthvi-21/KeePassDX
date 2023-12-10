@@ -458,11 +458,9 @@
     <string name="show_entry_colors_summary">Muestra los colores de primer y segundo plano de una entrada</string>
     <string name="show_entry_colors_title">Colores de entrada</string>
     <string name="menu_merge_database">Fusionar datos</string>
-    <string name="navigation_drawer_close">Cajón de navegación cerrado</string>
     <string name="searchable">Consultable</string>
     <string name="regex">Expresión regular</string>
     <string name="content_description_nav_header">Cabecera de navegación</string>
-    <string name="navigation_drawer_open">Cajón de navegación abierto</string>
     <string name="case_sensitive">Sensible a mayúsculas y minúsculas</string>
     <string name="auto_type_sequence">Secuencia de autocompletado</string>
     <string name="current_group">Grupo actual</string>

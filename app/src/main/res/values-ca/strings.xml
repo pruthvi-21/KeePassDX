@@ -256,7 +256,6 @@
     <string name="export_app_properties_title">Exporta la configuració de l\'aplicació</string>
     <string name="email">Email</string>
     <string name="content_description_nav_header">Títol de navegació</string>
-    <string name="navigation_drawer_close">Tancar calaix de navegació</string>
     <string name="properties">Propietats</string>
     <string name="clear_clipboard_notification_summary">Bloca la base de dades quan la duració del porta-retalls caduca o la notificació es tanca un cop s\'ha començat a utilitzar</string>
     <string name="html_about_privacy">&lt;strong&gt;No s\'agafa cap dada d\'usuari&lt;/strong&gt;, aquesta aplicació no connecta a cap servidor, només treballa localment i respecta la privacitat dels usuaris en la seva totalitat.</string>
@@ -264,7 +263,6 @@
     <string name="advanced_unlock">Desbloqueja dispositiu</string>
     <string name="template">Plantilla</string>
     <string name="title_case">Primera Majúscula</string>
-    <string name="navigation_drawer_open">Obrir calaix de navegació</string>
     <string name="max_history_size_summary">Limita la mida de l\'historial per entrada</string>
     <string name="success_export_app_properties">Configuració de l\'aplicació exportada</string>
     <string name="error_export_app_properties">Error a l\'exportar la configuració de l\'aplicació</string>

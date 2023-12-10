@@ -198,9 +198,7 @@
     <string name="menu_reload_database">Recarregar datos</string>
     <string name="menu_delete">Borrar</string>
     <string name="error_string_key">Cada cadea debe ter un nome de campo.</string>
-    <string name="navigation_drawer_open">Caixón de navegación aberto</string>
     <string name="content_description_nav_header">Cabeceira de navegación</string>
-    <string name="navigation_drawer_close">Caixón de navegación fechado</string>
     <string name="error_autofill_enable_service">Non foi posíbel habilitar o servizo de autocompletado.</string>
     <string name="error_start_database_action">Un erro ocorreu mentres se realizaba unha acción na base de datos.</string>
     <string name="error_otp_period">O período debe estar entre %1$d e %2$d segundos.</string>
