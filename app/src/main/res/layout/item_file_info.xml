@@ -53,10 +53,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:button="@drawable/checkbox_star"
-                        android:buttonTint="?attr/colorOnSurface"
                         android:contentDescription="@string/default_checkbox"
                         android:gravity="center"
-                        app:buttonTint="?attr/colorOnSurface"
+                        app:buttonTint="@color/default_btn_tint"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/file_information_button"
                         app:layout_constraintTop_toTopOf="parent" />
