@@ -147,7 +147,12 @@
     <style name="ThemeOverlay.Keepass.NavigationView" parent="" />
 
     <!-- Edit Text -->
-    <style name="Theme.Keepass.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox" />
+    <style name="Theme.Keepass.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">@dimen/card_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/card_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/card_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/card_radius</item>
+    </style>
 
     <style name="Theme.Keepass.TextInputLayout.ExposedMenu" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu" />
 

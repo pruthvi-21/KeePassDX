@@ -39,7 +39,12 @@ class TextEditFieldView @JvmOverloads constructor(
     private var textModified = false
     private var isColorizedPasswordActivated = PreferencesUtil.colorizePassword(context)
 
-    private val labelView = TextInputLayout(context).apply {
+    private val labelView = TextInputLayout(
+        ContextThemeWrapper(
+            context,
+            R.style.Theme_Keepass_TextInputLayout
+        )
+    ).apply {
         layoutParams = LayoutParams(
             LayoutParams.MATCH_PARENT,
             LayoutParams.WRAP_CONTENT
