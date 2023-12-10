@@ -22,6 +22,8 @@
     <dimen name="min_height_breadcrumb">48dp</dimen>
     <dimen name="margin_vertical_breadcrumb">8dp</dimen>
     <dimen name="preference_radius">18dp</dimen>
+    <dimen name="item_icon_picker_width">72dp</dimen>
+    <dimen name="item_icon_picker_height">80dp</dimen>
 
     <integer name="animation_duration">260</integer>
 </resources>

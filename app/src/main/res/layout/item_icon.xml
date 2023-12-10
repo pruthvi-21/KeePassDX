@@ -1,26 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/icon_container"
-    style="@style/Theme.Keepass.Selectable.Item"
-    android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:layout_width="@dimen/item_icon_picker_width"
+    android:layout_height="@dimen/item_icon_picker_height"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/icon_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintBottom_toTopOf="@id/icon_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/icon_name"
@@ -30,13 +20,5 @@
         android:gravity="center"
         android:maxLines="3"
         android:paddingStart="4dp"
-        android:paddingLeft="4dp"
-        android:paddingEnd="4dp"
-        android:paddingRight="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icon_image" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:paddingEnd="4dp" />
+</LinearLayout>

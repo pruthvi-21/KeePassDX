@@ -12,6 +12,7 @@ import com.kunzisoft.keepass.adapters.IconPickerAdapter
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.icon.IconImageDraw
 import com.kunzisoft.keepass.viewmodels.IconPickerViewModel
+import com.libx.ui.helpers.AutoSpanGridLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,6 +51,9 @@ abstract class IconFragment<T : IconImageDraw> : DatabaseFragment(),
         iconPickerAdapter = IconPickerAdapter(requireContext(), tintColor)
         iconPickerAdapter.iconPickerListener = this
         iconsGridView.adapter = iconPickerAdapter
+
+        iconsGridView.layoutManager =
+            AutoSpanGridLayout(context, resources.getDimension(R.dimen.item_icon_picker_width))
 
         resetAppTimeoutWhenViewFocusedOrChanged(view)
     }
