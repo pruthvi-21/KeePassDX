@@ -61,7 +61,12 @@
                         android:id="@+id/entry_edit_template_selector"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_marginHorizontal="18dp"
+                        android:background="@drawable/background_spinner"
+                        android:popupBackground="@drawable/background_spinner_popup"
+                        android:spinnerMode="dropdown"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:listitem="@layout/item_template" />
 
                     <androidx.fragment.app.FragmentContainerView
                         android:id="@+id/entry_edit_content"
