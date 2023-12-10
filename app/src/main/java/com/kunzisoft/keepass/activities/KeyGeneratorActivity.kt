@@ -18,14 +18,12 @@ import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.activities.fragments.KeyGeneratorFragment
 import com.kunzisoft.keepass.activities.legacy.DatabaseLockActivity
 import com.kunzisoft.keepass.settings.PreferencesUtil
-import com.kunzisoft.keepass.view.updateLockPaddingLeft
 import com.kunzisoft.keepass.viewmodels.KeyGeneratorViewModel
 
 class KeyGeneratorActivity : DatabaseLockActivity() {
 
-    private lateinit var toolbar: Toolbar
     private lateinit var coordinatorLayout: CoordinatorLayout
-    private lateinit var validationButton: View
+    private lateinit var keyGenerateButton: View
     private var lockView: View? = null
 
     private val keyGeneratorViewModel: KeyGeneratorViewModel by viewModels()
@@ -35,11 +33,8 @@ class KeyGeneratorActivity : DatabaseLockActivity() {
 
         setContentView(R.layout.activity_key_generator)
 
-        toolbar = findViewById(R.id.toolbar)
-        toolbar.title = " "
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        val toolbarTop = findViewById<Toolbar>(R.id.toolbar_top)
+        setSupportActionBar(toolbarTop)
 
         coordinatorLayout = findViewById(R.id.key_generator_coordinator)
 
@@ -48,9 +43,9 @@ class KeyGeneratorActivity : DatabaseLockActivity() {
             lockAndExit()
         }
 
-        validationButton = findViewById(R.id.key_generator_validation)
-        validationButton.setOnClickListener {
-            keyGeneratorViewModel.validateKeyGenerated()
+        keyGenerateButton = findViewById(R.id.key_generate)
+        keyGenerateButton.setOnClickListener {
+            keyGeneratorViewModel.requireKeyGeneration()
         }
 
         supportFragmentManager.commit {
@@ -83,9 +78,6 @@ class KeyGeneratorActivity : DatabaseLockActivity() {
         } else {
             View.GONE
         }
-
-        // Padding if lock button visible
-        toolbar.updateLockPaddingLeft()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -100,8 +92,8 @@ class KeyGeneratorActivity : DatabaseLockActivity() {
                 onDatabaseBackPressed()
             }
 
-            R.id.menu_generate -> {
-                keyGeneratorViewModel.requireKeyGeneration()
+            R.id.menu_validate -> {
+                keyGeneratorViewModel.validateKeyGenerated()
             }
         }
 

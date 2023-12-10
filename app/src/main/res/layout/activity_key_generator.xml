@@ -6,12 +6,21 @@
     android:layout_height="match_parent"
     android:filterTouchesWhenObscured="true">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_top"
+        style="?toolbarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_toolbar_back_white_24dp"
+        app:title="@string/key_generator" />
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/key_generator_coordinator"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toTopOf="@+id/screenshot_mode_banner"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_top">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/key_generator_fragment"
@@ -19,24 +28,16 @@
             android:layout_height="match_parent" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <com.kunzisoft.keepass.view.ToolbarAction
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:layout_constraintBottom_toTopOf="@+id/screenshot_mode_banner" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/key_generator_validation"
+        android:id="@+id/key_generate"
         style="@style/Theme.Keepass.Fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/validate"
-        android:src="@drawable/ic_check_white_24dp"
-        app:fabCustomSize="@dimen/button_small_size"
+        android:layout_margin="20dp"
+        android:contentDescription="@string/generate_password"
+        android:src="@drawable/ic_random_white_24dp"
         app:layout_constraintBottom_toTopOf="@+id/screenshot_mode_banner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
     <include

@@ -195,6 +195,7 @@
     <string name="creating_database">Creating database…</string>
     <string name="loading_database">Loading database…</string>
     <string name="about">About</string>
+    <string name="key_generator">Generator</string>
     <string name="menu_change_key_settings">Change master key</string>
     <string name="copy_field">Copy of %1$s</string>
     <string name="settings">Settings</string>
