@@ -1,92 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="6dp"
-    android:background="@drawable/background_repeat"
-    android:backgroundTint="?colorPrimary"
-    android:gravity="bottom"
-    android:orientation="vertical"
-    android:paddingStart="@dimen/default_margin"
-    android:paddingTop="36dp"
-    android:paddingEnd="@dimen/default_margin"
-    android:paddingBottom="@dimen/default_margin"
-    tools:ignore="UnusedAttribute">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/nav_database_version"
-        style="@style/Theme.Keepass.Text.Info.OnSurface"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="8dp"
-        android:paddingLeft="8dp"
-        android:paddingEnd="8dp"
-        android:paddingRight="8dp"
-        android:textIsSelectable="true"
-        android:textSize="11sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="version" />
-
-    <ImageView
-        android:id="@+id/nav_database_icon"
-        style="@style/Theme.Keepass.Icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginBottom="12dp"
-        android:contentDescription="@string/content_description_nav_header"
-        app:layout_constraintBottom_toTopOf="@+id/nav_database_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nav_database_version"
-        app:srcCompat="@drawable/ic_database_white_36dp"
-        app:tint="?attr/colorSecondary" />
-
-    <ImageView
-        android:id="@+id/nav_database_modified"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/save"
-        android:src="@drawable/ic_modified_white_12dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_database_icon"
-        app:layout_constraintStart_toEndOf="@+id/nav_database_icon"
-        app:layout_constraintTop_toTopOf="@+id/nav_database_icon" />
-
-    <ImageView
-        android:id="@+id/nav_database_color"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="10dp"
-        android:contentDescription="@string/content_description_database_color"
-        android:src="@drawable/background_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/nav_database_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/nav_database_name" />
-
-    <TextView
-        android:id="@+id/nav_database_name"
-        style="@style/Theme.Keepass.Title.OnSurface"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:maxLines="2"
-        android:text="@string/database"
-        android:textIsSelectable="true"
-        app:layout_constraintBottom_toTopOf="@+id/nav_database_path"
-        app:layout_constraintEnd_toStartOf="@+id/nav_database_color"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/nav_database_path"
-        style="@style/Theme.Keepass.Text.Info.OnSurface"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/path"
-        android:textIsSelectable="true"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginBottom="6dp"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/default_margin"
+        android:paddingTop="36dp"
+        android:paddingEnd="@dimen/default_margin"
+        android:paddingBottom="@dimen/default_margin"
+        tools:ignore="UnusedAttribute">
+
+        <TextView
+            android:id="@+id/nav_database_version"
+            style="@style/Theme.Keepass.Text.Info.OnSurface"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:paddingLeft="8dp"
+            android:paddingEnd="8dp"
+            android:paddingRight="8dp"
+            android:textIsSelectable="true"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="version" />
+
+        <ImageView
+            android:id="@+id/nav_database_icon"
+            style="@style/Theme.Keepass.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginBottom="12dp"
+            android:contentDescription="@string/content_description_nav_header"
+            app:layout_constraintBottom_toTopOf="@+id/nav_database_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nav_database_version"
+            app:srcCompat="@drawable/ic_database_white_36dp"
+            app:tint="?attr/colorSecondary" />
+
+        <ImageView
+            android:id="@+id/nav_database_modified"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/save"
+            android:src="@drawable/ic_modified_white_12dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/nav_database_icon"
+            app:layout_constraintStart_toEndOf="@+id/nav_database_icon"
+            app:layout_constraintTop_toTopOf="@+id/nav_database_icon" />
+
+        <ImageView
+            android:id="@+id/nav_database_color"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:contentDescription="@string/content_description_database_color"
+            android:src="@drawable/background_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/nav_database_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/nav_database_name" />
+
+        <TextView
+            android:id="@+id/nav_database_name"
+            style="@style/Theme.Keepass.Title.OnSurface"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:maxLines="2"
+            android:text="@string/database"
+            android:textIsSelectable="true"
+            app:layout_constraintBottom_toTopOf="@+id/nav_database_path"
+            app:layout_constraintEnd_toStartOf="@+id/nav_database_color"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/nav_database_path"
+            style="@style/Theme.Keepass.Text.Info.OnSurface"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/path"
+            android:textIsSelectable="true"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:listDivider" />
+</LinearLayout>

@@ -64,6 +64,8 @@
         <item name="expandedTitleTextAppearance">@style/Theme.Keepass.Title.Large.OnSurface</item>
         <item name="collapsedTitleTextAppearance">@style/Theme.Keepass.Title.OnSurface</item>
 
+        <item name="navigationViewStyle">@style/Theme.Keepass.NavigationView</item>
+
         <!-- Tab -->
         <item name="tabStyle">@style/Theme.Keepass.TabLayout</item>
 
@@ -134,6 +136,15 @@
     </style>
     <!-- Action Style -->
     <style name="Theme.Keepass.Toolbar.Action" parent="Theme.Keepass.Toolbar" />
+
+    <style name="Theme.Keepass.NavigationView" parent="Widget.Material3.NavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Keepass.NavigationView</item>
+        <item name="android:background">?colorSurfaceVariant</item>
+        <item name="dividerInsetStart">0dp</item>
+        <item name="dividerInsetEnd">0dp</item>
+    </style>
+
+    <style name="ThemeOverlay.Keepass.NavigationView" parent="" />
 
     <!-- Edit Text -->
     <style name="Theme.Keepass.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox" />
