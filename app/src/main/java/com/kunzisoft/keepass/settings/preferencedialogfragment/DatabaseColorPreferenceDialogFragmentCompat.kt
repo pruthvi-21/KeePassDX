@@ -23,7 +23,7 @@ class DatabaseColorPreferenceDialogFragmentCompat : DatabaseSavePreferenceDialog
 
     var onColorSelectedListener: ((color: Int?) -> Unit)? = null
 
-    private var currentColor = Color.WHITE
+    private var currentColor = DEFAULT_COLOR
     private var isActivated = false
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -86,15 +86,13 @@ class DatabaseColorPreferenceDialogFragmentCompat : DatabaseSavePreferenceDialog
 
         database?.let {
             var initColor = it.customColor
-            if (initColor != null) {
-                enableSwitchView.isChecked = true
-            } else {
-                enableSwitchView.isChecked = false
+            if (initColor == null) {
                 initColor = DEFAULT_COLOR
             }
             currentColor = initColor
             colorPickerView.setColor(initColor)
             colorPreview.setBackgroundColor(initColor)
+            enableSwitchView.isChecked = it.customColor != null
             arguments?.putInt(ARG_INITIAL_COLOR, initColor)
         }
     }
