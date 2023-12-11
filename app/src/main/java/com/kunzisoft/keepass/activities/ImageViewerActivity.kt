@@ -72,6 +72,7 @@ class ImageViewerActivity : DatabaseLockActivity() {
                 }
             }
             useDragToDismiss = false
+            useFlingToDismissGesture = false
         }
     }
 
