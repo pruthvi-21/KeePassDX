@@ -31,7 +31,7 @@ class EntryAttachmentsItemsAdapter(context: Context) :
     ) {
 
     var database: ContextualDatabase? = null
-    var onItemClickListener: ((item: EntryAttachmentState) -> Unit)? = null
+    var onItemClickListener: ((item: EntryAttachmentState, viewPreview: Boolean) -> Unit)? = null
     var onBinaryPreviewLoaded: ((item: EntryAttachmentState) -> Unit)? = null
 
     // Approximately
@@ -179,7 +179,11 @@ class EntryAttachmentsItemsAdapter(context: Context) :
                     setProgressCompat(entryAttachmentState.downloadProgression, true)
                 }
                 holder.binaryFileInfo.setOnClickListener {
-                    onItemClickListener?.invoke(entryAttachmentState)
+                    onItemClickListener?.invoke(entryAttachmentState, true)
+                }
+
+                holder.binaryFileProgressIcon.setOnClickListener {
+                    onItemClickListener?.invoke(entryAttachmentState, false)
                 }
             }
         }

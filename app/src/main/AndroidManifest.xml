@@ -137,6 +137,9 @@
             android:name="com.kunzisoft.keepass.activities.EntryActivity"
             android:configChanges="keyboardHidden" />
         <activity
+            android:name=".activities.PdfViewerActivity"
+            android:exported="true" />
+        <activity
             android:name="com.kunzisoft.keepass.activities.IconPickerActivity"
             android:configChanges="keyboardHidden" />
         <activity
