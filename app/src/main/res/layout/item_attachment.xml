@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_attachment_container"
@@ -12,11 +12,10 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/item_attachment_thumbnail"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/image_preview_height"
-        android:layout_centerHorizontal="true"
+        android:layout_height="@dimen/item_file_info_height"
         android:layout_marginTop="12dp"
         android:background="?android:attr/windowBackground"
-        android:scaleType="fitStart"
+        android:scaleType="centerCrop"
         android:visibility="gone" />
 
     <RelativeLayout
@@ -25,7 +24,6 @@
         android:layout_height="48dp"
         android:clickable="true"
         android:focusable="true"
-        android:layout_alignBottom="@+id/item_attachment_thumbnail"
         android:background="@drawable/background_attachment_item">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -131,4 +129,4 @@
             </FrameLayout>
         </FrameLayout>
     </RelativeLayout>
-</RelativeLayout>
+</LinearLayout>
