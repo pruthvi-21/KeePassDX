@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.kunzisoft.keepass.R
@@ -60,6 +61,8 @@ class EntryAttachmentsItemsAdapter(context: Context) :
 
     override fun onBindViewHolder(holder: EntryBinariesViewHolder, position: Int) {
         val entryAttachmentState = itemsList[position]
+
+        if (position == 0) holder.divider.isVisible = false
 
         holder.itemView.visibility = View.VISIBLE
         holder.binaryFileThumbnail.apply {
@@ -191,6 +194,7 @@ class EntryAttachmentsItemsAdapter(context: Context) :
 
     class EntryBinariesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        var divider: View = itemView.findViewById(R.id.divider)
         var binaryFileThumbnail: ImageView = itemView.findViewById(R.id.item_attachment_thumbnail)
         var binaryFileInfo: View = itemView.findViewById(R.id.item_attachment_info)
         var binaryFileBroken: ImageView = itemView.findViewById(R.id.item_attachment_broken)
