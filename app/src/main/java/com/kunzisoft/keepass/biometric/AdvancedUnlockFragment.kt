@@ -16,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -42,6 +43,11 @@ class AdvancedUnlockFragment(
     private var mBuilderListener: BuilderListener? = null
 
     private var mAdvancedUnlockEnabled = false
+        set(value){
+            field = value
+            deleteDeviceUnlockKeyView?.isVisible =
+                value && deleteDeviceUnlockKeyView?.isVisible ?: false
+        }
     private var mAutoOpenPromptEnabled = false
 
     private var advancedUnlockManager: AdvancedUnlockManager? = null
