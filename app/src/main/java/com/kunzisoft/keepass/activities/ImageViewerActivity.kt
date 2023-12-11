@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.igreenwood.loupe.Loupe
 import com.kunzisoft.keepass.R
@@ -25,6 +26,8 @@ class ImageViewerActivity : DatabaseLockActivity() {
     private var imageContainerView: ViewGroup? = null
     private lateinit var imageView: ImageView
     private lateinit var progressView: View
+    private val titleView: TextView by lazy { findViewById(R.id.title_view) }
+    private val subtitleView: TextView by lazy { findViewById(R.id.subtitle_view) }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +41,6 @@ class ImageViewerActivity : DatabaseLockActivity() {
             resetAppTimeout()
             false
         }
-        toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_white_24dp)
 
         imageContainerView = findViewById(R.id.image_viewer_container)
         imageView = findViewById(R.id.image_viewer_image)
@@ -89,10 +91,10 @@ class ImageViewerActivity : DatabaseLockActivity() {
             progressView.visibility = View.VISIBLE
             intent.getParcelableExtraCompat<Attachment>(IMAGE_ATTACHMENT_TAG)?.let { attachment ->
 
-                supportActionBar?.title = attachment.name
+                titleView.text = attachment.name
 
                 val size = attachment.binaryData.getSize()
-                supportActionBar?.subtitle = Formatter.formatFileSize(this, size)
+                subtitleView.text = Formatter.formatFileSize(this, size)
 
                 // Approximately, to not OOM and allow a zoom
                 val mImagePreviewMaxWidth = max(
