@@ -2,6 +2,7 @@ package com.kunzisoft.keepass.activities
 
 import android.os.Build
 import android.os.Bundle
+import android.text.format.Formatter
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -36,6 +37,7 @@ class PdfViewerActivity : DatabaseLockActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         val titleView = findViewById<TextView>(R.id.title_view)
+        val subTitleView = findViewById<TextView>(R.id.subtitle_view)
         setSupportActionBar(toolbar)
 
         if (attachment == null) {
@@ -43,7 +45,7 @@ class PdfViewerActivity : DatabaseLockActivity() {
         }
 
         titleView.text = attachment!!.name
-        Log.e(TAG, "onCreate: ${attachment!!.name}")
+        subTitleView.text = Formatter.formatFileSize(this, attachment!!.binaryData.getSize())
 
         pdfView.minZoom = 1.5f
         pdfView.setNightMode(true)

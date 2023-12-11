@@ -15,14 +15,31 @@
         app:contentInsetEnd="16dp"
         app:navigationIcon="@drawable/ic_toolbar_back_white_24dp">
 
-        <TextView
-            android:id="@+id/title_view"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="middle"
-            android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-            android:textColor="?colorPrimary" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="middle"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
+                android:textColor="?colorPrimary"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/subtitle_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="middle"
+                android:singleLine="true"
+                android:textAppearance="@style/TextAppearance.Material3.ActionBar.Subtitle"
+                android:textColor="?android:textColorSecondary"
+                android:textSize="14sp" />
+        </LinearLayout>
     </com.google.android.material.appbar.MaterialToolbar>
 
     <com.github.barteksc.pdfviewer.PDFView
