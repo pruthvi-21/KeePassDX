@@ -33,6 +33,7 @@ import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.timeout.ClipboardHelper
 import com.kunzisoft.keepass.utils.TimeUtil.getDateTimeString
 import com.kunzisoft.keepass.utils.UuidUtil
+import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.view.TemplateView
 import com.kunzisoft.keepass.view.showByFading
 import com.kunzisoft.keepass.viewmodels.EntryViewModel
@@ -230,15 +231,21 @@ class EntryFragment : DatabaseFragment() {
             if (viewPreview) {
                 when (fileType) {
                     EntryAttachmentsItemsAdapter.FileType.PDF -> {
-                        pdfPreviewLauncher.launch(
+                        pdfAndImagePreviewLauncher.launch(
                             Intent(requireContext(), PdfViewerActivity::class.java).apply {
                                 putExtra(EXTRA_ATTACHMENT, item.attachment)
                             }
                         )
                     }
+
                     EntryAttachmentsItemsAdapter.FileType.IMAGE -> {
-                        ImageViewerActivity.getInstance(requireContext(), item.attachment)
+                        pdfAndImagePreviewLauncher.launch(
+                            Intent(requireContext(), ImageViewerActivity::class.java).apply {
+                                putExtra(EXTRA_ATTACHMENT_TAG, item.attachment)
+                            }
+                        )
                     }
+
                     else -> {
                         mEntryViewModel.onAttachmentSelected(item.attachment)
                     }
@@ -272,17 +279,13 @@ class EntryFragment : DatabaseFragment() {
     }
 
     //launcher for pdf preview
-    val pdfPreviewLauncher =
+    val pdfAndImagePreviewLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val data = result.data
                 if (data != null) {
-                    val attachment = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        data.getParcelableExtra(EXTRA_ATTACHMENT, Attachment::class.java)
-                    } else {
-                        data.getParcelableExtra(EXTRA_ATTACHMENT)
-                    }
-                    val value = data.getBooleanExtra(RESULT_DOWNLOAD, false)
+                    val attachment = data.getParcelableExtraCompat<Attachment>(EXTRA_ATTACHMENT_TAG)
+                    val value = data.getBooleanExtra(EXTRA_ACTION_DOWNLOAD, false)
                     if (value && attachment != null) {
                         mEntryViewModel.onAttachmentSelected(attachment)
                     }
@@ -291,6 +294,10 @@ class EntryFragment : DatabaseFragment() {
         }
 
     companion object {
+
+        const val EXTRA_ACTION_DOWNLOAD = "extra_action_download"
+        const val EXTRA_ATTACHMENT_TAG = "extra_attachment_tag"
+
         fun getInstance(): EntryFragment {
             return EntryFragment().apply {
                 arguments = Bundle()

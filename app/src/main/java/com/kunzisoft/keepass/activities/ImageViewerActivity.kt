@@ -1,11 +1,12 @@
 package com.kunzisoft.keepass.activities
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.format.Formatter
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,8 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.igreenwood.loupe.Loupe
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.activities.fragments.EntryFragment.Companion.EXTRA_ACTION_DOWNLOAD
+import com.kunzisoft.keepass.activities.fragments.EntryFragment.Companion.EXTRA_ATTACHMENT_TAG
 import com.kunzisoft.keepass.activities.legacy.DatabaseLockActivity
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.Attachment
@@ -28,6 +31,8 @@ class ImageViewerActivity : DatabaseLockActivity() {
     private lateinit var progressView: View
     private val titleView: TextView by lazy { findViewById(R.id.title_view) }
     private val subtitleView: TextView by lazy { findViewById(R.id.subtitle_view) }
+
+    private var attachment: Attachment? = null
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,8 +95,8 @@ class ImageViewerActivity : DatabaseLockActivity() {
 
         try {
             progressView.visibility = View.VISIBLE
-            intent.getParcelableExtraCompat<Attachment>(IMAGE_ATTACHMENT_TAG)?.let { attachment ->
-
+            intent.getParcelableExtraCompat<Attachment>(EXTRA_ATTACHMENT_TAG)?.let { attachment ->
+                this.attachment = attachment
                 titleView.text = attachment.name
 
                 val size = attachment.binaryData.getSize()
@@ -124,23 +129,27 @@ class ImageViewerActivity : DatabaseLockActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.attachment_preview, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            android.R.id.home -> finish()
+            android.R.id.home -> onDatabaseBackPressed()
+            R.id.menu_save_attachment -> {
+                setResult(
+                    Activity.RESULT_OK, Intent()
+                        .putExtra(EXTRA_ACTION_DOWNLOAD, true)
+                        .putExtra(EXTRA_ATTACHMENT_TAG, attachment)
+                )
+                finish()
+            }
         }
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
     companion object {
-
         private val TAG = ImageViewerActivity::class.simpleName
-
-        private const val IMAGE_ATTACHMENT_TAG = "IMAGE_ATTACHMENT_TAG"
-
-        fun getInstance(context: Context, imageAttachment: Attachment) {
-            context.startActivity(Intent(context, ImageViewerActivity::class.java).apply {
-                putExtra(IMAGE_ATTACHMENT_TAG, imageAttachment)
-            })
-        }
     }
 }
