@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -34,6 +35,7 @@ import com.kunzisoft.keepass.utils.TimeUtil.getDateTimeString
 import com.kunzisoft.keepass.utils.UuidUtil
 import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.view.TemplateView
+import com.kunzisoft.keepass.view.hideByFading
 import com.kunzisoft.keepass.view.showByFading
 import com.kunzisoft.keepass.viewmodels.EntryViewModel
 
@@ -51,7 +53,6 @@ class EntryFragment : DatabaseFragment() {
     private lateinit var attachmentsListView: RecyclerView
     private var attachmentsAdapter: EntryAttachmentsItemsAdapter? = null
 
-    private lateinit var uuidContainerView: View
     private lateinit var uuidReferenceView: TextView
 
     private var mClipboardHelper: ClipboardHelper? = null
@@ -96,14 +97,7 @@ class EntryFragment : DatabaseFragment() {
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
 
-        creationDateView = view.findViewById(R.id.entry_created)
-        modificationDateView = view.findViewById(R.id.entry_modified)
-
-        uuidContainerView = view.findViewById(R.id.entry_UUID_container)
-        uuidContainerView.apply {
-            visibility = if (PreferencesUtil.showUUID(context)) View.VISIBLE else View.GONE
-        }
-        uuidReferenceView = view.findViewById(R.id.entry_UUID_reference)
+        setupMetadata(view)
 
         mEntryViewModel.entryInfoHistory.observe(viewLifecycleOwner) { entryInfoHistory ->
             if (entryInfoHistory != null) {
@@ -120,6 +114,32 @@ class EntryFragment : DatabaseFragment() {
                 if (it.streamDirection != StreamDirection.UPLOAD) {
                     putAttachment(it)
                 }
+            }
+        }
+    }
+
+    private fun setupMetadata(view: View) {
+        uuidReferenceView = view.findViewById(R.id.entry_UUID_reference)
+        creationDateView = view.findViewById(R.id.entry_created)
+        modificationDateView = view.findViewById(R.id.entry_modified)
+
+        val metadataHeaderView = view.findViewById<View>(R.id.entry_show_metadata)
+        val metadataContentView = view.findViewById<View>(R.id.entry_metadata_content)
+        val arrow = view.findViewById<ImageView>(R.id.arrow)
+        metadataHeaderView.setOnClickListener {
+            val currentVisibility = metadataContentView.isVisible
+            if (currentVisibility) {
+                metadataContentView.hideByFading()
+                arrow.animate()
+                    .rotation(0f)
+                    .setDuration(200)
+                    .start()
+            } else {
+                metadataContentView.showByFading()
+                arrow.animate()
+                    .rotation(90f)
+                    .setDuration(200)
+                    .start()
             }
         }
     }

@@ -53,6 +53,7 @@
     <string name="entry_accessed">Accessed</string>
     <string name="entry_cancel">Cancel</string>
     <string name="entry_notes">Notes</string>
+    <string name="entry_metadata">Metadata</string>
     <string name="entry_created">Created</string>
     <string name="entry_expires">Expires</string>
     <string name="expired">Expired</string>

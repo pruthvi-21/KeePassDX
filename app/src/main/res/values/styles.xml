@@ -424,18 +424,14 @@
         <item name="android:textColor">?attr/colorSecondary</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingStart">8dp</item>
-        <item name="android:paddingRight">8dp</item>
         <item name="android:paddingEnd">8dp</item>
     </style>
 
     <style name="Theme.Keepass.TextAppearance.TextNode" parent="Theme.Keepass.Text">
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:layout_marginBottom">4dp</item>
-        <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingStart">8dp</item>
-        <item name="android:paddingRight">8dp</item>
         <item name="android:paddingEnd">8dp</item>
         <item name="android:textSize">16sp</item>
     </style>
