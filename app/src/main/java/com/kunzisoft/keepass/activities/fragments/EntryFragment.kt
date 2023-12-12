@@ -3,7 +3,6 @@ package com.kunzisoft.keepass.activities.fragments
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -256,24 +255,6 @@ class EntryFragment : DatabaseFragment() {
 
     fun putAttachment(attachmentToDownload: EntryAttachmentState) {
         attachmentsAdapter?.putItem(attachmentToDownload)
-    }
-
-    /* -------------
-     * Education
-     * -------------
-     */
-
-    fun firstEntryFieldCopyView(): View? {
-        return try {
-            templateView.getActionImageView()
-        } catch (e: Exception) {
-            null
-        }
-    }
-
-    fun launchEntryCopyEducationAction() {
-        val appNameString = getString(R.string.app_name)
-        mClipboardHelper?.timeoutCopyToClipboard(appNameString, appNameString)
     }
 
     //launcher for pdf preview
