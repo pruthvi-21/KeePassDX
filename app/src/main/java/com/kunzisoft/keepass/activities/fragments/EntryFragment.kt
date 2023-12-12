@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.activities.ImageViewerActivity
 import com.kunzisoft.keepass.activities.PdfViewerActivity
+import com.kunzisoft.keepass.activities.TextFileViewerActivity
 import com.kunzisoft.keepass.adapters.EntryAttachmentsItemsAdapter
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.Attachment
@@ -239,6 +240,14 @@ class EntryFragment : DatabaseFragment() {
                     EntryAttachmentsItemsAdapter.FileType.IMAGE -> {
                         pdfAndImagePreviewLauncher.launch(
                             Intent(requireContext(), ImageViewerActivity::class.java).apply {
+                                putExtra(EXTRA_ATTACHMENT_TAG, item.attachment)
+                            }
+                        )
+                    }
+
+                    EntryAttachmentsItemsAdapter.FileType.TEXT -> {
+                        pdfAndImagePreviewLauncher.launch(
+                            Intent(requireContext(), TextFileViewerActivity::class.java).apply {
                                 putExtra(EXTRA_ATTACHMENT_TAG, item.attachment)
                             }
                         )

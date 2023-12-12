@@ -34,10 +34,11 @@ class EntryAttachmentsItemsAdapter(context: Context) :
     var onBinaryPreviewLoaded: ((item: EntryAttachmentState) -> Unit)? = null
 
     private val imageExtensionList = arrayOf(".jpg", "jpeg", ".png", ".bmp", ".webp", ".gif")
+    private val textFileExtensionList = arrayOf(".txt")
     private val pdfExtension = ".pdf"
 
     enum class FileType {
-        IMAGE, PDF, OTHER
+        IMAGE, PDF, TEXT, OTHER
     }
 
     private var mTitleColor: Int
@@ -78,6 +79,9 @@ class EntryAttachmentsItemsAdapter(context: Context) :
             } else if (fileName.endsWith(pdfExtension)) {
                 setImageResource(R.drawable.ic_thumb_pdf_24dp)
                 FileType.PDF
+            } else if (textFileExtensionList.any { fileName.endsWith(it, true) }) {
+                setImageResource(R.drawable.ic_thumb_txt_24dp)
+                FileType.TEXT
             } else {
                 setImageResource(R.drawable.ic_thumb_file_24dp)
                 FileType.OTHER
