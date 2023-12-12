@@ -1,13 +1,16 @@
 package com.kunzisoft.keepass.activities.fragments
 
+import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -15,6 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.activities.PdfViewerActivity
+import com.kunzisoft.keepass.activities.PdfViewerActivity.Companion.EXTRA_ATTACHMENT
+import com.kunzisoft.keepass.activities.PdfViewerActivity.Companion.RESULT_DOWNLOAD
 import com.kunzisoft.keepass.adapters.EntryAttachmentsItemsAdapter
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.Attachment
@@ -30,8 +36,6 @@ import com.kunzisoft.keepass.utils.UuidUtil
 import com.kunzisoft.keepass.view.TemplateView
 import com.kunzisoft.keepass.view.showByFading
 import com.kunzisoft.keepass.viewmodels.EntryViewModel
-import com.kunzisoft.keepass.activities.PdfViewerActivity
-import com.kunzisoft.keepass.activities.PdfViewerActivity.Companion.EXTRA_ATTACHMENT
 
 
 class EntryFragment : DatabaseFragment() {
@@ -222,14 +226,21 @@ class EntryFragment : DatabaseFragment() {
         attachmentsAdapter?.assignItems(attachments.map {
             EntryAttachmentState(it, StreamDirection.DOWNLOAD)
         })
+
         attachmentsAdapter?.onItemClickListener = { item, viewPreview ->
             if (viewPreview) {
                 if (item.attachment.name.endsWith("pdf", ignoreCase = true)) {
-                    startActivity(Intent(requireContext(), PdfViewerActivity::class.java).apply {
-                        putExtra(EXTRA_ATTACHMENT, item.attachment)
-                    })
+                    pdfPreviewLauncher.launch(
+                        Intent(requireContext(), PdfViewerActivity::class.java).apply {
+                            putExtra(EXTRA_ATTACHMENT, item.attachment)
+                        }
+                    )
                 } else {
-                    Toast.makeText(context, "Unable to preview this file format.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "Unable to preview this file format.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } else {
                 mEntryViewModel.onAttachmentSelected(item.attachment)
@@ -259,8 +270,26 @@ class EntryFragment : DatabaseFragment() {
         mClipboardHelper?.timeoutCopyToClipboard(appNameString, appNameString)
     }
 
+    //launcher for pdf preview
+    val pdfPreviewLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data
+                if (data != null) {
+                    val attachment = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        data.getParcelableExtra(EXTRA_ATTACHMENT, Attachment::class.java)
+                    } else {
+                        data.getParcelableExtra(EXTRA_ATTACHMENT)
+                    }
+                    val value = data.getBooleanExtra(RESULT_DOWNLOAD, false)
+                    if (value && attachment != null) {
+                        mEntryViewModel.onAttachmentSelected(attachment)
+                    }
+                }
+            }
+        }
+
     companion object {
-        var BYTE_Array: ByteArray? = null
         fun getInstance(): EntryFragment {
             return EntryFragment().apply {
                 arguments = Bundle()

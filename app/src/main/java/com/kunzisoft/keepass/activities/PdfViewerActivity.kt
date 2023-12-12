@@ -1,14 +1,15 @@
 package com.kunzisoft.keepass.activities
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.format.Formatter
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.github.barteksc.pdfviewer.PDFView
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle
@@ -20,7 +21,6 @@ import java.io.IOException
 
 class PdfViewerActivity : DatabaseLockActivity() {
 
-    private val mainContainer: ViewGroup by lazy { findViewById(R.id.container) }
     private val pdfView: PDFView by lazy { findViewById(R.id.pdfView) }
 
     private var attachment: Attachment? = null
@@ -46,9 +46,6 @@ class PdfViewerActivity : DatabaseLockActivity() {
 
         titleView.text = attachment!!.name
         subTitleView.text = Formatter.formatFileSize(this, attachment!!.binaryData.getSize())
-
-        pdfView.minZoom = 1.5f
-        pdfView.setNightMode(true)
     }
 
     override fun onDatabaseRetrieved(database: ContextualDatabase?) {
@@ -66,7 +63,6 @@ class PdfViewerActivity : DatabaseLockActivity() {
                     .enableSwipe(true)
                     .enableDoubletap(true)
                     .onTap {
-                        Toast.makeText(this@PdfViewerActivity, "Tap", Toast.LENGTH_SHORT).show()
                         true
                     }
                     .scrollHandle(DefaultScrollHandle(this))
@@ -74,13 +70,26 @@ class PdfViewerActivity : DatabaseLockActivity() {
                     .load()
             }
         } catch (e: IOException) {
-            Log.e("PDF-TEST", "catch: ", e)
+            Log.e(TAG, "catch: exception occurred", e)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.attachment_preview, menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> onDatabaseBackPressed()
+            R.id.menu_save_attachment -> {
+                setResult(
+                    Activity.RESULT_OK, Intent()
+                        .putExtra(RESULT_DOWNLOAD, true)
+                        .putExtra(EXTRA_ATTACHMENT, attachment)
+                )
+                finish()
+            }
         }
         return true
     }
@@ -91,6 +100,9 @@ class PdfViewerActivity : DatabaseLockActivity() {
     }
 
     companion object {
+        private const val TAG = "PdfViewerActivity"
+
         const val EXTRA_ATTACHMENT = "extra_attachment"
+        const val RESULT_DOWNLOAD = "download_attachment"
     }
 }
