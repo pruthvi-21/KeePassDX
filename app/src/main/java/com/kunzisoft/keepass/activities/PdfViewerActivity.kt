@@ -85,8 +85,9 @@ class PdfViewerActivity : DatabaseLockActivity() {
         return true
     }
 
-    override fun viewToInvalidateTimeout(): View {
-        return mainContainer
+    override fun viewToInvalidateTimeout(): View? {
+        // Null to manually manage events
+        return null
     }
 
     companion object {
