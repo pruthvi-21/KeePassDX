@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
@@ -18,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.activities.ImageViewerActivity
 import com.kunzisoft.keepass.activities.PdfViewerActivity
 import com.kunzisoft.keepass.activities.PdfViewerActivity.Companion.EXTRA_ATTACHMENT
 import com.kunzisoft.keepass.activities.PdfViewerActivity.Companion.RESULT_DOWNLOAD
@@ -36,7 +36,6 @@ import com.kunzisoft.keepass.utils.UuidUtil
 import com.kunzisoft.keepass.view.TemplateView
 import com.kunzisoft.keepass.view.showByFading
 import com.kunzisoft.keepass.viewmodels.EntryViewModel
-
 
 class EntryFragment : DatabaseFragment() {
 
@@ -227,20 +226,22 @@ class EntryFragment : DatabaseFragment() {
             EntryAttachmentState(it, StreamDirection.DOWNLOAD)
         })
 
-        attachmentsAdapter?.onItemClickListener = { item, viewPreview ->
+        attachmentsAdapter?.onItemClickListener = { item, fileType, viewPreview ->
             if (viewPreview) {
-                if (item.attachment.name.endsWith("pdf", ignoreCase = true)) {
-                    pdfPreviewLauncher.launch(
-                        Intent(requireContext(), PdfViewerActivity::class.java).apply {
-                            putExtra(EXTRA_ATTACHMENT, item.attachment)
-                        }
-                    )
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Unable to preview this file format.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                when (fileType) {
+                    EntryAttachmentsItemsAdapter.FileType.PDF -> {
+                        pdfPreviewLauncher.launch(
+                            Intent(requireContext(), PdfViewerActivity::class.java).apply {
+                                putExtra(EXTRA_ATTACHMENT, item.attachment)
+                            }
+                        )
+                    }
+                    EntryAttachmentsItemsAdapter.FileType.IMAGE -> {
+                        ImageViewerActivity.getInstance(requireContext(), item.attachment)
+                    }
+                    else -> {
+                        mEntryViewModel.onAttachmentSelected(item.attachment)
+                    }
                 }
             } else {
                 mEntryViewModel.onAttachmentSelected(item.attachment)

@@ -423,6 +423,8 @@
     <string name="other">Other</string>
     <string name="compression_none">None</string>
     <string name="compression_gzip">Gzip</string>
+    <string name="filesize_text_placeholder">%1$s</string>
+    <string name="compression_text_placeholder">%1$s (%2$s)</string>
     <string name="recycle_bin">Recycle bin</string>
     <string name="templates">Templates</string>
     <string name="keyboard">Keyboard</string>

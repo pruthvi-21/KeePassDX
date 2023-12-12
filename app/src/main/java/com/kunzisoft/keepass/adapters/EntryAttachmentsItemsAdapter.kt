@@ -13,7 +13,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.activities.ImageViewerActivity
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.database.CompressionAlgorithm
 import com.kunzisoft.keepass.database.helper.getLocalizedName
@@ -21,9 +20,7 @@ import com.kunzisoft.keepass.model.AttachmentState
 import com.kunzisoft.keepass.model.EntryAttachmentState
 import com.kunzisoft.keepass.model.StreamDirection
 import com.kunzisoft.keepass.services.AttachmentFileNotificationService.Companion.FILE_PROGRESSION_MAX
-import com.kunzisoft.keepass.tasks.BinaryDatabaseManager
-import com.kunzisoft.keepass.view.expand
-import kotlin.math.max
+import com.kunzisoft.keepass.utils.ColorUtils
 
 
 class EntryAttachmentsItemsAdapter(context: Context) :
@@ -32,15 +29,19 @@ class EntryAttachmentsItemsAdapter(context: Context) :
     ) {
 
     var database: ContextualDatabase? = null
-    var onItemClickListener: ((item: EntryAttachmentState, viewPreview: Boolean) -> Unit)? = null
+    var onItemClickListener: ((item: EntryAttachmentState, fileType: FileType, viewPreview: Boolean) -> Unit)? =
+        null
     var onBinaryPreviewLoaded: ((item: EntryAttachmentState) -> Unit)? = null
 
-    // Approximately
-    private val mImagePreviewMaxWidth = max(
-        context.resources.displayMetrics.widthPixels,
-        context.resources.getDimensionPixelSize(R.dimen.item_file_info_height)
-    )
+    private val imageExtensionList = arrayOf(".jpg", "jpeg", ".png", ".bmp", ".webp", ".gif")
+    private val pdfExtension = ".pdf"
+
+    enum class FileType {
+        IMAGE, PDF, OTHER
+    }
+
     private var mTitleColor: Int
+    private var colorError = ColorUtils.getColorFromAttr(context, R.attr.colorError, Color.RED)
 
     init {
         // Get the primary text color of the theme
@@ -63,75 +64,51 @@ class EntryAttachmentsItemsAdapter(context: Context) :
         val entryAttachmentState = itemsList[position]
 
         if (position == 0) holder.divider.isVisible = false
+        var fileType = FileType.OTHER
 
         holder.itemView.visibility = View.VISIBLE
-        holder.binaryFileThumbnail.apply {
-            // Perform image loading only if upload is finished
-            if (entryAttachmentState.downloadState != AttachmentState.START
-                && entryAttachmentState.downloadState != AttachmentState.IN_PROGRESS
-            ) {
-                // Show the bitmap image if loaded
-                if (entryAttachmentState.previewState == AttachmentState.NULL) {
-                    entryAttachmentState.previewState = AttachmentState.IN_PROGRESS
-                    // Load the bitmap image
-                    database?.let { database ->
-                        BinaryDatabaseManager.loadBitmap(
-                            database,
-                            entryAttachmentState.attachment.binaryData,
-                            mImagePreviewMaxWidth
-                        ) { imageLoaded ->
-                            if (imageLoaded == null) {
-                                entryAttachmentState.previewState = AttachmentState.ERROR
-                                visibility = View.GONE
-                                onBinaryPreviewLoaded?.invoke(entryAttachmentState)
-                            } else {
-                                entryAttachmentState.previewState = AttachmentState.COMPLETE
-                                setImageBitmap(imageLoaded)
-                                if (visibility != View.VISIBLE) {
-                                    expand(
-                                        true,
-                                        resources.getDimensionPixelSize(R.dimen.item_file_info_height)
-                                    ) {
-                                        onBinaryPreviewLoaded?.invoke(entryAttachmentState)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+
+        holder.binaryFilePreviewIcon.apply {
+            isVisible = true
+            val fileName = entryAttachmentState.attachment.name
+
+            fileType = if (imageExtensionList.any { fileName.endsWith(it, true) }) {
+                setImageResource(R.drawable.ic_thumb_image_24dp)
+                FileType.IMAGE
+            } else if (fileName.endsWith(pdfExtension)) {
+                setImageResource(R.drawable.ic_thumb_pdf_24dp)
+                FileType.PDF
             } else {
-                visibility = View.GONE
-            }
-            this.setOnClickListener {
-                ImageViewerActivity.getInstance(context, entryAttachmentState.attachment)
+                setImageResource(R.drawable.ic_thumb_file_24dp)
+                FileType.OTHER
             }
         }
-        holder.binaryFileBroken.apply {
-            setColorFilter(Color.RED)
-            visibility = if (entryAttachmentState.attachment.binaryData.isCorrupted) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
-        }
+
         holder.binaryFileTitle.text = entryAttachmentState.attachment.name
+
         if (entryAttachmentState.attachment.binaryData.isCorrupted) {
-            holder.binaryFileTitle.setTextColor(Color.RED)
+            holder.binaryFilePreviewIcon.apply {
+                setColorFilter(colorError)
+                setImageResource(R.drawable.ic_attach_file_broken_white_24dp)
+            }
+            holder.binaryFileTitle.setTextColor(colorError)
         } else {
             holder.binaryFileTitle.setTextColor(mTitleColor)
         }
 
         val size = entryAttachmentState.attachment.binaryData.getSize()
-        holder.binaryFileSize.text = Formatter.formatFileSize(context, size)
-        holder.binaryFileCompression.apply {
-            if (entryAttachmentState.attachment.binaryData.isCompressed) {
-                text = CompressionAlgorithm.GZIP.getLocalizedName(context.resources)
-                visibility = View.VISIBLE
-            } else {
-                text = ""
-                visibility = View.GONE
-            }
+        val fileSize = Formatter.formatFileSize(context, size)
+
+        holder.binaryFileSize.text = if (entryAttachmentState.attachment.binaryData.isCompressed) {
+            context.resources.getString(
+                R.string.compression_text_placeholder,
+                fileSize,
+                CompressionAlgorithm.GZIP.getLocalizedName(context.resources)
+            )
+        } else {
+            context.resources.getString(R.string.filesize_text_placeholder, fileSize)
         }
+
         holder.binaryFileProgress.max = FILE_PROGRESSION_MAX
         when (entryAttachmentState.streamDirection) {
             StreamDirection.UPLOAD -> {
@@ -182,11 +159,14 @@ class EntryAttachmentsItemsAdapter(context: Context) :
                     setProgressCompat(entryAttachmentState.downloadProgression, true)
                 }
                 holder.binaryFileInfo.setOnClickListener {
-                    onItemClickListener?.invoke(entryAttachmentState, true)
+                    onItemClickListener?.invoke(
+                        entryAttachmentState, fileType,
+                        !entryAttachmentState.attachment.binaryData.isCorrupted
+                    )
                 }
 
                 holder.binaryFileProgressIcon.setOnClickListener {
-                    onItemClickListener?.invoke(entryAttachmentState, false)
+                    onItemClickListener?.invoke(entryAttachmentState, fileType, false)
                 }
             }
         }
@@ -195,16 +175,13 @@ class EntryAttachmentsItemsAdapter(context: Context) :
     class EntryBinariesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         var divider: View = itemView.findViewById(R.id.divider)
-        var binaryFileThumbnail: ImageView = itemView.findViewById(R.id.item_attachment_thumbnail)
         var binaryFileInfo: View = itemView.findViewById(R.id.item_attachment_info)
-        var binaryFileBroken: ImageView = itemView.findViewById(R.id.item_attachment_broken)
         var binaryFileTitle: TextView = itemView.findViewById(R.id.item_attachment_title)
         var binaryFileSize: TextView = itemView.findViewById(R.id.item_attachment_size)
-        var binaryFileCompression: TextView =
-            itemView.findViewById(R.id.item_attachment_compression)
         var binaryFileProgressContainer: View =
             itemView.findViewById(R.id.item_attachment_progress_container)
         var binaryFileProgressIcon: ImageView = itemView.findViewById(R.id.item_attachment_icon)
+        var binaryFilePreviewIcon: ImageView = itemView.findViewById(R.id.item_attachment_logo)
         var binaryFileProgress: CircularProgressIndicator =
             itemView.findViewById(R.id.item_attachment_progress)
         var binaryFileDeleteButton: View = itemView.findViewById(R.id.item_attachment_delete_button)

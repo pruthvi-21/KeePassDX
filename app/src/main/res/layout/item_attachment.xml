@@ -17,77 +17,56 @@
         android:alpha="0.5"
         android:background="?android:listDivider" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/item_attachment_thumbnail"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/item_file_info_height"
-        android:layout_marginTop="12dp"
-        android:background="?android:attr/windowBackground"
-        android:scaleType="centerCrop"
-        android:visibility="gone" />
-
     <RelativeLayout
         android:id="@+id/item_attachment_info"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/background_attachment_item"
         android:clickable="true"
         android:focusable="true">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/item_attachment_broken"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/entry_attachments"
-            android:src="@drawable/ic_attach_file_broken_white_24dp" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/item_attachment_title"
-            style="@style/Theme.Keepass.TextAppearance.TextNode"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toStartOf="@+id/item_attachment_size_container"
-            android:layout_toEndOf="@+id/item_attachment_broken"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="2"
-            tools:text="BinaryFile.attach" />
+            android:id="@+id/item_attachment_logo"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="5dp"
+            android:contentDescription="@string/entry_attachments" />
 
         <LinearLayout
-            android:id="@+id/item_attachment_size_container"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/item_attachment_action_container"
-            android:gravity="center_vertical|end"
+            android:layout_toEndOf="@+id/item_attachment_logo"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/item_attachment_size"
-                android:layout_width="wrap_content"
+                android:id="@+id/item_attachment_title"
+                style="@style/Theme.Keepass.TextAppearance.TextNode"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:firstBaselineToTopHeight="0dp"
-                android:includeFontPadding="false"
-                tools:text="1.2 Mb" />
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="2"
+                tools:text="BinaryFile.attach" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/item_attachment_compression"
-                style="@style/Theme.Keepass.Text.Tiny"
-                android:layout_width="wrap_content"
+                android:id="@+id/item_attachment_size"
+                style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:firstBaselineToTopHeight="0dp"
-                android:includeFontPadding="false"
-                android:paddingStart="8dp"
-                android:paddingLeft="8dp"
-                android:paddingEnd="8dp"
-                android:paddingRight="8dp"
-                tools:text="GZip" />
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                tools:text="1.2Mb" />
         </LinearLayout>
 
         <FrameLayout
             android:id="@+id/item_attachment_action_container"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true">
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true">
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/item_attachment_delete_button"
