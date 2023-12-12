@@ -2,7 +2,6 @@ package com.kunzisoft.keepass.activities
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.text.format.Formatter
 import android.util.Log
@@ -14,9 +13,12 @@ import androidx.appcompat.widget.Toolbar
 import com.github.barteksc.pdfviewer.PDFView
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.activities.fragments.EntryFragment.Companion.EXTRA_ACTION_DOWNLOAD
+import com.kunzisoft.keepass.activities.fragments.EntryFragment.Companion.EXTRA_ATTACHMENT_TAG
 import com.kunzisoft.keepass.activities.legacy.DatabaseLockActivity
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.Attachment
+import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import java.io.IOException
 
 class PdfViewerActivity : DatabaseLockActivity() {
@@ -29,11 +31,7 @@ class PdfViewerActivity : DatabaseLockActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdf_viewer)
 
-        attachment = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(EXTRA_ATTACHMENT, Attachment::class.java)
-        } else {
-            intent.getParcelableExtra(EXTRA_ATTACHMENT)
-        }
+        attachment = intent.getParcelableExtraCompat<Attachment>(EXTRA_ATTACHMENT_TAG)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         val titleView = findViewById<TextView>(R.id.title_view)
@@ -85,8 +83,8 @@ class PdfViewerActivity : DatabaseLockActivity() {
             R.id.menu_save_attachment -> {
                 setResult(
                     Activity.RESULT_OK, Intent()
-                        .putExtra(RESULT_DOWNLOAD, true)
-                        .putExtra(EXTRA_ATTACHMENT, attachment)
+                        .putExtra(EXTRA_ACTION_DOWNLOAD, true)
+                        .putExtra(EXTRA_ATTACHMENT_TAG, attachment)
                 )
                 finish()
             }
@@ -101,8 +99,5 @@ class PdfViewerActivity : DatabaseLockActivity() {
 
     companion object {
         private const val TAG = "PdfViewerActivity"
-
-        const val EXTRA_ATTACHMENT = "extra_attachment"
-        const val RESULT_DOWNLOAD = "download_attachment"
     }
 }
