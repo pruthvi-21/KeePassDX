@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="5dp"
     android:visibility="visible"
     app:cardCornerRadius="@dimen/card_radius"
     tools:visibility="visible">
@@ -14,26 +13,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/section_title_view"
-            style="@style/TextAppearance.Material3.ActionBar.Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="15dp"
-            android:paddingHorizontal="14dp"
-            android:textColor="?colorPrimary"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            tools:text="Information"
-            tools:visibility="visible" />
-
         <LinearLayout
             android:id="@+id/container_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="6dp" />
+            android:orientation="vertical" />
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

@@ -632,7 +632,6 @@ abstract class TemplateAbstractView<
 
         return if (!isStandardFieldName(customField.name)) {
             customFieldsContainerView.visibility = View.VISIBLE
-            customFieldsContainerView.setSectionTitle(context.getString(R.string.custom_fields))
             if (getIndexViewFieldByName(customField.name) >= 0) {
                 // Update a custom field with a new value,
                 // new field name must be the same as old field name

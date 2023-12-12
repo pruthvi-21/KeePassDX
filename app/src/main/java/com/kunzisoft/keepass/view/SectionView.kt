@@ -15,26 +15,15 @@ class SectionView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs) {
 
     private val containerSectionView: LinearLayout
-    private val sectionTitleView: TextView
 
     init {
         inflate(context, R.layout.layout_section_view, this)
         containerSectionView = findViewById(R.id.container_view)
-        sectionTitleView = findViewById(R.id.section_title_view)
     }
 
     override fun addView(child: View?) {
         visibility = View.VISIBLE
         containerSectionView.addView(child)
-    }
-
-    fun setSectionTitle(title: String?) {
-        if (title == null || title?.isEmpty() == true) {
-            sectionTitleView.visibility = View.GONE
-        } else {
-            sectionTitleView.visibility = View.VISIBLE
-            sectionTitleView.text = title
-        }
     }
 
     fun removeViewById(@IdRes viewId: Int, onFinish: ((View) -> Unit)? = null) {
