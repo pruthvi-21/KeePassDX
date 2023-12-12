@@ -15,6 +15,7 @@ import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.activities.fragments.EntryFragment.Companion.EXTRA_ACTION_DOWNLOAD
 import com.kunzisoft.keepass.activities.fragments.EntryFragment.Companion.EXTRA_ATTACHMENT_TAG
+import com.kunzisoft.keepass.activities.fragments.EntryFragment.Companion.EXTRA_PREVIEW_FAILED_TAG
 import com.kunzisoft.keepass.activities.legacy.DatabaseLockActivity
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.Attachment
@@ -39,6 +40,10 @@ class PdfViewerActivity : DatabaseLockActivity() {
         setSupportActionBar(toolbar)
 
         if (attachment == null) {
+            setResult(
+                Activity.RESULT_CANCELED,
+                Intent().putExtra(EXTRA_PREVIEW_FAILED_TAG, true)
+            )
             finish()
         }
 
@@ -60,8 +65,12 @@ class PdfViewerActivity : DatabaseLockActivity() {
                     .fromStream(unGzipInputStream)
                     .enableSwipe(true)
                     .enableDoubletap(true)
-                    .onTap {
-                        true
+                    .onError {
+                        setResult(
+                            Activity.RESULT_CANCELED,
+                            Intent().putExtra(EXTRA_PREVIEW_FAILED_TAG, true)
+                        )
+                        finish()
                     }
                     .scrollHandle(DefaultScrollHandle(this))
                     .spacing(3)

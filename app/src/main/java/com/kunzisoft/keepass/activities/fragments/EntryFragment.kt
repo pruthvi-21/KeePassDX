@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
@@ -260,13 +261,23 @@ class EntryFragment : DatabaseFragment() {
     //launcher for pdf preview
     val pdfAndImagePreviewLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data = result.data
-                if (data != null) {
-                    val attachment = data.getParcelableExtraCompat<Attachment>(EXTRA_ATTACHMENT_TAG)
-                    val value = data.getBooleanExtra(EXTRA_ACTION_DOWNLOAD, false)
-                    if (value && attachment != null) {
-                        mEntryViewModel.onAttachmentSelected(attachment)
+            when (result.resultCode) {
+                Activity.RESULT_OK -> {
+                    result.data?.let {
+                        val attachment =
+                            it.getParcelableExtraCompat<Attachment>(EXTRA_ATTACHMENT_TAG)
+                        val value = it.getBooleanExtra(EXTRA_ACTION_DOWNLOAD, false)
+                        if (value && attachment != null) {
+                            mEntryViewModel.onAttachmentSelected(attachment)
+                        }
+                    }
+                }
+
+                Activity.RESULT_CANCELED -> {
+                    result.data?.let {
+                        if (it.getBooleanExtra(EXTRA_PREVIEW_FAILED_TAG, false)) {
+                            Toast.makeText(context, "Unable to load", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
@@ -276,6 +287,7 @@ class EntryFragment : DatabaseFragment() {
 
         const val EXTRA_ACTION_DOWNLOAD = "extra_action_download"
         const val EXTRA_ATTACHMENT_TAG = "extra_attachment_tag"
+        const val EXTRA_PREVIEW_FAILED_TAG = "extra_preview_failed_tag"
 
         fun getInstance(): EntryFragment {
             return EntryFragment().apply {

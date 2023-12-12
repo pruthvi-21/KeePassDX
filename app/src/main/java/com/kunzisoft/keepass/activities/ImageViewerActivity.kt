@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.igreenwood.loupe.Loupe
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.activities.fragments.EntryFragment
 import com.kunzisoft.keepass.activities.fragments.EntryFragment.Companion.EXTRA_ACTION_DOWNLOAD
 import com.kunzisoft.keepass.activities.fragments.EntryFragment.Companion.EXTRA_ATTACHMENT_TAG
 import com.kunzisoft.keepass.activities.legacy.DatabaseLockActivity
@@ -122,7 +123,13 @@ class ImageViewerActivity : DatabaseLockActivity() {
                         }
                     }
                 }
-            } ?: finish()
+            } ?: run {
+                setResult(
+                    Activity.RESULT_CANCELED,
+                    Intent().putExtra(EntryFragment.EXTRA_PREVIEW_FAILED_TAG, true)
+                )
+                finish()
+            }
         } catch (e: Exception) {
             Log.e(TAG, "Unable to view the binary", e)
             finish()
