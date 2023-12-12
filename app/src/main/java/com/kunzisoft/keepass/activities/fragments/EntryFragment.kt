@@ -242,6 +242,27 @@ class EntryFragment : DatabaseFragment() {
 
     private fun assignAttachments(attachments: List<Attachment>) {
         attachmentsContainerView.visibility = if (attachments.isEmpty()) View.GONE else View.VISIBLE
+        attachmentsContainerView.apply {
+            val attachmentsHeaderView = findViewById<View>(R.id.entry_show_attachments)
+            val attachmentsContentView = findViewById<View>(R.id.entry_attachments_content)
+            val arrow = findViewById<ImageView>(R.id.attachments_arrow)
+            attachmentsHeaderView.setOnClickListener {
+                val currentVisibility = attachmentsContentView.isVisible
+                if (currentVisibility) {
+                    attachmentsContentView.hideByFading()
+                    arrow.animate()
+                        .rotation(0f)
+                        .setDuration(200)
+                        .start()
+                } else {
+                    attachmentsContentView.showByFading()
+                    arrow.animate()
+                        .rotation(90f)
+                        .setDuration(200)
+                        .start()
+                }
+            }
+        }
         attachmentsAdapter?.assignItems(attachments.map {
             EntryAttachmentState(it, StreamDirection.DOWNLOAD)
         })

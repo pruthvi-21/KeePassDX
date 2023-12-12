@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/entry_section_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,39 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/entry_attachments_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/card_view_margin_horizontal"
-        android:layout_marginVertical="5dp"
-        app:cardCornerRadius="12dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/card_view_padding"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/entry_attachments_label"
-                style="@style/TextAppearance.Material3.ActionBar.Title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="15dp"
-                android:paddingHorizontal="9dp"
-                android:text="@string/entry_attachments"
-                android:textColor="?colorPrimary"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/entry_attachments_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+    <include layout="@layout/layout_entry_attachments" />
 
     <include layout="@layout/layout_entry_metadata" />
 
