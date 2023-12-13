@@ -3,8 +3,8 @@ package com.kunzisoft.keepass.activities.fragments
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +18,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.activities.EntryActivity
 import com.kunzisoft.keepass.activities.ImageViewerActivity
 import com.kunzisoft.keepass.activities.PdfViewerActivity
 import com.kunzisoft.keepass.activities.TextFileViewerActivity
@@ -35,6 +33,7 @@ import com.kunzisoft.keepass.model.StreamDirection
 import com.kunzisoft.keepass.otp.OtpType
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.timeout.ClipboardHelper
+import com.kunzisoft.keepass.utils.ColorUtils
 import com.kunzisoft.keepass.utils.TimeUtil.getDateTimeString
 import com.kunzisoft.keepass.utils.UuidUtil
 import com.kunzisoft.keepass.utils.getParcelableExtraCompat
@@ -103,6 +102,9 @@ class EntryFragment : DatabaseFragment() {
 
         setupMetadata(view)
 
+        val colorSecondary =
+            ColorUtils.getColorFromAttr(requireContext(), R.attr.colorSecondary, Color.BLUE)
+
         mEntryViewModel.onOtpElementUpdated.observe(viewLifecycleOwner) { otpElement ->
             val progressView = templateView.otpView?.progressView
 
@@ -118,6 +120,11 @@ class EntryFragment : DatabaseFragment() {
                     progressView?.apply {
                         max = otpElement.period
                         setProgressCompat(otpElement.secondsRemaining, true)
+                        if (otpElement.secondsRemaining.toFloat() / max > 0.3) setIndicatorColor(
+                            colorSecondary
+                        )
+                        else setIndicatorColor(Color.RED)
+
                         visibility = View.VISIBLE
                     }
                 }
