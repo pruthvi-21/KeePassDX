@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.activities.EntryActivity
 import com.kunzisoft.keepass.activities.ImageViewerActivity
 import com.kunzisoft.keepass.activities.PdfViewerActivity
 import com.kunzisoft.keepass.activities.TextFileViewerActivity
@@ -29,6 +32,7 @@ import com.kunzisoft.keepass.database.helper.getLocalizedName
 import com.kunzisoft.keepass.model.EntryAttachmentState
 import com.kunzisoft.keepass.model.EntryInfo
 import com.kunzisoft.keepass.model.StreamDirection
+import com.kunzisoft.keepass.otp.OtpType
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.timeout.ClipboardHelper
 import com.kunzisoft.keepass.utils.TimeUtil.getDateTimeString
@@ -98,6 +102,27 @@ class EntryFragment : DatabaseFragment() {
         }
 
         setupMetadata(view)
+
+        mEntryViewModel.onOtpElementUpdated.observe(viewLifecycleOwner) { otpElement ->
+            val progressView = templateView.otpView?.progressView
+
+            if (otpElement == null) {
+                progressView?.visibility = View.GONE
+            } else when (otpElement.type) {
+                // Only add token if HOTP
+                OtpType.HOTP -> {
+                    progressView?.visibility = View.GONE
+                }
+                // Refresh view if TOTP
+                OtpType.TOTP -> {
+                    progressView?.apply {
+                        max = otpElement.period
+                        setProgressCompat(otpElement.secondsRemaining, true)
+                        visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
 
         mEntryViewModel.entryInfoHistory.observe(viewLifecycleOwner) { entryInfoHistory ->
             if (entryInfoHistory != null) {

@@ -63,6 +63,23 @@
         </LinearLayout>
     </LinearLayout>
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/entry_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="6dp"
+        android:indeterminate="false"
+        android:max="30"
+        android:progress="10"
+        android:visibility="gone"
+        app:indicatorColor="?colorSecondary"
+        app:trackColor="?colorSurfaceVariant2"
+        app:trackCornerRadius="10dp"
+        app:trackThickness="7dp"
+        tools:visibility="visible" />
+
     <include layout="@layout/divider" />
 
 </LinearLayout>

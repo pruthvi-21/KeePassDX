@@ -22,6 +22,8 @@ class TemplateView @JvmOverloads constructor(
 ) : TemplateAbstractView<TextFieldView, TextFieldView, DateTimeFieldView>
     (context, attrs, defStyle) {
 
+    var otpView: TextFieldView? = null
+
     private var mOnAskCopySafeClickListener: (() -> Unit)? = null
     fun setOnAskCopySafeClickListener(listener: (() -> Unit)? = null) {
         this.mOnAskCopySafeClickListener = listener
@@ -89,7 +91,12 @@ class TemplateView @JvmOverloads constructor(
                 }
 
                 val label = templateAttribute.label.lowercase()
-                if (!arrayOf("username", "password", "totp").contains(label)) {
+                this.progressView.visibility = if (label.equals(OTP_TOKEN_FIELD, true)) {
+                    otpView = this
+                    View.VISIBLE
+                } else View.GONE
+
+                if (!arrayOf("username", "password").contains(label)) {
                     setCopyButtonState(TextFieldView.ButtonState.GONE)
                 }
             }

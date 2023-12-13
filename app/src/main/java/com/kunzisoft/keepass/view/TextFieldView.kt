@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.core.text.util.LinkifyCompat
 import androidx.core.view.isVisible
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.template.TemplateField
 import com.kunzisoft.keepass.database.helper.isStandardPasswordName
@@ -32,6 +33,8 @@ class TextFieldView @JvmOverloads constructor(
     private var showButton: ImageButton
     private var copyButton: ImageButton
 
+    val progressView: LinearProgressIndicator
+
     init {
         inflate(context, R.layout.layout_text_field_view, this)
 
@@ -40,6 +43,8 @@ class TextFieldView @JvmOverloads constructor(
 
         showButton = findViewById(R.id.show_btn)
         copyButton = findViewById(R.id.copy_btn)
+
+        progressView = findViewById(R.id.entry_progress)
     }
 
     override fun applyFontVisibility(fontInVisibility: Boolean) {

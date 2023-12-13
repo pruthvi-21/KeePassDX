@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.activities.helpers.ExternalFileHelper
 import com.kunzisoft.keepass.activities.helpers.SpecialMode
@@ -38,7 +37,6 @@ import com.kunzisoft.keepass.database.element.icon.IconImage
 import com.kunzisoft.keepass.database.element.node.NodeId
 import com.kunzisoft.keepass.magikeyboard.MagikeyboardService
 import com.kunzisoft.keepass.model.EntryAttachmentState
-import com.kunzisoft.keepass.otp.OtpType
 import com.kunzisoft.keepass.services.AttachmentFileNotificationService
 import com.kunzisoft.keepass.services.ClipboardEntryNotificationService
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.ACTION_DATABASE_DELETE_ENTRY_HISTORY
@@ -69,7 +67,6 @@ class EntryActivity : DatabaseLockActivity() {
     private var historyView: View? = null
     private var tagsListView: RecyclerView? = null
     private var tagsAdapter: TagsAdapter? = null
-    private var entryProgress: LinearProgressIndicator? = null
     private var lockView: View? = null
     private var toolbar: Toolbar? = null
     private var loadingView: ProgressBar? = null
@@ -118,7 +115,6 @@ class EntryActivity : DatabaseLockActivity() {
         titleIconView = findViewById(R.id.entry_icon)
         historyView = findViewById(R.id.history_container)
         tagsListView = findViewById(R.id.entry_tags_list_view)
-        entryProgress = findViewById(R.id.entry_progress)
         lockView = findViewById(R.id.lock_button)
         loadingView = findViewById(R.id.loading)
 
@@ -241,25 +237,6 @@ class EntryActivity : DatabaseLockActivity() {
             }
             // Refresh Menu
             invalidateOptionsMenu()
-        }
-
-        mEntryViewModel.onOtpElementUpdated.observe(this) { otpElement ->
-            if (otpElement == null) {
-                entryProgress?.visibility = View.GONE
-            } else when (otpElement.type) {
-                // Only add token if HOTP
-                OtpType.HOTP -> {
-                    entryProgress?.visibility = View.GONE
-                }
-                // Refresh view if TOTP
-                OtpType.TOTP -> {
-                    entryProgress?.apply {
-                        max = otpElement.period
-                        setProgressCompat(otpElement.secondsRemaining, true)
-                        visibility = View.VISIBLE
-                    }
-                }
-            }
         }
 
         mEntryViewModel.attachmentSelected.observe(this) { attachmentSelected ->

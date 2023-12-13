@@ -54,17 +54,6 @@
                     app:layout_collapseMode="pin"
                     app:navigationIcon="@drawable/ic_toolbar_back_white_24dp" />
 
-                <com.google.android.material.progressindicator.LinearProgressIndicator
-                    android:id="@+id/entry_progress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:indeterminate="false"
-                    android:max="30"
-                    android:progress="10"
-                    android:visibility="gone"
-                    app:indicatorColor="?attr/colorSecondary" />
-
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
