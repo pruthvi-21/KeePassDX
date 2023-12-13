@@ -56,6 +56,7 @@
     <string name="entry_metadata">Metadata</string>
     <string name="entry_created">Created</string>
     <string name="entry_expires">Expires</string>
+    <string name="add_an_expiry_date">Add an expiry date</string>
     <string name="expired">Expired</string>
     <string name="entry_UUID">UUID</string>
     <string name="entry_history">History</string>
@@ -229,6 +230,7 @@
     <string name="menu_delete_entry_history">Delete history</string>
     <string name="menu_external_icon">External icon</string>
     <string name="never">Never</string>
+    <string name="never_expires">Never expires</string>
     <string name="no_results">No search results</string>
     <string name="no_url_handler">Install a web browser to open this URL.</string>
     <string name="database_file_history_title">Recent Files</string>

@@ -36,9 +36,8 @@ class DateTimeEditFieldView @JvmOverloads constructor(
         entryExpiresTextView = findViewById(R.id.expiration_text)
         entryExpiresCheckBox = findViewById(R.id.expiration_checkbox)
 
-        entryExpiresTextView.setOnClickListener {
-            if (entryExpiresCheckBox.isChecked)
-                setOnDateClickListener?.invoke(dateTime)
+        entryExpiresLabelView.setEndIconOnClickListener {
+            setOnDateClickListener?.invoke(dateTime)
         }
         entryExpiresCheckBox.setOnCheckedChangeListener { _, isChecked ->
             defineDateTimeAfterCheckBoxChange(isChecked)
@@ -52,9 +51,7 @@ class DateTimeEditFieldView @JvmOverloads constructor(
                 DateInstant.Type.DATE -> DateInstant.IN_ONE_MONTH_DATE
                 DateInstant.Type.TIME -> DateInstant.IN_ONE_HOUR_TIME
             }
-        } else {
-            mDefault
-        }
+        } else mDefault
     }
 
     override var label: String
@@ -87,17 +84,19 @@ class DateTimeEditFieldView @JvmOverloads constructor(
      */
     override var dateTime: DateInstant
         get() {
-            return if (activation)
-                mDateTime
-            else
-                mDefault
+            return if (activation) mDateTime
+            else mDefault
         }
         set(value) {
             mDateTime = DateInstant(value.date, mDateTime.type)
             entryExpiresTextView.text = if (entryExpiresCheckBox.isChecked) {
+                entryExpiresTextView.alpha = 1f
+                entryExpiresLabelView.isEnabled = true
                 mDateTime.getDateTimeString(resources)
             } else {
-                resources.getString(R.string.never)
+                entryExpiresTextView.alpha = 0.5f
+                entryExpiresLabelView.isEnabled = false
+                resources.getString(R.string.never_expires)
             }
         }
 
