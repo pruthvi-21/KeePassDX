@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.annotation.IdRes
+import androidx.core.view.isVisible
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.DateInstant
 import com.kunzisoft.keepass.database.element.Field
@@ -160,7 +161,7 @@ abstract class TemplateAbstractView<
                 val sectionView = SectionView(context, null)
 
                 // Build each attribute
-                templateSection.attributes.forEach { templateAttribute ->
+                templateSection.attributes.forEachIndexed { index, templateAttribute ->
                     if (templateAttribute.label != TemplateField.LABEL_TITLE) {
                         val fieldTag: String =
                             getTagFromStandardTemplateAttribute(templateAttribute)
@@ -176,6 +177,7 @@ abstract class TemplateAbstractView<
                             ),
                             fieldTag
                         )
+
                         // Add created view to this parent
                         sectionView.addView(attributeView)
                     }
