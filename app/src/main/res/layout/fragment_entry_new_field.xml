@@ -6,11 +6,18 @@
     android:layout_height="wrap_content"
     android:importantForAutofill="noExcludeDescendants"
     android:paddingStart="@dimen/default_margin"
-    android:paddingLeft="@dimen/default_margin"
     android:paddingTop="@dimen/default_margin"
     android:paddingEnd="@dimen/default_margin"
-    android:paddingRight="@dimen/default_margin"
     tools:ignore="UnusedAttribute">
+
+    <TextView
+        android:id="@+id/field_name_label"
+        style="@style/Theme.KeePass.TextInput.Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="3dp"
+        android:text="@string/field_name"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/entry_custom_field_label_container"
@@ -18,7 +25,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@+id/entry_custom_field_delete"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/field_name_label">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/entry_custom_field_label"
@@ -28,7 +35,8 @@
             android:importantForAccessibility="no"
             android:importantForAutofill="no"
             android:inputType="text"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:textIsSelectable="false" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -39,16 +47,17 @@
         android:contentDescription="@string/menu_delete"
         android:src="@drawable/ic_content_delete_white_24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/field_name_label"
+        app:tint="?colorError" />
 
-    <com.google.android.material.materialswitch.MaterialSwitch
+    <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/entry_custom_field_protection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:minHeight="48dp"
-        android:text="@string/protection"
+        android:text="@string/protect_field"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/entry_custom_field_label_container" />
 

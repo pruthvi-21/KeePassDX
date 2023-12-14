@@ -249,6 +249,7 @@
     <string name="subdomain_search_title">Subdomain search</string>
     <string name="subdomain_search_summary">Search web domains with subdomains constraints</string>
     <string name="protection">Protection</string>
+    <string name="protect_field">Protect field</string>
     <string name="contains_duplicate_uuid">The database contains duplicate UUIDs.</string>
     <string name="contains_duplicate_uuid_procedure">Solve problem by generating new UUIDs for duplicates to continue?</string>
     <string name="search_mode">Search mode</string>
