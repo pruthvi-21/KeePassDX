@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="text_color_secondary">#909090</color>
+    <color name="divider_color">#e1e1e1</color>
+    <color name="divider_color_variant">#dddddd</color>
 
     <color name="warning">#eba700</color>
     <color name="transparent">#00ffffff</color>

@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:targetApi="p">
 
-    <include layout="@layout/divider" />
+    <include layout="@layout/divider_variant" />
 
     <RelativeLayout
         android:id="@+id/item_attachment_info"

@@ -7,6 +7,8 @@
     <attr name="preferenceCornerRadius" format="dimension" />
     <attr name="preferenceTitleColor" format="color" />
     <attr name="preferenceSummaryColor" format="color" />
+    <attr name="colorDivider" format="color" />
+    <attr name="colorDividerVariant" format="color" />
 
     <attr name="dialogBackgroundColor" format="color" />
 

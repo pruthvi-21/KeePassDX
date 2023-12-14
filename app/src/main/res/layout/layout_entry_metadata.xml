@@ -67,7 +67,7 @@
                 android:textIsSelectable="true"
                 tools:text="83458748758B48347523462" />
 
-            <include layout="@layout/divider" />
+            <include layout="@layout/divider_variant" />
 
             <!-- Created -->
             <androidx.appcompat.widget.AppCompatTextView
@@ -86,7 +86,7 @@
                 android:layout_marginBottom="8dp"
                 tools:text="31-Dec-2022 21:00" />
 
-            <include layout="@layout/divider" />
+            <include layout="@layout/divider_variant" />
 
             <!-- Modified -->
             <androidx.appcompat.widget.AppCompatTextView

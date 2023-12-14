@@ -171,6 +171,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:alpha="0.15"
-        android:background="?android:textColorSecondary" />
+        android:background="?attr/colorDivider" />
 </LinearLayout>

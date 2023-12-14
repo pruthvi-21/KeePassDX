@@ -31,6 +31,9 @@
         <item name="colorSurfaceVariant">@color/surface_color_variant</item>
         <item name="colorSurfaceVariant2">@color/surface_color_variant2</item>
 
+        <item name="colorDivider">@color/divider_color</item>
+        <item name="colorDividerVariant">@color/divider_color_variant</item>
+
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="android:fitsSystemWindows">false</item>
@@ -147,7 +150,9 @@
         <item name="dividerInsetEnd">0dp</item>
     </style>
 
-    <style name="ThemeOverlay.Keepass.NavigationView" parent="" />
+    <style name="ThemeOverlay.Keepass.NavigationView" parent="">
+        <item name="android:listDivider">?attr/colorDividerVariant</item>
+    </style>
 
     <!-- Edit Text -->
     <style name="Theme.Keepass.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">

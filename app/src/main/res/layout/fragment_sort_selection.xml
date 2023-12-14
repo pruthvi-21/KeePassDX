@@ -14,8 +14,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
-        android:alpha="0.5"
-        app:cardBackgroundColor="?android:textColorSecondary"
+        app:cardBackgroundColor="?attr/colorDividerVariant"
         app:cardCornerRadius="20dp" />
 
     <com.google.android.material.chip.ChipGroup
@@ -75,8 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginVertical="15dp"
-        android:alpha="0.15"
-        android:background="?android:textColorSecondary" />
+        android:background="?attr/colorDividerVariant" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/sort_order_group"
@@ -109,8 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginVertical="15dp"
-        android:alpha="0.15"
-        android:background="?android:textColorSecondary" />
+        android:background="?attr/colorDividerVariant" />
 
     <LinearLayout
         android:layout_width="match_parent"
