@@ -11,15 +11,15 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_entry_hardware_key_layout"
-        style="@style/Theme.Keepass.Credentials.TextInputStyle.ExposedMenu"
+        style="?textInputOutlinedExposedDropdownMenuStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hardware_key">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
             android:id="@+id/input_entry_hardware_key_completion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/hardware_key"
             android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -13,8 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical"
-        android:paddingHorizontal="10dp">
+        android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -52,28 +51,23 @@
         <FrameLayout
             android:id="@+id/template_title_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingBottom="10dp" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/template_fields_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/card_view_margin_horizontal" />
+        android:orientation="vertical" />
 
     <com.kunzisoft.keepass.view.SectionView
         android:id="@+id/not_referenced_fields_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/card_view_margin_horizontal" />
+        android:layout_height="wrap_content" />
 
     <com.kunzisoft.keepass.view.SectionView
         android:id="@+id/custom_fields_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/card_view_margin_horizontal" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

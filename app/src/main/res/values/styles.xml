@@ -83,6 +83,9 @@
 
         <!-- Edit Text -->
         <item name="textInputStyle">@style/Theme.Keepass.TextInputLayout</item>
+        <item name="textInputOutlinedExposedDropdownMenuStyle">
+            @style/Theme.Keepass.TextInputLayout.ExposedMenu
+        </item>
 
         <!-- Snackbar -->
         <item name="snackbarStyle">@style/Theme.Keepass.SnackBar</item>
@@ -148,13 +151,34 @@
 
     <!-- Edit Text -->
     <style name="Theme.Keepass.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">?colorSurfaceVariant</item>
         <item name="boxCornerRadiusTopStart">@dimen/card_radius</item>
         <item name="boxCornerRadiusTopEnd">@dimen/card_radius</item>
         <item name="boxCornerRadiusBottomStart">@dimen/card_radius</item>
         <item name="boxCornerRadiusBottomEnd">@dimen/card_radius</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeColor">?colorSurfaceVariant</item>
+        <item name="hintEnabled">false</item>
     </style>
 
-    <style name="Theme.Keepass.TextInputLayout.ExposedMenu" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu" />
+    <style name="Theme.Keepass.TextInputLayout.ExposedMenu" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxBackgroundColor">?colorSurfaceVariant</item>
+        <item name="boxCornerRadiusTopStart">@dimen/card_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/card_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/card_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/card_radius</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeColor">?colorSurfaceVariant</item>
+        <item name="hintEnabled">false</item>
+    </style>
+
+    <style name="Theme.KeePass.TextInput.Label" parent="">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_color_secondary</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+    </style>
 
     <!-- Tab -->
     <style name="Theme.Keepass.TabLayout" parent="@style/Widget.Material3.TabLayout" />
@@ -463,27 +487,5 @@
         <item name="labelTextSize">14sp</item>
         <item name="verticalCorrection">-10dip</item>
         <item name="popupLayout">@layout/keyboard_popup_fields</item>
-    </style>
-
-    <style name="Theme.Keepass.Credentials.TextInputStyle" parent="Widget.Material3.TextInputLayout.OutlinedBox">
-        <item name="boxBackgroundColor">?colorSurfaceVariant</item>
-        <item name="boxCornerRadiusTopStart">@dimen/card_radius</item>
-        <item name="boxCornerRadiusTopEnd">@dimen/card_radius</item>
-        <item name="boxCornerRadiusBottomStart">@dimen/card_radius</item>
-        <item name="boxCornerRadiusBottomEnd">@dimen/card_radius</item>
-        <item name="boxStrokeWidth">0dp</item>
-        <item name="boxStrokeColor">?colorSurfaceVariant</item>
-        <item name="hintEnabled">false</item>
-    </style>
-
-    <style name="Theme.Keepass.Credentials.TextInputStyle.ExposedMenu" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-        <item name="boxBackgroundColor">?colorSurfaceVariant</item>
-        <item name="boxCornerRadiusTopStart">@dimen/card_radius</item>
-        <item name="boxCornerRadiusTopEnd">@dimen/card_radius</item>
-        <item name="boxCornerRadiusBottomStart">@dimen/card_radius</item>
-        <item name="boxCornerRadiusBottomEnd">@dimen/card_radius</item>
-        <item name="boxStrokeWidth">0dp</item>
-        <item name="boxStrokeColor">?colorSurfaceVariant</item>
-        <item name="hintEnabled">false</item>
     </style>
 </resources>

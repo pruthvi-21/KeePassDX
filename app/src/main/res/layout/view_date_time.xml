@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:filterTouchesWhenObscured="true"
     android:orientation="vertical"
+    android:paddingHorizontal="@dimen/default_margin"
     android:paddingVertical="6dp">
 
     <androidx.appcompat.widget.AppCompatTextView

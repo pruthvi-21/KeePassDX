@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="text_color_secondary">#999999</color>
+
     <color name="warning">#eed202</color>
 
     <color name="surface_color">#111115</color>

@@ -54,6 +54,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:paddingHorizontal="@dimen/default_margin"
                     android:paddingTop="@dimen/card_view_margin_vertical"
                     android:paddingBottom="128dp">
 
@@ -61,7 +62,6 @@
                         android:id="@+id/entry_edit_template_selector"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="18dp"
                         android:background="@drawable/background_spinner"
                         android:popupBackground="@drawable/background_spinner_popup"
                         android:spinnerMode="dropdown"
@@ -81,7 +81,6 @@
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
                         android:layout_marginVertical="5dp"
                         app:layout_constraintTop_toBottomOf="@id/entry_edit_content">
 

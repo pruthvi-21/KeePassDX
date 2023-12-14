@@ -9,10 +9,11 @@ import android.text.SpannableString
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.ContextThemeWrapper
+import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.content.ContextCompat
@@ -30,88 +31,71 @@ class TextEditFieldView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
-) : RelativeLayout(context, attrs, defStyle), GenericTextFieldView {
+) : LinearLayout(context, attrs, defStyle), GenericTextFieldView {
 
     private var labelViewId = ViewCompat.generateViewId()
-    private var valueViewId = ViewCompat.generateViewId()
+    private var textInputLayoutId = ViewCompat.generateViewId()
+    private var textInputEditTextId = ViewCompat.generateViewId()
     private var actionImageButtonId = ViewCompat.generateViewId()
 
-    private var textModified = false
     private var isColorizedPasswordActivated = PreferencesUtil.colorizePassword(context)
 
-    private val labelView = TextInputLayout(
-        ContextThemeWrapper(
-            context,
-            R.style.Theme_Keepass_TextInputLayout
-        )
+    private val textInputLayout = TextInputLayout(
+        ContextThemeWrapper(context, R.style.Theme_Keepass_TextInputLayout)
     ).apply {
-        layoutParams = LayoutParams(
-            LayoutParams.MATCH_PARENT,
-            LayoutParams.WRAP_CONTENT
-        )
+        layoutParams = LayoutParams(0, LayoutParams.WRAP_CONTENT).apply {
+            weight = 1f
+        }
     }
-    private val valueView = TextInputEditText(
-        ContextThemeWrapper(
-            getContext(),
-            R.style.Theme_Keepass_TextInputLayout
-        )
-    ).apply {
-        layoutParams = LinearLayout.LayoutParams(
-            LayoutParams.MATCH_PARENT,
-            LayoutParams.WRAP_CONTENT
-        )
+
+    private val textInputEditText = TextInputEditText(textInputLayout.context).apply {
+        layoutParams =
+            LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         inputType = EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             imeOptions = EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING
             importantForAutofill = IMPORTANT_FOR_AUTOFILL_NO
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
-        }
+        importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
         maxLines = 1
-    }
-    private var actionImageButton = AppCompatImageButton(
-        ContextThemeWrapper(context, R.style.Theme_Keepass_ImageButton_Simple), null, 0
-    ).apply {
-        layoutParams = LayoutParams(
-            LayoutParams.WRAP_CONTENT,
-            LayoutParams.WRAP_CONTENT
-        ).also {
-            it.topMargin = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                12f,
-                resources.displayMetrics
-            ).toInt()
-            it.addRule(ALIGN_PARENT_RIGHT)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                it.addRule(ALIGN_PARENT_END)
-            }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            setHintTextColor(resources.getColorStateList(R.color.hint_color, null))
         }
+    }
+
+    private var actionImageButton = AppCompatImageButton(
+        ContextThemeWrapper(context, R.style.Theme_Keepass_ImageButton_Simple),
+        null,
+        0
+    ).apply {
+        layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         visibility = View.GONE
         contentDescription = context.getString(R.string.menu_edit)
     }
 
-    init {
-        // Manually write view to avoid view id bugs
-        buildViews()
-        // To change the password color dynamically
-        /* Fixme 1686
-        valueView.doAfterTextChanged { editable ->
-            editable?.let { text ->
-                if (textModified) {
-                    textModified = false
-                } else {
-                    textModified = true
-                    val selectionStart = valueView.selectionStart
-                    val selectionEnd = valueView.selectionEnd
-                    value = text.toString()
-                    valueView.setSelection(selectionStart, selectionEnd)
+    private val labelView =
+        TextView(ContextThemeWrapper(context, R.style.Theme_KeePass_TextInput_Label)).apply {
+            layoutParams =
+                LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
+                    bottomMargin = TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP, 3f, resources.displayMetrics
+                    ).toInt()
                 }
-            }
-        }*/
-        labelView.addView(valueView)
+        }
+
+    init {
+        orientation = VERTICAL
+        buildViews()
+
+        textInputLayout.addView(textInputEditText)
+        val linearLayout = LinearLayout(context).apply {
+            orientation = HORIZONTAL
+            addView(textInputLayout)
+            addView(actionImageButton)
+            gravity = Gravity.CENTER
+        }
         addView(labelView)
-        addView(actionImageButton)
+        addView(linearLayout)
 
         setPadding(
             0,
@@ -122,26 +106,15 @@ class TextEditFieldView @JvmOverloads constructor(
     }
 
     private fun buildViews() {
-        labelView.apply {
-            id = labelViewId
-            layoutParams = (layoutParams as LayoutParams?).also {
-                it?.addRule(LEFT_OF, actionImageButtonId)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    it?.addRule(START_OF, actionImageButtonId)
-                }
-            }
-        }
-        valueView.apply {
-            id = valueViewId
-        }
-        actionImageButton.apply {
-            id = actionImageButtonId
-        }
+        labelView.id = labelViewId
+        textInputLayout.id = textInputLayoutId
+        textInputEditText.id = textInputEditTextId
+        actionImageButton.id = actionImageButtonId
     }
 
     override fun applyFontVisibility(fontInVisibility: Boolean) {
         if (fontInVisibility)
-            valueView.applyFontVisibility()
+            textInputEditText.applyFontVisibility()
     }
 
     fun getActionImageView(): View {
@@ -163,23 +136,34 @@ class TextEditFieldView @JvmOverloads constructor(
 
     override var label: String
         get() {
-            return labelView.hint?.toString() ?: ""
+            return textInputEditText.hint?.toString() ?: ""
         }
         set(value) {
-            labelView.hint = value
+            setHint(value)
+            labelView.text = value
             // Define views Ids with label value
-            labelViewId = "labelViewId $value".hashCode()
-            valueViewId = "valueViewId $value".hashCode()
+            labelViewId = "hintViewId $value".hashCode()
+            textInputLayoutId = "labelViewId $value".hashCode()
+            textInputEditTextId = "valueViewId $value".hashCode()
             actionImageButtonId = "actionImageButtonId $value".hashCode()
             buildViews()
         }
 
+    private fun setHint(value: String) {
+        textInputEditText.hint = when (value.lowercase()) {
+            "username" -> "Username or Email"
+            "password" -> "Your password"
+            "url" -> "Website Url"
+            else -> value
+        }
+    }
+
     override var value: String
         get() {
-            return valueView.text?.toString() ?: ""
+            return textInputEditText.text?.toString() ?: ""
         }
         set(value) {
-            valueView.setText(spannableValue(value))
+            textInputEditText.setText(spannableValue(value))
         }
 
     override var default: String = ""
@@ -187,13 +171,13 @@ class TextEditFieldView @JvmOverloads constructor(
     fun setMaxChars(numberChars: Int) {
         when {
             numberChars <= 0 -> {
-                valueView.filters += InputFilter.LengthFilter(MAX_CHARS_LIMIT)
+                textInputEditText.filters += InputFilter.LengthFilter(MAX_CHARS_LIMIT)
             }
 
             else -> {
                 @Suppress("KotlinConstantConditions")
                 val chars = if (numberChars > MAX_CHARS_LIMIT) MAX_CHARS_LIMIT else numberChars
-                valueView.filters += InputFilter.LengthFilter(chars)
+                textInputEditText.filters += InputFilter.LengthFilter(chars)
             }
         }
     }
@@ -201,35 +185,35 @@ class TextEditFieldView @JvmOverloads constructor(
     fun setMaxLines(numberLines: Int) {
         when {
             numberLines == 1 -> {
-                valueView.inputType = valueView.inputType or
+                textInputEditText.inputType = textInputEditText.inputType or
                         InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_NORMAL
-                valueView.maxLines = 1
+                textInputEditText.maxLines = 1
             }
 
             numberLines <= 0 -> {
-                valueView.inputType = valueView.inputType or
+                textInputEditText.inputType = textInputEditText.inputType or
                         InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
-                valueView.maxLines = MAX_LINES_LIMIT
+                textInputEditText.maxLines = MAX_LINES_LIMIT
             }
 
             else -> {
                 @Suppress("KotlinConstantConditions")
                 val lines = if (numberLines > MAX_LINES_LIMIT) MAX_LINES_LIMIT else numberLines
-                valueView.inputType = valueView.inputType or
+                textInputEditText.inputType = textInputEditText.inputType or
                         InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
-                valueView.maxLines = lines
+                textInputEditText.maxLines = lines
             }
         }
     }
 
     fun setProtection(protection: Boolean) {
         if (protection) {
-            labelView.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
+            textInputLayout.endIconMode = TextInputLayout.END_ICON_PASSWORD_TOGGLE
             val visibilityTag = if (PreferencesUtil.hideProtectedValue(context))
                 InputType.TYPE_TEXT_VARIATION_PASSWORD
             else
                 InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-            valueView.inputType = valueView.inputType or visibilityTag
+            textInputEditText.inputType = textInputEditText.inputType or visibilityTag
         }
     }
 
