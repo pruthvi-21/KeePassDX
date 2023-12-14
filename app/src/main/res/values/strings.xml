@@ -77,12 +77,17 @@
     <string name="save">Save</string>
     <string name="entry_title">Title</string>
     <string name="otp_type">OTP type</string>
+    <string name="otp_type_totp">TOTP</string>
+    <string name="otp_type_hotp">HOTP</string>
     <string name="otp_secret">Secret</string>
     <string name="otp_period">Period (seconds)</string>
     <string name="otp_counter">Counter</string>
     <string name="otp_digits">Digits</string>
     <string name="search_filters">Search filters</string>
     <string name="otp_algorithm">Algorithm</string>
+    <string name="otp_algorithm_sha1">SHA1</string>
+    <string name="otp_algorithm_sha256">SHA256</string>
+    <string name="otp_algorithm_sha512">SHA512</string>
     <string name="current_group">Current group</string>
     <string name="case_sensitive">Case sensitive</string>
     <string name="regex">Regular expression</string>

@@ -279,15 +279,12 @@ enum class OtpTokenType {
             }
         }
 
-        fun getTotpTokenTypeValues(getProprietaryElements: Boolean = true): Array<OtpTokenType> {
-            return if (getProprietaryElements)
-                arrayOf(RFC6238, STEAM)
-            else
-                arrayOf(RFC6238)
+        fun getTotpTokenTypeValues(): Array<OtpTokenType> {
+            return arrayOf(RFC6238, STEAM)
         }
 
         fun getHotpTokenTypeValues(): Array<OtpTokenType> {
-            return  arrayOf(RFC4226)
+            return arrayOf(RFC4226)
         }
     }
 }

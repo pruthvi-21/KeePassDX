@@ -58,40 +58,39 @@
             android:layout_marginVertical="@dimen/default_margin"
             android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/otp_type_group"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                app:checkedButton="@id/otp_type_totp"
+                app:selectionRequired="true"
+                app:singleSelection="true">
 
-                <TextView
-                    android:id="@+id/setup_otp_type_label"
-                    style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/otp_type"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <!-- HOTP / TOTP -->
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/setup_otp_type"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/otp_type_totp"
+                    style="?materialButtonOutlinedStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="3dp"
-                    android:minHeight="48dp"
-                    app:layout_constraintEnd_toStartOf="@id/setup_otp_token_type"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/setup_otp_type_label" />
+                    android:layout_weight="1"
+                    android:text="@string/otp_type_totp" />
 
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/setup_otp_token_type"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/otp_type_hotp"
+                    style="?materialButtonOutlinedStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:minHeight="48dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/setup_otp_type"
-                    app:layout_constraintTop_toBottomOf="@+id/setup_otp_type_label" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_weight="1"
+                    android:text="@string/otp_type_hotp" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
 
-            <!-- Secret -->
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/setup_otp_token_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:background="@drawable/background_spinner"
+                android:minHeight="48dp" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/setup_otp_secret_label"
                 android:layout_width="match_parent"
@@ -106,8 +105,7 @@
                     android:hint="@string/otp_secret"
                     android:importantForAccessibility="no"
                     android:importantForAutofill="no"
-                    android:inputType="textPassword"
-                    tools:targetApi="jelly_bean" />
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
@@ -117,36 +115,81 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="@dimen/default_margin"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <!-- Algorithm -->
-            <TextView
-                style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Theme.KeePass.TextInput.Label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:text="@string/otp_algorithm" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/otp_algo_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:checkedButton="@id/algo_sha1"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/algo_sha1"
+                        style="?materialButtonOutlinedStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:text="@string/otp_algorithm_sha1" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/algo_sha256"
+                        style="?materialButtonOutlinedStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:text="@string/otp_algorithm_sha256" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/algo_sha512"
+                        style="?materialButtonOutlinedStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:text="@string/otp_algorithm_sha512" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/otp_algorithm" />
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/setup_otp_algorithm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="48dp" />
+                <TextView
+                    android:id="@+id/label_period"
+                    style="@style/Theme.KeePass.TextInput.Label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:text="@string/otp_period" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <!-- Period / Counter -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/setup_otp_period_label"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="3dp"
-                    android:visibility="visible"
-                    app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:visibility="visible">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/setup_otp_period"
@@ -159,20 +202,23 @@
                         android:importantForAutofill="no"
                         android:inputType="numberSigned"
                         android:maxLength="3"
-                        tools:targetApi="jelly_bean"
                         tools:text="30" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <TextView
+                    android:id="@+id/label_counter"
+                    style="@style/Theme.KeePass.TextInput.Label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/otp_counter" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/setup_otp_counter_label"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="3dp"
-                    android:visibility="gone"
-
-                    app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:visibility="visible">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/setup_otp_counter"
@@ -183,26 +229,21 @@
                         android:importantForAccessibility="no"
                         android:importantForAutofill="no"
                         android:inputType="numberSigned"
-                        tools:targetApi="jelly_bean"
                         tools:text="1" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/vertical_guideline"
-                    android:layout_width="1dp"
+                <TextView
+                    android:id="@+id/label_digits"
+                    style="@style/Theme.KeePass.TextInput.Label"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.5" />
+                    android:layout_marginTop="5dp"
+                    android:text="@string/otp_digits" />
 
-                <!-- Digits -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/setup_otp_digits_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/vertical_guideline"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/setup_otp_digits"
@@ -215,10 +256,9 @@
                         android:importantForAutofill="no"
                         android:inputType="numberSigned"
                         android:maxLength="2"
-                        tools:targetApi="jelly_bean"
                         tools:text="6" />
                 </com.google.android.material.textfield.TextInputLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

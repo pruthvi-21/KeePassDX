@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.textfield.TextInputLayout
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.model.OtpModel
@@ -25,7 +26,6 @@ import com.kunzisoft.keepass.otp.OtpElement.Companion.MIN_TOTP_PERIOD
 import com.kunzisoft.keepass.otp.OtpTokenType
 import com.kunzisoft.keepass.otp.OtpType
 import com.kunzisoft.keepass.otp.TokenCalculator
-import com.kunzisoft.keepass.utils.UriUtil.isContributingUser
 import com.kunzisoft.keepass.utils.UriUtil.openUrl
 import com.kunzisoft.keepass.utils.getParcelableCompat
 import java.util.*
@@ -37,23 +37,23 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
     private var mOtpElement: OtpElement = OtpElement()
 
     private var otpTypeMessage: TextView? = null
-    private var otpTypeSpinner: Spinner? = null
+    private var otpTypeGroup: MaterialButtonToggleGroup? = null
     private var otpTokenTypeSpinner: Spinner? = null
     private var otpSecretContainer: TextInputLayout? = null
     private var otpSecretTextView: EditText? = null
+    private var otpPeriodLabelView: TextView? = null
     private var otpPeriodContainer: TextInputLayout? = null
     private var otpPeriodTextView: EditText? = null
+    private var otpCounterLabelView: TextView? = null
     private var otpCounterContainer: TextInputLayout? = null
     private var otpCounterTextView: EditText? = null
     private var otpDigitsContainer: TextInputLayout? = null
     private var otpDigitsTextView: EditText? = null
-    private var otpAlgorithmSpinner: Spinner? = null
+    private var otpAlgorithmGroup: MaterialButtonToggleGroup? = null
 
-    private var otpTypeAdapter: ArrayAdapter<OtpType>? = null
     private var otpTokenTypeAdapter: ArrayAdapter<OtpTokenType>? = null
     private var totpTokenTypeAdapter: ArrayAdapter<OtpTokenType>? = null
     private var hotpTokenTypeAdapter: ArrayAdapter<OtpTokenType>? = null
-    private var otpAlgorithmAdapter: ArrayAdapter<TokenCalculator.HashAlgorithm>? = null
     private var mHotpTokenTypeArray: Array<OtpTokenType>? = null
     private var mTotpTokenTypeArray: Array<OtpTokenType>? = null
 
@@ -129,13 +129,15 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
             val root =
                 activity.layoutInflater.inflate(R.layout.fragment_set_otp, null) as ViewGroup?
             otpTypeMessage = root?.findViewById(R.id.setup_otp_type_message)
-            otpTypeSpinner = root?.findViewById(R.id.setup_otp_type)
+            otpTypeGroup = root?.findViewById(R.id.otp_type_group)
             otpTokenTypeSpinner = root?.findViewById(R.id.setup_otp_token_type)
             otpSecretContainer = root?.findViewById(R.id.setup_otp_secret_label)
             otpSecretTextView = root?.findViewById(R.id.setup_otp_secret)
-            otpAlgorithmSpinner = root?.findViewById(R.id.setup_otp_algorithm)
+            otpAlgorithmGroup = root?.findViewById(R.id.otp_algo_group)
+            otpPeriodLabelView = root?.findViewById(R.id.label_period)
             otpPeriodContainer = root?.findViewById(R.id.setup_otp_period_label)
             otpPeriodTextView = root?.findViewById(R.id.setup_otp_period)
+            otpCounterLabelView = root?.findViewById(R.id.label_counter)
             otpCounterContainer = root?.findViewById(R.id.setup_otp_counter_label)
             otpCounterTextView = root?.findViewById(R.id.setup_otp_counter)
             otpDigitsContainer = root?.findViewById(R.id.setup_otp_digits_label)
@@ -145,10 +147,14 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
             // With tab keyboard selection
             otpSecretTextView?.onFocusChangeListener = mOnFocusChangeListener
             // With finger selection
-            otpTypeSpinner?.setOnTouchListener(mOnTouchListener)
+            root?.findViewById<Button>(R.id.algo_sha1)?.setOnTouchListener(mOnTouchListener)
+            root?.findViewById<Button>(R.id.algo_sha256)?.setOnTouchListener(mOnTouchListener)
+            root?.findViewById<Button>(R.id.algo_sha512)?.setOnTouchListener(mOnTouchListener)
+            root?.findViewById<Button>(R.id.otp_type_totp)?.setOnTouchListener(mOnTouchListener)
+            root?.findViewById<Button>(R.id.otp_type_hotp)?.setOnTouchListener(mOnTouchListener)
             otpTokenTypeSpinner?.setOnTouchListener(mOnTouchListener)
             otpSecretTextView?.setOnTouchListener(mOnTouchListener)
-            otpAlgorithmSpinner?.setOnTouchListener(mOnTouchListener)
+            otpAlgorithmGroup?.setOnTouchListener(mOnTouchListener)
             otpPeriodTextView?.setOnTouchListener(mOnTouchListener)
             otpCounterTextView?.setOnTouchListener(mOnTouchListener)
             otpDigitsTextView?.setOnTouchListener(mOnTouchListener)
@@ -176,16 +182,6 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
                     false
             }
 
-            // HOTP / TOTP Type selection
-            val otpTypeArray = OtpType.values()
-            otpTypeAdapter = ArrayAdapter(
-                activity,
-                android.R.layout.simple_spinner_item, otpTypeArray
-            ).apply {
-                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            }
-            otpTypeSpinner?.adapter = otpTypeAdapter
-
             // Otp Token type selection
             mHotpTokenTypeArray = OtpTokenType.getHotpTokenTypeValues()
             hotpTokenTypeAdapter = ArrayAdapter(
@@ -195,9 +191,7 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
             // Proprietary only on full version
-            mTotpTokenTypeArray = OtpTokenType.getTotpTokenTypeValues(
-                activity.isContributingUser()
-            )
+            mTotpTokenTypeArray = OtpTokenType.getTotpTokenTypeValues()
             totpTokenTypeAdapter = ArrayAdapter(
                 activity,
                 android.R.layout.simple_spinner_item, mTotpTokenTypeArray!!
@@ -206,16 +200,6 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
             }
             otpTokenTypeAdapter = hotpTokenTypeAdapter
             otpTokenTypeSpinner?.adapter = otpTokenTypeAdapter
-
-            // OTP Algorithm
-            val otpAlgorithmArray = TokenCalculator.HashAlgorithm.values()
-            otpAlgorithmAdapter = ArrayAdapter(
-                activity,
-                android.R.layout.simple_spinner_item, otpAlgorithmArray
-            ).apply {
-                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            }
-            otpAlgorithmSpinner?.adapter = otpAlgorithmAdapter
 
             // Set the default value of OTP element
             upgradeType()
@@ -260,21 +244,13 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
 
     private fun attachListeners() {
         // Set Type listener
-        otpTypeSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (mManualEvent) {
-                    (parent?.selectedItem as OtpType?)?.let {
-                        mOtpElement.type = it
-                        upgradeTokenType()
-                    }
+        otpTypeGroup?.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            if (mManualEvent && isChecked) {
+                mOtpElement.type = when (checkedId) {
+                    R.id.otp_type_hotp -> OtpType.HOTP
+                    else -> OtpType.TOTP
                 }
+                upgradeTokenType()
             }
         }
 
@@ -297,20 +273,13 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
             }
         }
 
-        // Set algorithm spinner
-        otpAlgorithmSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (mManualEvent) {
-                    (parent?.selectedItem as TokenCalculator.HashAlgorithm?)?.let {
-                        mOtpElement.algorithm = it
-                    }
+        // Set algorithm button group
+        otpAlgorithmGroup?.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            if (mManualEvent && isChecked) {
+                mOtpElement.algorithm = when (checkedId) {
+                    R.id.algo_sha256 -> TokenCalculator.HashAlgorithm.SHA256
+                    R.id.algo_sha512 -> TokenCalculator.HashAlgorithm.SHA512
+                    else -> TokenCalculator.HashAlgorithm.SHA1
                 }
             }
         }
@@ -404,7 +373,12 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
     }
 
     private fun upgradeType() {
-        otpTypeSpinner?.setSelection(OtpType.values().indexOf(mOtpElement.type))
+        otpTypeGroup?.check(
+            when (mOtpElement.type) {
+                OtpType.TOTP -> R.id.otp_type_totp
+                OtpType.HOTP -> R.id.otp_type_hotp
+            }
+        )
     }
 
     private fun upgradeTokenType() {
@@ -412,7 +386,9 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
         when (mOtpElement.type) {
             OtpType.HOTP -> {
                 otpPeriodContainer?.visibility = View.GONE
+                otpPeriodLabelView?.visibility = View.GONE
                 otpCounterContainer?.visibility = View.VISIBLE
+                otpCounterLabelView?.visibility = View.VISIBLE
                 otpTokenTypeSpinner?.adapter = hotpTokenTypeAdapter
                 mHotpTokenTypeArray?.let { otpTokenTypeArray ->
                     defineOtpTokenTypeSpinner(otpTokenTypeArray, tokenType, OtpTokenType.RFC4226)
@@ -421,7 +397,9 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
 
             OtpType.TOTP -> {
                 otpPeriodContainer?.visibility = View.VISIBLE
+                otpPeriodLabelView?.visibility = View.VISIBLE
                 otpCounterContainer?.visibility = View.GONE
+                otpCounterLabelView?.visibility = View.GONE
                 otpTokenTypeSpinner?.adapter = totpTokenTypeAdapter
                 mTotpTokenTypeArray?.let { otpTokenTypeArray ->
                     defineOtpTokenTypeSpinner(otpTokenTypeArray, tokenType, OtpTokenType.RFC6238)
@@ -446,9 +424,12 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
     }
 
     private fun upgradeParameters() {
-        otpAlgorithmSpinner?.setSelection(
-            TokenCalculator.HashAlgorithm.values()
-                .indexOf(mOtpElement.algorithm)
+        otpAlgorithmGroup?.check(
+            when (mOtpElement.algorithm) {
+                TokenCalculator.HashAlgorithm.SHA1 -> R.id.algo_sha1
+                TokenCalculator.HashAlgorithm.SHA256 -> R.id.algo_sha256
+                TokenCalculator.HashAlgorithm.SHA512 -> R.id.algo_sha512
+            }
         )
 
         val secret = mOtpElement.getBase32Secret()
