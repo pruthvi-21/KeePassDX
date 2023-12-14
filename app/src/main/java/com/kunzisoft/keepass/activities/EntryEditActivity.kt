@@ -182,10 +182,14 @@ class EntryEditActivity : DatabaseLockActivity(),
             parentId = parent
         }
 
-        supportActionBar?.title = when {
-            entryId != null -> "Edit entry"
-            parentId != null -> "Create entry"
-            else -> ""
+        supportActionBar?.title = if (savedInstanceState?.containsKey(KEY_TOOLBAR_TITLE) == true) {
+            savedInstanceState.getString(KEY_TOOLBAR_TITLE)
+        } else {
+            when {
+                entryId != null -> "Edit entry"
+                parentId != null -> "Create entry"
+                else -> ""
+            }
         }
 
         var isNewToolbarColor = false
@@ -577,6 +581,13 @@ class EntryEditActivity : DatabaseLockActivity(),
         super.onPause()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (supportActionBar?.title != null) {
+            outState.putString(KEY_TOOLBAR_TITLE, supportActionBar!!.title!!.toString())
+        }
+    }
+
     /**
      * Add a new customized field
      */
@@ -718,6 +729,8 @@ class EntryEditActivity : DatabaseLockActivity(),
         const val KEY_ENTRY = "entry"
         const val KEY_PARENT = "parent"
         const val ADD_OR_UPDATE_ENTRY_KEY = "ADD_OR_UPDATE_ENTRY_KEY"
+
+        const val KEY_TOOLBAR_TITLE = "toolbar_title"
 
         fun registerForEntryResult(
             fragment: Fragment,
