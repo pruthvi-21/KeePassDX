@@ -103,6 +103,7 @@ class GroupActivity : DatabaseLockActivity(),
     MainCredentialDialogFragment.AskMainCredentialDialogListener {
 
     // Views
+    private var mainContainer: View? = null
     private var header: ViewGroup? = null
     private var footer: ViewGroup? = null
     private var drawerLayout: DrawerLayout? = null
@@ -292,11 +293,16 @@ class GroupActivity : DatabaseLockActivity(),
         )
         toggle.syncState()
 
-        val mainContainer = findViewById<View>(R.id.activity_group_container_view)
+
+        mainContainer = findViewById(R.id.activity_group_container_view)
+        if (savedInstanceState?.containsKey(KEY_LAYOUT_POSITION) == true) {
+            mainContainer?.translationX = savedInstanceState.getFloat(KEY_LAYOUT_POSITION, 0f)
+        }
+
         drawerLayout?.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 val slideX = drawerView.width * slideOffset
-                mainContainer.translationX = slideX
+                mainContainer?.translationX = slideX
             }
 
             override fun onDrawerOpened(drawerView: View) {}
@@ -772,6 +778,9 @@ class GroupActivity : DatabaseLockActivity(),
             outState.putParcelable(OLD_GROUP_TO_UPDATE_KEY, it)
         }
         outState.putBoolean(REQUEST_STARTUP_SEARCH_KEY, mRequestStartupSearch)
+        mainContainer?.translationX?.let {
+            if (it > 0f) outState.putFloat(KEY_LAYOUT_POSITION, it)
+        }
         super.onSaveInstanceState(outState)
     }
 
@@ -1413,6 +1422,7 @@ class GroupActivity : DatabaseLockActivity(),
         private const val GROUP_FRAGMENT_TAG = "GROUP_FRAGMENT_TAG"
         private const val OLD_GROUP_TO_UPDATE_KEY = "OLD_GROUP_TO_UPDATE_KEY"
         private const val AUTO_SEARCH_KEY = "AUTO_SEARCH_KEY"
+        private const val KEY_LAYOUT_POSITION = "layout_position"
 
         private fun buildIntent(
             context: Context,
