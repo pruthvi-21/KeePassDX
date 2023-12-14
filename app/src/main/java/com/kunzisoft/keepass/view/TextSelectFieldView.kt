@@ -1,191 +1,78 @@
 package com.kunzisoft.keepass.view
 
 import android.content.Context
-import android.os.Build
-import android.text.InputType
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.AdapterView
 import android.widget.BaseAdapter
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.annotation.DrawableRes
-import androidx.appcompat.widget.AppCompatImageButton
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.BlendModeColorFilterCompat
-import androidx.core.graphics.BlendModeCompat
-import androidx.core.view.ViewCompat
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.view.isVisible
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.kunzisoft.keepass.R
-
 
 class TextSelectFieldView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
-) : RelativeLayout(context, attrs, defStyle), GenericTextFieldView {
+) : LinearLayout(context, attrs, defStyle), GenericTextFieldView {
 
-    private var labelViewId = ViewCompat.generateViewId()
-    private var valueViewId = ViewCompat.generateViewId()
+    private var spinnerId = View.generateViewId()
+
     private var valueSpinnerAdapter = ValueSpinnerAdapter(context)
-    private var actionImageButtonId = ViewCompat.generateViewId()
     private var mDefaultPosition = 0
 
-    private val labelView = TextInputLayout(context).apply {
-        layoutParams = LayoutParams(
-            LayoutParams.MATCH_PARENT,
-            LayoutParams.WRAP_CONTENT
-        )
-    }
-    private val valueView = TextInputEditText(
-        ContextThemeWrapper(
-            context,
-            R.style.Theme_Keepass_TextInputLayout
-        )
-    ).apply {
-        layoutParams = LinearLayout.LayoutParams(
-            LayoutParams.MATCH_PARENT,
-            LayoutParams.WRAP_CONTENT
-        )
-        inputType = EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            imeOptions = EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING
-            importantForAutofill = IMPORTANT_FOR_AUTOFILL_NO
+    private var spinner: AppCompatSpinner
+
+    private val labelView =
+        TextView(ContextThemeWrapper(context, R.style.Theme_KeePass_TextInput_Label)).apply {
+            layoutParams =
+                LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
+                    bottomMargin = TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP, 3f, resources.displayMetrics
+                    ).toInt()
+                }
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
-        }
-        val drawable = ContextCompat.getDrawable(context, R.drawable.ic_arrow_down_white_24dp)
-            ?.apply {
-                mutate().colorFilter = BlendModeColorFilterCompat
-                    .createBlendModeColorFilterCompat(currentTextColor, BlendModeCompat.SRC_IN)
-            }
-        setCompoundDrawablesWithIntrinsicBounds(
-            null,
-            null,
-            drawable,
-            null
-        )
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            setCompoundDrawablesRelativeWithIntrinsicBounds(
-                null,
-                null,
-                drawable,
-                null
-            )
-        }
-        isFocusable = false
-        inputType = InputType.TYPE_NULL
-        maxLines = 1
-    }
-    private val valueSpinnerView = Spinner(context).apply {
-        layoutParams = LayoutParams(
-            0,
-            0
-        )
-    }
-    private var actionImageButton = AppCompatImageButton(
-        ContextThemeWrapper(context, R.style.Theme_Keepass_ImageButton_Simple), null, 0
-    ).apply {
-        layoutParams = LayoutParams(
-            LayoutParams.WRAP_CONTENT,
-            LayoutParams.WRAP_CONTENT
-        ).also {
-            it.topMargin = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                8f,
-                resources.displayMetrics
-            ).toInt()
-            it.addRule(ALIGN_PARENT_RIGHT)
-            it.addRule(ALIGN_PARENT_END)
-        }
-        visibility = View.GONE
-        contentDescription = context.getString(R.string.menu_edit)
-    }
 
     init {
-        // Manually write view to avoid view id bugs
+        val view = inflate(context, R.layout.layout_select_field_spinner, null)
+        spinner = view as AppCompatSpinner
+        spinner.adapter = valueSpinnerAdapter
+
+        orientation = VERTICAL
+
         buildViews()
-        labelView.addView(valueView)
         addView(labelView)
-        addView(valueSpinnerView)
-        addView(actionImageButton)
+        addView(spinner)
 
-        valueView.apply {
-            setOnClickListener {
-                valueSpinnerView.performClick()
-            }
-        }
-        valueSpinnerView.apply {
-            adapter = valueSpinnerAdapter
-            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    val stringValue = valueSpinnerAdapter.getItem(position)
-                    valueView.setText(stringValue)
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-            }
-        }
+        setPadding(
+            0,
+            (7f * resources.displayMetrics.density).toInt(),
+            0,
+            (3f * resources.displayMetrics.density).toInt()
+        )
     }
 
     private fun buildViews() {
-        labelView.apply {
-            id = labelViewId
-            layoutParams = (layoutParams as LayoutParams?).also {
-                it?.addRule(LEFT_OF, actionImageButtonId)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    it?.addRule(START_OF, actionImageButtonId)
-                }
-            }
-        }
-        valueSpinnerView.apply {
-            id = valueViewId
-            layoutParams = (layoutParams as LayoutParams?).also {
-                it?.addRule(LEFT_OF, actionImageButtonId)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    it?.addRule(START_OF, actionImageButtonId)
-                }
-                it?.addRule(BELOW, labelViewId)
-            }
-        }
-        actionImageButton.apply {
-            id = actionImageButtonId
-        }
+        spinner.id = spinnerId
     }
 
     override fun applyFontVisibility(fontInVisibility: Boolean) {
         valueSpinnerAdapter.fontVisibility = fontInVisibility
     }
 
-    fun getActionImageView(): View {
-        return actionImageButton
-    }
-
     override var label: String
         get() {
-            return labelView.hint?.toString() ?: ""
+            return labelView.text.toString()
         }
         set(value) {
-            labelView.hint = value
-            // Define views Ids with label value
-            labelViewId = "labelViewId $value".hashCode()
-            valueViewId = "valueViewId $value".hashCode()
-            actionImageButtonId = "actionImageButtonId $value".hashCode()
+            labelView.text = value
+
+            spinnerId = "valueViewId $value".hashCode()
             buildViews()
         }
 
@@ -196,14 +83,14 @@ class TextSelectFieldView @JvmOverloads constructor(
     // To define default value and retrieve selected one
     override var value: String
         get() {
-            var selectedItemString = valueSpinnerView.selectedItem?.toString()
+            var selectedItemString = spinner.selectedItem?.toString()
             if (selectedItemString.isNullOrEmpty()) {
                 selectedItemString = valueSpinnerAdapter.getItem(0)
             }
             return selectedItemString
         }
         set(value) {
-            valueSpinnerView.setSelection(valueSpinnerAdapter.getPosition(value))
+            spinner.setSelection(valueSpinnerAdapter.getPosition(value))
         }
 
     override var default: String
@@ -217,12 +104,7 @@ class TextSelectFieldView @JvmOverloads constructor(
         onActionClickListener: OnClickListener?,
         @DrawableRes actionImageId: Int?
     ) {
-        actionImageId?.let {
-            actionImageButton.setImageDrawable(ContextCompat.getDrawable(context, it))
-        }
-        actionImageButton.setOnClickListener(onActionClickListener)
-        actionImageButton.visibility =
-            if (onActionClickListener == null) View.GONE else View.VISIBLE
+
     }
 
     override var isFieldVisible: Boolean
@@ -279,7 +161,7 @@ class TextSelectFieldView @JvmOverloads constructor(
             if (valueView == null) {
                 holder = ValueSelectorViewHolder()
                 valueView = inflater.inflate(R.layout.item_select_field_value, parent, false)
-                holder.valueText = valueView?.findViewById(R.id.value_string)
+                holder.valueText = valueView?.findViewById(R.id.spinner_value)
                 if (fontVisibility)
                     holder.valueText?.applyFontVisibility()
                 valueView?.tag = holder

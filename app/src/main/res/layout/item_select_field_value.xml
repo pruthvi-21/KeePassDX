@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="48dp">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="16dp">
 
     <TextView
-        android:id="@+id/value_string"
-        style="@style/Theme.Keepass.Title"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/spinner_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:ellipsize="end"
-        android:gravity="center_vertical"
         android:maxLines="2"
-        android:paddingStart="@dimen/default_margin"
-        android:paddingLeft="@dimen/default_margin"
-        android:paddingEnd="@dimen/default_margin"
-        android:paddingRight="@dimen/default_margin"
-        tools:text="Test" />
-</FrameLayout>
+        android:textSize="16sp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        tools:text="Spinner value" />
+</LinearLayout>
