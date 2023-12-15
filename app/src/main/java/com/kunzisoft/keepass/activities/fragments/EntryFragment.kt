@@ -273,18 +273,18 @@ class EntryFragment : DatabaseFragment() {
         attachmentsContainerView.visibility = if (attachments.isEmpty()) View.GONE else View.VISIBLE
         attachmentsContainerView.apply {
             val attachmentsHeaderView = findViewById<View>(R.id.entry_show_attachments)
-            val attachmentsContentView = findViewById<View>(R.id.entry_attachments_content)
+            val attachmentsContentView =
+                findViewById<CollapsibleLinearLayout>(R.id.entry_attachments_content)
             val arrow = findViewById<ImageView>(R.id.attachments_arrow)
             attachmentsHeaderView.setOnClickListener {
-                val currentVisibility = attachmentsContentView.isVisible
-                if (currentVisibility) {
-                    attachmentsContentView.hideByFading()
+                if (attachmentsContentView.isExpanded) {
+                    attachmentsContentView.collapse()
                     arrow.animate()
                         .rotation(0f)
                         .setDuration(200)
                         .start()
                 } else {
-                    attachmentsContentView.showByFading()
+                    attachmentsContentView.expand()
                     arrow.animate()
                         .rotation(90f)
                         .setDuration(200)
