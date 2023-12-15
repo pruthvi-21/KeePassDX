@@ -3,6 +3,9 @@ package com.kunzisoft.keepass.activities.dialogs
 import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StrikethroughSpan
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -13,13 +16,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.adapters.TagsAdapter
 import com.kunzisoft.keepass.database.ContextualDatabase
+import com.kunzisoft.keepass.database.element.DateInstant
 import com.kunzisoft.keepass.database.element.icon.IconImage
 import com.kunzisoft.keepass.model.GroupInfo
-import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.utils.TimeUtil.getDateTimeString
 import com.kunzisoft.keepass.utils.UuidUtil
 import com.kunzisoft.keepass.utils.getParcelableCompat
-import com.kunzisoft.keepass.view.DateTimeFieldView
 
 class GroupDialogFragment : DatabaseDialogFragment() {
 
@@ -33,7 +35,8 @@ class GroupDialogFragment : DatabaseDialogFragment() {
     private var tagsAdapter: TagsAdapter? = null
     private lateinit var notesTextLabelView: TextView
     private lateinit var notesTextView: TextView
-    private lateinit var expirationView: DateTimeFieldView
+    private lateinit var expirationView: TextView
+    private lateinit var expirationLabel: TextView
     private lateinit var creationView: TextView
     private lateinit var modificationView: TextView
     private lateinit var searchableLabelView: TextView
@@ -78,7 +81,8 @@ class GroupDialogFragment : DatabaseDialogFragment() {
             tagsListView = root.findViewById(R.id.group_tags_list_view)
             notesTextLabelView = root.findViewById(R.id.group_note_label)
             notesTextView = root.findViewById(R.id.group_note)
-            expirationView = root.findViewById(R.id.group_expiration)
+            expirationView = root.findViewById(R.id.group_expiry)
+            expirationLabel = root.findViewById(R.id.group_expiry_label)
             creationView = root.findViewById(R.id.group_created)
             modificationView = root.findViewById(R.id.group_modified)
             searchableLabelView = root.findViewById(R.id.group_searchable_label)
@@ -130,8 +134,23 @@ class GroupDialogFragment : DatabaseDialogFragment() {
                 notesTextLabelView.visibility = View.VISIBLE
                 notesTextView.visibility = View.VISIBLE
             }
-            expirationView.activation = mGroupInfo.expires
-            expirationView.dateTime = mGroupInfo.expiryTime
+
+            val isExpired = mGroupInfo.expiryTime.isCurrentlyExpire()
+            val dateTimeString = mGroupInfo.expiryTime.getDateTimeString(resources)
+            expirationView.text = if (!isExpired) {
+                if (DateInstant.NEVER_EXPIRES.getDateTimeString(resources) == dateTimeString)
+                    "Never"
+                else dateTimeString
+            } else {
+                SpannableString(mGroupInfo.expiryTime.getDateTimeString(resources)).apply {
+                    setSpan(
+                        StrikethroughSpan(),
+                        0, dateTimeString.length,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    )
+                }
+            }
+
             creationView.text = mGroupInfo.creationTime.getDateTimeString(resources)
             modificationView.text = mGroupInfo.lastModificationTime.getDateTimeString(resources)
             searchableView.text = stringFromInheritableBoolean(mGroupInfo.searchable)
@@ -145,7 +164,7 @@ class GroupDialogFragment : DatabaseDialogFragment() {
             } else {
                 uuidReferenceView.text = uuid
                 uuidContainerView.apply {
-                    visibility = if (PreferencesUtil.showUUID(context)) View.VISIBLE else View.GONE
+                    visibility = View.VISIBLE
                 }
             }
 

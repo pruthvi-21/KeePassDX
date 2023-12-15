@@ -60,9 +60,7 @@
                 android:layout_gravity="center"
                 android:orientation="horizontal"
                 android:paddingStart="5dp"
-                android:paddingLeft="5dp"
                 android:paddingEnd="5dp"
-                android:paddingRight="5dp"
                 android:paddingBottom="@dimen/default_margin"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
@@ -72,6 +70,7 @@
                 style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="@string/entry_notes" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -79,13 +78,24 @@
                 style="@style/Theme.Keepass.TextAppearance.TextNode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:inputType="textMultiLine" />
 
             <!-- Expiration -->
-            <com.kunzisoft.keepass.view.DateTimeFieldView
-                android:id="@+id/group_expiration"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/group_expiry_label"
+                style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/entry_expires" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/group_expiry"
+                style="@style/Theme.Keepass.TextAppearance.TextNode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
 
             <!-- Created -->
             <androidx.appcompat.widget.AppCompatTextView
@@ -93,13 +103,15 @@
                 style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="@string/entry_created" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/group_created"
                 style="@style/Theme.Keepass.TextAppearance.TextNode"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
 
             <!-- Modified -->
             <androidx.appcompat.widget.AppCompatTextView
@@ -107,13 +119,15 @@
                 style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="@string/entry_modified" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/group_modified"
                 style="@style/Theme.Keepass.TextAppearance.TextNode"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
 
             <!-- Search -->
             <androidx.appcompat.widget.AppCompatTextView
@@ -150,6 +164,7 @@
                 android:id="@+id/group_UUID_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -159,17 +174,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/entry_UUID" />
 
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/group_UUID_reference"
-                        style="@style/Theme.Keepass.TextAppearance.TextNode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textIsSelectable="true" />
-                </HorizontalScrollView>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/group_UUID_reference"
+                    style="@style/Theme.Keepass.TextAppearance.TextNode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
