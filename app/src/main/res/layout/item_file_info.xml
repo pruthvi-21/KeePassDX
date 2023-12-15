@@ -76,17 +76,19 @@
                 <FrameLayout
                     android:id="@+id/file_expand_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/card_view_margin_horizontal">
+                    android:layout_height="wrap_content">
 
-                    <com.google.android.material.card.MaterialCardView
+                    <com.libx.ui.views.CollapsibleLinearLayout
+                        android:id="@+id/collapsible_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardBackgroundColor="?colorSurfaceVariant2">
+                        android:background="?colorSurfaceVariant2"
+                        app:animationDuration="150">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/item_file_info_height"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="10dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -146,7 +148,6 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="@dimen/default_margin"
-                                    android:layout_marginRight="@dimen/default_margin"
                                     android:gravity="end|center_vertical"
                                     android:paddingTop="8dp"
                                     android:textColor="?attr/colorOnSurface"
@@ -182,7 +183,7 @@
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
-                    </com.google.android.material.card.MaterialCardView>
+                    </com.libx.ui.views.CollapsibleLinearLayout>
                 </FrameLayout>
 
             </LinearLayout>

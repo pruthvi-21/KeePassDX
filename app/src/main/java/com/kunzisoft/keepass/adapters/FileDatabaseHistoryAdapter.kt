@@ -12,14 +12,12 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ViewSwitcher
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SortedList
 import androidx.recyclerview.widget.SortedListAdapterCallback
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.model.DatabaseFile
-import com.kunzisoft.keepass.view.collapse
-import com.kunzisoft.keepass.view.expand
+import com.libx.ui.views.CollapsibleLinearLayout
 
 class FileDatabaseHistoryAdapter(
     context: Context,
@@ -136,19 +134,8 @@ class FileDatabaseHistoryAdapter(
         // Click on information
         val isExpanded = superDatabaseFile == mExpandedDatabaseFile
         // Hides or shows info
-        holder.fileExpandContainer.apply {
-            if (isExpanded) {
-                if (visibility != View.VISIBLE) {
-                    visibility = View.VISIBLE
-                    expand(
-                        true,
-                        resources.getDimensionPixelSize(R.dimen.item_file_info_height),
-                        200L
-                    )
-                }
-            } else {
-                collapse(true, 200L)
-            }
+        holder.fileCollapsibleLayout.apply {
+            if (isExpanded) expand() else collapse()
         }
 
         // Save alias modification
@@ -326,7 +313,8 @@ class FileDatabaseHistoryAdapter(
         var fileAliasEdit: EditText = itemView.findViewById(R.id.file_alias_edit)
         var fileAliasCloseButton: ImageView = itemView.findViewById(R.id.file_alias_save)
 
-        var fileExpandContainer: ViewGroup = itemView.findViewById(R.id.file_expand_container)
+        var fileCollapsibleLayout: CollapsibleLinearLayout =
+            itemView.findViewById(R.id.collapsible_layout)
         var fileModifyButton: TextView = itemView.findViewById(R.id.file_modify_button)
         var fileDeleteButton: TextView = itemView.findViewById(R.id.file_delete_button)
         var filePath: TextView = itemView.findViewById(R.id.file_path)
