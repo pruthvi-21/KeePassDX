@@ -24,7 +24,7 @@ class CollapsibleLinearLayout @JvmOverloads constructor(
         private set
 
     private var isMoving: Boolean = false
-    protected var animDuration: Long
+    var animDuration: Long
 
     private val defaultClickListener = OnClickListener {
         if (isExpanded)
@@ -49,6 +49,10 @@ class CollapsibleLinearLayout @JvmOverloads constructor(
         typedArray.recycle()
 
         addView(contentView)
+
+        contentView.postDelayed({
+            expand(0, true)
+        }, 200)
     }
 
     override fun onFinishInflate() {
@@ -78,6 +82,10 @@ class CollapsibleLinearLayout @JvmOverloads constructor(
     }
 
     fun expand(timeAnim: Long = animDuration) {
+        expand(timeAnim, false)
+    }
+
+    private fun expand(timeAnim: Long, initial: Boolean) {
         if (isMoving) return
         listener?.onExpandChanged(true)
         isMoving = true
@@ -94,6 +102,9 @@ class CollapsibleLinearLayout @JvmOverloads constructor(
             onAnimationEnd {
                 isExpanded = true
                 isMoving = false
+                if (initial) {
+                    collapse()
+                }
             }
             duration = timeAnim
             start()
