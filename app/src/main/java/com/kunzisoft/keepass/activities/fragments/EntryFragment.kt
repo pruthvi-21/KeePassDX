@@ -41,6 +41,7 @@ import com.kunzisoft.keepass.view.TemplateView
 import com.kunzisoft.keepass.view.hideByFading
 import com.kunzisoft.keepass.view.showByFading
 import com.kunzisoft.keepass.viewmodels.EntryViewModel
+import com.libx.ui.views.CollapsibleLinearLayout
 
 class EntryFragment : DatabaseFragment() {
 
@@ -156,22 +157,18 @@ class EntryFragment : DatabaseFragment() {
         modificationDateView = view.findViewById(R.id.entry_modified)
 
         val metadataHeaderView = view.findViewById<View>(R.id.entry_show_metadata)
-        val metadataContentView = view.findViewById<View>(R.id.entry_metadata_content)
+        val metadataContentView =
+            view.findViewById<CollapsibleLinearLayout>(R.id.entry_metadata_content)
         val arrow = view.findViewById<ImageView>(R.id.arrow)
         metadataHeaderView.setOnClickListener {
-            val currentVisibility = metadataContentView.isVisible
-            if (currentVisibility) {
-                metadataContentView.hideByFading()
-                arrow.animate()
-                    .rotation(0f)
-                    .setDuration(200)
-                    .start()
-            } else {
-                metadataContentView.showByFading()
-                arrow.animate()
-                    .rotation(90f)
-                    .setDuration(200)
-                    .start()
+            metadataContentView.apply {
+                if (isExpanded) {
+                    collapse()
+                    arrow.animate().rotation(0f).setDuration(150).start()
+                } else {
+                    expand()
+                    arrow.animate().rotation(90f).setDuration(150).start()
+                }
             }
         }
     }

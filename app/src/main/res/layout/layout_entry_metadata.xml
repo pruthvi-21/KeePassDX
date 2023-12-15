@@ -42,68 +42,73 @@
                 app:tint="?android:textColorSecondary" />
         </LinearLayout>
 
-        <LinearLayout
+        <com.libx.ui.views.CollapsibleLinearLayout
             android:id="@+id/entry_metadata_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/card_view_padding"
-            android:visibility="gone"
-            tools:visibility="visible">
+            app:animationDuration="150">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/entry_UUID_label"
-                style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/entry_UUID" />
+                android:orientation="vertical"
+                android:padding="@dimen/card_view_padding"
+                tools:visibility="visible">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/entry_UUID_reference"
-                style="@style/Theme.Keepass.TextAppearance.TextNode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:textIsSelectable="true"
-                tools:text="83458748758B48347523462" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/entry_UUID_label"
+                    style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/entry_UUID" />
 
-            <include layout="@layout/divider_variant" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/entry_UUID_reference"
+                    style="@style/Theme.Keepass.TextAppearance.TextNode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:textIsSelectable="true"
+                    tools:text="83458748758B48347523462" />
 
-            <!-- Created -->
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/entry_created_label"
-                style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/entry_created" />
+                <include layout="@layout/divider_variant" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/entry_created"
-                style="@style/Theme.Keepass.TextAppearance.TextNode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                tools:text="31-Dec-2022 21:00" />
+                <!-- Created -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/entry_created_label"
+                    style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/entry_created" />
 
-            <include layout="@layout/divider_variant" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/entry_created"
+                    style="@style/Theme.Keepass.TextAppearance.TextNode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    tools:text="31-Dec-2022 21:00" />
 
-            <!-- Modified -->
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/entry_modified_label"
-                style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@string/entry_modified" />
+                <include layout="@layout/divider_variant" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/entry_modified"
-                style="@style/Theme.Keepass.TextAppearance.TextNode"
-                android:layout_width="match_parent"
-                android:layout_marginBottom="4dp"
-                android:layout_height="wrap_content"
-                tools:text="31-Dec-2023 21:00" />
-        </LinearLayout>
+                <!-- Modified -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/entry_modified_label"
+                    style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/entry_modified" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/entry_modified"
+                    style="@style/Theme.Keepass.TextAppearance.TextNode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    tools:text="31-Dec-2023 21:00" />
+            </LinearLayout>
+        </com.libx.ui.views.CollapsibleLinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
