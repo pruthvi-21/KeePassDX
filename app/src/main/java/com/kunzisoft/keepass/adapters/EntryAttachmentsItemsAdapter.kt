@@ -64,7 +64,6 @@ class EntryAttachmentsItemsAdapter(context: Context) :
     override fun onBindViewHolder(holder: EntryBinariesViewHolder, position: Int) {
         val entryAttachmentState = itemsList[position]
 
-        if (position == 0) holder.divider.isVisible = false
         var fileType = FileType.OTHER
 
         holder.itemView.visibility = View.VISIBLE
@@ -178,7 +177,6 @@ class EntryAttachmentsItemsAdapter(context: Context) :
 
     class EntryBinariesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        var divider: View = itemView.findViewById(R.id.divider)
         var binaryFileInfo: View = itemView.findViewById(R.id.item_attachment_info)
         var binaryFileTitle: TextView = itemView.findViewById(R.id.item_attachment_title)
         var binaryFileSize: TextView = itemView.findViewById(R.id.item_attachment_size)

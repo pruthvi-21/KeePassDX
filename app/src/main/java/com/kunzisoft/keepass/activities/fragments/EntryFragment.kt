@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,8 +38,8 @@ import com.kunzisoft.keepass.utils.ColorUtils
 import com.kunzisoft.keepass.utils.TimeUtil.getDateTimeString
 import com.kunzisoft.keepass.utils.UuidUtil
 import com.kunzisoft.keepass.utils.getParcelableExtraCompat
+import com.kunzisoft.keepass.view.DividerItemDecorator
 import com.kunzisoft.keepass.view.TemplateView
-import com.kunzisoft.keepass.view.hideByFading
 import com.kunzisoft.keepass.view.showByFading
 import com.kunzisoft.keepass.viewmodels.EntryViewModel
 import com.libx.ui.views.CollapsibleLinearLayout
@@ -100,6 +101,12 @@ class EntryFragment : DatabaseFragment() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
+
+        attachmentsListView.addItemDecoration(
+            DividerItemDecorator(
+                ResourcesCompat.getDrawable(resources, R.drawable.divider, requireContext().theme)
+            )
+        )
 
         setupMetadata(view)
 
