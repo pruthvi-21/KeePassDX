@@ -56,10 +56,11 @@ class DateTimeEditFieldView @JvmOverloads constructor(
 
     override var label: String
         get() {
-            return entryExpiresLabelView.hint.toString()
+            return entryExpiresCheckBox.hint.toString()
         }
         set(value) {
             entryExpiresLabelView.hint = value
+            entryExpiresCheckBox.text = value
         }
 
     var type: DateInstant.Type
