@@ -1,5 +1,6 @@
 package com.kunzisoft.keepass.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.model.EntryInfo
-import com.kunzisoft.keepass.utils.TimeUtil.getDateTimeStringShort
+import com.kunzisoft.keepass.utils.TimeUtil.getDateTimeString
 
 class EntryHistoryAdapter(val context: Context) :
     RecyclerView.Adapter<EntryHistoryAdapter.EntryHistoryViewHolder>() {
@@ -27,13 +28,14 @@ class EntryHistoryAdapter(val context: Context) :
         )
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: EntryHistoryViewHolder, position: Int) {
         val entryHistory = entryHistoryList[position]
 
         holder.lastModifiedView.text =
-            entryHistory.lastModificationTime.getDateTimeStringShort(context.resources)
+            entryHistory.lastModificationTime.getDateTimeString(context.resources)
         holder.titleView.text = entryHistory.title
-        holder.usernameView.text = entryHistory.username
+        holder.slNo.text = (itemCount - position).toString()
 
         holder.itemView.setOnClickListener {
             onItemClickListener?.invoke(entryHistory, position)
@@ -52,6 +54,6 @@ class EntryHistoryAdapter(val context: Context) :
 
         var lastModifiedView: TextView = itemView.findViewById(R.id.entry_history_last_modified)
         var titleView: TextView = itemView.findViewById(R.id.entry_history_title)
-        var usernameView: TextView = itemView.findViewById(R.id.entry_history_username)
+        var slNo: TextView = itemView.findViewById(R.id.sl_no)
     }
 }

@@ -1,45 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?selectableItemBackground"
-    android:gravity="center"
-    android:minHeight="48dp"
-    android:orientation="horizontal"
-    android:weightSum="3">
+    android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/entry_history_last_modified"
-        style="@style/Theme.Keepass.TextAppearance.TextNode"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:textSize="13sp"
-        tools:text="Last Modified" />
+    <include layout="@layout/divider_variant" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/entry_history_title"
-        style="@style/Theme.Keepass.TextAppearance.TextNode"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="6"
-        android:textSize="15sp"
-        tools:text="Title" />
+        android:background="?selectableItemBackground"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        android:weightSum="3">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/entry_history_username"
-        style="@style/Theme.Keepass.TextAppearance.TextNode"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:maxLines="6"
-        android:textSize="15sp"
-        tools:text="Username" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/sl_no"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/circle"
+            android:backgroundTint="?colorSurfaceVariant2"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/entry_history_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:ellipsize="end"
+            android:maxLines="6"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/entry_history_last_modified"
+            app:layout_constraintStart_toEndOf="@id/sl_no"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/entry_history_last_modified"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/sl_no"
+            app:layout_constraintTop_toBottomOf="@id/entry_history_title"
+            tools:text="Last Modified" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.6"
+            android:src="@drawable/ic_arrow_right_white_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?android:textColorSecondary" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

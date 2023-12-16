@@ -1,99 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/entry_history_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/card_view_margin_horizontal"
-    android:layout_marginVertical="5dp">
+    android:background="?colorSurfaceVariant"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        style="?toolbarStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="?actionBarSize"
+        android:background="?colorSurfaceVariant"
+        app:navigationIcon="@drawable/ic_close_white_24dp"
+        app:title="@string/entry_history"
+        app:titleCentered="true" />
 
-        <LinearLayout
-            android:id="@+id/entry_show_history"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="horizontal"
-            android:paddingHorizontal="10dp">
+    <TextView
+        android:id="@+id/entry_empty_history"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:text="@string/entry_no_history"
+        android:textColor="?android:textColorSecondary" />
 
-            <TextView
-                android:id="@+id/view_history_label"
-                style="@style/Theme.Keepass.TextAppearance.TextNode"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="15dp"
-                android:text="@string/entry_show_history" />
-
-            <ImageView
-                android:id="@+id/view_history_arrow"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center"
-                android:padding="12dp"
-                android:src="@drawable/ic_arrow_right_white_24dp"
-                app:tint="?android:textColorSecondary" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/history_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/card_view_padding"
-            android:orientation="vertical"
-            android:visibility="gone"
-            tools:visibility="visible">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/entry_history_last_modified"
-                    style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/entry_modified" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/entry_history_title"
-                    style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/entry_title" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/entry_history_username"
-                    style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/entry_user_name" />
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/entry_history_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-    </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/entry_history_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

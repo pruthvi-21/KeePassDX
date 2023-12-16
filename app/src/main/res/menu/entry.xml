@@ -8,4 +8,9 @@
         android:title="@string/menu_edit"
         app:iconTint="?attr/colorControlNormal"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_show_history"
+        android:orderInCategory="100"
+        android:title="@string/entry_history"
+        app:showAsAction="never" />
 </menu>

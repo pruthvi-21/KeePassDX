@@ -15,10 +15,4 @@
     <include layout="@layout/layout_entry_metadata" />
 
     <include layout="@layout/layout_entry_attachments" />
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/entry_history"
-        android:name="com.kunzisoft.keepass.activities.fragments.EntryHistoryFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 </LinearLayout>

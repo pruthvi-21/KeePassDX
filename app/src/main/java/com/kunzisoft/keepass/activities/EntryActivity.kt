@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.activities.fragments.EntryHistoryBottomSheetFragment
 import com.kunzisoft.keepass.activities.helpers.ExternalFileHelper
 import com.kunzisoft.keepass.activities.helpers.SpecialMode
 import com.kunzisoft.keepass.activities.legacy.DatabaseLockActivity
@@ -391,6 +392,11 @@ class EntryActivity : DatabaseLockActivity() {
                     }
                 }
                 return true
+            }
+
+            R.id.menu_show_history -> {
+                EntryHistoryBottomSheetFragment()
+                    .show(supportFragmentManager, "EntryHistoryBottomSheetFragment")
             }
 
             R.id.menu_restore_entry_history -> {
