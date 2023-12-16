@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.annotation.IdRes
-import androidx.core.view.isVisible
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.DateInstant
 import com.kunzisoft.keepass.database.element.Field
@@ -56,6 +55,7 @@ abstract class TemplateAbstractView<
     protected var colorButton: ImageView
     private var titleContainerView: ViewGroup
     protected var templateContainerView: ViewGroup
+    protected var notesContainerView: ViewGroup
     private var customFieldsContainerView: SectionView
     private var notReferencedFieldsContainerView: SectionView
 
@@ -68,6 +68,8 @@ abstract class TemplateAbstractView<
         colorButton = findViewById(R.id.template_color_button)
         titleContainerView = findViewById(R.id.template_title_container)
         templateContainerView = findViewById(R.id.template_fields_container)
+        notesContainerView = findViewById(R.id.template_notes_container)
+
         // To fix card view margin below Marshmallow
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             val paddingVertical = resources.getDimensionPixelSize(R.dimen.card_view_margin_vertical)
@@ -132,6 +134,7 @@ abstract class TemplateAbstractView<
         templateContainerView.removeAllViews()
         customFieldsContainerView.removeAllViews()
         notReferencedFieldsContainerView.removeAllViews()
+        notesContainerView.removeAllViews()
         mViewFields.clear()
 
         mTemplate?.let { template ->
@@ -179,7 +182,11 @@ abstract class TemplateAbstractView<
                         )
 
                         // Add created view to this parent
-                        sectionView.addView(attributeView)
+                        if (templateAttribute.label == "Notes") {
+                            notesContainerView.addView(attributeView)
+                        } else {
+                            sectionView.addView(attributeView)
+                        }
                     }
                 }
                 // Add build view to parent
