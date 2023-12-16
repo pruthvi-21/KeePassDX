@@ -47,7 +47,7 @@ class TemplateBuilder {
             setDateFormatToDate()
         })
     private val expirationDateAttribute = TemplateAttribute(
-        TemplateField.LABEL_EXPIRATION,
+        TemplateField.LABEL_DATE_OF_EXPIRY,
         TemplateAttributeType.DATETIME,
         false,
         TemplateAttributeOption().apply {

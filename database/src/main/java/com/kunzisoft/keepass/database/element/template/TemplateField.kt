@@ -40,6 +40,7 @@ object TemplateField {
     const val LABEL_NAME = "Name"
     const val LABEL_PLACE_OF_ISSUE = "Place of issue"
     const val LABEL_DATE_OF_ISSUE = "Date of issue"
+    const val LABEL_DATE_OF_EXPIRY = "Date of expiry"
     const val LABEL_EMAIL = "Email"
     const val LABEL_EMAIL_ADDRESS = "Email address"
     const val LABEL_WIRELESS = "Wi-Fi"
