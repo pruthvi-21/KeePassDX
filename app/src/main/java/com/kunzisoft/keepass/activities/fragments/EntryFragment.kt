@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -40,6 +39,7 @@ import com.kunzisoft.keepass.utils.UuidUtil
 import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.view.DividerItemDecorator
 import com.kunzisoft.keepass.view.TemplateView
+import com.kunzisoft.keepass.view.TextFieldView
 import com.kunzisoft.keepass.view.showByFading
 import com.kunzisoft.keepass.viewmodels.EntryViewModel
 import com.libx.ui.views.CollapsibleLinearLayout
@@ -51,18 +51,17 @@ class EntryFragment : DatabaseFragment() {
 
     private lateinit var templateView: TemplateView
 
-    private lateinit var creationDateView: TextView
-    private lateinit var modificationDateView: TextView
-
     private lateinit var attachmentsContainerView: View
     private lateinit var attachmentsListView: RecyclerView
     private var attachmentsAdapter: EntryAttachmentsItemsAdapter? = null
 
-    private lateinit var uuidReferenceView: TextView
-
     private var mClipboardHelper: ClipboardHelper? = null
 
     private val mEntryViewModel: EntryViewModel by activityViewModels()
+
+    private var uuidReferenceView: TextFieldView? = null
+    private var createdDateView: TextFieldView? = null
+    private var modifiedDateView: TextFieldView? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -159,24 +158,24 @@ class EntryFragment : DatabaseFragment() {
     }
 
     private fun setupMetadata(view: View) {
-        uuidReferenceView = view.findViewById(R.id.entry_UUID_reference)
-        creationDateView = view.findViewById(R.id.entry_created)
-        modificationDateView = view.findViewById(R.id.entry_modified)
+        uuidReferenceView = view.findViewById(R.id.uuid_view)
+        createdDateView = view.findViewById(R.id.created_view)
+        modifiedDateView = view.findViewById(R.id.modified_view)
 
-        val metadataHeaderView = view.findViewById<View>(R.id.entry_show_metadata)
-        val metadataContentView =
-            view.findViewById<CollapsibleLinearLayout>(R.id.entry_metadata_content)
-        val arrow = view.findViewById<ImageView>(R.id.arrow)
-        metadataHeaderView.setOnClickListener {
-            metadataContentView.apply {
-                if (isExpanded) {
-                    collapse()
-                    arrow.animate().rotation(0f).setDuration(150).start()
-                } else {
-                    expand()
-                    arrow.animate().rotation(90f).setDuration(150).start()
-                }
-            }
+        uuidReferenceView?.apply {
+            setLabel(R.string.entry_UUID)
+            setProtection(false)
+            setCopyButtonState(TextFieldView.ButtonState.GONE)
+        }
+        createdDateView?.apply {
+            setLabel(R.string.entry_created)
+            setProtection(false)
+            setCopyButtonState(TextFieldView.ButtonState.GONE)
+        }
+        modifiedDateView?.apply {
+            setLabel(R.string.entry_modified)
+            setProtection(false)
+            setCopyButtonState(TextFieldView.ButtonState.GONE)
         }
     }
 
@@ -232,14 +231,29 @@ class EntryFragment : DatabaseFragment() {
         assignAttachments(entryInfo?.attachments ?: listOf())
 
         // Assign dates
-        creationDateView.text = entryInfo?.creationTime?.getDateTimeString(resources)
-        modificationDateView.text = entryInfo?.lastModificationTime?.getDateTimeString(resources)
+        val createdTime = entryInfo?.creationTime?.getDateTimeString(resources)
+        val modifiedTime = entryInfo?.lastModificationTime?.getDateTimeString(resources)
+
+        createdDateView?.isVisible = if (createdTime != null) {
+            createdDateView?.value = createdTime
+            true
+        } else false
+
+        modifiedDateView?.isVisible = if (modifiedTime != null) {
+            modifiedDateView?.value = modifiedTime
+            true
+        } else false
 
         // TODO Custom data
         // customDataView.text = entryInfo?.customData?.toString()
 
         // Assign special data
-        uuidReferenceView.text = UuidUtil.toHexString(entryInfo?.id)
+        context?.let {
+            uuidReferenceView?.isVisible = PreferencesUtil.showUUID(it)
+            UuidUtil.toHexString(entryInfo?.id)?.let {
+                uuidReferenceView?.value = it
+            }
+        }
     }
 
     private fun showClipboardDialog() {

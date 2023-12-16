@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <include layout="@layout/layout_entry_attachments" />
-
     <include layout="@layout/layout_entry_metadata" />
+
+    <include layout="@layout/layout_entry_attachments" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/entry_history"

@@ -1,114 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/card_view_margin_horizontal"
-    android:layout_marginVertical="5dp">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <com.kunzisoft.keepass.view.TextFieldView
+        android:id="@+id/uuid_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:id="@+id/entry_show_metadata"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="horizontal"
-            android:paddingHorizontal="10dp">
+    <com.kunzisoft.keepass.view.TextFieldView
+        android:id="@+id/created_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-            <TextView
-                style="@style/Theme.Keepass.TextAppearance.TextNode"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="15dp"
-                android:text="@string/entry_metadata" />
-
-            <ImageView
-                android:id="@+id/arrow"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center"
-                android:contentDescription="@null"
-                android:padding="12dp"
-                android:src="@drawable/ic_arrow_right_white_24dp"
-                app:tint="?android:textColorSecondary" />
-        </LinearLayout>
-
-        <com.libx.ui.views.CollapsibleLinearLayout
-            android:id="@+id/entry_metadata_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:animationDuration="150">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/card_view_padding"
-                tools:visibility="visible">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/entry_UUID_label"
-                    style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/entry_UUID" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/entry_UUID_reference"
-                    style="@style/Theme.Keepass.TextAppearance.TextNode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:textIsSelectable="true"
-                    tools:text="83458748758B48347523462" />
-
-                <include layout="@layout/divider_variant" />
-
-                <!-- Created -->
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/entry_created_label"
-                    style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/entry_created" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/entry_created"
-                    style="@style/Theme.Keepass.TextAppearance.TextNode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    tools:text="31-Dec-2022 21:00" />
-
-                <include layout="@layout/divider_variant" />
-
-                <!-- Modified -->
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/entry_modified_label"
-                    style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/entry_modified" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/entry_modified"
-                    style="@style/Theme.Keepass.TextAppearance.TextNode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    tools:text="31-Dec-2023 21:00" />
-            </LinearLayout>
-        </com.libx.ui.views.CollapsibleLinearLayout>
-    </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+    <com.kunzisoft.keepass.view.TextFieldView
+        android:id="@+id/modified_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
