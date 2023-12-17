@@ -43,31 +43,16 @@
                 tools:text="3" />
         </RelativeLayout>
 
-        <LinearLayout
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/group_name"
+            style="@style/Theme.Keepass.Title.Group"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
+            android:layout_height="match_parent"
             android:layout_marginEnd="6dp"
             android:layout_weight="1"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/group_name"
-                style="@style/Theme.Keepass.Title.Group"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="@string/root" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/group_meta"
-                style="@style/Theme.Keepass.Text.Meta.OnSurface"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:lines="1"
-                android:singleLine="true"
-                tools:text="7543A7EAB2EA7CFD1394F1615EBEB08C" />
-        </LinearLayout>
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="@string/root" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

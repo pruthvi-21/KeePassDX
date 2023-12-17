@@ -123,18 +123,6 @@ class BreadcrumbAdapter(val context: Context) :
                         visibility = View.GONE
                     }
                 }
-
-                holder.groupMetaView?.apply {
-                    val meta = group.nodeId.toVisualString()
-                    visibility = if (meta != null
-                        && !group.isVirtual
-                    ) {
-                        text = meta
-                        View.VISIBLE
-                    } else {
-                        View.GONE
-                    }
-                }
             }
         }
 
@@ -148,6 +136,5 @@ class BreadcrumbAdapter(val context: Context) :
         var groupIconView: ImageView? = itemView.findViewById(R.id.group_icon)
         var groupNumbersView: TextView? = itemView.findViewById(R.id.group_numbers)
         var groupNameView: TextView = itemView.findViewById(R.id.group_name)
-        var groupMetaView: TextView? = itemView.findViewById(R.id.group_meta)
     }
 }
