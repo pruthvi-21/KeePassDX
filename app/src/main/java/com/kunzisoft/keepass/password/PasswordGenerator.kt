@@ -18,12 +18,7 @@ class PasswordGenerator(private val resources: Resources) {
         upperCase: Boolean,
         lowerCase: Boolean,
         digits: Boolean,
-        minus: Boolean,
-        underline: Boolean,
-        space: Boolean,
         specials: Boolean,
-        brackets: Boolean,
-        extended: Boolean,
         considerChars: String,
         ignoreChars: String,
         atLeastOneFromEach: Boolean,
@@ -38,12 +33,7 @@ class PasswordGenerator(private val resources: Resources) {
         if (!upperCase
             && !lowerCase
             && !digits
-            && !minus
-            && !underline
-            && !space
             && !specials
-            && !brackets
-            && !extended
             && considerChars.isEmpty()
         ) {
             throw IllegalArgumentException(resources.getString(R.string.error_pass_gen_type))
@@ -53,8 +43,6 @@ class PasswordGenerator(private val resources: Resources) {
         val passwordFilters = PasswordFilters().apply {
             this.length = length
             this.ignoreChars = ignoreChars
-            if (excludeAmbiguousChar)
-                this.ignoreChars += AMBIGUOUS_CHARS
             if (upperCase) {
                 addFilter(
                     UPPERCASE_CHARS,
@@ -73,39 +61,9 @@ class PasswordGenerator(private val resources: Resources) {
                     if (atLeastOneFromEach) 1 else 0
                 )
             }
-            if (minus) {
-                addFilter(
-                    MINUS_CHAR,
-                    if (atLeastOneFromEach) 1 else 0
-                )
-            }
-            if (underline) {
-                addFilter(
-                    UNDERLINE_CHAR,
-                    if (atLeastOneFromEach) 1 else 0
-                )
-            }
-            if (space) {
-                addFilter(
-                    SPACE_CHAR,
-                    if (atLeastOneFromEach) 1 else 0
-                )
-            }
             if (specials) {
                 addFilter(
                     SPECIAL_CHARS,
-                    if (atLeastOneFromEach) 1 else 0
-                )
-            }
-            if (brackets) {
-                addFilter(
-                    BRACKET_CHARS,
-                    if (atLeastOneFromEach) 1 else 0
-                )
-            }
-            if (extended) {
-                addFilter(
-                    extendedChars(),
                     if (atLeastOneFromEach) 1 else 0
                 )
             }
@@ -212,12 +170,7 @@ class PasswordGenerator(private val resources: Resources) {
         private const val UPPERCASE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         private const val LOWERCASE_CHARS = "abcdefghijklmnopqrstuvwxyz"
         private const val DIGIT_CHARS = "0123456789"
-        private const val MINUS_CHAR = "-"
-        private const val UNDERLINE_CHAR = "_"
-        private const val SPACE_CHAR = " "
-        private const val SPECIAL_CHARS = "!\"#$%&'*+,./:;=?@\\^`"
-        private const val BRACKET_CHARS = "[]{}()<>"
-        private const val AMBIGUOUS_CHARS = "iI|lLoO01"
+        private const val SPECIAL_CHARS = "!@#$%^&*"
 
         // From KeePassXC code https://github.com/keepassxreboot/keepassxc/pull/538
         private fun extendedChars(): String {
@@ -259,13 +212,6 @@ class PasswordGenerator(private val resources: Resources) {
                         SPECIAL_CHARS.contains(it) -> {
                             // Blue
                             spannableString.append(colorizeChar(it, Color.rgb(39, 166, 228)))
-                        }
-
-                        MINUS_CHAR.contains(it) ||
-                                UNDERLINE_CHAR.contains(it) ||
-                                BRACKET_CHARS.contains(it) -> {
-                            // Purple
-                            spannableString.append(colorizeChar(it, Color.rgb(185, 38, 209)))
                         }
 
                         extendedChars().contains(it) -> {

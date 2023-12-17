@@ -527,8 +527,10 @@
     <string name="at_least_one_char">At least one character from each</string>
     <string name="exclude_ambiguous_chars">Exclude ambiguous characters</string>
     <string name="consider_chars_filter">Consider characters</string>
+    <string name="consider_chars_filter_hint">Consider</string>
     <string name="word_separator">Separator</string>
     <string name="ignore_chars_filter">Ignore characters</string>
+    <string name="ignore_chars_filter_hint">Ignore</string>
     <string name="lower_case">lower case</string>
     <string name="upper_case">UPPER CASE</string>
     <string name="title_case">Title Case</string>
@@ -557,4 +559,5 @@
     <string name="show_entry_colors_title">Entry colors</string>
     <string name="show_entry_colors_summary">Displays foreground and background colors for an entry</string>
     <string name="hide_expired_entries_title">Hide expired entries</string>
+    <string name="copy_password">Copy password</string>
 </resources>

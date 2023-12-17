@@ -1,14 +1,13 @@
 package com.kunzisoft.keepass.activities.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import android.widget.CompoundButton.OnCheckedChangeListener
 import android.widget.EditText
-import android.widget.ImageView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.slider.Slider
@@ -20,22 +19,16 @@ import com.kunzisoft.keepass.timeout.ClipboardHelper
 import com.kunzisoft.keepass.view.PassKeyView
 import com.kunzisoft.keepass.viewmodels.KeyGeneratorViewModel
 
-class PasswordGeneratorFragment : DatabaseFragment() {
+class PasswordGeneratorFragment : DatabaseFragment(), OnCheckedChangeListener {
 
     private lateinit var passKeyView: PassKeyView
 
     private lateinit var sliderLength: Slider
-    private lateinit var lengthEditView: EditText
 
     private lateinit var uppercaseCompound: CompoundButton
     private lateinit var lowercaseCompound: CompoundButton
     private lateinit var digitsCompound: CompoundButton
-    private lateinit var minusCompound: CompoundButton
-    private lateinit var underlineCompound: CompoundButton
-    private lateinit var spaceCompound: CompoundButton
     private lateinit var specialsCompound: CompoundButton
-    private lateinit var bracketsCompound: CompoundButton
-    private lateinit var extendedCompound: CompoundButton
     private lateinit var considerCharsEditText: EditText
     private lateinit var ignoreCharsEditText: EditText
     private lateinit var atLeastOneCompound: CompoundButton
@@ -58,20 +51,14 @@ class PasswordGeneratorFragment : DatabaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         passKeyView = view.findViewById(R.id.password_view)
-        val passwordCopyView: ImageView? = view.findViewById(R.id.password_copy_button)
+        val passwordCopyView: View? = view.findViewById(R.id.password_copy_button)
 
         sliderLength = view.findViewById(R.id.slider_length)
-        lengthEditView = view.findViewById(R.id.length)
 
         uppercaseCompound = view.findViewById(R.id.upperCase_filter)
         lowercaseCompound = view.findViewById(R.id.lowerCase_filter)
         digitsCompound = view.findViewById(R.id.digits_filter)
-        minusCompound = view.findViewById(R.id.minus_filter)
-        underlineCompound = view.findViewById(R.id.underline_filter)
-        spaceCompound = view.findViewById(R.id.space_filter)
         specialsCompound = view.findViewById(R.id.special_filter)
-        bracketsCompound = view.findViewById(R.id.brackets_filter)
-        extendedCompound = view.findViewById(R.id.extendedASCII_filter)
         considerCharsEditText = view.findViewById(R.id.consider_chars_filter)
         ignoreCharsEditText = view.findViewById(R.id.ignore_chars_filter)
         atLeastOneCompound = view.findViewById(R.id.atLeastOne_filter)
@@ -95,85 +82,28 @@ class PasswordGeneratorFragment : DatabaseFragment() {
 
         loadSettings()
 
-        uppercaseCompound.setOnCheckedChangeListener { _, _ ->
-            generatePassword()
-        }
-        lowercaseCompound.setOnCheckedChangeListener { _, _ ->
-            generatePassword()
-        }
-        digitsCompound.setOnCheckedChangeListener { _, _ ->
-            generatePassword()
-        }
-        minusCompound.setOnCheckedChangeListener { _, _ ->
-            generatePassword()
-        }
-        underlineCompound.setOnCheckedChangeListener { _, _ ->
-            generatePassword()
-        }
-        spaceCompound.setOnCheckedChangeListener { _, _ ->
-            generatePassword()
-        }
-        specialsCompound.setOnCheckedChangeListener { _, _ ->
-            generatePassword()
-        }
-        bracketsCompound.setOnCheckedChangeListener { _, _ ->
-            generatePassword()
-        }
-        extendedCompound.setOnCheckedChangeListener { _, _ ->
-            generatePassword()
-        }
+        uppercaseCompound.setOnCheckedChangeListener(this)
+        lowercaseCompound.setOnCheckedChangeListener(this)
+        digitsCompound.setOnCheckedChangeListener(this)
+        specialsCompound.setOnCheckedChangeListener(this)
+        atLeastOneCompound.setOnCheckedChangeListener(this)
+        excludeAmbiguousCompound.setOnCheckedChangeListener(this)
+
         considerCharsEditText.doOnTextChanged { _, _, _, _ ->
             generatePassword()
         }
         ignoreCharsEditText.doOnTextChanged { _, _, _, _ ->
             generatePassword()
         }
-        atLeastOneCompound.setOnCheckedChangeListener { _, _ ->
-            generatePassword()
-        }
-        excludeAmbiguousCompound.setOnCheckedChangeListener { _, _ ->
-            generatePassword()
-        }
 
-        var listenSlider = true
-        var listenEditText = true
-        sliderLength.addOnChangeListener { _, value, _ ->
-            try {
-                listenEditText = false
-                if (listenSlider) {
-                    lengthEditView.setText(value.toInt().toString())
-                }
-            } catch (e: Exception) {
-                Log.e(TAG, "Unable to set the length value", e)
-            } finally {
-                listenEditText = true
-            }
-        }
         sliderLength.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
-            // TODO upgrade material-components lib
-            // https://stackoverflow.com/questions/70873160/material-slider-onslidertouchlisteners-methods-can-only-be-called-from-within-t
-            @SuppressLint("RestrictedApi")
             override fun onStartTrackingTouch(slider: Slider) {
             }
 
-            @SuppressLint("RestrictedApi")
             override fun onStopTrackingTouch(slider: Slider) {
                 generatePassword()
             }
         })
-        lengthEditView.doOnTextChanged { _, _, _, _ ->
-            if (listenEditText) {
-                try {
-                    listenSlider = false
-                    setSliderValue(getPasswordLength())
-                } catch (e: Exception) {
-                    Log.e(TAG, "Unable to get the length value", e)
-                } finally {
-                    listenSlider = true
-                    generatePassword()
-                }
-            }
-        }
 
         // Pre-populate a password to possibly save the user a few clicks
         generatePassword()
@@ -191,7 +121,7 @@ class PasswordGeneratorFragment : DatabaseFragment() {
 
     private fun getPasswordLength(): Int {
         return try {
-            Integer.valueOf(lengthEditView.text.toString())
+            sliderLength.value.toInt()
         } catch (numberException: NumberFormatException) {
             minLengthSlider
         }
@@ -199,7 +129,6 @@ class PasswordGeneratorFragment : DatabaseFragment() {
 
     private fun setPasswordLength(passwordLength: Int) {
         setSliderValue(passwordLength)
-        lengthEditView.setText(passwordLength.toString())
     }
 
     private fun getOptions(): Set<String> {
@@ -210,18 +139,8 @@ class PasswordGeneratorFragment : DatabaseFragment() {
             optionsSet.add(getString(R.string.value_password_lowercase))
         if (digitsCompound.isChecked)
             optionsSet.add(getString(R.string.value_password_digits))
-        if (minusCompound.isChecked)
-            optionsSet.add(getString(R.string.value_password_minus))
-        if (underlineCompound.isChecked)
-            optionsSet.add(getString(R.string.value_password_underline))
-        if (spaceCompound.isChecked)
-            optionsSet.add(getString(R.string.value_password_space))
         if (specialsCompound.isChecked)
             optionsSet.add(getString(R.string.value_password_special))
-        if (bracketsCompound.isChecked)
-            optionsSet.add(getString(R.string.value_password_brackets))
-        if (extendedCompound.isChecked)
-            optionsSet.add(getString(R.string.value_password_extended))
         if (atLeastOneCompound.isChecked)
             optionsSet.add(getString(R.string.value_password_atLeastOne))
         if (excludeAmbiguousCompound.isChecked)
@@ -233,12 +152,7 @@ class PasswordGeneratorFragment : DatabaseFragment() {
         uppercaseCompound.isChecked = false
         lowercaseCompound.isChecked = false
         digitsCompound.isChecked = false
-        minusCompound.isChecked = false
-        underlineCompound.isChecked = false
-        spaceCompound.isChecked = false
         specialsCompound.isChecked = false
-        bracketsCompound.isChecked = false
-        extendedCompound.isChecked = false
         atLeastOneCompound.isChecked = false
         excludeAmbiguousCompound.isChecked = false
         for (option in options) {
@@ -246,12 +160,7 @@ class PasswordGeneratorFragment : DatabaseFragment() {
                 getString(R.string.value_password_uppercase) -> uppercaseCompound.isChecked = true
                 getString(R.string.value_password_lowercase) -> lowercaseCompound.isChecked = true
                 getString(R.string.value_password_digits) -> digitsCompound.isChecked = true
-                getString(R.string.value_password_minus) -> minusCompound.isChecked = true
-                getString(R.string.value_password_underline) -> underlineCompound.isChecked = true
-                getString(R.string.value_password_space) -> spaceCompound.isChecked = true
                 getString(R.string.value_password_special) -> specialsCompound.isChecked = true
-                getString(R.string.value_password_brackets) -> bracketsCompound.isChecked = true
-                getString(R.string.value_password_extended) -> extendedCompound.isChecked = true
                 getString(R.string.value_password_atLeastOne) -> atLeastOneCompound.isChecked = true
                 getString(R.string.value_password_excludeAmbiguous) -> excludeAmbiguousCompound.isChecked =
                     true
@@ -283,12 +192,7 @@ class PasswordGeneratorFragment : DatabaseFragment() {
                 uppercaseCompound.isChecked,
                 lowercaseCompound.isChecked,
                 digitsCompound.isChecked,
-                minusCompound.isChecked,
-                underlineCompound.isChecked,
-                spaceCompound.isChecked,
                 specialsCompound.isChecked,
-                bracketsCompound.isChecked,
-                extendedCompound.isChecked,
                 getConsiderChars(),
                 getIgnoreChars(),
                 atLeastOneCompound.isChecked,
@@ -341,6 +245,10 @@ class PasswordGeneratorFragment : DatabaseFragment() {
                 sliderLength.value = value.toFloat()
             }
         }
+    }
+
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        generatePassword()
     }
 
     companion object {

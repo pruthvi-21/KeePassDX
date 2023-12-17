@@ -175,9 +175,9 @@
 
     <!-- Password Generator Settings -->
     <string name="password_generator_length_key" translatable="false">password_generator_length_key</string>
-    <integer name="password_generator_length_min" translatable="false">1</integer>
+    <integer name="password_generator_length_min" translatable="false">4</integer>
     <integer name="password_generator_length_default" translatable="false">14</integer>
-    <integer name="password_generator_length_max" translatable="false">64</integer>
+    <integer name="password_generator_length_max" translatable="false">40</integer>
     <string name="password_generator_options_key" translatable="false">password_generator_options_key</string>
     <string name="password_generator_consider_chars_key" translatable="false">password_generator_consider_chars_key</string>
     <string name="password_generator_consider_chars_default" translatable="false" />
@@ -328,22 +328,13 @@
     <string name="value_password_uppercase" translatable="false">value_password_uppercase</string>
     <string name="value_password_lowercase" translatable="false">value_password_lowercase</string>
     <string name="value_password_digits" translatable="false">value_password_digits</string>
-    <string name="value_password_minus" translatable="false">value_password_minus</string>
-    <string name="value_password_underline" translatable="false">value_password_underline</string>
-    <string name="value_password_space" translatable="false">value_password_space</string>
     <string name="value_password_special" translatable="false">value_password_special</string>
-    <string name="value_password_brackets" translatable="false">value_password_brackets</string>
-    <string name="value_password_extended" translatable="false">value_password_extended</string>
     <string name="value_password_atLeastOne" translatable="false">value_password_atLeastOne</string>
     <string name="value_password_excludeAmbiguous" translatable="false">value_password_excludeAmbiguous</string>
-    <string name="visual_uppercase" translatable="false">A-Z</string>
-    <string name="visual_lowercase" translatable="false">a-z</string>
-    <string name="visual_digits" translatable="false">0-9</string>
-    <string name="visual_minus" translatable="false">-</string>
-    <string name="visual_underline" translatable="false">_</string>
-    <string name="visual_special" translatable="false">&amp;\/,^@.#&quot;:%\\='$!*`;+</string>
-    <string name="visual_brackets" translatable="false">[](){}&lt;&gt;</string>
-    <string name="visual_extended" translatable="false">ñæËÌÂÝÜ...</string>
+    <string name="visual_uppercase" translatable="false">Letters (A-Z)</string>
+    <string name="visual_lowercase" translatable="false">Letters (a-z)</string>
+    <string name="visual_digits" translatable="false">Digits (0-9)</string>
+    <string name="visual_special" translatable="false">Symbols (!@#$%^&amp;*)</string>
     <string-array name="list_password_generator_options_default_values">
         <item translatable="false">@string/value_password_uppercase</item>
         <item translatable="false">@string/value_password_lowercase</item>
