@@ -317,8 +317,9 @@ class EntryFragment : DatabaseFragment() {
             EntryAttachmentState(it, StreamDirection.DOWNLOAD)
         })
 
+        val isPreviewSettingEnabled = PreferencesUtil.isPreviewFilesEnabled(requireContext())
         attachmentsAdapter?.onItemClickListener = { item, fileType, viewPreview ->
-            if (viewPreview) {
+            if (isPreviewSettingEnabled && viewPreview) {
                 when (fileType) {
                     EntryAttachmentsItemsAdapter.FileType.PDF -> {
                         pdfAndImagePreviewLauncher.launch(

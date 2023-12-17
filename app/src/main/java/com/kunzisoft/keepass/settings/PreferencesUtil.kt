@@ -584,6 +584,14 @@ object PreferencesUtil {
         )
     }
 
+    fun isPreviewFilesEnabled(context: Context): Boolean {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getBoolean(
+            context.getString(R.string.enable_files_preview_key),
+            context.resources.getBoolean(R.bool.enable_files_preview_key_default)
+        )
+    }
+
     fun isAdvancedUnlockEnable(context: Context): Boolean {
         return isBiometricUnlockEnable(context) || isDeviceCredentialUnlockEnable(context)
     }

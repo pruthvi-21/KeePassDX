@@ -39,7 +39,12 @@
             android:defaultValue="@bool/enable_screenshot_mode_key_default"
             android:key="@string/enable_screenshot_mode_key"
             android:summary="@string/enable_screenshot_mode_summary"
-            android:title="@string/enable_screenshot_mode_title"
+            android:title="@string/enable_screenshot_mode_title" />
+        <com.kunzisoft.keepass.settings.preference.AttachmentPreviewPreference
+            android:defaultValue="@bool/enable_files_preview_key_default"
+            android:key="@string/enable_files_preview_key"
+            android:summary="@string/enable_files_preview_summary"
+            android:title="@string/enable_files_preview_title"
             app:layout="@layout/preference_material_bottom" />
 
     </PreferenceCategory>
