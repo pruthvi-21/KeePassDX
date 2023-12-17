@@ -96,7 +96,9 @@
                 android:id="@+id/node_image_identifier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_right_white_24dp" />
+                android:alpha="0.45"
+                android:src="@drawable/ic_arrow_right_white_24dp"
+                app:tint="?android:textColorSecondary" />
         </LinearLayout>
     </RelativeLayout>
 

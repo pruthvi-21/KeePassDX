@@ -504,7 +504,6 @@ class NodesAdapter(
         }
 
         // Assign image
-        holder.imageIdentifier?.setColorFilter(iconColor)
         holder.icon.apply {
             database.iconDrawableFactory.assignDatabaseIcon(this, subNode.icon, iconColor)
             // Relative size of the icon
