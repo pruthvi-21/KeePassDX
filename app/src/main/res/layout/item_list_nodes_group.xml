@@ -29,16 +29,6 @@
             android:scaleType="fitXY"
             android:src="@drawable/ic_blank_32dp" />
 
-        <TextView
-            android:id="@+id/node_child_numbers"
-            style="@style/Theme.Keepass.Text.Badge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/node_icon"
-            android:layout_marginEnd="-32dp"
-            android:layout_toStartOf="@+id/node_icon"
-            tools:text="3" />
-
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/node_selected_icon"
             android:layout_width="17dp"
@@ -57,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/node_image_identifier"
+            android:layout_toStartOf="@+id/node_image_container"
             android:layout_toEndOf="@+id/node_icon"
             android:orientation="vertical"
             android:paddingTop="4dp"
@@ -83,15 +73,31 @@
                 tools:text="Node SubTitle" />
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/node_image_identifier"
+        <LinearLayout
+            android:id="@+id/node_image_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/image_list_margin_vertical"
             android:layout_marginEnd="12dp"
-            android:src="@drawable/ic_arrow_right_white_24dp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/node_child_numbers"
+                style="@style/Theme.Keepass.Text.Badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="5dp"
+                tools:text="3" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/node_image_identifier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_right_white_24dp" />
+        </LinearLayout>
     </RelativeLayout>
 
     <View
