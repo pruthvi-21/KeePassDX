@@ -17,7 +17,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SortedList
 import androidx.recyclerview.widget.SortedListAdapterCallback
-import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.Entry
@@ -603,7 +603,7 @@ class NodesAdapter(
         var subText: TextView = itemView.findViewById(R.id.node_subtext)
         var path: TextView? = itemView.findViewById(R.id.node_path)
         var otpContainer: ViewGroup? = itemView.findViewById(R.id.node_otp_container)
-        var otpProgress: CircularProgressIndicator? = itemView.findViewById(R.id.node_otp_progress)
+        var otpProgress: LinearProgressIndicator? = itemView.findViewById(R.id.node_otp_progress)
         var otpToken: TextView? = itemView.findViewById(R.id.node_otp_token)
         var otpRunnable: OtpRunnable = OtpRunnable(otpContainer)
         var numberChildren: TextView? = itemView.findViewById(R.id.node_child_numbers)

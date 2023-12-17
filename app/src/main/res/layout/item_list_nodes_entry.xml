@@ -78,8 +78,8 @@
                 style="@style/Theme.Keepass.SubTitle.Entry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
                 android:ellipsize="end"
+                android:maxLines="2"
                 tools:text="Node SubTitle" />
         </LinearLayout>
 
@@ -102,7 +102,7 @@
                 style="@style/Theme.Keepass.Selectable.Item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:paddingVertical="4dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="4dp">
@@ -115,20 +115,13 @@
                     android:layout_gravity="center"
                     tools:text="513 651" />
 
-                <FrameLayout
-                    android:layout_width="wrap_content"
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/node_otp_progress"
+                    android:layout_width="75dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-
-                    <com.google.android.material.progressindicator.CircularProgressIndicator
-                        android:id="@+id/node_otp_progress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        app:indicatorDirectionCircular="counterclockwise"
-                        app:indicatorSize="16dp"
-                        app:trackThickness="2dp" />
-                </FrameLayout>
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    app:trackCornerRadius="10dp" />
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -138,7 +131,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_attach_file_white_24dp" />
-
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
