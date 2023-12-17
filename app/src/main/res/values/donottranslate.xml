@@ -294,10 +294,14 @@
     <string name="list_item_subtitle_default_value" translatable="false">@string/list_item_subtitle_username_value</string>
     <string name="list_item_subtitle_username_value" translatable="false">username</string>
     <string name="list_item_subtitle_uuid_value" translatable="false">uuid</string>
+    <string name="list_item_subtitle_date_created_value" translatable="false">date_created</string>
+    <string name="list_item_subtitle_date_modified_value" translatable="false">date_modified</string>
     <string name="list_item_subtitle_none_value" translatable="false">none</string>
     <string-array name="list_item_subtitle_string_values">
         <item translatable="false">@string/list_item_subtitle_username_value</item>
         <item translatable="false">@string/list_item_subtitle_uuid_value</item>
+        <item translatable="false">@string/list_item_subtitle_date_created_value</item>
+        <item translatable="false">@string/list_item_subtitle_date_modified_value</item>
         <item translatable="false">@string/list_item_subtitle_none_value</item>
     </string-array>
 

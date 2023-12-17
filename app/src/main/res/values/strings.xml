@@ -541,6 +541,8 @@
     <string-array name="list_item_subtitle_options">
         <item>Username</item>
         <item>UUID</item>
+        <item>Date Created</item>
+        <item>Date Modified</item>
         <item>None</item>
     </string-array>
     <string-array name="list_size_options">
