@@ -12,10 +12,6 @@
         <item name="android:navigationBarColor">?colorSurfaceVariant2</item>
     </style>
 
-    <style name="MainCredentialActivityTheme" parent="Theme.Keepass">
-        <item name="android:navigationBarColor">?colorSurfaceVariant2</item>
-    </style>
-
     <style name="Theme.Keepass" parent="Theme.Keepass.v27" />
 
     <style name="Theme.Keepass.v27" parent="Theme.Keepass.v23" />

@@ -55,7 +55,6 @@
             android:name="com.kunzisoft.keepass.activities.MainCredentialActivity"
             android:configChanges="keyboardHidden"
             android:exported="true"
-            android:theme="@style/MainCredentialActivityTheme"
             android:windowSoftInputMode="adjustResize|stateUnchanged">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
