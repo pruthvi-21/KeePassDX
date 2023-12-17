@@ -68,4 +68,6 @@
             android:title="@string/allow_copy_password_title"
             app:layout="@layout/preference_material_bottom" />
     </PreferenceCategory>
+
+    <com.kunzisoft.keepass.settings.preference.DummyPreference />
 </PreferenceScreen>

@@ -47,4 +47,6 @@
             android:title="@string/autofill_web_domain_blocklist_title"
             app:layout="@layout/preference_material_bottom" />
     </PreferenceCategory>
+    <com.kunzisoft.keepass.settings.preference.DummyPreference />
+
 </PreferenceScreen>

@@ -45,4 +45,6 @@
             android:title="@string/biometric_delete_all_key_title"
             app:layout="@layout/preference_material_bottom" />
     </PreferenceCategory>
+
+    <com.kunzisoft.keepass.settings.preference.DummyPreference />
 </PreferenceScreen>

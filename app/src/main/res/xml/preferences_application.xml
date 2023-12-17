@@ -144,4 +144,5 @@
 
     </PreferenceCategory>
 
+    <com.kunzisoft.keepass.settings.preference.DummyPreference />
 </PreferenceScreen>
