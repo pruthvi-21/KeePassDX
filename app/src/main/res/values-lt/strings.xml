@@ -104,7 +104,6 @@
     <string name="error_otp_period">Laikotarpis turi būti nuo %1$d iki %2$d sekundžių.</string>
     <string name="error_move_group_here">Čia negalima perkelti grupės.</string>
     <string name="otp_secret">Paslaptis</string>
-    <string name="list_entries_show_username_summary">Rodo vartotojų vardus įrašų sąrašuose</string>
     <string name="warning_database_revoked">Failų tvarkyklė panaikino prieigą prie failo, uždarykite duomenų bazę ir vėl ją atidarykite iš jos vietos.</string>
     <string name="discard">Atmesti</string>
     <string name="otp_counter">Skaitiklis</string>
@@ -134,7 +133,6 @@
     <string name="error_autofill_enable_service">Nepavyko įjungti automatinio pildymo paslaugos.</string>
     <string name="error_otp_counter">Skaitiklis turi būti nuo %1$d iki %2$d.</string>
     <string name="invalid_db_same_uuid">%1$s su tuo pačiu UUID %2$s jau egzistuoja.</string>
-    <string name="list_entries_show_username_title">Rodyti vartotojų vardus</string>
     <string name="list_groups_show_number_entries_title">Rodyti įrašų skaičių</string>
     <string name="list_groups_show_number_entries_summary">Rodo grupės įrašų skaičių</string>
     <string name="loading_database">Įkeliama duomenų bazė…</string>

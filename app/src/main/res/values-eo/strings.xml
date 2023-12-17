@@ -46,8 +46,6 @@
     <string name="hide_password_title">Kaŝi pasvortojn</string>
     <string name="loading_database">Datumbaza ŝarĝado…</string>
     <string name="creating_database">Datumbaza kreado…</string>
-    <string name="list_entries_show_username_summary">Vidigi uzantnomojn en elementaj listoj</string>
-    <string name="list_entries_show_username_title">Vidigi uzantnomojn</string>
     <string name="invalid_algorithm">Malĝusta algoritmo.</string>
     <string name="password">Pasvorto</string>
     <string name="hint_pass">Pasvorto</string>

@@ -271,8 +271,6 @@
     <string name="keyboard_selection_entry_title">條目選擇</string>
     <string name="keyboard_setting_label">魔法鍵盤設置</string>
     <string name="keystore_not_accessible">密鑰庫未能初始化。</string>
-    <string name="list_entries_show_username_summary">在條目清單中顯示使用者名稱</string>
-    <string name="list_entries_show_username_title">顯示用戶名</string>
     <string name="list_groups_show_number_entries_summary">顯示群組中的條目數</string>
     <string name="list_groups_show_number_entries_title">顯示條目數</string>
     <string-array name="list_size_options">
@@ -382,8 +380,6 @@
     <string name="show_otp_token_title">顯示 OTP 令牌</string>
     <string name="show_recent_files_summary">顯示最近使用的儲存庫位置</string>
     <string name="show_recent_files_title">最近開啟的檔案</string>
-    <string name="show_uuid_summary">顯示與一個條目相連接的 UUID</string>
-    <string name="show_uuid_title">顯示 UUID</string>
     <string name="sort_creation_time">建立時間</string>
     <string name="sort_db">資料庫的排序順序</string>
     <string name="sort_groups_before">群組在前面</string>

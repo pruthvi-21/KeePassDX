@@ -88,8 +88,6 @@
     <string name="file_browser">مدير الملفات</string>
     <string name="invalid_credentials">تعذر قراءة الإعتمادات.</string>
     <string name="invalid_db_sig">تعذر تمييز نسق قاعدة البيانات.</string>
-    <string name="list_entries_show_username_title">أظهر أسماء المستخدمين</string>
-    <string name="list_entries_show_username_summary">اعرض اسماء المستخدمين في قوائم المدخلات</string>
     <string name="hide_password_title">اخفاء كلمات السر</string>
     <string name="copy_field">نُسخة من %1$s</string>
     <string name="menu_copy">نسخ</string>
@@ -365,7 +363,6 @@
     <string name="autofill_ask_to_save_data_title">اسأل لحفظ البيانات</string>
     <string name="content_description_database_color">لون قاعدة البيانات</string>
     <string name="menu_merge_from">ادمج من…</string>
-    <string name="show_uuid_summary">يعرض \"المعرف العام\" المرتبط بمُدخل او بمجموعة</string>
     <string name="expired">انتهت</string>
     <string name="tags">الوسوم</string>
     <string name="menu_merge_database">ادمج البيانات</string>
@@ -498,7 +495,6 @@
     <string name="configure">تضبيط</string>
     <string name="ask">إسأل</string>
     <string name="configure_biometric">لم تسجل بيانات اعتماد المقاييس الحيوية أو الجهاز.</string>
-    <string name="show_uuid_title">إظهار \"المعرف العام المميز\" UUID</string>
     <string name="unlock_and_link_biometric">رابط فتح الجهاز</string>
     <string name="advanced_unlock_invalid_key">لا يمكن قراءة مفتاح فتح الجهاز. يرجى حذفه وتكرار إجراء التعرف على الفتح.</string>
     <string name="advanced_unlock_scanning_error">خطأ في فتح الجهاز: %1$s</string>

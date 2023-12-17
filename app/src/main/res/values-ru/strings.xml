@@ -105,8 +105,6 @@
     <string name="sort_last_access_time">Время последнего доступа</string>
     <string name="error_load_database">Невозможно загрузить базу.</string>
     <string name="error_load_database_KDF_memory">Невозможно загрузить ключ. Попробуйте уменьшить размер памяти, используемой функцией формирования ключа (KDF).</string>
-    <string name="list_entries_show_username_title">Показывать имя</string>
-    <string name="list_entries_show_username_summary">Показывать имя пользователя в списке записей</string>
     <string name="menu_copy">Копировать</string>
     <string name="menu_move">Переместить</string>
     <string name="menu_paste">Вставить</string>
@@ -333,8 +331,6 @@
     <string name="keyboard_save_search_info_title">Сохранять общие данные</string>
     <string name="keyboard_previous_lock_title">Блокировка базы</string>
     <string name="keyboard_previous_lock_summary">Автоматически переключаться на предыдущую клавиатуру после блокировки базы</string>
-    <string name="show_uuid_summary">Показывать UUID, связанный с записью или группой</string>
-    <string name="show_uuid_title">Показывать UUID</string>
     <string name="autofill_read_only_save">Сохранение данных невозможно для базы, открытой только для чтения.</string>
     <string name="autofill_ask_to_save_data_summary">Запрашивать сохранение данных после завершения заполнения формы</string>
     <string name="autofill_ask_to_save_data_title">Запрос сохранения данных</string>

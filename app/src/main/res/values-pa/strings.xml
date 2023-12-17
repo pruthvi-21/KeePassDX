@@ -86,8 +86,6 @@
     <string name="list_size_title">ਸੂਚੀ ਚੀਜ਼ਾਂ ਦਾ ਆਕਾਰ</string>
     <string name="list_groups_show_number_entries_summary">ਗਰੁੱਪ ਵਿੱਚ ਐਂਟਰੀਆਂ ਦੀ ਗਿਣਤੀ ਵਿਖਾਓ</string>
     <string name="list_groups_show_number_entries_title">ਐਂਟਰੀਆਂ ਦੀ ਗਿਣਤੀ ਵਿਖਾਓ</string>
-    <string name="list_entries_show_username_summary">ਐਂਟਰੀ ਸੂਚੀਆਂ ਵਿੱਚ ਵਰਤੋਂਕਾਰ-ਨਾਂ ਵਿਖਾਓ</string>
-    <string name="list_entries_show_username_title">ਵਰਤੋਂਕਾਰ-ਨਾਂ ਵਿਖਾਓ</string>
     <string name="invalid_algorithm">ਗ਼ਲਤ ਐਲਗੋਰਿਥ ਹੈ।</string>
     <string name="invalid_credentials">ਸਨਦ ਪੜ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ।</string>
     <string name="password">ਪਾਸਵਰਡ</string>
@@ -217,7 +215,6 @@
     <string name="autofill_ask_to_save_data_summary">ਜਦੋਂ ਖੇਤਰ ਦੀ ਜਾਂਚ ਹੋ ਜਾਵੇ ਤਾਂ ਡਾਟਾ ਸੰਭਾਲਣ ਲਈ ਪੁੱਛੋ</string>
     <string name="autofill_ask_to_save_data_title">ਡਾਟਾ ਸੰਭਾਲਣ ਲਈ ਪੁੱਛੋ</string>
     <string name="upload_attachment">%1$s ਅੱਪਲੋਡ ਕਰੋ</string>
-    <string name="show_uuid_summary">ਐਂਟਰੀ ਨਾਲ ਸੰਬੰਧਿਤ UUID ਦਿਖਾਉਂਦਾ ਹੈ</string>
     <string name="encryption_explanation">ਸਾਰੇ ਡਾਟੇ ਲਈ ਡਾਟਾਬੇਸ ਇੰਕ੍ਰਿਪਸ਼ਨ ਐਲਗੋਰਿਥਮ ਵਰਤਿਆ ਗਿਆ ਹੈ।</string>
     <string name="registration_mode">ਰਜਿਸਟਰੇਸ਼ਨ ਢੰਗ</string>
     <string name="save_mode">ਸੰਭਾਲਣ ਢੰਗ</string>
@@ -259,5 +256,4 @@
     <string name="autofill_close_database_title">ਡਾਟਾਬੇਸ ਬੰਦ ਕਰੋ</string>
     <string name="enable_read_only_title">ਲਿਖਣ ਤੋਂ ਸੁਰੱਖਿਅਤ</string>
     <string name="html_text_dev_feature_contibute">&lt;strong&gt;ਹਿੱਸਾ ਪਾ ਕੇ&lt;/strong&gt;,</string>
-    <string name="show_uuid_title">UUID ਵੇਖਾਓ</string>
 </resources>

@@ -233,12 +233,8 @@
     <string name="show_otp_token_summary">Erakutsi OTP tokenak sarrera zerrendetan</string>
     <string name="error_otp_type">Formularioak ez du OTP mota hau ezagutzen, honen balidazioak ezin du tokena modu zuzenean sortu.</string>
     <string name="show_otp_token_title">Erakutsi OTP tokena</string>
-    <string name="show_uuid_title">Erakutsi UUIDa</string>
-    <string name="show_uuid_summary">Sarrera edo talde bati erlazionatutako UUIDa erakusten du</string>
     <string name="keyboard_save_search_info_summary">Saiatu partekatutako informazioa gordetzen etorkizunean eskuz egindako erabilera errazteko</string>
-    <string name="list_entries_show_username_title">Erakutsi erabiltzaileen izenak</string>
     <string name="hint_icon_name">Ikonoaren izena</string>
-    <string name="list_entries_show_username_summary">Erakutsi erabiltzaileen izenak sarrera zerrendetan</string>
     <string name="search_mode">Bilaketa modua</string>
     <string name="contains_duplicate_uuid_procedure">Arazoa konpondu UUID berriak sortuz errepikatutakoek jarrai dezaten\?</string>
     <string name="description_app_properties">KeePassDXen ezaugarriak aplikazioen ezarpenak kudeatzeko</string>

@@ -159,8 +159,6 @@
     <string name="creating_database">Es crea la base de dades…</string>
     <string name="list_groups_show_number_entries_summary">Mostra el nombre d\'entrades en un grup</string>
     <string name="list_groups_show_number_entries_title">Mostra el nombre d\'entades</string>
-    <string name="list_entries_show_username_summary">Mostra els noms d\'usuari en les llistes d\'entrades</string>
-    <string name="list_entries_show_username_title">Mostra noms d\'usuari</string>
     <string name="invalid_algorithm">Algorisme incorrecte.</string>
     <string name="file_not_found_content">No s\'ha trobat el fitxer. Mireu de reobrir-lo des de l\'explorador de fitxers.</string>
     <string name="field_name">Nom del camp</string>
@@ -223,7 +221,6 @@
     <string name="content_description_credentials_information">Informació de credencials</string>
     <string name="content_description_add_item">Afegeix un element</string>
     <string name="icon_section_standard">Estàndard</string>
-    <string name="show_uuid_title">Mostra l’UUID</string>
     <string name="hide_expired_entries_summary">No es mostren les entrades expirades</string>
     <string name="hide_expired_entries_title">Amaga les entrades expirades</string>
     <string name="download">Baixa</string>

@@ -211,8 +211,6 @@
     <string name="creating_database">Luodaan salasanatietokantaa…</string>
     <string name="list_groups_show_number_entries_summary">Näytä tietueiden määrä ryhmässä</string>
     <string name="list_groups_show_number_entries_title">Näytä tietueiden määrä</string>
-    <string name="list_entries_show_username_summary">Näytä käyttäjänimet tietuelistoissa</string>
-    <string name="list_entries_show_username_title">Näytä käyttäjänimet</string>
     <string name="invalid_db_same_uuid">%1$s samalla UUID:lla %2$s on jo olemassa.</string>
     <string name="file_not_found_content">Tiedostoa ei löytynyt. Yritä avata se uudelleen tiedostoselaimessasi.</string>
     <string name="error_string_type">Tämä teksti ei vastannut haettua.</string>

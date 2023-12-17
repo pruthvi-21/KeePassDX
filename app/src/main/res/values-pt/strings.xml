@@ -285,8 +285,6 @@
     <string name="keyboard_label">Magikeyboard (KeePassDX)</string>
     <string name="retrieving_db_key">A criar a chave da base de dados…</string>
     <string name="clipboard">Área de transferência</string>
-    <string name="list_entries_show_username_summary">Mostra nomes de utilizador nas listas de entradas</string>
-    <string name="list_entries_show_username_title">Mostrar nomes de utilizador</string>
     <string name="error_load_database_KDF_memory">Não foi possível carregar a chave. Tente diminuir o \"Uso de memória\" do KDF.</string>
     <string name="error_load_database">Não foi possível abrir a base de dados.</string>
     <string name="error_out_of_memory">Sem memória suficiente para carregar toda a base de dados.</string>
@@ -352,8 +350,6 @@
     <string name="bank_identifier_code">SWIFT / BIC</string>
     <string name="show_otp_token_summary">Mostra os tokens OTP na lista de entradas</string>
     <string name="show_otp_token_title">Mostrar token OTP</string>
-    <string name="show_uuid_summary">Mostra o UUID ligado a uma entrada ou grupo</string>
-    <string name="show_uuid_title">Mostrar UUID</string>
     <string name="icon_section_custom">Personalizado</string>
     <string name="icon_section_standard">Predefinido</string>
     <string name="download_canceled">Cancelado!</string>

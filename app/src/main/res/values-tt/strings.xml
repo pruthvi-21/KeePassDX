@@ -23,7 +23,6 @@
     <string name="menu_change_key_settings">Мастер ачкычны үзгәртү</string>
     <string name="about">Турында</string>
     <string name="hide_password_title">Серсүзләрне яшерү</string>
-    <string name="list_entries_show_username_title">Кулланучы исемнәрен күрсәтү</string>
     <string name="password">Серсүз</string>
     <string name="hint_pass">Серсүз</string>
     <string name="entry_user_name">Кулланучы исеме</string>

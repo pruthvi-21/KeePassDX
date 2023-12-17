@@ -89,8 +89,6 @@
     <string name="invalid_algorithm">Algoritm greșit.</string>
     <string name="invalid_db_same_uuid">%1$s cu același UUID %2$s există deja.</string>
     <string name="invalid_db_sig">Nu s-a putut recunoaște formatul bazei de date.</string>
-    <string name="list_entries_show_username_title">Afișați numele de utilizator</string>
-    <string name="list_entries_show_username_summary">Afișați numele de utilizator în listele de intrare</string>
     <string name="list_groups_show_number_entries_title">Afișează numărul de intrări</string>
     <string name="list_groups_show_number_entries_summary">Afișează numărul de intrări dintr-un grup</string>
     <string name="list_size_title">Mărimea articolelor din listă</string>
@@ -347,7 +345,6 @@
     <string name="menu_reload_database">Reîncărcați datele</string>
     <string name="save_mode">Mod de salvare</string>
     <string name="colorize_password_summary">Colorați caracterele parolei în funcție de tip</string>
-    <string name="show_uuid_title">Arată UUID</string>
     <string name="hint_icon_name">Numele iconiței</string>
     <string name="search_mode">Mod de căutare</string>
     <string name="wireless">Wi-Fi</string>
@@ -364,7 +361,6 @@
     <string name="colorize_password_title">Colorați parolele</string>
     <string name="show_otp_token_summary">Afișează tokenurile OTP în lista de intrări</string>
     <string name="show_otp_token_title">Afișați Tokenul OTP</string>
-    <string name="show_uuid_summary">Afișează UUID-ul legat de o intrare sau de un grup</string>
     <string name="menu_app_settings_summary">Căutare, blocare, istoric, proprietăți</string>
     <string name="menu_form_filling_settings_summary">Tastatură, completarea automată, clipboard</string>
     <string name="menu_advanced_unlock_settings_summary">Biometrie, acreditare din dispozitiv</string>

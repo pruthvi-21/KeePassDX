@@ -32,12 +32,10 @@ class BreadcrumbAdapter(val context: Context) :
     var onLongItemClickListener: ((item: Node, position: Int) -> Unit)? = null
 
     private var mShowNumberEntries = false
-    private var mShowUUID = false
     private var mIconColor: Int = 0
 
     init {
         mShowNumberEntries = PreferencesUtil.showNumberEntries(context)
-        mShowUUID = PreferencesUtil.showUUID(context)
 
         // Retrieve the color to tint the icon
         val taIconColor = context.theme.obtainStyledAttributes(intArrayOf(R.attr.colorOnSurface))
@@ -130,7 +128,6 @@ class BreadcrumbAdapter(val context: Context) :
                     val meta = group.nodeId.toVisualString()
                     visibility = if (meta != null
                         && !group.isVirtual
-                        && mShowUUID
                     ) {
                         text = meta
                         View.VISIBLE

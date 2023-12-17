@@ -162,14 +162,11 @@
     <bool name="hide_password_default" translatable="false">true</bool>
     <string name="colorize_password_key" translatable="false">colorize_password_key</string>
     <bool name="colorize_password_default" translatable="false">true</bool>
-    <string name="list_entries_show_username_key" translatable="false">list_entries_show_username_key</string>
-    <bool name="list_entries_show_username_default" translatable="false">true</bool>
+    <string name="list_item_subtitle_key" translatable="false">list_item_subtitle_key</string>
     <string name="list_groups_show_number_entries_key" translatable="false">list_groups_show_number_entries_key</string>
     <bool name="list_groups_show_number_entries_default" translatable="false">true</bool>
     <string name="show_otp_token_key" translatable="false">show_otp_token_key</string>
     <bool name="show_otp_token_default" translatable="false">true</bool>
-    <string name="show_uuid_key" translatable="false">show_uuid_key</string>
-    <bool name="show_uuid_default" translatable="false">false</bool>
     <string name="list_size_key" translatable="false">list_size_key</string>
     <string name="monospace_font_fields_enable_key" translatable="false">monospace_font_extra_fields_enable_key</string>
     <bool name="monospace_font_fields_enable_default" translatable="false">true</bool>
@@ -292,6 +289,17 @@
     <string name="timeout_backup_key" translatable="false">timeout_backup_key</string>
     <string name="timeout_default" translatable="false">300000</string>
     <string name="timeout_screen_off" translatable="false">1500</string>
+
+    <!-- List Item Subtitle -->
+    <string name="list_item_subtitle_default_value" translatable="false">@string/list_item_subtitle_username_value</string>
+    <string name="list_item_subtitle_username_value" translatable="false">username</string>
+    <string name="list_item_subtitle_uuid_value" translatable="false">uuid</string>
+    <string name="list_item_subtitle_none_value" translatable="false">none</string>
+    <string-array name="list_item_subtitle_string_values">
+        <item translatable="false">@string/list_item_subtitle_username_value</item>
+        <item translatable="false">@string/list_item_subtitle_uuid_value</item>
+        <item translatable="false">@string/list_item_subtitle_none_value</item>
+    </string-array>
 
     <!-- Text Size -->
     <dimen name="list_icon_size_default" translatable="false">32dp</dimen>

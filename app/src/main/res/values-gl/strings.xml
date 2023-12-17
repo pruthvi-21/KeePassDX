@@ -170,7 +170,6 @@
     <string name="menu_security_settings">Configuracións de seguranza</string>
     <string name="never">Nunca</string>
     <string name="error_string_type">Este texto non corresponde ao elemento solicitado.</string>
-    <string name="list_entries_show_username_summary">Mostra nomes do usuario nas listas de entrada</string>
     <string name="show_otp_token_title">Mostrar token OTP</string>
     <string name="list_groups_show_number_entries_title">Mostrar número de entradas</string>
     <string name="show_otp_token_summary">Mostra os tokens OTP na lista de entradas</string>
@@ -188,8 +187,6 @@
     <string name="generate_password">Xerar contrasinal</string>
     <string name="invalid_credentials">Non foi posíbel ler as credenciais.</string>
     <string name="invalid_db_sig">Non foi posíbel recoñecer o formato da base de datos.</string>
-    <string name="show_uuid_title">Mostrar UUID</string>
-    <string name="show_uuid_summary">Mostrar o UUID ligado a unha entrada do grupo</string>
     <string name="list_groups_show_number_entries_summary">Mostra o número de entradas dun grupo</string>
     <string name="list_size_title">Tamaño da lista de elementos</string>
     <string name="menu_merge_database">Combinar datos</string>
@@ -209,7 +206,6 @@
     <string name="file_not_found_content">Non foi posíbel atopar o ficheiro. Probe a volver abrilo no seu explorador de ficheiros.</string>
     <string name="hint_group_name">Nome do grupo</string>
     <string name="hint_icon_name">Nome do icono</string>
-    <string name="list_entries_show_username_title">Mostrar nomes de usuario</string>
     <string name="hint_pass">Contrasinal</string>
     <string name="hide_password_title">Ocultar contrasinais</string>
     <string name="about">Sobre</string>

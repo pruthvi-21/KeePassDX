@@ -156,8 +156,6 @@
     <string name="icon_pack_choose_title">Seleccione un paquete de iconos</string>
     <string name="error_load_database">No se pudo cargar la base de datos.</string>
     <string name="error_load_database_KDF_memory">No se ha podido cargar la clave. Intente disminuir el uso de memoria de KDF.</string>
-    <string name="list_entries_show_username_title">Mostrar nombres de usuario</string>
-    <string name="list_entries_show_username_summary">Muestra los nombres de usuario en las listas de entrada</string>
     <string name="menu_copy">Copiar</string>
     <string name="menu_move">Mover</string>
     <string name="menu_paste">Pegar</string>
@@ -370,8 +368,6 @@
     <string name="keyboard_auto_go_action_title">Acción de la tecla automática</string>
     <string name="keyboard_save_search_info_summary">Intente guardar la información compartida para su uso en el futuro cuando seleccione entradas manualmente</string>
     <string name="keyboard_save_search_info_title">Guardar información compartida</string>
-    <string name="show_uuid_summary">Muestra el UUID vinculado a una entrada o a un grupo</string>
-    <string name="show_uuid_title">Mostrar UUID</string>
     <string name="error_database_uri_null">No se puede recuperar la URI de la base de datos.</string>
     <string name="autofill_inline_suggestions_summary">Intenta mostrar sugerencias de autocompletado directamente desde un teclado compatible</string>
     <string name="autofill_inline_suggestions_keyboard">Añadidas sugerencias de autocompletado.</string>

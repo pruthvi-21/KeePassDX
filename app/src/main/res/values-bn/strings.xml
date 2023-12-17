@@ -220,7 +220,6 @@
     <string name="invalid_db_sig">ডাটাবেস বিন্যাস চিনতে পারেনি.</string>
     <string name="colorize_password_title">পাসওয়ার্ড রঙ করুন</string>
     <string name="colorize_password_summary">টাইপ অনুসারে পাসওয়ার্ড অক্ষর রঙ করুন</string>
-    <string name="list_entries_show_username_summary">এন্ট্রি তালিকায় ব্যবহারকারীর নাম প্রদর্শন করুন</string>
     <string name="list_groups_show_number_entries_title">এন্ট্রি সংখ্যা দেখান</string>
     <string name="remember_hardware_key_title">হার্ডওয়্যার কী মনে রাখবেন</string>
     <string name="remember_hardware_key_summary">ব্যবহৃত হার্ডওয়্যার কী ট্র্যাক রাখে</string>
@@ -257,10 +256,7 @@
     <string name="show_otp_token_title">OTP টোকেন দেখান</string>
     <string name="field_name">ক্ষেত্র নাম</string>
     <string name="corrupted_file">দূষিত ফাইল।</string>
-    <string name="show_uuid_title">UUID দেখান</string>
     <string name="hide_password_summary">ডিফল্টরূপে মাস্ক পাসওয়ার্ড (***)</string>
-    <string name="list_entries_show_username_title">ব্যবহারকারীর নাম দেখান</string>
-    <string name="show_uuid_summary">একটি এন্ট্রি বা একটি গ্রুপের সাথে সংযুক্ত UUID প্রদর্শন করে</string>
     <string name="menu_reload_database">ডেটা পুনরায় লোড করুন</string>
     <string name="show_otp_token_summary">এন্ট্রির তালিকায় OTP টোকেন প্রদর্শন করে</string>
     <string name="menu_save_copy_to">এতে একটি অনুলিপি সংরক্ষণ করুন…</string>

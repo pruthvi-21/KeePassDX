@@ -40,8 +40,6 @@
     <string name="list_size_title">Veličina stavki liste</string>
     <string name="list_groups_show_number_entries_summary">Prikaži broj unosa u grupi</string>
     <string name="list_groups_show_number_entries_title">Prikaži broj unosa</string>
-    <string name="list_entries_show_username_summary">Prikaži korisnička imena u listama unosa</string>
-    <string name="list_entries_show_username_title">Prikaži korisnička imena</string>
     <string name="invalid_db_sig">Nije moguće prepoznati format baze podataka.</string>
     <string name="invalid_db_same_uuid">%1$s sa istim UUID%2$s već postoji.</string>
     <string name="invalid_algorithm">Pogrešan algoritam.</string>

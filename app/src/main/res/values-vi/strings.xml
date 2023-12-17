@@ -122,7 +122,6 @@
     <string name="error_registration_read_only">Lưu một mục mới không được phép trong cơ sở dữ liệu chỉ đọc</string>
     <string name="error_field_name_already_exists">Tên trường đã tồn tại.</string>
     <string name="error_database_uri_null">Không thể truy xuất URI cơ sở dữ liệu.</string>
-    <string name="list_entries_show_username_title">Hiển thị tên người dùng</string>
     <string name="hint_pass">Mật khẩu</string>
     <string name="password">Mật khẩu</string>
     <string name="invalid_algorithm">Sai thuật toán.</string>

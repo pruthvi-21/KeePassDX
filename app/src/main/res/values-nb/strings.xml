@@ -56,8 +56,6 @@
     <string name="invalid_credentials">Ugyldig passord eller nøkkelfil.</string>
     <string name="invalid_algorithm">Ugyldig algoritme.</string>
     <string name="invalid_db_sig">Fremmed databaseformat.</string>
-    <string name="list_entries_show_username_title">Vis brukernavn</string>
-    <string name="list_entries_show_username_summary">Vis brukernavn i oppføringslister</string>
     <string name="list_size_title">Størrelsen på listeelementene</string>
     <string name="list_size_summary">Tekststørrelse i elemenetlisten</string>
     <string name="loading_database">Laster database…</string>
@@ -283,8 +281,6 @@
     <string name="error_field_name_already_exists">Feltnavnet finnes allerede.</string>
     <string name="content_description_add_item">Legg til element</string>
     <string name="unit_byte">B</string>
-    <string name="show_uuid_summary">Viser UUID-en tilhørende en oppføring</string>
-    <string name="show_uuid_title">Vis UUID</string>
     <string name="unit_mebibyte">MiB</string>
     <string name="unit_kibibyte">KiB</string>
     <string name="upload_attachment">Last opp %1$s</string>

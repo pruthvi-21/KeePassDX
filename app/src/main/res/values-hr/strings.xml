@@ -66,8 +66,6 @@
     <string name="invalid_algorithm">Pogrešan algoritam.</string>
     <string name="invalid_db_same_uuid">%1$s s istim UUID %2$s već postoji.</string>
     <string name="invalid_db_sig">Nije moguće prepoznati format baze podataka.</string>
-    <string name="list_entries_show_username_title">Prikaži korisnička imena</string>
-    <string name="list_entries_show_username_summary">Prikazuje korisnička imena u popisima unosa</string>
     <string name="list_groups_show_number_entries_title">Prikaži broj unosa</string>
     <string name="list_groups_show_number_entries_summary">Prikazuje broj unosa u grupi</string>
     <string name="creating_database">Stvaranje baze podataka …</string>
@@ -325,8 +323,6 @@
     <string name="notification">Obavijest</string>
     <string name="error_registration_read_only">Nije dopušteno spremati novi element u zaštićenoj bazi podataka</string>
     <string name="autofill_read_only_save">Spremanje podataka nije dopušteno za bazu podataka koja je otvorena u zaštićenom stanju.</string>
-    <string name="show_uuid_summary">Prikazuje UUID povezan s unosom ili grupom</string>
-    <string name="show_uuid_title">Prikaži UUID</string>
     <string name="autofill_ask_to_save_data_summary">Zatraži spremanje podataka kad se obrazac ispuni</string>
     <string name="autofill_ask_to_save_data_title">Zatraži spremanje podataka</string>
     <string name="autofill_save_search_info_title">Spremi podatke pretrage</string>

@@ -165,8 +165,6 @@
     <string name="icon_pack_choose_title">Pacchetto di icone</string>
     <string name="error_load_database">Caricamento del database fallito.</string>
     <string name="error_load_database_KDF_memory">Caricamento della chiave fallito. Prova a diminuire l\'«Utilizzo memoria» del KDF.</string>
-    <string name="list_entries_show_username_title">Mostra nomi utente</string>
-    <string name="list_entries_show_username_summary">Mostra i nomi utente negli elenchi</string>
     <string name="clipboard">Appunti</string>
     <string name="keyboard_label">Magitastiera (KeePassDX)</string>
     <string name="keyboard_setting_label">Impostazioni Magitastiera</string>
@@ -327,8 +325,6 @@
 \n
 \nIl tuo database può diventare molto grande e ridurre le prestazioni con questo caricamento.</string>
     <string name="content_description_credentials_information">Info credenziali</string>
-    <string name="show_uuid_summary">Visualizza l\'UUID collegato a una voce o a un gruppo</string>
-    <string name="show_uuid_title">Mostra UUID</string>
     <string name="autofill_read_only_save">Il salvataggio dei dati non è consentito per un database aperto in sola lettura.</string>
     <string name="autofill_ask_to_save_data_summary">Chiedi di salvare i dati quando l\'immissione dei dati in un form viene completata</string>
     <string name="autofill_ask_to_save_data_title">Chiedi di salvare i dati</string>

@@ -138,11 +138,11 @@ object PreferencesUtil {
         )
     }
 
-    fun showUsernamesListEntries(context: Context): Boolean {
+    fun getListItemSubtitle(context: Context): String? {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(
-            context.getString(R.string.list_entries_show_username_key),
-            context.resources.getBoolean(R.bool.list_entries_show_username_default)
+        return prefs.getString(
+            context.getString(R.string.list_item_subtitle_key),
+            context.getString(R.string.list_item_subtitle_default_value)
         )
     }
 
@@ -159,14 +159,6 @@ object PreferencesUtil {
         return prefs.getBoolean(
             context.getString(R.string.show_otp_token_key),
             context.resources.getBoolean(R.bool.show_otp_token_default)
-        )
-    }
-
-    fun showUUID(context: Context): Boolean {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(
-            context.getString(R.string.show_uuid_key),
-            context.resources.getBoolean(R.bool.show_uuid_default)
         )
     }
 
@@ -1228,9 +1220,9 @@ object PreferencesUtil {
                     value.toBoolean()
                 )
 
-                context.getString(R.string.list_entries_show_username_key) -> editor.putBoolean(
+                context.getString(R.string.list_item_subtitle_key) -> editor.putString(
                     name,
-                    value.toBoolean()
+                    value
                 )
 
                 context.getString(R.string.list_groups_show_number_entries_key) -> editor.putBoolean(
@@ -1239,11 +1231,6 @@ object PreferencesUtil {
                 )
 
                 context.getString(R.string.show_otp_token_key) -> editor.putBoolean(
-                    name,
-                    value.toBoolean()
-                )
-
-                context.getString(R.string.show_uuid_key) -> editor.putBoolean(
                     name,
                     value.toBoolean()
                 )

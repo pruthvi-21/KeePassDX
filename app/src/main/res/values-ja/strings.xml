@@ -100,8 +100,6 @@
     <string name="invalid_algorithm">間違ったアルゴリズムです。</string>
     <string name="invalid_db_same_uuid">同じ UUID %2$s を持つ %1$s がすでに存在します。</string>
     <string name="invalid_db_sig">データベースの形式が認識できませんでした。</string>
-    <string name="list_entries_show_username_title">ユーザー名を表示</string>
-    <string name="list_entries_show_username_summary">エントリーの一覧にユーザー名を表示します</string>
     <string name="list_groups_show_number_entries_title">エントリーの数を表示</string>
     <string name="list_groups_show_number_entries_summary">グループ内のエントリーの数を表示します</string>
     <string name="list_size_title">一覧項目のサイズ</string>
@@ -339,8 +337,6 @@
     <string name="icon_pack_choose_title">アイコンパック</string>
     <string name="hide_expired_entries_title">有効期限切れのエントリーを非表示にする</string>
     <string name="hide_expired_entries_summary">有効期限切れのエントリーは非表示になります</string>
-    <string name="show_uuid_title">UUID を表示</string>
-    <string name="show_uuid_summary">エントリーやグループにリンクされた UUID を表示します</string>
     <string name="autofill_read_only_save">データの保存は読み取り専用として開かれたデータベースでは許可されていません。</string>
     <string name="save_mode">保存モード</string>
     <string name="search_mode">検索モード</string>

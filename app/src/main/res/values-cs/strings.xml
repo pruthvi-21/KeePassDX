@@ -87,8 +87,6 @@
     <string name="error_load_database_KDF_memory">Klíč se nepodařilo načíst, zkuste snížit \"využití paměti\" pro KDF.</string>
     <string name="error_autofill_enable_service">Službu samovyplnění se nepodařilo zapnout.</string>
     <string name="file_not_found_content">Soubor nenalezen. Zkuste jej otevřít ze správce souborů.</string>
-    <string name="list_entries_show_username_title">Zobrazit uživatelská jména</string>
-    <string name="list_entries_show_username_summary">Zobrazí uživatelská jména v seznamech záznamů</string>
     <string name="copy_field">Kopie %1$s</string>
     <string name="menu_form_filling_settings">Vyplňování formulářů</string>
     <string name="menu_copy">Zkopírovat</string>
@@ -326,8 +324,6 @@
     <string name="data">Data</string>
     <string name="database_data_remove_unlinked_attachments_title">Odstranit data bez propojení</string>
     <string name="database_data_remove_unlinked_attachments_summary">Odstraní přílohy obsažené v databázi, ale nikoli přílohy propojené se záznamem</string>
-    <string name="show_uuid_summary">Ukáže UUID propojené se záznamem nebo skupinou</string>
-    <string name="show_uuid_title">Ukázat UUID</string>
     <string name="autofill_read_only_save">Uložení dat není povoleno, je-li databáze v režimu pouze pro čtení.</string>
     <string name="autofill_ask_to_save_data_summary">Po dokončení vyplnění formuláře se tázat na uložení dat</string>
     <string name="autofill_ask_to_save_data_title">Tázat se před uložením</string>

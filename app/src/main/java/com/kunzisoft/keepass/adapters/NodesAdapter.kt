@@ -56,16 +56,13 @@ class NodesAdapter(
     private var mPrefSizeMultiplier: Float = 0F
     private var mTextDefaultDimension: Float = 0F
     private var mSubTextDefaultDimension: Float = 0F
-    private var mMetaTextDefaultDimension: Float = 0F
     private var mOtpTokenTextDefaultDimension: Float = 0F
     private var mNumberChildrenTextDefaultDimension: Float = 0F
     private var mIconDefaultDimension: Float = 0F
 
     private var mShowEntryColors: Boolean = true
-    private var mShowUserNames: Boolean = true
     private var mShowNumberEntries: Boolean = true
     private var mShowOTP: Boolean = false
-    private var mShowUUID: Boolean = false
     private var mEntryFilters = arrayOf<Group.ChildFilter>()
     private var mOldVirtualGroup = false
     private var mVirtualGroup = false
@@ -73,6 +70,13 @@ class NodesAdapter(
     private var mActionNodesList = LinkedList<Node>()
     private var mNodeClickCallback: NodeClickCallback? = null
     private var mClipboardHelper = ClipboardHelper(context)
+
+    private val LIST_ITEM_SUBTITLE_USERNAME_SETTING_VALUE =
+        context.getString(R.string.list_item_subtitle_username_value)
+    private val LIST_ITEM_SUBTITLE_UUID_SETTING_VALUE =
+        context.getString(R.string.list_item_subtitle_uuid_value)
+    private val LIST_ITEM_SUBTITLE_NONE_SETTING_VALUE =
+        context.getString(R.string.list_item_subtitle_none_value)
 
     @ColorInt
     private val mColorBackground: Int
@@ -136,10 +140,8 @@ class NodesAdapter(
         )
 
         this.mShowEntryColors = PreferencesUtil.showEntryColors(context)
-        this.mShowUserNames = PreferencesUtil.showUsernamesListEntries(context)
         this.mShowNumberEntries = PreferencesUtil.showNumberEntries(context)
         this.mShowOTP = PreferencesUtil.showOTPToken(context)
-        this.mShowUUID = PreferencesUtil.showUUID(context)
 
         this.mEntryFilters = Group.ChildFilter.getDefaults(
             PreferencesUtil.showExpiredEntries(context)
@@ -326,8 +328,7 @@ class NodesAdapter(
         }
         val nodeViewHolder = NodeViewHolder(view)
         mTextDefaultDimension = nodeViewHolder.text.textSize
-        mSubTextDefaultDimension = nodeViewHolder.subText?.textSize ?: mSubTextDefaultDimension
-        mMetaTextDefaultDimension = nodeViewHolder.meta.textSize
+        mSubTextDefaultDimension = nodeViewHolder.subText.textSize
         mOtpTokenTextDefaultDimension =
             nodeViewHolder.otpToken?.textSize ?: mOtpTokenTextDefaultDimension
         nodeViewHolder.numberChildren?.let {
@@ -351,17 +352,6 @@ class NodesAdapter(
             setTextSize(mTextSizeUnit, mTextDefaultDimension, mPrefSizeMultiplier)
             strikeOut(subNode.isCurrentlyExpires)
         }
-        // Add meta text to show UUID
-        holder.meta.apply {
-            val nodeId = subNode.nodeId?.toVisualString()
-            if (mShowUUID && nodeId != null) {
-                text = nodeId
-                setTextSize(mTextSizeUnit, mMetaTextDefaultDimension, mPrefSizeMultiplier)
-                visibility = View.VISIBLE
-            } else {
-                visibility = View.GONE
-            }
-        }
         // Add path to virtual group
         if (mVirtualGroup) {
             holder.path?.apply {
@@ -380,22 +370,33 @@ class NodesAdapter(
             Type.ENTRY -> mColorSecondary
         }
 
+        val subtitleType = PreferencesUtil.getListItemSubtitle(context)
+
         // Specific elements for entry
         if (subNode.type == Type.ENTRY) {
             val entry = subNode as Entry
             database.startManageEntry(entry)
 
             holder.text.text = entry.getVisualTitle()
-            // Add subText with username
-            holder.subText?.apply {
-                val username = entry.username
-                if (mShowUserNames && username.isNotEmpty()) {
-                    visibility = View.VISIBLE
-                    text = username
-                    setTextSize(mTextSizeUnit, mSubTextDefaultDimension, mPrefSizeMultiplier)
-                    strikeOut(subNode.isCurrentlyExpires)
-                } else {
-                    visibility = View.GONE
+            holder.subText.apply {
+                setTextSize(mTextSizeUnit, mSubTextDefaultDimension, mPrefSizeMultiplier)
+                strikeOut(subNode.isCurrentlyExpires)
+                when (subtitleType) {
+                    LIST_ITEM_SUBTITLE_USERNAME_SETTING_VALUE -> {
+                        val username = entry.username
+                        text = username
+                        isVisible = username.isNotEmpty()
+                    }
+
+                    LIST_ITEM_SUBTITLE_UUID_SETTING_VALUE -> {
+                        val nodeId = subNode.nodeId.toVisualString()
+                        text = nodeId
+                        isVisible = (nodeId != null) and (entry.getVisualTitle() != nodeId)
+                    }
+
+                    LIST_ITEM_SUBTITLE_NONE_SETTING_VALUE -> {
+                        holder.subText.isVisible = false
+                    }
                 }
             }
 
@@ -429,27 +430,24 @@ class NodesAdapter(
             if (!holder.container.isSelected) {
                 if (foregroundColor != null) {
                     holder.text.setTextColor(foregroundColor)
-                    holder.subText?.setTextColor(foregroundColor)
+                    holder.subText.setTextColor(foregroundColor)
                     holder.otpToken?.setTextColor(foregroundColor)
                     holder.otpProgress?.setIndicatorColor(foregroundColor)
                     holder.attachmentIcon?.setColorFilter(foregroundColor)
-                    holder.meta.setTextColor(foregroundColor)
                     iconColor = foregroundColor
                 } else {
                     holder.text.setTextColor(mTextColor)
-                    holder.subText?.setTextColor(mTextColorSecondary)
+                    holder.subText.setTextColor(mTextColorSecondary)
                     holder.otpToken?.setTextColor(mTextColorSecondary)
                     holder.otpProgress?.setIndicatorColor(mTextColorSecondary)
                     holder.attachmentIcon?.setColorFilter(mTextColorSecondary)
-                    holder.meta.setTextColor(mTextColor)
                 }
             } else {
                 holder.text.setTextColor(mColorOnSurface)
-                holder.subText?.setTextColor(mColorOnSurface)
+                holder.subText.setTextColor(mColorOnSurface)
                 holder.otpToken?.setTextColor(mColorOnSurface)
                 holder.otpProgress?.setIndicatorColor(mColorOnSurface)
                 holder.attachmentIcon?.setColorFilter(mColorOnSurface)
-                holder.meta.setTextColor(mColorOnSurface)
             }
 
             database.stopManageEntry(entry)
@@ -474,12 +472,19 @@ class NodesAdapter(
                 holder.numberChildren?.visibility = View.GONE
             }
 
+            if (subtitleType == LIST_ITEM_SUBTITLE_UUID_SETTING_VALUE && subNode.nodeId != null) {
+                holder.subText.text = subNode.nodeId?.toVisualString()
+                holder.subText.isVisible = true
+            } else {
+                holder.subText.isVisible = false
+            }
+
             if (!holder.container.isSelected) {
                 holder.text.setTextColor(mTextColor)
-                holder.meta.setTextColor(mTextColor)
+                holder.subText.setTextColor(mTextColor)
             } else {
                 holder.text.setTextColor(mColorOnSurface)
-                holder.meta.setTextColor(mColorOnSurface)
+                holder.subText.setTextColor(mColorOnSurface)
             }
         }
 
@@ -595,8 +600,7 @@ class NodesAdapter(
         var icon: ImageView = itemView.findViewById(R.id.node_icon)
         var iconSelected: ImageView = itemView.findViewById(R.id.node_selected_icon)
         var text: TextView = itemView.findViewById(R.id.node_text)
-        var subText: TextView? = itemView.findViewById(R.id.node_subtext)
-        var meta: TextView = itemView.findViewById(R.id.node_meta)
+        var subText: TextView = itemView.findViewById(R.id.node_subtext)
         var path: TextView? = itemView.findViewById(R.id.node_path)
         var otpContainer: ViewGroup? = itemView.findViewById(R.id.node_otp_container)
         var otpProgress: CircularProgressIndicator? = itemView.findViewById(R.id.node_otp_progress)

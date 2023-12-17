@@ -52,7 +52,6 @@
     <string name="hide_password_title">പാസ്‌വേഡുകൾ മറയ്‌ക്കുക</string>
     <string name="loading_database">ഡാറ്റാബേസ് ലോഡുചെയ്യുന്നു…</string>
     <string name="creating_database">ഡാറ്റാബേസ് സൃഷ്ടിക്കുന്നു…</string>
-    <string name="list_entries_show_username_title">ഉപയോക്തൃനാമങ്ങൾ കാണിക്കുക</string>
     <string name="hint_conf_pass">പാസ്‌വേഡ് സ്ഥിരീകരിക്കുക</string>
     <string name="generate_password">പാസ്‌വേഡ് സൃഷ്ടിക്കുക</string>
     <string name="file_browser">ഫയൽ മാനേജർ</string>
@@ -203,7 +202,6 @@
     <string name="keyboard_entry_category">എൻട്രി</string>
     <string name="auto_focus_search_title">ദ്രുത തിരയൽ</string>
     <string name="never">ഒരിക്കലും</string>
-    <string name="list_entries_show_username_summary">എൻട്രി ലിസ്റ്റുകളിൽ ഉപയോക്തൃനാമങ്ങൾ കാണിക്കുക</string>
     <string name="invalid_credentials">ക്രെഡൻഷ്യലുകൾ വായിക്കാൻ കഴിഞ്ഞില്ല.</string>
     <string name="list_groups_show_number_entries_summary">ഒരു ഗ്രൂപ്പിലെ എൻ‌ട്രികളുടെ എണ്ണം കാണിക്കുക</string>
     <string name="list_size_title">ലിസ്റ്റ് ഇനങ്ങളുടെ വലുപ്പം</string>
@@ -272,7 +270,6 @@
     <string name="warning_sure_remove_data">എന്തായാലും ഈ ഡാറ്റ നീക്കംചെയ്യണോ\?</string>
     <string name="content_description_credentials_information">ക്രെഡൻഷ്യലുകളുടെ വിവരം</string>
     <string name="configure_biometric">ബയോമെട്രിക് അല്ലെങ്കിൽ ഉപകരണ ക്രെഡൻഷ്യലുകളൊന്നും എൻറോൾ ചെയ്തിട്ടില്ല.</string>
-    <string name="show_uuid_title">UUID കാണിക്കുക</string>
     <string name="autofill_ask_to_save_data_title">ഡാറ്റ സംരക്ഷിക്കാൻ ആവശ്യപ്പെടുക</string>
     <string name="autofill_save_search_info_title">തിരയൽ വിവരങ്ങൾ സംരക്ഷിക്കുക</string>
     <string name="autofill_close_database_title">ഡാറ്റാബേസ് അടയ്ക്കുക</string>

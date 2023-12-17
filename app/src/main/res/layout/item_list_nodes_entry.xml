@@ -78,19 +78,9 @@
                 style="@style/Theme.Keepass.SubTitle.Entry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-4dp"
-                android:lines="1"
-                android:singleLine="true"
+                android:maxLines="2"
+                android:ellipsize="end"
                 tools:text="Node SubTitle" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/node_meta"
-                style="@style/Theme.Keepass.Meta.Entry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lines="1"
-                android:singleLine="true"
-                tools:text="7543A7EAB2EA7CFD1394F1615EBEB08C" />
         </LinearLayout>
 
         <LinearLayout

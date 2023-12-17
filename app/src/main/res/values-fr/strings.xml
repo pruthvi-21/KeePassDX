@@ -167,8 +167,6 @@
     <string name="enable_read_only_summary">Ouvre la base de données en lecture seule par défaut</string>
     <string name="error_load_database">Impossible de charger la base de données.</string>
     <string name="error_load_database_KDF_memory">Impossible de charger la clé. Essayez de diminuer l’utilisation mémoire de la fonction de dérivation de clé.</string>
-    <string name="list_entries_show_username_title">Afficher les noms d’utilisateur</string>
-    <string name="list_entries_show_username_summary">Affiche les noms d’utilisateur dans les listes d’entrées</string>
     <string name="keyboard_label">Magiclavier (KeePassDX)</string>
     <string name="keyboard_setting_label">Paramètres Magiclavier</string>
     <string name="keyboard_entry_category">Entrée</string>
@@ -332,8 +330,6 @@
     <string name="database_data_remove_unlinked_attachments_title">Supprimer les données non-liées</string>
     <string name="database_data_remove_unlinked_attachments_summary">Supprimer les pièces jointes contenues dans la base de données mais non-liées à une entrée</string>
     <string name="data">Données</string>
-    <string name="show_uuid_summary">Affiche l’UUID lié à une entrée ou un groupe</string>
-    <string name="show_uuid_title">Afficher l’UUID</string>
     <string name="autofill_read_only_save">L’enregistrement des données n’est pas autorisé pour une base de données ouverte en lecture seule.</string>
     <string name="autofill_ask_to_save_data_summary">Demande de sauvegarde des données à la fin du remplissage d\'un formulaire</string>
     <string name="autofill_ask_to_save_data_title">Demander à enregistrer des données</string>

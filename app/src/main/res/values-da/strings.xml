@@ -86,8 +86,6 @@
     <string name="error_load_database_KDF_memory">Kunne ikke indlæse nøglen. Prøv at reducere KDF \"hukommelsesforbrug\".</string>
     <string name="error_autofill_enable_service">Kunne ikke aktivere autofyld-tjenesten.</string>
     <string name="file_not_found_content">Kunne ikke finde filen. Prøv at åbne den fra filhåndtering.</string>
-    <string name="list_entries_show_username_title">Vis brugernavne</string>
-    <string name="list_entries_show_username_summary">Viser brugernavne i postlister</string>
     <string name="copy_field">Kopi af %1$s</string>
     <string name="menu_form_filling_settings">Formularudfyldning</string>
     <string name="menu_copy">Kopier</string>
@@ -312,8 +310,6 @@
     <string name="subdomain_search_title">Underdomæne-søgning</string>
     <string name="error_string_type">Teksten stemmer ikke overens med det ønskede element.</string>
     <string name="content_description_add_item">Tilføj element</string>
-    <string name="show_uuid_summary">Viser UUID\'en, der er knyttet til en post eller en gruppe</string>
-    <string name="show_uuid_title">Vis UUID</string>
     <string name="upload_attachment">Overfør %1$s</string>
     <string name="autofill_read_only_save">Det er ikke tilladt at gemme data i en database, der er åbnet som skrivebeskyttet.</string>
     <string name="autofill_ask_to_save_data_summary">Spørg om du vil gemme data, når en formular er udfyldt</string>

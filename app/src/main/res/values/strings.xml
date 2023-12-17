@@ -185,13 +185,10 @@
     <string name="hide_password_summary">Mask passwords (***) by default</string>
     <string name="colorize_password_title">Colorize passwords</string>
     <string name="colorize_password_summary">Colorize password characters by type</string>
-    <string name="list_entries_show_username_title">Show usernames</string>
-    <string name="list_entries_show_username_summary">Displays usernames in entry lists</string>
+    <string name="list_item_subtitle_title">List item subtitle</string>
     <string name="list_groups_show_number_entries_title">Show number of entries</string>
     <string name="show_otp_token_title">Show OTP Token</string>
     <string name="show_otp_token_summary">Displays OTP tokens in the list of entries</string>
-    <string name="show_uuid_title">Show UUID</string>
-    <string name="show_uuid_summary">Displays the UUID linked to an entry or a group</string>
     <string name="list_groups_show_number_entries_summary">Displays the number of entries in a group</string>
     <string name="list_size_title">Size of list items</string>
     <string name="list_size_summary">Text size in the element list</string>
@@ -540,6 +537,11 @@
         <item>@string/lower_case</item>
         <item>@string/upper_case</item>
         <item>@string/title_case</item>
+    </string-array>
+    <string-array name="list_item_subtitle_options">
+        <item>Username</item>
+        <item>UUID</item>
+        <item>None</item>
     </string-array>
     <string-array name="list_size_options">
         <item>Small</item>

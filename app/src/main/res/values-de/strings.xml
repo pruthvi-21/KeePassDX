@@ -168,8 +168,6 @@
     <string name="enable_read_only_summary">Datenbank standardmäßig schreibgeschützt öffnen</string>
     <string name="error_load_database">Die Datenbank konnte nicht geladen werden.</string>
     <string name="error_load_database_KDF_memory">Laden des Schlüssels fehlgeschlagen. Bitte versuchen, die „Speicherplatznutzung“ von KDF zu verringern.</string>
-    <string name="list_entries_show_username_title">Nutzernamen anzeigen</string>
-    <string name="list_entries_show_username_summary">Nutzernamen in Liste anzeigen</string>
     <string name="keyboard_label">Magikeyboard (KeePassDX)</string>
     <string name="keyboard_setting_label">Magikeyboard-Einstellungen</string>
     <string name="keyboard_entry_category">Eintrag</string>
@@ -331,8 +329,6 @@
     <string name="upload_attachment">%1$s hochladen</string>
     <string name="database_data_remove_unlinked_attachments_summary">Entfernt Anhänge, die in der Datenbank enthalten, aber keinem Eintrag zugeordnet sind</string>
     <string name="warning_sure_add_file">Datei trotzdem hinzufügen\?</string>
-    <string name="show_uuid_summary">Zeigt die mit einem Eintrag oder einer Gruppe verknüpfte UUID an</string>
-    <string name="show_uuid_title">UUID anzeigen</string>
     <string name="autofill_read_only_save">Daten speichern ist bei schreibgeschützt geöffneter Datenbank nicht möglich.</string>
     <string name="autofill_close_database_title">Datenbank schließen</string>
     <string name="keyboard_previous_lock_summary">Nach dem Sperren der Datenbank automatisch zur vorherigen Tastatur wechseln</string>

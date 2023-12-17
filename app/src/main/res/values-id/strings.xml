@@ -32,8 +32,6 @@
     <string name="list_size_title">Ukuran daftar item</string>
     <string name="list_groups_show_number_entries_summary">Menampilkan jumlah entri dalam sebuah grup</string>
     <string name="list_groups_show_number_entries_title">Tampilkan jumlah entri</string>
-    <string name="list_entries_show_username_summary">Tampilkan nama pengguna di daftar entri</string>
-    <string name="list_entries_show_username_title">Tampilkan nama pengguna</string>
     <string name="invalid_db_sig">Tidak bisa mengenali format basis data.</string>
     <string name="invalid_db_same_uuid">%1$s dengan UUID yang sama %2$s sudah ada.</string>
     <string name="invalid_algorithm">Algoritma salah.</string>
@@ -226,14 +224,12 @@
     <string name="download_progression">Dalam proses: %1$d %%</string>
     <string name="download_initialization">Memulai …</string>
     <string name="upload_attachment">Unggah %1$s</string>
-    <string name="show_uuid_title">Tampilkan UUID</string>
     <string name="hide_expired_entries_summary">Entri yang kadaluarsa tidak ditampilkan</string>
     <string name="hide_expired_entries_title">Sembunyikan entri yang kedaluwarsa</string>
     <string name="icon_pack_choose_title">Paket ikon</string>
     <string name="unit_mebibyte">MiB</string>
     <string name="unit_kibibyte">KiB</string>
     <string name="unit_byte">B</string>
-    <string name="show_uuid_summary">Tampilkan UUID yang ditautkan ke entri atau grup</string>
     <string name="warning_password_encoding">Hindari karakter kata sandi di luar format pengkodean teks dalam file basis data (karakter yang tidak dikenal dikonversi ke huruf yang sama).</string>
     <string name="sort_creation_time">Penciptaan</string>
     <string name="filter">Saring</string>

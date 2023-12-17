@@ -83,7 +83,6 @@
     <string name="passphrase">วลีรหัสผ่าน</string>
     <string name="invalid_credentials">ไม่สามารถอ่านข้อมูลประจําตัว</string>
     <string name="invalid_db_sig">ไม่รู้จักรูปแบบฐานข้อมูล</string>
-    <string name="list_entries_show_username_summary">แสดงชื่อผู้ใช้ในรายการ</string>
     <string name="list_groups_show_number_entries_title">แสดงจํานวนรายการ</string>
     <string name="show_otp_token_title">แสดงโทเค็น OTP</string>
     <string name="copy_field">สำเนาของ %1$s</string>
@@ -176,14 +175,11 @@
     <string name="error_empty_key">คีย์นี้ไม่สามารถว่างเปล่าได้</string>
     <string name="error_unable_merge_database_kdb">ไม่สามารถควบรวมจากฐานข้อมูล V1</string>
     <string name="error_location_unknown">ไม่ทราบตําแหน่งที่ตั้งฐานข้อมูล ไม่สามารถดําเนินการกับฐานข้อมูลได้</string>
-    <string name="show_uuid_title">แสดง UUID</string>
     <string name="list_size_summary">ขนาดข้อความในรายการองค์ประกอบ</string>
     <string name="invalid_algorithm">อัลกอริทึมไม่ถูกต้อง</string>
     <string name="invalid_db_same_uuid">%1$s มี UUID เดียวกันกับ %2$s ที่มีอยู่แล้ว</string>
     <string name="colorize_password_title">ทำสีรหัสผ่าน</string>
-    <string name="show_uuid_summary">แสดง UUID ที่เชื่อมโยงกับรายการหรือกลุ่ม</string>
     <string name="colorize_password_summary">ทำสีอักขระรหัสผ่านตามประเภท</string>
-    <string name="list_entries_show_username_title">แสดงชื่อผู้ใช้</string>
     <string name="show_otp_token_summary">แสดงโทเค็น OTP ในรายการ</string>
     <string name="list_groups_show_number_entries_summary">แสดงจำนวนรายการในกลุ่ม</string>
     <string name="list_size_title">ขนาดของรายการ</string>

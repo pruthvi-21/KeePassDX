@@ -166,8 +166,6 @@
     <string name="icon_pack_choose_title">Pacote de ícones</string>
     <string name="error_load_database">Não foi possível carregar o banco de dados.</string>
     <string name="error_load_database_KDF_memory">Não pôde carregar a chave. Tente diminuir o \"Uso de Memória\" do KDF.</string>
-    <string name="list_entries_show_username_title">Mostrar nomes de usuário</string>
-    <string name="list_entries_show_username_summary">Exibe nomes de usuário em listas de entrada</string>
     <string name="clipboard">Área de transferência</string>
     <string name="keyboard_label">Magikeyboard (KeePassDX)</string>
     <string name="keyboard_setting_label">Configurações do Magikeyboard</string>
@@ -397,8 +395,6 @@
     <string name="menu_external_icon">Ícone externo</string>
     <string name="show_otp_token_summary">Exibe tokens OTP na lista de entradas</string>
     <string name="show_otp_token_title">Mostrar token OTP</string>
-    <string name="show_uuid_summary">Exibe o UUID vinculado a uma entrada ou grupo</string>
-    <string name="show_uuid_title">Mostrar UUID</string>
     <string name="icon_section_custom">Personalizado</string>
     <string name="icon_section_standard">Padrão</string>
     <string name="unit_mebibyte">MiB</string>

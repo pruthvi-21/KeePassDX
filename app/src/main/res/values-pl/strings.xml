@@ -87,8 +87,6 @@
     <string name="field_name">Nazwa pola</string>
     <string name="file_not_found_content">Nie znaleziono pliku. Spróbuj ponownie otworzyć go w przeglądarce plików.</string>
     <string name="invalid_algorithm">Błędny algorytm.</string>
-    <string name="list_entries_show_username_title">Pokaż nazwy użytkowników</string>
-    <string name="list_entries_show_username_summary">Wyświetla nazwy użytkowników na listach wpisów</string>
     <string name="copy_field">Skopiowano %1$s</string>
     <string name="menu_form_filling_settings">Wypełnianie formularzy</string>
     <string name="menu_copy">Kopiuj</string>
@@ -326,8 +324,6 @@
     <string name="warning_sure_remove_data">Czy mimo to usunąć te dane\?</string>
     <string name="warning_remove_unlinked_attachment">Usunięcie niepowiązanych danych może zmniejszyć rozmiar bazy danych, ale może również spowodować usunięcie danych używanych przez wtyczki KeePass.</string>
     <string name="content_description_credentials_information">Informacje o poświadczeniach</string>
-    <string name="show_uuid_summary">Wyświetla identyfikator UUID powiązany z wpisem lub grupą</string>
-    <string name="show_uuid_title">Pokaż UUID</string>
     <string name="autofill_read_only_save">Zapisywanie danych nie jest dozwolone dla bazy danych otwartej tylko do odczytu.</string>
     <string name="autofill_ask_to_save_data_summary">Pytaj o zapisanie danych po zakończeniu wypełniania formularza</string>
     <string name="autofill_ask_to_save_data_title">Pytaj o zapisanie danych</string>

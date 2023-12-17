@@ -84,8 +84,6 @@
     <string name="list_size_title">اندازه موارد لیست</string>
     <string name="list_groups_show_number_entries_summary">نمایش تعداد ورودی ها در یک گروه</string>
     <string name="list_groups_show_number_entries_title">نمایش تعداد ورودی ها</string>
-    <string name="list_entries_show_username_summary">نمایش نام های کاربری در لیست های ورودی</string>
-    <string name="list_entries_show_username_title">نمایش نام های کاربری</string>
     <string name="invalid_db_sig">نمی توانست فرمت پایگاه داده را تشخیص دهد.</string>
     <string name="invalid_db_same_uuid">%1$s با همان UUID %2$s در حال حاضر وجود دارد.</string>
     <string name="invalid_algorithm">الگوریتم اشتباه</string>

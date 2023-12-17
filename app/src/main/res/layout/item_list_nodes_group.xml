@@ -74,13 +74,13 @@
                 tools:text="Node Title" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/node_meta"
-                style="@style/Theme.Keepass.Meta.Group"
+                android:id="@+id/node_subtext"
+                style="@style/Theme.Keepass.SubTitle.Entry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:lines="1"
                 android:singleLine="true"
-                tools:text="7543A7EAB2EA7CFD1394F1615EBEB08C" />
+                tools:text="Node SubTitle" />
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView

@@ -249,7 +249,6 @@ class EntryFragment : DatabaseFragment() {
 
         // Assign special data
         context?.let {
-            uuidReferenceView?.isVisible = PreferencesUtil.showUUID(it)
             UuidUtil.toHexString(entryInfo?.id)?.let {
                 uuidReferenceView?.value = it
             }

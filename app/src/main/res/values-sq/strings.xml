@@ -158,10 +158,8 @@
     <string name="hide_password_title">Fshihi fjalëkalimet</string>
     <string name="hide_password_summary">Si parazgjedhje, maskoji fjalëkalimet (***)</string>
     <string name="colorize_password_title">Ngjyrosi fjalëkalimet</string>
-    <string name="list_entries_show_username_title">Shfaq emra përdoruesi</string>
     <string name="list_groups_show_number_entries_title">Shfaq numër zërash</string>
     <string name="show_otp_token_title">Shfaq Token OTP</string>
-    <string name="show_uuid_title">Shfaq UUID</string>
     <string name="list_groups_show_number_entries_summary">Shfaq numrin e zërave në një grup</string>
     <string name="creating_database">Po krijohet bazë të dhënash…</string>
     <string name="loading_database">Po ngarkohet baza e të dhënave…</string>
