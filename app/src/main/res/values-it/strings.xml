@@ -145,7 +145,6 @@
     <string name="database_name_title">Nome del database</string>
     <string name="database_description_title">Descrizione del database</string>
     <string name="database_version_title">Versione del database</string>
-    <string name="text_appearance">Testo</string>
     <string name="application_appearance">Interfaccia</string>
     <string name="other">Altro</string>
     <string name="keyboard">Tastiera</string>
@@ -271,7 +270,6 @@
     <string name="database_opened">Database aperto</string>
     <string name="settings_database_force_changing_master_key_title">Forza rinnovo</string>
     <string name="settings_database_recommend_changing_master_key_title">Rinnovo raccomandato</string>
-    <string name="hide_expired_entries_summary">Le voci scadute non sono mostrate</string>
     <string name="hide_expired_entries_title">Nascondi le voci scadute</string>
     <string name="download_complete">Completato!</string>
     <string name="download_finalization">Finalizzazione…</string>

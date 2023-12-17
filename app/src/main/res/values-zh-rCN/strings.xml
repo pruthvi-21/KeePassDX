@@ -121,7 +121,6 @@
     <string name="database_name_title">数据库名称</string>
     <string name="database_description_title">数据库描述</string>
     <string name="database_version_title">数据库版本</string>
-    <string name="text_appearance">文字样式</string>
     <string name="application_appearance">界面</string>
     <string name="other">其他</string>
     <string name="keyboard">键盘</string>
@@ -275,7 +274,6 @@
     <string name="download_finalization">正在完成…</string>
     <string name="download_complete">完成！</string>
     <string name="hide_expired_entries_title">隐藏过期条目</string>
-    <string name="hide_expired_entries_summary">过期条目将被隐藏</string>
     <string name="html_about_contribution">为了&lt;strong&gt;维持我们的自由&lt;/strong&gt;、&lt;strong&gt;修复 bugs&lt;/strong&gt;、&lt;strong&gt;添加更多功能&lt;/strong&gt;以及&lt;strong&gt;始终保持项目活跃&lt;/strong&gt;，我们期待您的&lt;strong&gt;贡献&lt;/strong&gt;。</string>
     <string name="auto_focus_search_title">快速搜索</string>
     <string name="auto_focus_search_summary">打开数据库时询问是否进行搜索</string>

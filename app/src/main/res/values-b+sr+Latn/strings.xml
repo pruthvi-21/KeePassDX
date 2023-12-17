@@ -117,7 +117,6 @@
     <string name="compression_none">Bez kompresije</string>
     <string name="other">Ostalo</string>
     <string name="application_appearance">Aplikacija</string>
-    <string name="text_appearance">Tekst</string>
     <string name="database_version_title">Verzija baze podataka</string>
     <string name="database_custom_color_title">Prilagođena boja baze podataka</string>
     <string name="database_default_username_title">Podrazumevano korisničko ime</string>

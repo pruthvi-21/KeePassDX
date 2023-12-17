@@ -212,7 +212,6 @@
     <string name="generate_password">生成密碼</string>
     <string name="hide_broken_locations_summary">在最近的資料庫列表中隱藏已損壞的資料庫的連結</string>
     <string name="hide_broken_locations_title">隱藏已損壞的資料庫路徑</string>
-    <string name="hide_expired_entries_summary">過期條目將被隱藏</string>
     <string name="hide_expired_entries_title">隱藏過期的條目</string>
     <string name="hide_password_summary">預設隱藏密碼</string>
     <string name="hide_password_title">密碼遮罩</string>
@@ -406,7 +405,6 @@
     <string name="templates_group_enable_summary">使用動態樣板填寫條目的欄位</string>
     <string name="templates_group_enable_title">樣板使用</string>
     <string name="templates_group_uuid_title">樣板組</string>
-    <string name="text_appearance">文字</string>
     <string name="token">令牌</string>
     <string name="type">類型</string>
     <string name="unavailable_feature_hardware">找不到所需的硬體。</string>

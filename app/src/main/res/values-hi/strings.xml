@@ -95,7 +95,6 @@
     <string name="error_move_entry_here">आप यहा किसी प्रविष्टि को स्थानांतरित नहीं कर सकते है।</string>
     <string name="error_save_database">डेटाबेस को सेव नहीं किया जा सका।</string>
     <string name="error_otp_counter">काउंटर %1$d और %2$d के बीच में होना चाहिए।</string>
-    <string name="hide_expired_entries_summary">समाप्त हो चुकी प्रविष्टियों को नहीं दिखाया गया है</string>
     <string name="unit_kibibyte">KiB</string>
     <string name="unit_mebibyte">MiB</string>
     <string name="content_description_credentials_information">क्रेडेंशियल्स कि जानकारी</string>

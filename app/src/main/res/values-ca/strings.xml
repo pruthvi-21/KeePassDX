@@ -221,7 +221,6 @@
     <string name="content_description_credentials_information">Informació de credencials</string>
     <string name="content_description_add_item">Afegeix un element</string>
     <string name="icon_section_standard">Estàndard</string>
-    <string name="hide_expired_entries_summary">No es mostren les entrades expirades</string>
     <string name="hide_expired_entries_title">Amaga les entrades expirades</string>
     <string name="download">Baixa</string>
     <string name="unit_kibibyte">KiB</string>

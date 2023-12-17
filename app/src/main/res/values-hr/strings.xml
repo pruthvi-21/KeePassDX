@@ -157,7 +157,6 @@
     <string name="database_default_username_title">Standardno korisničko ime</string>
     <string name="database_custom_color_title">Proizvoljna boja baze podataka</string>
     <string name="database_version_title">Verzija baze podataka</string>
-    <string name="text_appearance">Tekst</string>
     <string name="application_appearance">Sučelje</string>
     <string name="other">Ostalo</string>
     <string name="compression_none">Bez</string>
@@ -277,7 +276,6 @@
     <string name="hide_broken_locations_title">Sakrij pokvarene poveznice baze podataka</string>
     <string name="autofill_block">Blokiranje automatskog ispunjavanja</string>
     <string name="keystore_not_accessible">Baza ključeva nije ispravno inicijalizirana.</string>
-    <string name="hide_expired_entries_summary">Istekli unosi se ne pokazuju</string>
     <string name="biometric_auto_open_prompt_summary">Automatski zatraži otključavanje uređaja ako je baza podataka postavljena da ga koristi</string>
     <string name="unavailable_feature_text">Nije moguće pokrenuti ovu funkciju.</string>
     <string name="biometric_auto_open_prompt_title">Automatski otvori prozor za prijavu</string>

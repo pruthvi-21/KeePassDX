@@ -219,7 +219,6 @@
     <string name="database_default_username_title">Nume utilizator implicit</string>
     <string name="database_custom_color_title">Culoare personalizată a bazei de date</string>
     <string name="database_version_title">Versiunea bazei de date</string>
-    <string name="text_appearance">Text</string>
     <string name="application_appearance">Aplicație</string>
     <string name="other">Alta</string>
     <string name="compression_none">Nimic</string>
@@ -269,7 +268,6 @@
     <string name="download_complete">Complet!</string>
     <string name="icon_pack_choose_title">Pachet de pictograme</string>
     <string name="hide_expired_entries_title">Ascundeți intrările expirate</string>
-    <string name="hide_expired_entries_summary">Înscrierile expirate vor fi ascunse</string>
     <string name="auto_focus_search_title">Căutare rapidă</string>
     <string name="auto_focus_search_summary">Solicitați o căutare atunci când deschideți o bază de date</string>
     <string name="remember_database_locations_title">Amintiți locațiile bazelor de date</string>

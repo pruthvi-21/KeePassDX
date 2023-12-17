@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory android:title="@string/application_appearance">
-
         <com.kunzisoft.keepass.settings.preference.IconPackListPreference
             android:key="@string/setting_icon_pack_choose_key"
             android:title="@string/icon_pack_choose_title"
@@ -15,34 +14,15 @@
             android:summary="@string/show_entry_colors_summary"
             android:title="@string/show_entry_colors_title"
             app:layout="@layout/preference_material_bottom" />
-
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/password">
-
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/hide_password_default"
-            android:key="@string/hide_password_key"
-            android:summary="@string/hide_password_summary"
-            android:title="@string/hide_password_title"
-            app:layout="@layout/preference_material_top" />
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/colorize_password_default"
-            android:key="@string/colorize_password_key"
-            android:summary="@string/colorize_password_summary"
-            android:title="@string/colorize_password_title"
-            app:layout="@layout/preference_material_bottom" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/text_appearance">
-
+    <PreferenceCategory android:title="@string/settings_appearance_home_screen">
         <ListPreference
             android:defaultValue="@string/list_item_subtitle_default_value"
             android:entries="@array/list_item_subtitle_options"
             android:entryValues="@array/list_item_subtitle_string_values"
-            android:title="@string/list_item_subtitle_title"
             android:key="@string/list_item_subtitle_key"
+            android:title="@string/list_item_subtitle_title"
             app:layout="@layout/preference_material_top"
             app:useSimpleSummaryProvider="true" />
         <SwitchPreferenceCompat
@@ -64,22 +44,29 @@
             android:summary="@string/list_size_summary"
             android:title="@string/list_size_title" />
         <SwitchPreferenceCompat
+            android:defaultValue="@bool/hide_expired_entries_default"
+            android:key="@string/hide_expired_entries_key"
+            android:title="@string/hide_expired_entries_title"
+            app:layout="@layout/preference_material_bottom" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_appearance_entry_details">
+        <SwitchPreferenceCompat
             android:defaultValue="@bool/monospace_font_fields_enable_default"
             android:key="@string/monospace_font_fields_enable_key"
             android:summary="@string/monospace_font_fields_enable_summary"
             android:title="@string/monospace_font_fields_enable_title"
-            app:layout="@layout/preference_material_bottom" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/other">
-
+            app:layout="@layout/preference_material_top" />
         <SwitchPreferenceCompat
-            android:defaultValue="@bool/hide_expired_entries_default"
-            android:key="@string/hide_expired_entries_key"
-            android:summary="@string/hide_expired_entries_summary"
-            android:title="@string/hide_expired_entries_title"
-            app:layout="@layout/preference_material_single" />
+            android:defaultValue="@bool/hide_password_default"
+            android:key="@string/hide_password_key"
+            android:summary="@string/hide_password_summary"
+            android:title="@string/hide_password_title" />
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/colorize_password_default"
+            android:key="@string/colorize_password_key"
+            android:summary="@string/colorize_password_summary"
+            android:title="@string/colorize_password_title"
+            app:layout="@layout/preference_material_bottom" />
     </PreferenceCategory>
-
 </PreferenceScreen>

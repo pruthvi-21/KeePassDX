@@ -19,7 +19,6 @@
     <string name="keyboard">Teclado</string>
     <string name="other">Outros</string>
     <string name="application_appearance">Interface</string>
-    <string name="text_appearance">Texto</string>
     <string name="database_version_title">Versão da base de dados</string>
     <string name="database_description_title">Descrição da base de dados</string>
     <string name="database_name_title">Nome da base de dados</string>
@@ -101,7 +100,6 @@
     <string name="error_rounds_too_large">\"Rodadas de transformação\" é muito grande. Alterado para 2147483648.</string>
     <string name="error_pass_match">As palavras-passe não coincidem.</string>
     <string name="error_pass_gen_type">Tem de ser selecionado pelo menos um tipo de geração de palavra-chave.</string>
-    <string name="hide_expired_entries_summary">As entradas expiradas não são mostradas</string>
     <string name="download_complete">Completo!</string>
     <string name="upload_attachment">Enviar %1$s</string>
     <string name="allow_no_password_summary">Permite tocar no botão \"Abrir\" se não estiverem selecionadas nenhumas credenciais</string>

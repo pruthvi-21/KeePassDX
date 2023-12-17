@@ -143,7 +143,6 @@
     <string name="database_name_title">Databasenavn</string>
     <string name="database_description_title">Databasebeskrivelse</string>
     <string name="database_version_title">Databaseversjon</string>
-    <string name="text_appearance">Tekstutseende</string>
     <string name="application_appearance">Programutseende</string>
     <string name="other">Annet</string>
     <string name="keyboard">Tastatur</string>
@@ -252,7 +251,6 @@
     <string name="entry_add_attachment">Legg til vedlegg</string>
     <string name="enable_auto_save_database_summary">Lagre database etter hver viktige handling i (i \"modifiserbart\" modus)</string>
     <string name="download_initialization">Igangsetter…</string>
-    <string name="hide_expired_entries_summary">Utløpte oppføringer er skjult</string>
     <string name="enable_auto_save_database_title">Automatisk databaselagring</string>
     <string name="settings_database_force_changing_master_key_title">Påtving fornyelse</string>
     <string name="settings_database_recommend_changing_master_key_title">Anbefal fornyelse</string>

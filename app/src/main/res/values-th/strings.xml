@@ -157,7 +157,6 @@
     <string name="icon_section_standard">มาตรฐาน</string>
     <string name="icon_section_custom">กำหนดเอง</string>
     <string name="hide_expired_entries_title">ซ่อนรายการที่หมดอายุแล้ว</string>
-    <string name="hide_expired_entries_summary">รายการที่หมดอายุแล้วจะไม่แสดง</string>
     <string name="error_move_group_here">คุณไม่สามารถย้ายกลุ่มมาที่นี่ได้</string>
     <string name="error_move_entry_here">คุณไม่สามารถย้ายรายการมาที่นี่ได้</string>
     <string name="error_create_database">ไม่สามารถสร้างไฟล์ฐานข้อมูล</string>
@@ -469,7 +468,6 @@
     <string name="keyboard_selection_entry_summary">เมื่อดูรายการใน KeePassDX, เมจิคีย์บอร์ด จะใช้รายการนั้นด้วย</string>
     <string name="keyboard_save_search_info_summary">พยายามบันทึกข้อมูลที่ใช้ร่วมกันเมื่อเลือกกรอกรายการนั้นด้วยตนเองเพื่อใช้งานในอนาคตง่ายขึ้น</string>
     <string name="keyboard_notification_entry_clear_close_summary">ปิดฐานข้อมูลเมื่อปิดการแจ้งเตือน</string>
-    <string name="text_appearance">ลักษณะตัวหนังสือ</string>
     <string name="keyboard_auto_go_action_summary">กระทำปุ่ม \"ไป\" หลังจากกดปุ่ม \"เขตข้อมูล\"</string>
     <string name="keyboard_previous_database_credentials_title">หน้าจอการยืนยันข้อมูลประจำตัวฐานข้อมูล</string>
     <string name="keyboard_previous_database_credentials_summary">สลับไปยังแป้นพิมพ์ก่อนหน้านี้โดยอัตโนมัติบนหน้าจอการยืนยันข้อมูลประจำตัวฐานข้อมูล</string>

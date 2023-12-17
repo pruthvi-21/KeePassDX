@@ -142,7 +142,6 @@
     <string name="database_name_title">Namn på databas</string>
     <string name="database_description_title">Beskrivning på databas</string>
     <string name="database_version_title">Version på databas</string>
-    <string name="text_appearance">Text</string>
     <string name="application_appearance">App</string>
     <string name="other">Annan</string>
     <string name="keyboard">Tangentbord</string>
@@ -271,7 +270,6 @@
     <string name="menu_restore_entry_history">Återställ historik</string>
     <string name="error_create_database">Det gick inte att skapa databasfilen.</string>
     <string name="discard">Förkasta</string>
-    <string name="hide_expired_entries_summary">Utgångna poster visas ej</string>
     <string name="hide_expired_entries_title">Dölj utgångna poster</string>
     <string name="download_complete">Färdigt!</string>
     <string name="download_finalization">Färdigställande…</string>

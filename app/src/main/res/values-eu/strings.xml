@@ -298,7 +298,6 @@
     <string name="notification">Jakinarazpen</string>
     <string name="database_custom_color_title">Pertsonalizatutako datu-basearen kolorea</string>
     <string name="database_version_title">Datu-basearen bertsioa</string>
-    <string name="text_appearance">Testua</string>
     <string name="enable_auto_save_database_title">Gorde datu-basea automatikoki</string>
     <string name="autofill_web_domain_blocklist_title">Web domeinuen blokeo zerrenda</string>
     <string name="autofill_inline_suggestions_keyboard">Betetze automatikorako iradokizunak gehituta.</string>
@@ -409,7 +408,6 @@
     <string name="icon_pack_choose_title">Ikono paketea</string>
     <string name="show_entry_colors_title">Sarrerako koloreak</string>
     <string name="show_entry_colors_summary">Erakutsi sarreraren aurreko eta atzeko planoen koloreak</string>
-    <string name="hide_expired_entries_summary">Iraungitako sarrerak ez dira erakusten</string>
     <string name="advanced_unlock_prompt_extract_credential_title">Ireki datu-basea desblokeo aurreratuko ezagutzearekin</string>
     <string name="html_text_ad_free">Pasahitzak kudeatzeko aplikazio asko ez bezala, hau &lt;strong&gt; iragarkirik gabekoa&lt;/strong&gt; eta &lt;strong&gt; copyleft software libreako&lt;/strong&gt; da eta ez du datu pertsonalik biltzen zerbitzarietan, aplikazioaren edozein bertsiotan.</string>
     <string name="html_text_dev_feature">Ezaugarri hau &lt;strong&gt;garapen prozesuan &lt;/strong&gt; dago eta zure &lt;strong&gt; ekarpena&lt;/strong&gt; behar du ahalik eta lehen eskuragarri egoteko.</string>

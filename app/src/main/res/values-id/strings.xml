@@ -224,7 +224,6 @@
     <string name="download_progression">Dalam proses: %1$d %%</string>
     <string name="download_initialization">Memulai …</string>
     <string name="upload_attachment">Unggah %1$s</string>
-    <string name="hide_expired_entries_summary">Entri yang kadaluarsa tidak ditampilkan</string>
     <string name="hide_expired_entries_title">Sembunyikan entri yang kedaluwarsa</string>
     <string name="icon_pack_choose_title">Paket ikon</string>
     <string name="unit_mebibyte">MiB</string>
@@ -409,7 +408,6 @@
     <string name="html_text_ad_free">Tidak seperti banyak aplikasi pengelola kata sandi, ini &lt;strong&gt;bebas iklan&lt;/strong&gt;, &lt;strong&gt;perangkat lunak libre copyleft&lt;/strong&gt;, dan tidak mengumpulkan data pribadi di peladennya, tidak peduli versi apa yang Anda gunakan.</string>
     <string name="html_text_dev_feature">Fitur ini &lt;strong&gt;sedang dalam pengembangan&lt;/strong&gt; dan memerlukan &lt;strong&gt;kontribusi&lt;/strong&gt; Anda untuk bisa tersedia segera.</string>
     <string name="show_otp_token_title">Tampilkan Token OTP</string>
-    <string name="text_appearance">Teks</string>
     <string name="database_custom_color_title">Warna basis data kustom</string>
     <string name="settings_database_force_changing_master_key_next_time_title">Pembaruan paksa lain kali</string>
     <string name="settings_database_force_changing_master_key_title">Pembaruan paksa</string>

@@ -140,7 +140,6 @@
     <string name="database_name_title">Nome da base de dados</string>
     <string name="database_description_title">Descrição da base de dados</string>
     <string name="database_version_title">Versão da base de dados</string>
-    <string name="text_appearance">Texto</string>
     <string name="application_appearance">Interface</string>
     <string name="other">Outros</string>
     <string name="keyboard">Teclado</string>
@@ -299,7 +298,6 @@
     <string name="enable_auto_save_database_title">Guardar automaticamente a base de dados</string>
     <string name="keyboard_auto_go_action_title">Ação de tecla automática</string>
     <string name="hide_expired_entries_title">Ocultar entradas expiradas</string>
-    <string name="hide_expired_entries_summary">As entradas expiradas não são mostradas</string>
     <string name="menu_master_key_settings">Configurações da chave mestra</string>
     <string name="menu_empty_recycle_bin">Esvaziar caixote da reciclagem</string>
     <string name="contains_duplicate_uuid_procedure">Resolver o problema gerando novas UUIDs para os duplicados para continuar\?</string>

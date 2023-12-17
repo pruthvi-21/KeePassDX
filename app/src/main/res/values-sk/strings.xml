@@ -168,7 +168,6 @@
     <string name="notification">Oznámenie</string>
     <string name="clear_clipboard_notification_title">Pri zatváraní vymazať</string>
     <string name="database_description_title">Popis databázy</string>
-    <string name="text_appearance">Text</string>
     <string name="compression_gzip">Gzip</string>
     <string name="recycle_bin">Kôš</string>
     <string name="templates">Šablóny</string>
@@ -266,7 +265,6 @@
     <string name="autofill_manual_selection_title">Manuálny výber</string>
     <string name="enable_auto_save_database_title">Automatické ukladanie databázy</string>
     <string name="download_progression">Prebieha: %1$d%%</string>
-    <string name="hide_expired_entries_summary">Záznamy s uplynutou platnosťou sa nezobrazujú</string>
     <string name="show_otp_token_title">Ukázať OTP Token</string>
     <string name="hide_expired_entries_title">Skryť záznamy s vypršanou platnosťou</string>
     <string name="content_description_entry_icon">Ikona záznamu</string>

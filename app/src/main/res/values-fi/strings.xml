@@ -141,7 +141,6 @@
     <string name="keyboard">Näppäimistö</string>
     <string name="other">Muut</string>
     <string name="application_appearance">Sovellus</string>
-    <string name="text_appearance">Teksti</string>
     <string name="database_version_title">Salasanatietokannan versio</string>
     <string name="database_description_title">Salasanatietokannan kuvaus</string>
     <string name="database_name_title">Salasanatietokannan nimi</string>

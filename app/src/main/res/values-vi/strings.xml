@@ -139,7 +139,6 @@
     <string name="hide_password_summary">Mặc định che mật khẩu (***)</string>
     <string name="auto_type">Tự động gõ</string>
     <string name="inherited">Kế tục</string>
-    <string name="hide_expired_entries_summary">Các mục đã hết hạn không được hiển thị</string>
     <string name="consider_chars_filter">Xem xét các ký tự</string>
     <string name="exclude_ambiguous_chars">Loại trừ các ký tự không rõ ràng</string>
     <string name="unit_kibibyte">KiB</string>

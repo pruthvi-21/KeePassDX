@@ -413,7 +413,6 @@
     <string name="clear_clipboard_notification_summary">Bloquear a base de datos cando a duración do portapapeis expire ou cando a notificación for fechada despois de utilizala</string>
     <string name="database_default_username_title">Nome do usuario predefinido</string>
     <string name="database_version_title">Versión da base de datos</string>
-    <string name="text_appearance">Texto</string>
     <string name="other">Outros</string>
     <string name="compression_none">Ningunha</string>
     <string name="compression_gzip">Gzip</string>
@@ -478,7 +477,6 @@
     <string name="upload_attachment">Subir %1$s</string>
     <string name="unit_byte">B</string>
     <string name="unit_mebibyte">MiB</string>
-    <string name="hide_expired_entries_summary">Entradas expiradas non son mostradas</string>
     <string name="download_attachment">Descarregar %1$s</string>
     <string name="download_initialization">A inicializar…</string>
     <string name="download_progression">En progreso: %1$d%%</string>

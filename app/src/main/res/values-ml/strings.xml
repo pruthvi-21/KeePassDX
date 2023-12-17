@@ -173,7 +173,6 @@
     <string name="filter">ഫിൽട്ടർ</string>
     <string name="enable">പ്രവർത്തനക്ഷമമാക്കുക</string>
     <string name="default_checkbox">സ്ഥിരസ്ഥിതി ഡാറ്റാബേസായി ഉപയോഗിക്കുക</string>
-    <string name="text_appearance">വാചകം</string>
     <string name="advanced_unlock">വിപുലമായ അൺലോക്ക്</string>
     <string name="compression_none">ഒന്നുമില്ല</string>
     <string name="disable">പ്രവർത്തനരഹിതമാക്കുക</string>
@@ -253,7 +252,6 @@
     <string name="keystore_not_accessible">കീസ്റ്റോർ ശരിയായി സമാരംഭിച്ചിട്ടില്ല.</string>
     <string name="sort_recycle_bin_bottom">റീസൈക്കിൾ ബിൻ ചുവടെയുണ്ട്</string>
     <string name="root">റൂട്ട്</string>
-    <string name="hide_expired_entries_summary">കാലാവധി കഴിഞ്ഞ എൻട്രികൾ കാണിക്കുന്നില്ല</string>
     <string name="warning_empty_keyfile">ഒരു ശൂന്യ കീ ഫയൽ ചേർക്കാൻ ശുപാർശ ചെയ്യുന്നില്ല.</string>
     <string name="lock_database_back_root_summary">ഉപയോക്താവ് റൂട്ട് സ്ക്രീനിലെ ബാക്ക് ബട്ടൺ ക്ലിക്കുചെയ്യുമ്പോൾ ഡാറ്റാബേസ് ലോക്കുചെയ്യുക</string>
     <string name="biometric_delete_all_key_summary">ബയോമെട്രിക് തിരിച്ചറിയലുമായി ബന്ധപ്പെട്ട എല്ലാ എൻ‌ക്രിപ്ഷൻ കീകളും ഇല്ലാതാക്കുക</string>

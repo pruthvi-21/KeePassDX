@@ -148,7 +148,6 @@
     <string name="database_name_title">Adatbázis neve</string>
     <string name="database_description_title">Adatbázis leírása</string>
     <string name="database_version_title">Adatbázis verzió</string>
-    <string name="text_appearance">Szöveg</string>
     <string name="application_appearance">Felhasználói felület</string>
     <string name="other">Egyéb</string>
     <string name="keyboard">Billentyűzet</string>
@@ -211,7 +210,6 @@
     <string name="discard_changes">Elveti a változásokat\?</string>
     <string name="validate">Érvényesítés</string>
     <string name="auto_focus_search_title">Gyors keresés</string>
-    <string name="hide_expired_entries_summary">A lejárt bejegyzések nem jelennek meg</string>
     <string name="hide_expired_entries_title">Lejárt bejegyzések elrejtése</string>
     <string name="download_complete">Kész!</string>
     <string name="download_finalization">Befejezés…</string>

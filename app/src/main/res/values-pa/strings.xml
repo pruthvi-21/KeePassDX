@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hide_expired_entries_summary">ਮਿਆਦ ਪੁੱਗੀਆਂ ਐਂਟਰੀਆਂ ਦਿਖਾਈਆਂ ਨਹੀਂ ਹਨ</string>
     <string name="hide_expired_entries_title">ਮਿਆਦ ਪੁੱਗੀਆਂ ਐਂਟਰੀਆਂ ਲੁਕਾਓ</string>
     <string name="icon_pack_choose_title">ਆਈਕਾਨ ਪੈਕ</string>
     <string name="download_complete">ਪੂਰਾ ਹੋਇਆ!</string>
@@ -242,7 +241,6 @@
     <string name="compression_gzip">Gzip</string>
     <string name="other">ਹੋਰ</string>
     <string name="application_appearance">ਐਪ</string>
-    <string name="text_appearance">ਲਿਖਤ</string>
     <string name="database_version_title">ਡਾਟਾਬੇਸ ਦਾ ਵਰਜ਼ਨ</string>
     <string name="database_custom_color_title">ਪਸੰਦੀਦਾ ਡਾਟਾਬੇਸ ਦਾ ਰੰਗ</string>
     <string name="database_default_username_title">ਮੂਲ ਵਰਤੋਂਕਾਰ-ਨਾਂ</string>

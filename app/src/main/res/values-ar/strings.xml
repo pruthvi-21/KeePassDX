@@ -123,7 +123,6 @@
     <string name="database_name_title">اسم قاعدة البيانات</string>
     <string name="database_description_title">وصف قاعدة البيانات</string>
     <string name="database_version_title">نسخة قاعدة البيانات</string>
-    <string name="text_appearance">نص</string>
     <string name="application_appearance">الواجهة</string>
     <string name="other">أخرى</string>
     <string name="keyboard">لوحة مفاتيح</string>
@@ -256,7 +255,6 @@
     <string name="autofill_application_id_blocklist_summary">منع الملء التلقائي للتطبيقات الموجودة في القائمة</string>
     <string name="autofill_application_id_blocklist_title">قائمة التطبيقات المحظورة</string>
     <string name="content_description_repeat_toggle_password_visibility">بدِّل ظهور كلمة السر</string>
-    <string name="hide_expired_entries_summary">لن تعرض المدخلات منتهية الصلاحية</string>
     <string name="autofill_block">احظر الملء التلقائي</string>
     <string name="keyboard_previous_database_credentials_title">شاشة بيانات اعتماد قاعدة البيانات</string>
     <string name="keyboard_change">غيِّر لوحة المفاتيح</string>

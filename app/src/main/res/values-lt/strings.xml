@@ -237,7 +237,6 @@
     <string name="warning_password_encoding">Duomenų bazės faile venkite slaptažodžio simbolių, neatitinkančių teksto kodavimo formato (neatpažinti simboliai konvertuojami į tą pačią raidę).</string>
     <string name="warning_database_already_opened">Viena duomenų bazė jau atidaryta, pirmiausia ją uždarykite, kad atidaryti naują</string>
     <string name="warning_no_encryption_key">Tęsti be šifravimo rakto\?</string>
-    <string name="hide_expired_entries_summary">Nebegaliojantys įrašai nėra rodomi</string>
     <string name="import_app_properties_title">Importuoti programėlės savybes</string>
     <string name="export_app_properties_title">Eksportuoti programėlės savybes</string>
     <string name="hide_broken_locations_summary">Slėpti sugedusias nuorodas paskutinių duomenų bazių sąraše</string>

@@ -407,8 +407,8 @@
     <string name="settings_database_recommend_changing_master_key_title">Recommend renewal</string>
     <string name="settings_database_force_changing_master_key_title">Force renewal</string>
     <string name="settings_database_force_changing_master_key_next_time_title">Force renewal next time</string>
-    <string name="monospace_font_fields_enable_title">Field typeface</string>
-    <string name="monospace_font_fields_enable_summary">Change font used in fields for better character visibility</string>
+    <string name="monospace_font_fields_enable_title">Monospace font</string>
+    <string name="monospace_font_fields_enable_summary">Use monospace font in fields for better character visibility</string>
     <string name="allow_copy_password_title">Clipboard trust</string>
     <string name="allow_copy_password_summary">Allow copying the entry password and protected fields to the clipboard</string>
     <string name="allow_copy_password_warning">Warning: The clipboard is shared by all apps. If sensitive data is copied, other software may recover it.</string>
@@ -422,8 +422,9 @@
     <string name="database_default_username_title">Default username</string>
     <string name="database_custom_color_title">Custom database color</string>
     <string name="database_version_title">Database version</string>
-    <string name="text_appearance">Text</string>
     <string name="application_appearance">Interface</string>
+    <string name="settings_appearance_home_screen">Home screen</string>
+    <string name="settings_appearance_entry_details">Entry details</string>
     <string name="other">Other</string>
     <string name="compression_none">None</string>
     <string name="compression_gzip">Gzip</string>
@@ -556,5 +557,4 @@
     <string name="show_entry_colors_title">Entry colors</string>
     <string name="show_entry_colors_summary">Displays foreground and background colors for an entry</string>
     <string name="hide_expired_entries_title">Hide expired entries</string>
-    <string name="hide_expired_entries_summary">Expired entries are not shown</string>
 </resources>

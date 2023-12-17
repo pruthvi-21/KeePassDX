@@ -142,7 +142,6 @@
     <string name="database_name_title">Veri tabanı adı</string>
     <string name="database_description_title">Veri tabanı açıklaması</string>
     <string name="database_version_title">Veri tabanı sürümü</string>
-    <string name="text_appearance">Metin</string>
     <string name="application_appearance">Arayüz</string>
     <string name="other">Diğer</string>
     <string name="keyboard">Klavye</string>
@@ -267,7 +266,6 @@
     <string name="download_finalization">Sonuçlandırılıyor…</string>
     <string name="download_complete">Tamamlandı!</string>
     <string name="hide_expired_entries_title">Süresi dolan girdileri gizle</string>
-    <string name="hide_expired_entries_summary">Süresi dolan girdiler gösterilmez</string>
     <string name="hide_broken_locations_summary">Son veri tabanları listesindeki bozuk bağlantıları gizle</string>
     <string name="hide_broken_locations_title">Bozuk veri tabanı bağlantılarını gizle</string>
     <string name="show_recent_files_summary">Son veri tabanlarının konumlarını göster</string>

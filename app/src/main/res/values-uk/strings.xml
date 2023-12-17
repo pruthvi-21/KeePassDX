@@ -83,7 +83,6 @@
     <string name="compression_gzip">Gzip</string>
     <string name="other">Інше</string>
     <string name="application_appearance">Інтерфейс</string>
-    <string name="text_appearance">Текст</string>
     <string name="database_version_title">Версія бази даних</string>
     <string name="database_custom_color_title">Власний колір бази даних</string>
     <string name="database_default_username_title">Типове ім\'я користувача</string>
@@ -174,7 +173,6 @@
     <string name="content_description_add_node">Додати вузол</string>
     <string name="content_description_node_children">Дочірні вузли</string>
     <string name="unavailable_feature_hardware">Не вдалося знайти відповідне обладнання.</string>
-    <string name="hide_expired_entries_summary">Застарілі записи не показано</string>
     <string name="hide_expired_entries_title">Приховувати застарілі записи</string>
     <string name="icon_pack_choose_title">Набір піктограм</string>
     <string name="download_complete">Готово!</string>
