@@ -5,11 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
-import android.widget.CompoundButton.OnCheckedChangeListener
 import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.slider.Slider
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.ContextualDatabase
@@ -19,20 +18,20 @@ import com.kunzisoft.keepass.timeout.ClipboardHelper
 import com.kunzisoft.keepass.view.PassKeyView
 import com.kunzisoft.keepass.viewmodels.KeyGeneratorViewModel
 
-class PasswordGeneratorFragment : DatabaseFragment(), OnCheckedChangeListener {
+class PasswordGeneratorFragment : DatabaseFragment() {
 
     private lateinit var passKeyView: PassKeyView
 
     private lateinit var sliderLength: Slider
 
-    private lateinit var uppercaseCompound: CompoundButton
-    private lateinit var lowercaseCompound: CompoundButton
-    private lateinit var digitsCompound: CompoundButton
-    private lateinit var specialsCompound: CompoundButton
+    private lateinit var uppercaseSwitch: MaterialSwitch
+    private lateinit var lowercaseSwitch: MaterialSwitch
+    private lateinit var digitsSwitch: MaterialSwitch
+    private lateinit var specialsSwitch: MaterialSwitch
     private lateinit var considerCharsEditText: EditText
     private lateinit var ignoreCharsEditText: EditText
-    private lateinit var atLeastOneCompound: CompoundButton
-    private lateinit var excludeAmbiguousCompound: CompoundButton
+    private lateinit var atLeastOneSwitch: MaterialSwitch
+    private lateinit var excludeAmbiguousSwitch: MaterialSwitch
 
     private var minLengthSlider: Int = 0
     private var maxLengthSlider: Int = 0
@@ -55,14 +54,14 @@ class PasswordGeneratorFragment : DatabaseFragment(), OnCheckedChangeListener {
 
         sliderLength = view.findViewById(R.id.slider_length)
 
-        uppercaseCompound = view.findViewById(R.id.upperCase_filter)
-        lowercaseCompound = view.findViewById(R.id.lowerCase_filter)
-        digitsCompound = view.findViewById(R.id.digits_filter)
-        specialsCompound = view.findViewById(R.id.special_filter)
+        uppercaseSwitch = view.findViewById(R.id.upperCase_filter)
+        lowercaseSwitch = view.findViewById(R.id.lowerCase_filter)
+        digitsSwitch = view.findViewById(R.id.digits_filter)
+        specialsSwitch = view.findViewById(R.id.special_filter)
         considerCharsEditText = view.findViewById(R.id.consider_chars_filter)
         ignoreCharsEditText = view.findViewById(R.id.ignore_chars_filter)
-        atLeastOneCompound = view.findViewById(R.id.atLeastOne_filter)
-        excludeAmbiguousCompound = view.findViewById(R.id.excludeAmbiguous_filter)
+        atLeastOneSwitch = view.findViewById(R.id.atLeastOne_filter)
+        excludeAmbiguousSwitch = view.findViewById(R.id.excludeAmbiguous_filter)
 
         context?.let { context ->
             passwordCopyView?.visibility = if (PreferencesUtil.allowCopyProtectedFields(context))
@@ -80,14 +79,21 @@ class PasswordGeneratorFragment : DatabaseFragment(), OnCheckedChangeListener {
         minLengthSlider = resources.getInteger(R.integer.password_generator_length_min)
         maxLengthSlider = resources.getInteger(R.integer.password_generator_length_max)
 
-        loadSettings()
+        uppercaseSwitch.setOnCheckedChangeListener { _, _ ->
+            updateSwitchState(uppercaseSwitch, lowercaseSwitch, digitsSwitch, specialsSwitch)
+        }
+        lowercaseSwitch.setOnCheckedChangeListener { _, _ ->
+            updateSwitchState(lowercaseSwitch, uppercaseSwitch, digitsSwitch, specialsSwitch)
+        }
+        digitsSwitch.setOnCheckedChangeListener { _, _ ->
+            updateSwitchState(digitsSwitch, uppercaseSwitch, lowercaseSwitch, specialsSwitch)
+        }
+        specialsSwitch.setOnCheckedChangeListener { _, _ ->
+            updateSwitchState(specialsSwitch, uppercaseSwitch, lowercaseSwitch, digitsSwitch)
+        }
 
-        uppercaseCompound.setOnCheckedChangeListener(this)
-        lowercaseCompound.setOnCheckedChangeListener(this)
-        digitsCompound.setOnCheckedChangeListener(this)
-        specialsCompound.setOnCheckedChangeListener(this)
-        atLeastOneCompound.setOnCheckedChangeListener(this)
-        excludeAmbiguousCompound.setOnCheckedChangeListener(this)
+        atLeastOneSwitch.setOnCheckedChangeListener { _, _ -> generatePassword() }
+        excludeAmbiguousSwitch.setOnCheckedChangeListener { _, _ -> generatePassword() }
 
         considerCharsEditText.doOnTextChanged { _, _, _, _ ->
             generatePassword()
@@ -105,6 +111,8 @@ class PasswordGeneratorFragment : DatabaseFragment(), OnCheckedChangeListener {
             }
         })
 
+        loadSettings()
+
         // Pre-populate a password to possibly save the user a few clicks
         generatePassword()
 
@@ -117,6 +125,37 @@ class PasswordGeneratorFragment : DatabaseFragment(), OnCheckedChangeListener {
         }
 
         resetAppTimeoutWhenViewFocusedOrChanged(view)
+    }
+
+    private fun updateSwitchState(
+        switch: MaterialSwitch,
+        vararg switches: MaterialSwitch
+    ) {
+        if (switch.isChecked) {
+            switches.forEach {
+                it.isClickable = true
+                it.thumbIconDrawable = null
+            }
+
+            //just to set initial state
+            if (switches.all { !it.isChecked }) {
+                switch.setThumbIconResource(R.drawable.ic_lock_white_padding_24dp)
+                switch.isClickable = false
+            }
+        } else {
+            if (switches.all { it.isChecked }) {
+                return
+            }
+
+            val activeSwitches = switches.filter { it.isChecked }
+            if (activeSwitches.size == 1) {
+                activeSwitches[0].apply {
+                    setThumbIconResource(R.drawable.ic_lock_white_padding_24dp)
+                    isClickable = false
+                }
+            }
+        }
+        generatePassword()
     }
 
     private fun getPasswordLength(): Int {
@@ -133,39 +172,40 @@ class PasswordGeneratorFragment : DatabaseFragment(), OnCheckedChangeListener {
 
     private fun getOptions(): Set<String> {
         val optionsSet = mutableSetOf<String>()
-        if (uppercaseCompound.isChecked)
+        if (uppercaseSwitch.isChecked)
             optionsSet.add(getString(R.string.value_password_uppercase))
-        if (lowercaseCompound.isChecked)
+        if (lowercaseSwitch.isChecked)
             optionsSet.add(getString(R.string.value_password_lowercase))
-        if (digitsCompound.isChecked)
+        if (digitsSwitch.isChecked)
             optionsSet.add(getString(R.string.value_password_digits))
-        if (specialsCompound.isChecked)
+        if (specialsSwitch.isChecked)
             optionsSet.add(getString(R.string.value_password_special))
-        if (atLeastOneCompound.isChecked)
+        if (atLeastOneSwitch.isChecked)
             optionsSet.add(getString(R.string.value_password_atLeastOne))
-        if (excludeAmbiguousCompound.isChecked)
+        if (excludeAmbiguousSwitch.isChecked)
             optionsSet.add(getString(R.string.value_password_excludeAmbiguous))
         return optionsSet
     }
 
     private fun setOptions(options: Set<String>) {
-        uppercaseCompound.isChecked = false
-        lowercaseCompound.isChecked = false
-        digitsCompound.isChecked = false
-        specialsCompound.isChecked = false
-        atLeastOneCompound.isChecked = false
-        excludeAmbiguousCompound.isChecked = false
+        uppercaseSwitch.isChecked = false
+        lowercaseSwitch.isChecked = false
+        digitsSwitch.isChecked = false
+        specialsSwitch.isChecked = false
+        atLeastOneSwitch.isChecked = false
+        excludeAmbiguousSwitch.isChecked = false
         for (option in options) {
             when (option) {
-                getString(R.string.value_password_uppercase) -> uppercaseCompound.isChecked = true
-                getString(R.string.value_password_lowercase) -> lowercaseCompound.isChecked = true
-                getString(R.string.value_password_digits) -> digitsCompound.isChecked = true
-                getString(R.string.value_password_special) -> specialsCompound.isChecked = true
-                getString(R.string.value_password_atLeastOne) -> atLeastOneCompound.isChecked = true
-                getString(R.string.value_password_excludeAmbiguous) -> excludeAmbiguousCompound.isChecked =
+                getString(R.string.value_password_uppercase) -> uppercaseSwitch.isChecked = true
+                getString(R.string.value_password_lowercase) -> lowercaseSwitch.isChecked = true
+                getString(R.string.value_password_digits) -> digitsSwitch.isChecked = true
+                getString(R.string.value_password_special) -> specialsSwitch.isChecked = true
+                getString(R.string.value_password_atLeastOne) -> atLeastOneSwitch.isChecked = true
+                getString(R.string.value_password_excludeAmbiguous) -> excludeAmbiguousSwitch.isChecked =
                     true
             }
         }
+        updateSwitchState(uppercaseSwitch, lowercaseSwitch, digitsSwitch, specialsSwitch)
     }
 
     private fun getConsiderChars(): String {
@@ -189,14 +229,14 @@ class PasswordGeneratorFragment : DatabaseFragment(), OnCheckedChangeListener {
         try {
             password = PasswordGenerator(resources).generatePassword(
                 getPasswordLength(),
-                uppercaseCompound.isChecked,
-                lowercaseCompound.isChecked,
-                digitsCompound.isChecked,
-                specialsCompound.isChecked,
+                uppercaseSwitch.isChecked,
+                lowercaseSwitch.isChecked,
+                digitsSwitch.isChecked,
+                specialsSwitch.isChecked,
                 getConsiderChars(),
                 getIgnoreChars(),
-                atLeastOneCompound.isChecked,
-                excludeAmbiguousCompound.isChecked
+                atLeastOneSwitch.isChecked,
+                excludeAmbiguousSwitch.isChecked
             )
         } catch (e: Exception) {
             Log.e(TAG, "Unable to generate a password", e)
@@ -245,10 +285,6 @@ class PasswordGeneratorFragment : DatabaseFragment(), OnCheckedChangeListener {
                 sliderLength.value = value.toFloat()
             }
         }
-    }
-
-    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        generatePassword()
     }
 
     companion object {
