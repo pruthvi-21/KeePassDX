@@ -23,7 +23,6 @@ class PassphraseGeneratorFragment : DatabaseFragment() {
     private lateinit var passKeyView: PassKeyView
 
     private lateinit var sliderWordCount: Slider
-    private lateinit var wordCountText: EditText
     private lateinit var charactersCountText: TextView
     private lateinit var wordSeparator: EditText
     private lateinit var wordCaseSpinner: Spinner
@@ -46,9 +45,8 @@ class PassphraseGeneratorFragment : DatabaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         passKeyView = view.findViewById(R.id.passphrase_view)
-        val passphraseCopyView: ImageView? = view.findViewById(R.id.passphrase_copy_button)
+        val passphraseCopyView: View? = view.findViewById(R.id.passphrase_copy_button)
         sliderWordCount = view.findViewById(R.id.slider_word_count)
-        wordCountText = view.findViewById(R.id.word_count)
         charactersCountText = view.findViewById(R.id.character_count)
         wordSeparator = view.findViewById(R.id.word_separator)
         wordCaseSpinner = view.findViewById(R.id.word_case)
@@ -80,45 +78,14 @@ class PassphraseGeneratorFragment : DatabaseFragment() {
 
         loadSettings()
 
-        var listenSlider = true
-        var listenEditText = true
-        sliderWordCount.addOnChangeListener { _, value, _ ->
-            try {
-                listenEditText = false
-                if (listenSlider) {
-                    wordCountText.setText(value.toInt().toString())
-                }
-            } catch (e: Exception) {
-                Log.e(TAG, "Unable to set the word count value", e)
-            } finally {
-                listenEditText = true
-            }
-        }
         sliderWordCount.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
-            // TODO upgrade material-components lib
-            // https://stackoverflow.com/questions/70873160/material-slider-onslidertouchlisteners-methods-can-only-be-called-from-within-t
-            @SuppressLint("RestrictedApi")
             override fun onStartTrackingTouch(slider: Slider) {
             }
 
-            @SuppressLint("RestrictedApi")
             override fun onStopTrackingTouch(slider: Slider) {
                 generatePassphrase()
             }
         })
-        wordCountText.doOnTextChanged { _, _, _, _ ->
-            if (listenEditText) {
-                try {
-                    listenSlider = false
-                    setSliderValue(getWordCount())
-                } catch (e: Exception) {
-                    Log.e(TAG, "Unable to get the word count value", e)
-                } finally {
-                    listenSlider = true
-                    generatePassphrase()
-                }
-            }
-        }
         wordSeparator.doOnTextChanged { _, _, _, _ ->
             generatePassphrase()
         }
@@ -150,7 +117,7 @@ class PassphraseGeneratorFragment : DatabaseFragment() {
 
     private fun getWordCount(): Int {
         return try {
-            Integer.valueOf(wordCountText.text.toString())
+            sliderWordCount.value.toInt()
         } catch (numberException: NumberFormatException) {
             minSliderWordCount
         }
@@ -158,7 +125,6 @@ class PassphraseGeneratorFragment : DatabaseFragment() {
 
     private fun setWordCount(wordCount: Int) {
         setSliderValue(wordCount)
-        wordCountText.setText(wordCount.toString())
     }
 
     private fun setSliderValue(value: Int) {

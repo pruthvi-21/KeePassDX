@@ -9,52 +9,38 @@
     android:paddingBottom="@dimen/card_view_margin_vertical"
     tools:targetApi="o">
 
-    <FrameLayout
+    <com.google.android.material.card.MaterialCardView
+        style="?cardViewStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/card_view_margin_horizontal"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/card_view_margin_horizontal"
+        android:layout_marginBottom="@dimen/card_view_margin_vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:background="?attr/colorSurface" />
-
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="@dimen/card_view_margin_horizontal"
-            android:layout_marginLeft="@dimen/card_view_margin_horizontal"
-            android:layout_marginTop="@dimen/default_margin"
-            android:layout_marginEnd="@dimen/card_view_margin_horizontal"
-            android:layout_marginRight="@dimen/card_view_margin_horizontal"
-            android:layout_marginBottom="@dimen/card_view_margin_vertical">
+            android:layout_margin="@dimen/card_view_padding"
+            android:orientation="vertical">
 
-            <RelativeLayout
+            <com.kunzisoft.keepass.view.PassKeyView
+                android:id="@+id/passphrase_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/card_view_padding">
+                app:passKeyHint="@string/passphrase"
+                app:passKeyMaxLines="7" />
 
-                <com.kunzisoft.keepass.view.PassKeyView
-                    android:id="@+id/passphrase_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/passphrase_copy_button"
-                    app:passKeyHint="@string/passphrase"
-                    app:passKeyMaxLines="7" />
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/passphrase_copy_button"
-                    style="@style/Theme.Keepass.ImageButton.Simple"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/passphrase_view"
-                    android:layout_alignBottom="@+id/passphrase_view"
-                    android:layout_alignParentEnd="true"
-                    android:contentDescription="@string/menu_copy"
-                    android:src="@drawable/ic_content_copy_white_24dp" />
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-    </FrameLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/passphrase_copy_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp"
+                android:text="@string/copy_passphrase" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <ScrollView
         android:id="@+id/ScrollView"
@@ -62,82 +48,107 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/card_view_margin_horizontal"
-            android:layout_marginLeft="@dimen/card_view_margin_horizontal"
-            android:layout_marginTop="@dimen/card_view_margin_vertical"
-            android:layout_marginEnd="@dimen/card_view_margin_horizontal"
-            android:layout_marginRight="@dimen/card_view_margin_horizontal"
-            android:layout_marginBottom="@dimen/card_view_margin_vertical"
-            app:cardCornerRadius="4dp">
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/character_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:paddingHorizontal="20dp"
+                tools:text="Character count: 51" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@integer/passphrase_generator_word_count_min" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/slider_word_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/content_description_password_length"
+                    android:stepSize="1"
+                    android:value="@integer/passphrase_generator_word_count_default"
+                    android:valueFrom="@integer/passphrase_generator_word_count_min"
+                    android:valueTo="@integer/passphrase_generator_word_count_max"
+                    app:tickColor="#0000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@integer/passphrase_generator_word_count_max" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/card_view_padding"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <com.google.android.material.slider.Slider
-                        android:id="@+id/slider_word_count"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/word_count"
-                        android:layout_alignParentStart="true"
-                        android:layout_toStartOf="@+id/word_count"
-                        android:contentDescription="@string/content_description_password_length"
-                        android:stepSize="1"
-                        android:value="@integer/passphrase_generator_word_count_default"
-                        android:valueFrom="@integer/passphrase_generator_word_count_min"
-                        android:valueTo="@integer/passphrase_generator_word_count_max" />
-
-                    <EditText
-                        android:id="@+id/word_count"
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:inputType="number"
-                        android:maxLength="2"
-                        android:maxLines="1" />
-
-                </RelativeLayout>
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="5dp">
 
                 <TextView
-                    android:id="@+id/character_count"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    tools:text="Character count: 51" />
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/passphrase_word_case"
+                    android:textAppearance="?textAppearanceBodyMedium" />
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                <Spinner
+                    android:id="@+id/word_case"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_spinner"
+                    android:minWidth="150dp"
+                    android:paddingVertical="15dp"
+                    android:popupBackground="@drawable/background_spinner_popup"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
 
-                    <Spinner
-                        android:id="@+id/word_case"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="12dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="5dp">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/word_separator_layout"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/passphrase_word_separator" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/word_separator_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/word_separator"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/word_case">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/word_separator"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/word_separator" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                </RelativeLayout>
-
+                        android:hint="@string/word_separator" />
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
-        </FrameLayout>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

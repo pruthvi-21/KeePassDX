@@ -560,4 +560,7 @@
     <string name="show_entry_colors_summary">Displays foreground and background colors for an entry</string>
     <string name="hide_expired_entries_title">Hide expired entries</string>
     <string name="copy_password">Copy password</string>
+    <string name="copy_passphrase">Copy passphrase</string>
+    <string name="passphrase_word_case">Word case</string>
+    <string name="passphrase_word_separator">Word separator</string>
 </resources>
