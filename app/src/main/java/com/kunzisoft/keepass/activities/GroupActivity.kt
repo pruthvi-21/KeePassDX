@@ -248,6 +248,8 @@ class GroupActivity : DatabaseLockActivity(),
             AutofillHelper.buildActivityResultLauncher(this)
         else null
 
+    private var CLOSE_DRAWER = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -330,10 +332,12 @@ class GroupActivity : DatabaseLockActivity(),
                     R.id.menu_app_settings -> {
                         // To avoid flickering when launch settings in a LockingActivity
                         SettingsActivity.launch(this@GroupActivity, true)
+                        CLOSE_DRAWER = true
                     }
 
                     R.id.menu_merge_from -> {
                         mExternalFileHelper?.openDocument()
+                        CLOSE_DRAWER = true
                     }
 
                     R.id.menu_save_copy_to -> {
@@ -342,6 +346,7 @@ class GroupActivity : DatabaseLockActivity(),
                                     getString(R.string.database_file_name_copy) +
                                     mDatabase?.defaultFileExtension
                         )
+                        CLOSE_DRAWER = true
                     }
 
                     R.id.menu_lock_all -> {
@@ -350,6 +355,7 @@ class GroupActivity : DatabaseLockActivity(),
 
                     R.id.menu_about -> {
                         startActivity(Intent(this@GroupActivity, AboutActivity::class.java))
+                        CLOSE_DRAWER = true
                     }
                 }
                 false
@@ -1154,6 +1160,13 @@ class GroupActivity : DatabaseLockActivity(),
         toolbarAction?.updateLockPaddingLeft()
 
         loadGroup()
+
+        //close drawer and reset mainLayout position
+        if (CLOSE_DRAWER) {
+            drawerLayout!!.closeDrawer(GravityCompat.START, false)
+            mainContainer?.translationX = 0f
+            CLOSE_DRAWER = false
+        }
     }
 
     override fun onPause() {
