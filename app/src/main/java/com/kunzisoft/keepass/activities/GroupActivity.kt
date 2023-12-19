@@ -327,6 +327,7 @@ class GroupActivity : DatabaseLockActivity(),
         databaseNavView?.apply {
             inflateMenu(R.menu.database_extra)
             inflateMenu(R.menu.about)
+
             setNavigationItemSelectedListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.menu_app_settings -> {
@@ -356,6 +357,21 @@ class GroupActivity : DatabaseLockActivity(),
                     R.id.menu_about -> {
                         startActivity(Intent(this@GroupActivity, AboutActivity::class.java))
                         CLOSE_DRAWER = true
+                    }
+
+                    R.id.menu_save_database -> {
+                        saveDatabase()
+                        drawerLayout?.close()
+                    }
+
+                    R.id.menu_merge_database -> {
+                        mergeDatabase()
+                        drawerLayout?.close()
+                    }
+
+                    R.id.menu_reload_database -> {
+                        reloadDatabase()
+                        drawerLayout?.close()
                     }
                 }
                 false
@@ -646,6 +662,21 @@ class GroupActivity : DatabaseLockActivity(),
         }
         refreshDatabaseViews()
         invalidateOptionsMenu()
+
+        //invalidate navView menu
+        databaseNavView?.menu?.let {
+            if (mDatabaseReadOnly) {
+                it.findItem(R.id.menu_save_database)?.isVisible = false
+                it.findItem(R.id.menu_merge_database)?.isVisible = false
+            }
+            if (!mMergeDataAllowed) {
+                it.findItem(R.id.menu_merge_database)?.isVisible = false
+            }
+            if (mSpecialMode != SpecialMode.DEFAULT) {
+                it.findItem(R.id.menu_merge_database)?.isVisible = false
+                it.findItem(R.id.menu_reload_database)?.isVisible = false
+            }
+        }
     }
 
     private fun refreshDatabaseViews() {
@@ -1201,18 +1232,7 @@ class GroupActivity : DatabaseLockActivity(),
 
         val inflater = menuInflater
         inflater.inflate(R.menu.search, menu)
-        inflater.inflate(R.menu.database, menu)
-        if (mDatabaseReadOnly) {
-            menu.findItem(R.id.menu_save_database)?.isVisible = false
-            menu.findItem(R.id.menu_merge_database)?.isVisible = false
-        }
-        if (!mMergeDataAllowed) {
-            menu.findItem(R.id.menu_merge_database)?.isVisible = false
-        }
-        if (mSpecialMode != SpecialMode.DEFAULT) {
-            menu.findItem(R.id.menu_merge_database)?.isVisible = false
-            menu.findItem(R.id.menu_reload_database)?.isVisible = false
-        }
+
         // Menu for recycle bin
         if (mRecyclingBinEnabled && mRecyclingBinIsCurrentGroup) {
             inflater.inflate(R.menu.recycle_bin, menu)
@@ -1269,21 +1289,6 @@ class GroupActivity : DatabaseLockActivity(),
             }
 
             R.id.menu_search -> {
-                return true
-            }
-
-            R.id.menu_save_database -> {
-                saveDatabase()
-                return true
-            }
-
-            R.id.menu_merge_database -> {
-                mergeDatabase()
-                return true
-            }
-
-            R.id.menu_reload_database -> {
-                reloadDatabase()
                 return true
             }
 
