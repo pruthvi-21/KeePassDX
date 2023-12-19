@@ -22,7 +22,7 @@
     <group android:id="@+id/db_ops">
         <item
             android:id="@+id/menu_save_database"
-            android:icon="@drawable/ic_saving_white_24dp"
+            android:icon="@drawable/ic_save_white_24dp"
             android:title="@string/menu_save_database"
             app:iconTint="?attr/colorControlNormal" />
         <item
@@ -32,7 +32,7 @@
             app:iconTint="?attr/colorControlNormal" />
         <item
             android:id="@+id/menu_reload_database"
-            android:icon="@drawable/ic_downloading_white_24dp"
+            android:icon="@drawable/ic_random_white_24dp"
             android:title="@string/menu_reload_database"
             app:iconTint="?attr/colorControlNormal" />
     </group>
