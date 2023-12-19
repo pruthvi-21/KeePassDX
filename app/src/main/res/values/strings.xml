@@ -546,6 +546,8 @@
         <item>UUID</item>
         <item>Date Created</item>
         <item>Date Modified</item>
+        <item>Expiry</item>
+        <item>Expiry (Blank if no expiry)</item>
         <item>None</item>
     </string-array>
     <string-array name="list_size_options">
