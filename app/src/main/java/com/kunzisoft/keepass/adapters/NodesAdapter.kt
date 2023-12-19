@@ -361,6 +361,10 @@ class NodesAdapter(
             setTextSize(mTextSizeUnit, mTextDefaultDimension, mPrefSizeMultiplier)
             strikeOut(subNode.isCurrentlyExpires)
         }
+        holder.subText.apply {
+            setTextSize(mTextSizeUnit, mSubTextDefaultDimension, mPrefSizeMultiplier)
+            strikeOut(subNode.isCurrentlyExpires)
+        }
         // Add path to virtual group
         if (mVirtualGroup) {
             holder.path?.apply {
@@ -388,8 +392,6 @@ class NodesAdapter(
 
             holder.text.text = entry.getVisualTitle()
             holder.subText.apply {
-                setTextSize(mTextSizeUnit, mSubTextDefaultDimension, mPrefSizeMultiplier)
-                strikeOut(subNode.isCurrentlyExpires)
                 when (subtitleType) {
                     LIST_ITEM_SUBTITLE_USERNAME_SETTING_VALUE -> {
                         val username = entry.username
@@ -401,27 +403,6 @@ class NodesAdapter(
                         val nodeId = subNode.nodeId.toVisualString()
                         text = nodeId
                         isVisible = (nodeId != null) and (entry.getVisualTitle() != nodeId)
-                    }
-
-                    LIST_ITEM_SUBTITLE_DATE_CREATED_SETTING_VALUE -> {
-                        text = entry.creationTime.getDateTimeString(resources)
-                        isVisible = true
-                    }
-
-                    LIST_ITEM_SUBTITLE_DATE_MODIFIED_SETTING_VALUE -> {
-                        text = entry.lastModificationTime.getDateTimeString(resources)
-                        isVisible = true
-                    }
-
-                    LIST_ITEM_SUBTITLE_EXPIRY_SETTING_VALUE -> {
-                        text = if (entry.expires) entry.expiryTime.getDateTimeString(resources)
-                        else context.getString(R.string.never_expires)
-                        isVisible = true
-                    }
-
-                    LIST_ITEM_SUBTITLE_EXPIRY_BLANK_SETTING_VALUE -> {
-                        text = entry.expiryTime.getDateTimeString(resources)
-                        isVisible = entry.expires
                     }
 
                     else -> {
@@ -502,30 +483,11 @@ class NodesAdapter(
                 holder.numberChildren?.visibility = View.GONE
             }
 
-            if (subtitleType == LIST_ITEM_SUBTITLE_UUID_SETTING_VALUE && subNode.nodeId != null) {
-                holder.subText.text = subNode.nodeId?.toVisualString()
-                holder.subText.isVisible = true
-            } else {
-                holder.subText.isVisible = false
-            }
-
             holder.subText.apply {
-                strikeOut(subNode.isCurrentlyExpires)
                 when (subtitleType) {
                     LIST_ITEM_SUBTITLE_UUID_SETTING_VALUE -> {
                         isVisible = subNode.nodeId != null
                         text = subNode.nodeId?.toVisualString()
-                    }
-
-                    LIST_ITEM_SUBTITLE_EXPIRY_SETTING_VALUE -> {
-                        text = if (subNode.expires) subNode.expiryTime.getDateTimeString(resources)
-                        else context.getString(R.string.never_expires)
-                        isVisible = true
-                    }
-
-                    LIST_ITEM_SUBTITLE_EXPIRY_BLANK_SETTING_VALUE -> {
-                        text = subNode.expiryTime.getDateTimeString(resources)
-                        isVisible = subNode.expires
                     }
                 }
             }
@@ -536,6 +498,33 @@ class NodesAdapter(
             } else {
                 holder.text.setTextColor(mColorOnSurface)
                 holder.subText.setTextColor(mColorOnSurface)
+            }
+        }
+
+        //set subtitle
+        holder.subText.apply {
+            when (subtitleType) {
+
+                LIST_ITEM_SUBTITLE_DATE_CREATED_SETTING_VALUE -> {
+                    text = subNode.creationTime.getDateTimeString(resources)
+                    isVisible = true
+                }
+
+                LIST_ITEM_SUBTITLE_DATE_MODIFIED_SETTING_VALUE -> {
+                    text = subNode.lastModificationTime.getDateTimeString(resources)
+                    isVisible = true
+                }
+
+                LIST_ITEM_SUBTITLE_EXPIRY_SETTING_VALUE -> {
+                    text = if (subNode.expires) subNode.expiryTime.getDateTimeString(resources)
+                    else context.getString(R.string.never_expires)
+                    isVisible = true
+                }
+
+                LIST_ITEM_SUBTITLE_EXPIRY_BLANK_SETTING_VALUE -> {
+                    text = subNode.expiryTime.getDateTimeString(resources)
+                    isVisible = subNode.expires
+                }
             }
         }
 
