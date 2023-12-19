@@ -2,7 +2,9 @@ package com.kunzisoft.keepass.activities.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
@@ -16,7 +18,7 @@ import com.kunzisoft.keepass.timeout.ClipboardHelper
 import com.kunzisoft.keepass.view.PassKeyView
 import com.kunzisoft.keepass.viewmodels.KeyGeneratorViewModel
 
-class PasswordGeneratorFragment : BaseViewStubFragment() {
+class PasswordGeneratorFragment : DatabaseFragment() {
 
     private lateinit var passKeyView: PassKeyView
 
@@ -36,23 +38,30 @@ class PasswordGeneratorFragment : BaseViewStubFragment() {
 
     private val mKeyGeneratorViewModel: KeyGeneratorViewModel by activityViewModels()
 
-    override fun onCreateViewAfterViewStubInflated(
-        inflatedView: View,
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) {
-        passKeyView = inflatedView.findViewById(R.id.password_view)
-        val passwordCopyView: View? = inflatedView.findViewById(R.id.password_copy_button)
+    ): View {
+        return inflater.inflate(R.layout.fragment_generate_password, container, false)
+    }
 
-        sliderLength = inflatedView.findViewById(R.id.slider_length)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        uppercaseSwitch = inflatedView.findViewById(R.id.upperCase_filter)
-        lowercaseSwitch = inflatedView.findViewById(R.id.lowerCase_filter)
-        digitsSwitch = inflatedView.findViewById(R.id.digits_filter)
-        specialsSwitch = inflatedView.findViewById(R.id.special_filter)
-        considerCharsEditText = inflatedView.findViewById(R.id.consider_chars_filter)
-        ignoreCharsEditText = inflatedView.findViewById(R.id.ignore_chars_filter)
-        atLeastOneSwitch = inflatedView.findViewById(R.id.atLeastOne_filter)
-        excludeAmbiguousSwitch = inflatedView.findViewById(R.id.excludeAmbiguous_filter)
+        passKeyView = view.findViewById(R.id.password_view)
+        val passwordCopyView: View? = view.findViewById(R.id.password_copy_button)
+
+        sliderLength = view.findViewById(R.id.slider_length)
+
+        uppercaseSwitch = view.findViewById(R.id.upperCase_filter)
+        lowercaseSwitch = view.findViewById(R.id.lowerCase_filter)
+        digitsSwitch = view.findViewById(R.id.digits_filter)
+        specialsSwitch = view.findViewById(R.id.special_filter)
+        considerCharsEditText = view.findViewById(R.id.consider_chars_filter)
+        ignoreCharsEditText = view.findViewById(R.id.ignore_chars_filter)
+        atLeastOneSwitch = view.findViewById(R.id.atLeastOne_filter)
+        excludeAmbiguousSwitch = view.findViewById(R.id.excludeAmbiguous_filter)
 
         context?.let { context ->
             passwordCopyView?.visibility = if (PreferencesUtil.allowCopyProtectedFields(context))
@@ -115,11 +124,7 @@ class PasswordGeneratorFragment : BaseViewStubFragment() {
             generatePassword()
         }
 
-        resetAppTimeoutWhenViewFocusedOrChanged(inflatedView)
-    }
-
-    override fun getViewStubLayoutResource(): Int {
-        return R.layout.fragment_generate_password
+        resetAppTimeoutWhenViewFocusedOrChanged(view)
     }
 
     private fun updateSwitchState(

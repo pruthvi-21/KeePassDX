@@ -1,8 +1,11 @@
 package com.kunzisoft.keepass.activities.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
@@ -15,7 +18,7 @@ import com.kunzisoft.keepass.timeout.ClipboardHelper
 import com.kunzisoft.keepass.view.PassKeyView
 import com.kunzisoft.keepass.viewmodels.KeyGeneratorViewModel
 
-class PassphraseGeneratorFragment : BaseViewStubFragment() {
+class PassphraseGeneratorFragment : DatabaseFragment() {
 
     private lateinit var passKeyView: PassKeyView
 
@@ -30,16 +33,23 @@ class PassphraseGeneratorFragment : BaseViewStubFragment() {
 
     private val mKeyGeneratorViewModel: KeyGeneratorViewModel by activityViewModels()
 
-    override fun onCreateViewAfterViewStubInflated(
-        inflatedView: View,
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) {
-        passKeyView = inflatedView.findViewById(R.id.passphrase_view)
-        val passphraseCopyView: View? = inflatedView.findViewById(R.id.passphrase_copy_button)
-        sliderWordCount = inflatedView.findViewById(R.id.slider_word_count)
-        charactersCountText = inflatedView.findViewById(R.id.character_count)
-        wordSeparator = inflatedView.findViewById(R.id.word_separator)
-        wordCaseSpinner = inflatedView.findViewById(R.id.word_case)
+    ): View {
+        return inflater.inflate(R.layout.fragment_generate_passphrase, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        passKeyView = view.findViewById(R.id.passphrase_view)
+        val passphraseCopyView: View? = view.findViewById(R.id.passphrase_copy_button)
+        sliderWordCount = view.findViewById(R.id.slider_word_count)
+        charactersCountText = view.findViewById(R.id.character_count)
+        wordSeparator = view.findViewById(R.id.word_separator)
+        wordCaseSpinner = view.findViewById(R.id.word_case)
 
         minSliderWordCount = resources.getInteger(R.integer.passphrase_generator_word_count_min)
         maxSliderWordCount = resources.getInteger(R.integer.passphrase_generator_word_count_max)
@@ -102,11 +112,7 @@ class PassphraseGeneratorFragment : BaseViewStubFragment() {
             generatePassphrase()
         }
 
-        resetAppTimeoutWhenViewFocusedOrChanged(inflatedView)
-    }
-
-    override fun getViewStubLayoutResource(): Int {
-        return R.layout.fragment_generate_passphrase
+        resetAppTimeoutWhenViewFocusedOrChanged(view)
     }
 
     private fun getWordCount(): Int {
