@@ -1,16 +1,18 @@
 package com.kunzisoft.keepass.activities
 
+import android.content.Intent
 import android.content.pm.PackageManager.NameNotFoundException
+import android.net.Uri
 import android.os.Bundle
-import android.text.method.LinkMovementMethod
+import android.provider.Settings
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.text.HtmlCompat
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.utils.getPackageInfoCompat
-import org.joda.time.DateTime
+
 
 class AboutActivity : StylishActivity() {
 
@@ -20,7 +22,7 @@ class AboutActivity : StylishActivity() {
         setContentView(R.layout.activity_about)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        toolbar.title = getString(R.string.about)
+        toolbar.title = " "
         setSupportActionBar(toolbar)
         toolbar.setNavigationIcon(R.drawable.ic_toolbar_back_white_24dp)
 
@@ -39,29 +41,11 @@ class AboutActivity : StylishActivity() {
         val versionTextView = findViewById<TextView>(R.id.activity_about_version)
         versionTextView.text = version
 
-        findViewById<TextView>(R.id.activity_about_licence_text).apply {
-            movementMethod = LinkMovementMethod.getInstance()
-            text = HtmlCompat.fromHtml(
-                getString(R.string.html_about_licence, DateTime().year),
-                HtmlCompat.FROM_HTML_MODE_LEGACY
-            )
-        }
+    }
 
-        findViewById<TextView>(R.id.activity_about_privacy_text).apply {
-            movementMethod = LinkMovementMethod.getInstance()
-            text = HtmlCompat.fromHtml(
-                getString(R.string.html_about_privacy),
-                HtmlCompat.FROM_HTML_MODE_LEGACY
-            )
-        }
-
-        findViewById<TextView>(R.id.activity_about_contribution_text).apply {
-            movementMethod = LinkMovementMethod.getInstance()
-            text = HtmlCompat.fromHtml(
-                getString(R.string.html_about_contribution),
-                HtmlCompat.FROM_HTML_MODE_LEGACY
-            )
-        }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.about_activity, menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -70,6 +54,19 @@ class AboutActivity : StylishActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             android.R.id.home -> finish()
+
+            R.id.menu_app_info -> {
+                val uri = Uri.fromParts("package", packageName, null)
+                val intent = Intent().apply {
+                    action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                    data = uri
+                }
+
+                // Check if the intent can be resolved to avoid crashes on some devices
+                if (intent.resolveActivity(packageManager) != null) {
+                    startActivity(intent)
+                }
+            }
         }
         return super.onOptionsItemSelected(item)
     }
