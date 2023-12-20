@@ -1,6 +1,6 @@
 # KeePass Client for Android
 
-**A password manager for Android**, KeePass allows editing encrypted data in a single file in KeePass format and fill in the forms in a secure way.
+**A password manager for Android**, KeeBinder allows editing encrypted data in a single file in kdbx format and fill in the forms in a secure way.
 
 ### Features
  - Create database files / entries and groups.
@@ -12,9 +12,9 @@
  - Dynamic templates. 
  - History of each entry.
 
-KeePass is **open source** and **ad-free**.
+KeeBinder is **open source** and **ad-free**.
 
-KeePass is under **open source GPL3 license**, meaning you can use, study, change and share it at will. Copyleft ensures it stays that way.
+KeeBinder is under **open source GPL3 license**, meaning you can use, study, change and share it at will. Copyleft ensures it stays that way.
 From the full source, anyone can build, fork, and check whether for example the encryption algorithms are implemented correctly.
 
 ## Other devices
