@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="encryption_algorithm">குறியாக்க வழிமுறை</string>
-    <string name="encryption">மறையாக்கம்</string>
-    <string name="security">பாதுகாப்பு</string>
-    <string name="master_key">தலைச்சாவி</string>
-    <string name="add_group">தொகுதி சேர்க்கவும்</string>
-    <string name="add_entry">பதிவைச் சேர்க்கவும்</string>
-</resources>
