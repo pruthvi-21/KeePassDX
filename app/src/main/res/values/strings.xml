@@ -229,6 +229,7 @@
     <string name="menu_restore_entry_history">Restore history</string>
     <string name="menu_delete_entry_history">Delete history</string>
     <string name="menu_external_icon">External icon</string>
+    <string name="menu_add_icon">Add icon</string>
     <string name="never">Never</string>
     <string name="never_expires">Never expires</string>
     <string name="no_results">No search results</string>
@@ -565,4 +566,5 @@
     <string name="copy_passphrase">Copy passphrase</string>
     <string name="passphrase_word_case">Word case</string>
     <string name="passphrase_word_separator">Word separator</string>
+    <string name="icon_picker_title">Icon picker</string>
 </resources>

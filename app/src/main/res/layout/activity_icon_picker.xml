@@ -6,38 +6,27 @@
     android:layout_height="match_parent"
     android:filterTouchesWhenObscured="true">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        style="?toolbarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_toolbar_back_white_24dp"
+        app:title="@string/icon_picker_title" />
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/icon_picker_coordinator"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/toolbar"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toTopOf="@+id/screenshot_mode_banner"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/icon_picker_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <com.kunzisoft.keepass.view.ToolbarAction
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:layout_constraintBottom_toTopOf="@+id/screenshot_mode_banner" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/icon_picker_upload"
-        style="@style/Theme.Keepass.Fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/validate"
-        android:src="@drawable/ic_file_upload_white_24dp"
-        app:fabCustomSize="@dimen/button_small_size"
-        app:layout_constraintBottom_toTopOf="@+id/screenshot_mode_banner"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
     <include
         layout="@layout/view_button_lock"

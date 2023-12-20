@@ -11,16 +11,16 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.commit
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.activities.dialogs.IconEditDialogFragment
 import com.kunzisoft.keepass.activities.fragments.IconPickerFragment
 import com.kunzisoft.keepass.activities.helpers.ExternalFileHelper
-import com.kunzisoft.keepass.activities.helpers.setOpenDocumentClickListener
 import com.kunzisoft.keepass.activities.legacy.DatabaseLockActivity
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.icon.IconImage
@@ -32,7 +32,6 @@ import com.kunzisoft.keepass.utils.UriUtil.openUrl
 import com.kunzisoft.keepass.utils.getParcelableCompat
 import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.view.asError
-import com.kunzisoft.keepass.view.updateLockPaddingLeft
 import com.kunzisoft.keepass.viewmodels.IconPickerViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
@@ -44,9 +43,8 @@ import kotlinx.coroutines.withContext
 
 class IconPickerActivity : DatabaseLockActivity() {
 
-    private lateinit var toolbar: Toolbar
+    private lateinit var toolbar: MaterialToolbar
     private lateinit var coordinatorLayout: CoordinatorLayout
-    private lateinit var uploadButton: View
     private var lockView: View? = null
 
     private var mIconImage: IconImage = IconImage()
@@ -59,16 +57,20 @@ class IconPickerActivity : DatabaseLockActivity() {
 
     private var mExternalFileHelper: ExternalFileHelper? = null
 
+    private var enableUpdateIcon = true
+        set(value) {
+            field = value
+
+            invalidateOptionsMenu()
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_icon_picker)
 
         toolbar = findViewById(R.id.toolbar)
-        toolbar.title = " "
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
         updateIconsSelectedViews()
 
         coordinatorLayout = findViewById(R.id.icon_picker_coordinator)
@@ -77,8 +79,6 @@ class IconPickerActivity : DatabaseLockActivity() {
         mExternalFileHelper?.buildOpenDocument { uri ->
             addCustomIcon(uri)
         }
-
-        uploadButton = findViewById(R.id.icon_picker_upload)
 
         lockView = findViewById(R.id.lock_button)
         lockView?.setOnClickListener {
@@ -132,7 +132,7 @@ class IconPickerActivity : DatabaseLockActivity() {
                 ).asError().show()
                 iconCustomAdded.errorConsumed = true
             }
-            uploadButton.isEnabled = true
+            enableUpdateIcon = true
         }
         iconPickerViewModel.customIconRemoved.observe(this) { iconCustomRemoved ->
             if (iconCustomRemoved.error && !iconCustomRemoved.errorConsumed) {
@@ -143,7 +143,7 @@ class IconPickerActivity : DatabaseLockActivity() {
                 ).asError().show()
                 iconCustomRemoved.errorConsumed = true
             }
-            uploadButton.isEnabled = true
+            enableUpdateIcon = true
         }
         iconPickerViewModel.customIconUpdated.observe(this) { iconCustomUpdated ->
             if (iconCustomUpdated.error && !iconCustomUpdated.errorConsumed) {
@@ -172,20 +172,16 @@ class IconPickerActivity : DatabaseLockActivity() {
     override fun onDatabaseRetrieved(database: ContextualDatabase?) {
         super.onDatabaseRetrieved(database)
 
-        if (database?.allowCustomIcons == true) {
-            uploadButton.setOpenDocumentClickListener(mExternalFileHelper)
-        } else {
-            uploadButton.visibility = View.GONE
-        }
+        invalidateOptionsMenu()
     }
 
     private fun updateIconsSelectedViews() {
-        if (mIconsSelected.isEmpty()) {
+        toolbar.title = if (mIconsSelected.isEmpty()) {
             mCustomIconsSelectionMode = false
-            toolbar.title = " "
+            getString(R.string.icon_picker_title)
         } else {
             mCustomIconsSelectionMode = true
-            toolbar.title = mIconsSelected.size.toString()
+            mIconsSelected.size.toString()
         }
         invalidateOptionsMenu()
     }
@@ -198,16 +194,7 @@ class IconPickerActivity : DatabaseLockActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        // Show the lock button
-        lockView?.visibility = if (PreferencesUtil.showLockDatabaseButton(this)) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
-
-        // Padding if lock button visible
-        toolbar.updateLockPaddingLeft()
+        lockView?.isVisible = PreferencesUtil.showLockDatabaseButton(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -223,6 +210,10 @@ class IconPickerActivity : DatabaseLockActivity() {
         }
         menu?.findItem(R.id.menu_delete)?.apply {
             isEnabled = mCustomIconsSelectionMode
+            isVisible = isEnabled
+        }
+        menu?.findItem(R.id.menu_add_icon)?.apply {
+            isEnabled = mIconsSelected.isEmpty() && mDatabase?.allowCustomIcons == true
             isVisible = isEnabled
         }
         return super.onPrepareOptionsMenu(menu)
@@ -251,13 +242,17 @@ class IconPickerActivity : DatabaseLockActivity() {
             R.id.menu_external_icon -> {
                 this.openUrl(R.string.external_icon_url)
             }
+
+            R.id.menu_add_icon -> {
+                mExternalFileHelper?.openDocument(false)
+            }
         }
 
         return super.onOptionsItemSelected(item)
     }
 
     private fun addCustomIcon(iconToUploadUri: Uri?) {
-        uploadButton.isEnabled = false
+        enableUpdateIcon = false
         mainScope.launch {
             withContext(Dispatchers.IO) {
                 // on Progress with thread
@@ -320,7 +315,7 @@ class IconPickerActivity : DatabaseLockActivity() {
     }
 
     private fun removeCustomIcon(iconImageCustom: IconImageCustom) {
-        uploadButton.isEnabled = false
+        enableUpdateIcon = false
         iconPickerViewModel.deselectAllCustomIcons()
         mDatabase?.removeCustomIcon(iconImageCustom)
         iconPickerViewModel.removeCustomIcon(
@@ -335,6 +330,10 @@ class IconPickerActivity : DatabaseLockActivity() {
     }
 
     override fun onDatabaseBackPressed() {
+        if (mCustomIconsSelectionMode) {
+            iconPickerViewModel.deselectAllCustomIcons()
+            return
+        }
         setResult()
         super.onDatabaseBackPressed()
     }

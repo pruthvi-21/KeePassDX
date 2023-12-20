@@ -22,4 +22,11 @@
         android:title="@string/menu_external_icon"
         app:iconTint="?attr/colorControlNormal"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_add_icon"
+        android:icon="@drawable/ic_add_white_24dp"
+        android:orderInCategory="20"
+        android:title="@string/menu_external_icon"
+        app:iconTint="?attr/colorControlNormal"
+        app:showAsAction="ifRoom" />
 </menu>
