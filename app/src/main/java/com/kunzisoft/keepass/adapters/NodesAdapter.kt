@@ -489,6 +489,10 @@ class NodesAdapter(
                         isVisible = subNode.nodeId != null
                         text = subNode.nodeId?.toVisualString()
                     }
+
+                    else -> {
+                        isVisible = false
+                    }
                 }
             }
 
