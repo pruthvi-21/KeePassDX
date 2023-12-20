@@ -35,7 +35,7 @@ object AESTransformer {
         // Prefer the native final key implementation
         return try {
             NativeLib.init()
-            NativeAESKeyTransformer.nTransformKey(seed, key, rounds!!)
+            com.kunzisoft.encrypt.aes.NativeAESKeyTransformer.nTransformKey(seed, key, rounds!!)
         } catch (exception: Exception) {
             Log.e(AESTransformer::class.java.simpleName, "Unable to perform native AES key transformation", exception)
             // Fall back on the android crypto implementation

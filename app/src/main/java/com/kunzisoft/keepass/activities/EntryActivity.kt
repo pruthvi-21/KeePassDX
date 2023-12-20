@@ -214,7 +214,7 @@ class EntryActivity : DatabaseLockActivity() {
                 mIcon = entryInfo.icon
                 // Assign title text
                 val entryTitle =
-                    if (entryInfo.title.isNotEmpty()) entryInfo.title else UuidUtil.toHexString(
+                    if (entryInfo.title.isNotEmpty()) entryInfo.title else com.kunzisoft.keepass.utils.UuidUtil.toHexString(
                         entryInfo.id
                     )
                 collapsingToolbarLayout?.title = entryTitle

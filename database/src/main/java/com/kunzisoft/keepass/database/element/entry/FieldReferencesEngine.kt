@@ -79,7 +79,7 @@ class FieldReferencesEngine(private val mDatabase: DatabaseKDBX) {
                         'A' -> entryFound?.decodeUrlKey(newRecursionLevel)
                         'P' -> entryFound?.decodePasswordKey(newRecursionLevel)
                         'N' -> entryFound?.decodeNotesKey(newRecursionLevel)
-                        'I' -> UuidUtil.toHexString(entryFound?.nodeId?.id)
+                        'I' -> com.kunzisoft.keepass.utils.UuidUtil.toHexString(entryFound?.nodeId?.id)
                         else -> null
                     }
                     refsCache[fullReference] = data
@@ -127,7 +127,7 @@ class FieldReferencesEngine(private val mDatabase: DatabaseKDBX) {
             'P' -> mDatabase.getEntryByPassword(searchQuery, recursionLevel)
             'N' -> mDatabase.getEntryByNotes(searchQuery, recursionLevel)
             'I' -> {
-                UuidUtil.fromHexString(searchQuery)?.let { uuid ->
+                com.kunzisoft.keepass.utils.UuidUtil.fromHexString(searchQuery)?.let { uuid ->
                     mDatabase.getEntryById(NodeIdUUID(uuid))
                 }
             }

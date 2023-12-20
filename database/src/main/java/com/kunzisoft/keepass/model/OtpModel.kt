@@ -34,10 +34,12 @@ class OtpModel() : Parcelable {
     var name: String = "OTP" // ie : user@email.com
     var issuer: String = "None" // ie : Gitlab
     var secret: ByteArray? = null // Seed
-    var counter: Long = TokenCalculator.HOTP_INITIAL_COUNTER // ie : 5 - only for HOTP
-    var period: Int = TokenCalculator.TOTP_DEFAULT_PERIOD // ie : 30 seconds - only for TOTP
-    var digits: Int = TokenCalculator.OTP_DEFAULT_DIGITS
-    var algorithm: TokenCalculator.HashAlgorithm = OTP_DEFAULT_ALGORITHM
+    var counter: Long =
+        com.kunzisoft.keepass.otp.TokenCalculator.HOTP_INITIAL_COUNTER // ie : 5 - only for HOTP
+    var period: Int =
+        com.kunzisoft.keepass.otp.TokenCalculator.TOTP_DEFAULT_PERIOD // ie : 30 seconds - only for TOTP
+    var digits: Int = com.kunzisoft.keepass.otp.TokenCalculator.OTP_DEFAULT_DIGITS
+    var algorithm: com.kunzisoft.keepass.otp.TokenCalculator.HashAlgorithm = OTP_DEFAULT_ALGORITHM
 
     constructor(parcel: Parcel) : this() {
         val typeRead = parcel.readInt()
@@ -49,7 +51,7 @@ class OtpModel() : Parcelable {
         counter = parcel.readLong()
         period = parcel.readInt()
         digits = parcel.readInt()
-        algorithm = TokenCalculator.HashAlgorithm.values()[parcel.readInt()]
+        algorithm = com.kunzisoft.keepass.otp.TokenCalculator.HashAlgorithm.values()[parcel.readInt()]
     }
 
     override fun equals(other: Any?): Boolean {

@@ -6,7 +6,6 @@ import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.icon.IconImageCustom
 
-
 class IconCustomFragment : IconFragment<IconImageCustom>() {
 
     override fun retrieveMainLayoutId(): Int {

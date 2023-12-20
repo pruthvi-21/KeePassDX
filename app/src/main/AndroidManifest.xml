@@ -40,7 +40,7 @@
         android:theme="@style/Theme.Keepass"
         tools:targetApi="s">
         <activity
-            android:name="com.kunzisoft.keepass.activities.FileDatabaseSelectActivity"
+            android:name=".activities.FileDatabaseSelectActivity"
             android:configChanges="keyboardHidden"
             android:exported="true"
             android:launchMode="singleTop"
@@ -52,7 +52,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.kunzisoft.keepass.activities.MainCredentialActivity"
+            android:name=".activities.MainCredentialActivity"
             android:configChanges="keyboardHidden"
             android:exported="true"
             android:windowSoftInputMode="adjustResize|stateUnchanged">
@@ -115,7 +115,7 @@
         </activity>
         <!-- Main Activity -->
         <activity
-            android:name="com.kunzisoft.keepass.activities.GroupActivity"
+            android:name=".activities.GroupActivity"
             android:configChanges="keyboardHidden"
             android:exported="false"
             android:theme="@style/GroupActivityTheme"
@@ -133,45 +133,45 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name="com.kunzisoft.keepass.activities.EntryActivity"
+            android:name=".activities.EntryActivity"
             android:configChanges="keyboardHidden" />
         <activity
             android:name=".activities.PdfViewerActivity"
             android:exported="true" />
         <activity
-            android:name="com.kunzisoft.keepass.activities.IconPickerActivity"
+            android:name=".activities.IconPickerActivity"
             android:configChanges="keyboardHidden" />
         <activity
-            android:name="com.kunzisoft.keepass.activities.KeyGeneratorActivity"
+            android:name=".activities.KeyGeneratorActivity"
             android:configChanges="keyboardHidden" />
         <activity
-            android:name="com.kunzisoft.keepass.activities.ImageViewerActivity"
+            android:name=".activities.ImageViewerActivity"
             android:configChanges="keyboardHidden" />
         <activity
-            android:name="com.kunzisoft.keepass.activities.TextFileViewerActivity"
+            android:name=".activities.TextFileViewerActivity"
             android:configChanges="keyboardHidden" />
         <activity
-            android:name="com.kunzisoft.keepass.activities.EntryEditActivity"
+            android:name=".activities.EntryEditActivity"
             android:windowSoftInputMode="adjustPan" />
         <!-- About and Settings -->
         <activity
-            android:name="com.kunzisoft.keepass.activities.AboutActivity"
+            android:name=".activities.AboutActivity"
             android:label="@string/about"
             android:launchMode="singleTask" />
-        <activity android:name="com.kunzisoft.keepass.settings.SettingsActivity" />
+        <activity android:name=".settings.SettingsActivity" />
         <activity
-            android:name="com.kunzisoft.keepass.activities.AutofillLauncherActivity"
+            android:name=".activities.AutofillLauncherActivity"
             android:configChanges="keyboardHidden"
             android:excludeFromRecents="true"
             android:theme="@style/Theme.Transparent" />
-        <activity android:name="com.kunzisoft.keepass.settings.AdvancedUnlockSettingsActivity" />
-        <activity android:name="com.kunzisoft.keepass.settings.AutofillSettingsActivity" />
-        <activity android:name="com.kunzisoft.keepass.settings.AppearanceSettingsActivity" />
+        <activity android:name=".settings.AdvancedUnlockSettingsActivity" />
+        <activity android:name=".settings.AutofillSettingsActivity" />
+        <activity android:name=".settings.AppearanceSettingsActivity" />
         <activity
-            android:name="com.kunzisoft.keepass.hardware.HardwareKeyActivity"
+            android:name=".hardware.HardwareKeyActivity"
             android:theme="@style/Theme.Transparent" />
         <activity
-            android:name="com.kunzisoft.keepass.activities.EntrySelectionLauncherActivity"
+            android:name=".activities.EntrySelectionLauncherActivity"
             android:exported="true"
             android:launchMode="singleInstance"
             android:theme="@style/Theme.Transparent">
@@ -192,7 +192,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.kunzisoft.keepass.settings.MagikeyboardSettingsActivity"
+            android:name=".settings.MagikeyboardSettingsActivity"
             android:exported="true"
             android:label="@string/keyboard_setting_label">
             <intent-filter>
@@ -201,28 +201,28 @@
         </activity>
 
         <service
-            android:name="com.kunzisoft.keepass.services.DatabaseTaskNotificationService"
+            android:name=".services.DatabaseTaskNotificationService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="specialUse" />
         <service
-            android:name="com.kunzisoft.keepass.services.AttachmentFileNotificationService"
+            android:name=".services.AttachmentFileNotificationService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="specialUse" />
         <service
-            android:name="com.kunzisoft.keepass.services.ClipboardEntryNotificationService"
+            android:name=".services.ClipboardEntryNotificationService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="specialUse" />
         <service
-            android:name="com.kunzisoft.keepass.services.AdvancedUnlockNotificationService"
+            android:name=".services.AdvancedUnlockNotificationService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="specialUse" />
         <!-- Receiver for Autofill -->
         <service
-            android:name="com.kunzisoft.keepass.autofill.KeeAutofillService"
+            android:name=".autofill.KeeAutofillService"
             android:exported="true"
             android:foregroundServiceType="specialUse"
             android:label="@string/autofill_service_name"
@@ -235,7 +235,7 @@
             </intent-filter>
         </service>
         <service
-            android:name="com.kunzisoft.keepass.magikeyboard.MagikeyboardService"
+            android:name=".magikeyboard.MagikeyboardService"
             android:exported="true"
             android:foregroundServiceType="specialUse"
             android:label="@string/keyboard_label"
@@ -248,12 +248,12 @@
             </intent-filter>
         </service>
         <service
-            android:name="com.kunzisoft.keepass.services.KeyboardEntryNotificationService"
+            android:name=".services.KeyboardEntryNotificationService"
             android:enabled="true"
             android:exported="false" />
 
         <receiver
-            android:name="com.kunzisoft.keepass.receivers.DexModeReceiver"
+            android:name=".receivers.DexModeReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.app.action.ENTER_KNOX_DESKTOP_MODE" />

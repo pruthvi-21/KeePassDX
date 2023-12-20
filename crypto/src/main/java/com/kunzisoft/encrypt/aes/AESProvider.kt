@@ -23,7 +23,7 @@ import java.security.Provider
 
 class AESProvider : Provider("AESProvider", 1.0, "") {
     init {
-        put("Cipher.AES", NativeAESCipherSpi::class.java.name)
+        put("Cipher.AES", com.kunzisoft.encrypt.aes.NativeAESCipherSpi::class.java.name)
     }
 
     companion object {

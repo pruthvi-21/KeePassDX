@@ -102,7 +102,7 @@ class EntryFragment : DatabaseFragment() {
         }
 
         attachmentsListView.addItemDecoration(
-            DividerItemDecorator(
+            com.kunzisoft.keepass.view.DividerItemDecorator(
                 ResourcesCompat.getDrawable(resources, R.drawable.divider, requireContext().theme)
             )
         )
@@ -249,7 +249,7 @@ class EntryFragment : DatabaseFragment() {
 
         // Assign special data
         context?.let {
-            UuidUtil.toHexString(entryInfo?.id)?.let {
+            com.kunzisoft.keepass.utils.UuidUtil.toHexString(entryInfo?.id)?.let {
                 uuidReferenceView?.value = it
             }
         }

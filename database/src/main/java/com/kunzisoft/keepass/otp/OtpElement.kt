@@ -50,19 +50,19 @@ data class OtpElement(var otpModel: OtpModel = OtpModel()) {
             otpModel.tokenType = value
             when (tokenType) {
                 OtpTokenType.RFC4226 -> {
-                    otpModel.algorithm = TokenCalculator.OTP_DEFAULT_ALGORITHM
-                    otpModel.digits = TokenCalculator.OTP_DEFAULT_DIGITS
-                    otpModel.counter = TokenCalculator.HOTP_INITIAL_COUNTER
+                    otpModel.algorithm = com.kunzisoft.keepass.otp.TokenCalculator.OTP_DEFAULT_ALGORITHM
+                    otpModel.digits = com.kunzisoft.keepass.otp.TokenCalculator.OTP_DEFAULT_DIGITS
+                    otpModel.counter = com.kunzisoft.keepass.otp.TokenCalculator.HOTP_INITIAL_COUNTER
                 }
                 OtpTokenType.RFC6238 -> {
-                    otpModel.algorithm = TokenCalculator.OTP_DEFAULT_ALGORITHM
-                    otpModel.digits = TokenCalculator.OTP_DEFAULT_DIGITS
-                    otpModel.period = TokenCalculator.TOTP_DEFAULT_PERIOD
+                    otpModel.algorithm = com.kunzisoft.keepass.otp.TokenCalculator.OTP_DEFAULT_ALGORITHM
+                    otpModel.digits = com.kunzisoft.keepass.otp.TokenCalculator.OTP_DEFAULT_DIGITS
+                    otpModel.period = com.kunzisoft.keepass.otp.TokenCalculator.TOTP_DEFAULT_PERIOD
                 }
                 OtpTokenType.STEAM -> {
-                    otpModel.algorithm = TokenCalculator.OTP_DEFAULT_ALGORITHM
-                    otpModel.digits = TokenCalculator.STEAM_DEFAULT_DIGITS
-                    otpModel.period = TokenCalculator.TOTP_DEFAULT_PERIOD
+                    otpModel.algorithm = com.kunzisoft.keepass.otp.TokenCalculator.OTP_DEFAULT_ALGORITHM
+                    otpModel.digits = com.kunzisoft.keepass.otp.TokenCalculator.STEAM_DEFAULT_DIGITS
+                    otpModel.period = com.kunzisoft.keepass.otp.TokenCalculator.TOTP_DEFAULT_PERIOD
                 }
             }
         }
@@ -92,7 +92,7 @@ data class OtpElement(var otpModel: OtpModel = OtpModel()) {
             otpModel.counter = if (isValidCounter(value)) {
                 value
             } else {
-                TokenCalculator.HOTP_INITIAL_COUNTER
+                com.kunzisoft.keepass.otp.TokenCalculator.HOTP_INITIAL_COUNTER
                 throw NumberFormatException()
             }
         }
@@ -104,7 +104,7 @@ data class OtpElement(var otpModel: OtpModel = OtpModel()) {
             otpModel.period = if (isValidPeriod(value)) {
                 value
             } else {
-                TokenCalculator.TOTP_DEFAULT_PERIOD
+                com.kunzisoft.keepass.otp.TokenCalculator.TOTP_DEFAULT_PERIOD
                 throw NumberFormatException()
             }
         }
@@ -116,7 +116,7 @@ data class OtpElement(var otpModel: OtpModel = OtpModel()) {
             otpModel.digits = if (isValidDigits(value)) {
                 value
             } else {
-                TokenCalculator.OTP_DEFAULT_DIGITS
+                com.kunzisoft.keepass.otp.TokenCalculator.OTP_DEFAULT_DIGITS
                 throw NumberFormatException()
             }
         }
@@ -170,10 +170,27 @@ data class OtpElement(var otpModel: OtpModel = OtpModel()) {
             if (secret == null)
                 return ""
             return when (type) {
-                OtpType.HOTP -> TokenCalculator.HOTP(secret, counter, digits, algorithm)
+                OtpType.HOTP -> com.kunzisoft.keepass.otp.TokenCalculator.HOTP(
+                    secret,
+                    counter,
+                    digits,
+                    algorithm
+                )
+
                 OtpType.TOTP -> when (tokenType) {
-                    OtpTokenType.STEAM -> TokenCalculator.TOTP_Steam(secret, period, digits, algorithm)
-                    else -> TokenCalculator.TOTP_RFC6238(secret, period, digits, algorithm)
+                    OtpTokenType.STEAM -> com.kunzisoft.keepass.otp.TokenCalculator.TOTP_Steam(
+                        secret,
+                        period,
+                        digits,
+                        algorithm
+                    )
+
+                    else -> com.kunzisoft.keepass.otp.TokenCalculator.TOTP_RFC6238(
+                        secret,
+                        period,
+                        digits,
+                        algorithm
+                    )
                 }
             }
         }

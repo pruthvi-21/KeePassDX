@@ -353,7 +353,12 @@ class GroupActivity : DatabaseLockActivity(),
                     }
 
                     R.id.menu_about -> {
-                        startActivity(Intent(this@GroupActivity, AboutActivity::class.java))
+                        startActivity(
+                            Intent(
+                                this@GroupActivity,
+                                com.kunzisoft.keepass.activities.AboutActivity::class.java
+                            )
+                        )
                         CLOSE_DRAWER = true
                     }
 

@@ -158,7 +158,7 @@ class GroupDialogFragment : DatabaseDialogFragment() {
                 mGroupInfo.enableAutoType,
                 mGroupInfo.defaultAutoTypeSequence
             )
-            val uuid = UuidUtil.toHexString(mGroupInfo.id)
+            val uuid = com.kunzisoft.keepass.utils.UuidUtil.toHexString(mGroupInfo.id)
             if (uuid == null || uuid.isEmpty()) {
                 uuidContainerView.visibility = View.GONE
             } else {

@@ -31,7 +31,7 @@ object MenuUtil {
             }
 
             R.id.menu_about -> {
-                val intent = Intent(activity, AboutActivity::class.java)
+                val intent = Intent(activity, com.kunzisoft.keepass.activities.AboutActivity::class.java)
                 activity.startActivity(intent)
             }
         }

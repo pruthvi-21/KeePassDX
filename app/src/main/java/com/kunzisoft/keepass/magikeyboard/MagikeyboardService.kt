@@ -43,19 +43,20 @@ import com.kunzisoft.keepass.utils.registerLockReceiver
 import com.kunzisoft.keepass.utils.unregisterLockReceiver
 import java.util.UUID
 
-class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionListener {
+class MagikeyboardService : InputMethodService(),
+    com.kunzisoft.keepass.magikeyboard.KeyboardView.OnKeyboardActionListener {
 
     private var mDatabaseTaskProvider: DatabaseTaskProvider? = null
     private var mDatabase: ContextualDatabase? = null
 
-    private var keyboardView: KeyboardView? = null
+    private var keyboardView: com.kunzisoft.keepass.magikeyboard.KeyboardView? = null
     private var entryContainer: View? = null
     private var entryText: TextView? = null
     private var databaseText: TextView? = null
     private var databaseColorView: ImageView? = null
     private var packageText: TextView? = null
-    private var keyboard: Keyboard? = null
-    private var keyboardEntry: Keyboard? = null
+    private var keyboard: com.kunzisoft.keepass.magikeyboard.Keyboard? = null
+    private var keyboardEntry: com.kunzisoft.keepass.magikeyboard.Keyboard? = null
     private var popupCustomKeys: PopupWindow? = null
     private var fieldsAdapter: FieldsAdapter? = null
     private var playSoundDuringCLick: Boolean = false
@@ -107,8 +108,9 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
         keyboardView = rootKeyboardView.findViewById(R.id.magikeyboard_view)
 
         if (keyboardView != null) {
-            keyboard = Keyboard(this, R.xml.keyboard_password)
-            keyboardEntry = Keyboard(this, R.xml.keyboard_password_entry)
+            keyboard = com.kunzisoft.keepass.magikeyboard.Keyboard(this, R.xml.keyboard_password)
+            keyboardEntry =
+                com.kunzisoft.keepass.magikeyboard.Keyboard(this, R.xml.keyboard_password_entry)
 
             val context = baseContext
             val popupFieldsView = LayoutInflater.from(context)
@@ -217,7 +219,7 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
 
     private fun playVibration(keyCode: Int) {
         when (keyCode) {
-            Keyboard.KEYCODE_DELETE -> {}
+            com.kunzisoft.keepass.magikeyboard.Keyboard.KEYCODE_DELETE -> {}
             else -> keyboardView?.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
         }
     }
@@ -225,8 +227,14 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
     private fun playClick(keyCode: Int) {
         val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager?
         when (keyCode) {
-            Keyboard.KEYCODE_DONE, 10 -> audioManager?.playSoundEffect(AudioManager.FX_KEYPRESS_RETURN)
-            Keyboard.KEYCODE_DELETE -> audioManager?.playSoundEffect(AudioManager.FX_KEYPRESS_DELETE)
+            com.kunzisoft.keepass.magikeyboard.Keyboard.KEYCODE_DONE, 10 -> audioManager?.playSoundEffect(
+                AudioManager.FX_KEYPRESS_RETURN
+            )
+
+            com.kunzisoft.keepass.magikeyboard.Keyboard.KEYCODE_DELETE -> audioManager?.playSoundEffect(
+                AudioManager.FX_KEYPRESS_DELETE
+            )
+
             else -> audioManager?.playSoundEffect(AudioManager.FX_KEYPRESS_STANDARD)
         }
     }
@@ -332,11 +340,13 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
                 )
             }
 
-            Keyboard.KEYCODE_DELETE -> {
+            com.kunzisoft.keepass.magikeyboard.Keyboard.KEYCODE_DELETE -> {
                 inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL))
             }
 
-            Keyboard.KEYCODE_DONE -> inputConnection.performEditorAction(EditorInfo.IME_ACTION_GO)
+            com.kunzisoft.keepass.magikeyboard.Keyboard.KEYCODE_DONE -> inputConnection.performEditorAction(
+                EditorInfo.IME_ACTION_GO
+            )
         }
     }
 
@@ -402,7 +412,7 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
         val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager?
         if (audioManager != null)
             when (primaryCode) {
-                Keyboard.KEYCODE_DELETE -> keyboardView?.performHapticFeedback(
+                com.kunzisoft.keepass.magikeyboard.Keyboard.KEYCODE_DELETE -> keyboardView?.performHapticFeedback(
                     HapticFeedbackConstants.LONG_PRESS
                 )
             }
@@ -410,7 +420,7 @@ class MagikeyboardService : InputMethodService(), KeyboardView.OnKeyboardActionL
 
     override fun onRelease(primaryCode: Int) {
         when (primaryCode) {
-            Keyboard.KEYCODE_DELETE -> {}
+            com.kunzisoft.keepass.magikeyboard.Keyboard.KEYCODE_DELETE -> {}
         }
     }
 

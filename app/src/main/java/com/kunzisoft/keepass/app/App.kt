@@ -7,6 +7,6 @@ class App : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
 
-        PRNGFixes.apply()
+        com.kunzisoft.keepass.app.PRNGFixes.apply()
     }
 }

@@ -14,7 +14,7 @@ import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.utils.getPackageInfoCompat
 
 
-class AboutActivity : StylishActivity() {
+class AboutActivity : com.kunzisoft.keepass.activities.StylishActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

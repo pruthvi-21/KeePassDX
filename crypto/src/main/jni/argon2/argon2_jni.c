@@ -129,8 +129,15 @@ void throwExceptionF(JNIEnv *env, jclass exception, const char *format, ...) {
 
 JNIEXPORT jbyteArray
 JNICALL Java_com_kunzisoft_encrypt_argon2_NativeArgon2KeyTransformer_nTransformKey(JNIEnv *env,
-   jobject this, jint type, jbyteArray password, jbyteArray salt, jint parallelism, jint memory,
-   jint iterations, jbyteArray secretKey, jbyteArray associatedData, jint version) {
+                                                                            jobject this, jint type,
+                                                                            jbyteArray password,
+                                                                            jbyteArray salt,
+                                                                            jint parallelism,
+                                                                            jint memory,
+                                                                            jint iterations,
+                                                                            jbyteArray secretKey,
+                                                                            jbyteArray associatedData,
+                                                                            jint version) {
 
     argon2_context context;
     uint8_t *out;

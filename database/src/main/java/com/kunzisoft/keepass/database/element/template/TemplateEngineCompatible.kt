@@ -33,7 +33,11 @@ class TemplateEngineCompatible(database: DatabaseKDBX): TemplateEngine(database)
     }
 
     override fun getTemplate(entryKDBX: EntryKDBX): Template? {
-        UuidUtil.fromHexString(entryKDBX.getCustomFieldValue(TEMPLATE_ENTRY_UUID))?.let { templateUUID ->
+        com.kunzisoft.keepass.utils.UuidUtil.fromHexString(
+            entryKDBX.getCustomFieldValue(
+                TEMPLATE_ENTRY_UUID
+            )
+        )?.let { templateUUID ->
             return getTemplateByCache(templateUUID)
         }
         return null
@@ -48,9 +52,11 @@ class TemplateEngineCompatible(database: DatabaseKDBX): TemplateEngine(database)
     }
 
     private fun getTemplateUUIDField(template: Template): Field? {
-        UuidUtil.toHexString(template.uuid)?.let { uuidString ->
-            return Field(TEMPLATE_ENTRY_UUID,
-                ProtectedString(false, uuidString))
+        com.kunzisoft.keepass.utils.UuidUtil.toHexString(template.uuid)?.let { uuidString ->
+            return Field(
+                TEMPLATE_ENTRY_UUID,
+                ProtectedString(false, uuidString)
+            )
         }
         return null
     }

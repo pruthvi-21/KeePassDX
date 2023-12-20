@@ -62,7 +62,7 @@ class NodeIdUUID : NodeId<UUID> {
     }
 
     override fun toString(): String {
-        return UuidUtil.toHexString(id) ?: id.toString()
+        return com.kunzisoft.keepass.utils.UuidUtil.toHexString(id) ?: id.toString()
     }
 
     override fun toVisualString(): String {

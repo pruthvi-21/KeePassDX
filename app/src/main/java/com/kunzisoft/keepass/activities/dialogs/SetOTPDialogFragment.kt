@@ -277,9 +277,9 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
         otpAlgorithmGroup?.addOnButtonCheckedListener { group, checkedId, isChecked ->
             if (mManualEvent && isChecked) {
                 mOtpElement.algorithm = when (checkedId) {
-                    R.id.algo_sha256 -> TokenCalculator.HashAlgorithm.SHA256
-                    R.id.algo_sha512 -> TokenCalculator.HashAlgorithm.SHA512
-                    else -> TokenCalculator.HashAlgorithm.SHA1
+                    R.id.algo_sha256 -> com.kunzisoft.keepass.otp.TokenCalculator.HashAlgorithm.SHA256
+                    R.id.algo_sha512 -> com.kunzisoft.keepass.otp.TokenCalculator.HashAlgorithm.SHA512
+                    else -> com.kunzisoft.keepass.otp.TokenCalculator.HashAlgorithm.SHA1
                 }
             }
         }
@@ -426,9 +426,9 @@ class SetOTPDialogFragment : DatabaseDialogFragment() {
     private fun upgradeParameters() {
         otpAlgorithmGroup?.check(
             when (mOtpElement.algorithm) {
-                TokenCalculator.HashAlgorithm.SHA1 -> R.id.algo_sha1
-                TokenCalculator.HashAlgorithm.SHA256 -> R.id.algo_sha256
-                TokenCalculator.HashAlgorithm.SHA512 -> R.id.algo_sha512
+                com.kunzisoft.keepass.otp.TokenCalculator.HashAlgorithm.SHA1 -> R.id.algo_sha1
+                com.kunzisoft.keepass.otp.TokenCalculator.HashAlgorithm.SHA256 -> R.id.algo_sha256
+                com.kunzisoft.keepass.otp.TokenCalculator.HashAlgorithm.SHA512 -> R.id.algo_sha512
             }
         )
 

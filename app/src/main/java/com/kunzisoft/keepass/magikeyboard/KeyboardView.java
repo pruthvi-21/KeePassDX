@@ -951,14 +951,14 @@ public class KeyboardView extends View implements View.OnClickListener {
      * method on the base class if the subclass doesn't wish to handle the call.
      */
     protected boolean onLongPress(Key popupKey) {
-        if (popupKey.codes[0] == KEY_BACK_KEYBOARD) {
-            mKeyboardActionListener.onKey(KEY_CHANGE_KEYBOARD, popupKey.codes);
+        if (popupKey.codes[0] == MagikeyboardService.KEY_BACK_KEYBOARD) {
+            mKeyboardActionListener.onKey(MagikeyboardService.KEY_CHANGE_KEYBOARD, popupKey.codes);
             return true;
-        } else if (popupKey.codes[0] == KEY_ENTRY) {
-            mKeyboardActionListener.onKey(KEY_ENTRY_ALT, popupKey.codes);
+        } else if (popupKey.codes[0] == MagikeyboardService.KEY_ENTRY) {
+            mKeyboardActionListener.onKey(MagikeyboardService.KEY_ENTRY_ALT, popupKey.codes);
             return true;
-        } else if (popupKey.codes[0] == KEY_OTP) {
-            mKeyboardActionListener.onKey(KEY_OTP_ALT, popupKey.codes);
+        } else if (popupKey.codes[0] == MagikeyboardService.KEY_OTP) {
+            mKeyboardActionListener.onKey(MagikeyboardService.KEY_OTP_ALT, popupKey.codes);
             return true;
         } else {
             int popupKeyboardId = popupKey.popupResId;

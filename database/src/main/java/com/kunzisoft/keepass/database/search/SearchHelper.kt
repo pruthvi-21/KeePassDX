@@ -156,7 +156,7 @@ class SearchHelper {
                     return true
             }
             if (searchParameters.searchInUUIDs) {
-                val hexString = UuidUtil.toHexString(entry.nodeId.id) ?: ""
+                val hexString = com.kunzisoft.keepass.utils.UuidUtil.toHexString(entry.nodeId.id) ?: ""
                 if (checkSearchQuery(hexString, searchParameters))
                     return true
             }
