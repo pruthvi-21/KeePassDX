@@ -94,9 +94,10 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/breadcrumb_list"
                         android:layout_width="match_parent"
-                        android:layout_height="64dp"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingHorizontal="12dp"
+                        android:paddingHorizontal="15dp"
+                        android:paddingVertical="5dp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                     <com.kunzisoft.keepass.view.SearchFiltersView

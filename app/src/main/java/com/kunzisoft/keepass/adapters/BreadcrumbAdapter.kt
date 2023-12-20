@@ -8,11 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.database.element.Group
 import com.kunzisoft.keepass.database.element.node.Node
-import com.kunzisoft.keepass.database.element.node.Type
 import com.kunzisoft.keepass.icons.IconDrawableFactory
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.view.strikeOut
@@ -59,21 +58,9 @@ class BreadcrumbAdapter(val context: Context) :
         notifyDataSetChanged()
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return when (position) {
-            mNodeBreadcrumb.size - 1 -> 0
-            else -> 1
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BreadcrumbGroupViewHolder {
         return BreadcrumbGroupViewHolder(
-            inflater.inflate(
-                when (viewType) {
-                    0 -> R.layout.item_breadcrumb_important
-                    else -> R.layout.item_breadcrumb
-                }, parent, false
-            )
+            inflater.inflate(R.layout.item_breadcrumb, parent, false)
         )
     }
 
@@ -84,6 +71,9 @@ class BreadcrumbAdapter(val context: Context) :
             text = node?.title ?: ""
             strikeOut(node?.isCurrentlyExpires ?: false)
         }
+
+        holder.groupHomeIcon.isVisible = position == 0
+        holder.groupSeparator.isVisible = position != 0
 
         holder.itemView.apply {
             setOnClickListener {
@@ -98,34 +88,6 @@ class BreadcrumbAdapter(val context: Context) :
                 true
             }
         }
-
-        if (node?.type == Type.GROUP) {
-            (node as Group).let { group ->
-
-                holder.groupIconView?.let { imageView ->
-                    iconDrawableFactory?.assignDatabaseIcon(
-                        imageView,
-                        group.icon,
-                        mIconColor
-                    )
-                }
-
-                holder.groupNumbersView?.apply {
-                    if (mShowNumberEntries) {
-                        group.refreshNumberOfChildEntries(
-                            Group.ChildFilter.getDefaults(
-                                PreferencesUtil.showExpiredEntries(context)
-                            )
-                        )
-                        text = group.recursiveNumberOfChildEntries.toString()
-                        visibility = View.VISIBLE
-                    } else {
-                        visibility = View.GONE
-                    }
-                }
-            }
-        }
-
     }
 
     override fun getItemCount(): Int {
@@ -133,8 +95,8 @@ class BreadcrumbAdapter(val context: Context) :
     }
 
     inner class BreadcrumbGroupViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var groupIconView: ImageView? = itemView.findViewById(R.id.group_icon)
-        var groupNumbersView: TextView? = itemView.findViewById(R.id.group_numbers)
+        var groupHomeIcon: ImageView = itemView.findViewById(R.id.group_home_icon)
         var groupNameView: TextView = itemView.findViewById(R.id.group_name)
+        var groupSeparator: ImageView = itemView.findViewById(R.id.group_separator)
     }
 }

@@ -118,7 +118,6 @@ class GroupActivity : DatabaseLockActivity(),
     private var searchView: SearchView? = null
     private var searchFiltersView: SearchFiltersView? = null
     private var toolbarAction: ToolbarAction? = null
-    private var numberChildrenView: TextView? = null
     private var addNodeButtonView: AddNodeButtonView? = null
     private var breadcrumbListView: RecyclerView? = null
     private var loadingView: ProgressBar? = null
@@ -263,7 +262,6 @@ class GroupActivity : DatabaseLockActivity(),
         databaseNavView = findViewById(R.id.database_nav_view)
         coordinatorLayout = findViewById(R.id.group_coordinator)
         coordinatorError = findViewById(R.id.error_coordinator)
-        numberChildrenView = findViewById(R.id.group_numbers)
         addNodeButtonView = findViewById(R.id.add_node_button)
         toolbar = findViewById(R.id.toolbar)
         databaseModifiedView = findViewById(R.id.database_modified)
