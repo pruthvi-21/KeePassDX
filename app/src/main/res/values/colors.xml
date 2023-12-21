@@ -28,11 +28,13 @@
     <color name="orange_lighter">#ffa726</color>
     <color name="orange">#fb8c00</color>
 
-    <color name="grey_blue_slighter">#4F5F66</color>
-    <color name="grey_blue_slight">#3c474c</color>
-    <color name="grey_blue_deep">#263238</color>
-
     <color name="surface_color">#FAF9FD</color>
     <color name="surface_color_variant">#EEEEEE</color>
     <color name="surface_color_variant2">#E5E5E5</color>
+
+    <color name="magikeyboard_bg_color">#e2e2e2</color>
+    <color name="magikeyboard_bg_variant_color">#f0f0f0</color>
+    <color name="magikeyboard_key_color">#fcfcfc</color>
+    <color name="magikeyboard_text_color">#010101</color>
+    <color name="magikeyboard_subtext_color">#5a5a5a</color>
 </resources>

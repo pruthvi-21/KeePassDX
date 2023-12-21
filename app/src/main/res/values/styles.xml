@@ -481,10 +481,10 @@
     <!-- Keyboard -->
     <style name="Theme.Keepass.Keyboard" parent="Theme.AppCompat">
         <item name="android:paddingTop">4dp</item>
-        <item name="background">@color/grey_blue_deep</item>
+        <item name="background">@color/magikeyboard_bg_color</item>
         <item name="keyBackground">@drawable/key_background</item>
         <item name="keyTextSize">22sp</item>
-        <item name="keyTextColor">@color/white</item>
+        <item name="keyTextColor">@color/magikeyboard_text_color</item>
         <item name="labelTextSize">14sp</item>
         <item name="verticalCorrection">-10dip</item>
         <item name="popupLayout">@layout/keyboard_popup_fields</item>

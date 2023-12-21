@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/grey_blue_deep">
+    android:background="@color/magikeyboard_bg_variant_color">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/keyboard_popup_fields_list"

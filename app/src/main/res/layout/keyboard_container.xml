@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_alignParentBottom="true"
-    android:background="@color/grey_blue_deep"
+    android:background="@color/magikeyboard_bg_color"
     android:orientation="vertical"
-    android:paddingTop="4dp"
     android:paddingBottom="8dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="4dp"
+        android:background="@color/magikeyboard_bg_variant_color" />
 
     <LinearLayout
         android:id="@+id/magikeyboard_entry_container"
@@ -18,10 +24,8 @@
         android:background="@drawable/key_border"
         android:orientation="vertical"
         android:paddingStart="24dp"
-        android:paddingLeft="24dp"
         android:paddingTop="4dp"
         android:paddingEnd="24dp"
-        android:paddingRight="24dp"
         android:paddingBottom="4dp">
 
         <TextView
@@ -32,7 +36,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:textColor="@color/white"
+            android:textColor="@color/magikeyboard_text_color"
             android:textSize="16sp"
             tools:text="Git account signup" />
 
@@ -63,7 +67,7 @@
                 android:layout_marginRight="4dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="@color/grey_blue_slighter"
+                android:textColor="@color/magikeyboard_subtext_color"
                 android:textSize="11sp"
                 tools:text="Database A" />
         </LinearLayout>
@@ -73,11 +77,11 @@
         android:id="@+id/magikeyboard_package_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey_blue_deep"
+        android:background="@color/magikeyboard_bg_color"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
-        android:textColor="@color/grey_blue_slighter"
+        android:textColor="@color/magikeyboard_subtext_color"
         android:textSize="12sp"
         tools:text="com.kunzisoft.keepass" />
 
