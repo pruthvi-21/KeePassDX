@@ -118,7 +118,7 @@
                                 android:paddingVertical="15dp"
                                 android:text="@string/entry_add_otp"
                                 android:textStyle="bold"
-                                app:drawableStartCompat="@drawable/ic_otp_white_24dp"
+                                app:drawableStartCompat="@drawable/ic_keyboard_otp_24dp"
                                 app:drawableTint="?colorPrimary" />
 
                             <TextView

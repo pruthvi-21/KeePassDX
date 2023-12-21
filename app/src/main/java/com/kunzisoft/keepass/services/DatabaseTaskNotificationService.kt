@@ -613,7 +613,7 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
                         // Unfortunately swipe is disabled in lollipop+
                         setDeleteIntent(pendingDeleteIntent)
                         addAction(
-                            R.drawable.ic_lock_white_24dp, getString(R.string.lock),
+                            0, getString(R.string.lock),
                             pendingDeleteIntent
                         )
                     }

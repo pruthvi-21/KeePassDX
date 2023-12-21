@@ -40,7 +40,7 @@
             android:background="@drawable/bg_fab_item_icon"
             android:backgroundTint="?colorPrimaryContainer"
             android:padding="8dp"
-            android:src="@drawable/ic_key_white_24dp"
+            android:src="@drawable/ic_keyboard_key_24dp"
             app:tint="?colorOnPrimaryContainer" />
     </LinearLayout>
 
