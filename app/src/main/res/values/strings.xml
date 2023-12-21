@@ -351,7 +351,6 @@
     <string name="autofill_preference_title">Autofill settings</string>
     <string name="database_opened">Database opened</string>
     <string name="clipboard">Clipboard</string>
-    <string name="clipboard_explanation_summary">Copy entry fields using the clipboard of your device</string>
     <string name="clipboard_notifications_title">Clipboard notifications</string>
     <string name="clipboard_notifications_summary">Show clipboard notifications to copy fields when viewing an entry</string>
     <string name="clipboard_warning">If automatic deletion of clipboard fails, delete its history manually.</string>

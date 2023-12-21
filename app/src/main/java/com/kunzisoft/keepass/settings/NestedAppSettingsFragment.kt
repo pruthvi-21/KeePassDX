@@ -160,11 +160,6 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
             }
         }
 
-        findPreference<Preference>(getString(R.string.magic_keyboard_explanation_key))?.setOnPreferenceClickListener {
-            context?.openUrl(R.string.magic_keyboard_explanation_url)
-            false
-        }
-
         findPreference<Preference>(getString(R.string.magic_keyboard_key))?.setOnPreferenceClickListener {
             startActivity(Intent(Settings.ACTION_INPUT_METHOD_SETTINGS).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -174,11 +169,6 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
 
         findPreference<Preference>(getString(R.string.magic_keyboard_preference_key))?.setOnPreferenceClickListener {
             startActivity(Intent(context, MagikeyboardSettingsActivity::class.java))
-            false
-        }
-
-        findPreference<Preference>(getString(R.string.autofill_explanation_key))?.setOnPreferenceClickListener {
-            context?.openUrl(R.string.autofill_explanation_url)
             false
         }
 
@@ -192,11 +182,6 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
                 ClipboardEntryNotificationService.removeNotification(context)
             }
             true
-        }
-
-        findPreference<Preference>(getString(R.string.clipboard_explanation_key))?.setOnPreferenceClickListener {
-            context?.openUrl(R.string.clipboard_explanation_url)
-            false
         }
 
         val copyPasswordPreference: TwoStatePreference? =

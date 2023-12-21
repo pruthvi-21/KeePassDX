@@ -17,9 +17,6 @@
     <string name="credentials_explanation_url" translatable="false">https://github.com/Kunzisoft/KeePassDX/wiki/Credentials</string>
     <string name="otp_explanation_url" translatable="false">https://github.com/Kunzisoft/KeePassDX/wiki/OTP</string>
     <string name="advanced_unlock_explanation_url" translatable="false">https://github.com/Kunzisoft/KeePassDX/wiki/Advanced-Unlocking</string>
-    <string name="magic_keyboard_explanation_url" translatable="false">https://github.com/Kunzisoft/KeePassDX/wiki/Magikeyboard</string>
-    <string name="clipboard_explanation_url" translatable="false">https://github.com/Kunzisoft/KeePassDX/wiki/Clipboard</string>
-    <string name="autofill_explanation_url" translatable="false">https://github.com/Kunzisoft/KeePassDX/wiki/Autofill</string>
     <string name="file_manager_explanation_url" translatable="false">https://github.com/Kunzisoft/KeePassDX/wiki/File-Manager-and-Sync</string>
 
     <!-- File Path -->
@@ -96,10 +93,8 @@
     <!-- Form Filling Settings -->
     <string name="settings_form_filling_key" translatable="false">settings_form_filling_key</string>
 
-    <string name="magic_keyboard_explanation_key" translatable="false">magic_keyboard_explanation_key</string>
     <string name="magic_keyboard_key" translatable="false">magic_keyboard_key</string>
     <string name="magic_keyboard_preference_key" translatable="false">magic_keyboard_preference_key</string>
-    <string name="clipboard_explanation_key" translatable="false">clipboard_explanation_key</string>
     <string name="clipboard_notifications_key" translatable="false">clipboard_notifications_key</string>
     <bool name="clipboard_notifications_default" translatable="false">false</bool>
     <string name="clear_clipboard_notification_key" translatable="false">clear_clipboard_notification_key</string>
@@ -107,7 +102,6 @@
     <string name="clipboard_timeout_key" translatable="false">clip_timeout_key</string>
     <string name="clipboard_timeout_default" translatable="false">20000</string>
     <string name="autofill_key" translatable="false">autofill_key</string>
-    <string name="autofill_explanation_key" translatable="false">autofill_explanation_key</string>
     <string name="settings_autofill_enable_key" translatable="false">settings_autofill_enable_key</string>
     <bool name="settings_autofill_enable_default" translatable="false">false</bool>
     <string name="settings_autofill_key" translatable="false">settings_autofill_key</string>
