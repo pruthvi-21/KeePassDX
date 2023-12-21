@@ -1,9 +1,18 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
-    android:viewportWidth="24.0"
-    android:viewportHeight="24.0">
+    android:viewportWidth="24"
+    android:viewportHeight="24">
     <path
-        android:fillColor="@color/magikeyboard_text_color"
-        android:pathData="M20,5L4,5c-1.1,0 -1.99,0.9 -1.99,2L2,17c0,1.1 0.9,2 2,2h16c1.1,0 2,-0.9 2,-2L22,7c0,-1.1 -0.9,-2 -2,-2zM11,8h2v2h-2L11,8zM11,11h2v2h-2v-2zM8,8h2v2L8,10L8,8zM8,11h2v2L8,13v-2zM7,13L5,13v-2h2v2zM7,10L5,10L5,8h2v2zM16,17L8,17v-2h8v2zM16,13h-2v-2h2v2zM16,10h-2L14,8h2v2zM19,13h-2v-2h2v2zM19,10h-2L17,8h2v2z" />
+        android:fillColor="@color/magikeyboard_icon_color"
+        android:pathData="M17.828,11.998A1.086,1.086 0,1 1,18.916 13.073,1.08 1.08,0 0,1 17.828,11.998ZM14.371,11.998a1.086,1.086 0,1 1,1.085 1.076A1.08,1.08 0,0 1,14.371 11.998ZM10.914,11.998a1.086,1.086 0,1 1,1.085 1.076A1.08,1.08 0,0 1,10.916 11.998ZM7.457,11.998a1.086,1.086 0,1 1,1.085 1.076A1.08,1.08 0,0 1,7.457 11.998ZM4,11.998a1.086,1.086 0,1 1,1.085 1.076A1.08,1.08 0,0 1,4 11.998Z" />
+    <path
+        android:fillColor="@color/magikeyboard_icon_color"
+        android:pathData="M17.828,8.575A1.086,1.086 0,1 1,18.916 9.65,1.08 1.08,0 0,1 17.828,8.575ZM14.371,8.575a1.086,1.086 0,1 1,1.085 1.076A1.08,1.08 0,0 1,14.371 8.575ZM10.914,8.575a1.086,1.086 0,1 1,1.085 1.076A1.08,1.08 0,0 1,10.916 8.575ZM7.457,8.575a1.086,1.086 0,1 1,1.085 1.076A1.08,1.08 0,0 1,7.457 8.575ZM4,8.575a1.086,1.086 0,1 1,1.085 1.076A1.08,1.08 0,0 1,4 8.575Z" />
+    <path
+        android:fillColor="@color/magikeyboard_icon_color"
+        android:pathData="M17.828,15.42A1.086,1.086 0,1 1,18.916 16.495,1.08 1.08,0 0,1 17.828,15.42ZM4,15.42a1.086,1.086 0,1 1,1.085 1.076A1.08,1.08 0,0 1,4 15.42Z" />
+    <path
+        android:fillColor="@color/magikeyboard_icon_color"
+        android:pathData="M8.457,14.345L15.548,14.345A1,1 0,0 1,16.548 15.345L16.548,15.5A1,1 0,0 1,15.548 16.5L8.457,16.5A1,1 0,0 1,7.457 15.5L7.457,15.345A1,1 0,0 1,8.457 14.345z" />
 </vector>

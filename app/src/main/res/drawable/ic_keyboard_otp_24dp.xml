@@ -6,7 +6,7 @@
     android:viewportHeight="24">
 
     <path
-        android:fillColor="@color/magikeyboard_text_color"
+        android:fillColor="@color/magikeyboard_icon_color"
         android:pathData="M9.19922,3.13867 L9.19922,4.73828 L9.19922,6.33984 L10.8008,6.33984
 L10.8008,4.79297 C13.6944,5.15457,15.9841,7.44622,16.3457,10.3398
 L14.8008,10.3398 L14.8008,11.9395 L16.3438,11.9395

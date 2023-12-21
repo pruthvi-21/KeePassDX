@@ -37,4 +37,5 @@
     <color name="magikeyboard_key_color">#fcfcfc</color>
     <color name="magikeyboard_text_color">#010101</color>
     <color name="magikeyboard_subtext_color">#5a5a5a</color>
+    <color name="magikeyboard_icon_color">#404040</color>
 </resources>
