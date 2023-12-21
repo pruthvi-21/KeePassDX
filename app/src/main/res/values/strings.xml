@@ -233,10 +233,10 @@
     <string name="no_url_handler">Install a web browser to open this URL.</string>
     <string name="database_file_history_title">Recent Files</string>
     <string name="database_file_history_bookmark_msg">Mark the file as a favorite to set it as the default.</string>
-    <string name="database_file_selection_welcome_msg1">Welcome to KeeBinder!</string>
+    <string name="database_file_selection_welcome_msg1">Welcome to KeeTrunk!</string>
     <string name="database_file_selection_welcome_msg2">Begin your secure journey by either importing an existing vault or creating a new one to safeguard your passwords.</string>
     <string name="select_database_file">Open an existing vault</string>
-    <string name="create_keebinder_file">Create a new vault</string>
+    <string name="create_keetrunk_file">Create a new vault</string>
     <string name="auto_focus_search_title">Quick search</string>
     <string name="auto_focus_search_summary">Request a search when opening a database</string>
     <string name="subdomain_search_title">Subdomain search</string>
@@ -263,7 +263,7 @@
     <string name="import_app_properties_summary">Select a file to import app settings</string>
     <string name="export_app_properties_title">Export app settings</string>
     <string name="export_app_properties_summary">Create a file to export app settings</string>
-    <string name="description_app_properties">KeePass properties to manage app settings</string>
+    <string name="description_app_properties">KeeTrunk properties to manage app settings</string>
     <string name="success_import_app_properties">App settings imported</string>
     <string name="error_import_app_properties">Error during app settings import</string>
     <string name="success_export_app_properties">App settings exported</string>
@@ -343,8 +343,8 @@
     <string name="menu_appearance_settings_summary">Themes, colors, attributes</string>
     <string name="general">General</string>
     <string name="autofill">Autofill</string>
-    <string name="autofill_service_name">KeePass form autofilling</string>
-    <string name="autofill_sign_in_prompt">Sign in with KeePass</string>
+    <string name="autofill_service_name">@string/app_name</string>
+    <string name="autofill_sign_in_prompt">Sign in with KeeTrunk</string>
     <string name="autofill_explanation_summary">Enable autofilling to quickly fill out forms in other apps</string>
     <string name="autofill_select_entry">Select entry…</string>
     <string name="set_autofill_service_title">Set default autofill service</string>
@@ -434,11 +434,11 @@
     <string name="magic_keyboard_title">Magikeyboard</string>
     <string name="magic_keyboard_explanation_summary">Activate a custom keyboard populating your passwords and all identity fields</string>
     <string name="device_keyboard_setting_title">Device keyboard settings</string>
-    <string name="keyboard_label">Magikeyboard (KeePass)</string>
+    <string name="keyboard_label">Magikeyboard (KeeTrunk)</string>
     <string name="keyboard_setting_label">Magikeyboard settings</string>
     <string name="keyboard_entry_category">Entry</string>
     <string name="keyboard_selection_entry_title">Entry selection</string>
-    <string name="keyboard_selection_entry_summary">When viewing an entry in KeePass, populate Magikeyboard with that entry</string>
+    <string name="keyboard_selection_entry_summary">When viewing an entry in KeeTrunk, populate Magikeyboard with that entry</string>
     <string name="keyboard_notification_entry_title">Notification info</string>
     <string name="keyboard_notification_entry_summary">Show a notification when an entry is available</string>
     <string name="keyboard_save_search_info_title">Save shared info</string>

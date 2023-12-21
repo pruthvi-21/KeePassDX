@@ -9,6 +9,7 @@ import android.os.IBinder
 import android.util.TypedValue
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.kunzisoft.keepass.BuildConfig
 import com.kunzisoft.keepass.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -121,6 +122,6 @@ abstract class NotificationService : Service() {
 
     companion object {
         private const val CHANNEL_ID = "com.kunzisoft.keepass.notification.channel"
-        private const val CHANNEL_NAME = "KeeBinder notification"
+        private const val CHANNEL_NAME = BuildConfig.APP_NAME + " notification"
     }
 }
