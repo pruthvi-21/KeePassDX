@@ -616,13 +616,6 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
                             R.drawable.ic_lock_white_24dp, getString(R.string.lock),
                             pendingDeleteIntent
                         )
-                        // Won't work with Xiaomi and Kitkat
-                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
-                            setStyle(
-                                NotificationCompat.MediaStyle()
-                                    .setShowActionsInCompactView(0)
-                            )
-                        }
                     }
                 }
             }
