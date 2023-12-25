@@ -374,6 +374,9 @@ class EntryActivity : DatabaseLockActivity() {
             menu?.findItem(R.id.menu_merge_database)?.isVisible = false
             menu?.findItem(R.id.menu_reload_database)?.isVisible = false
         }
+        menu?.findItem(R.id.menu_save_database)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+        menu?.findItem(R.id.menu_merge_database)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
+        menu?.findItem(R.id.menu_reload_database)?.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
         applyToolbarColors()
         return super.onPrepareOptionsMenu(menu)
     }
