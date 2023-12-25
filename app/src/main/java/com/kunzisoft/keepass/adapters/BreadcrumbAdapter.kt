@@ -14,6 +14,7 @@ import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.node.Node
 import com.kunzisoft.keepass.icons.IconDrawableFactory
 import com.kunzisoft.keepass.settings.PreferencesUtil
+import com.kunzisoft.keepass.utils.ColorUtils
 import com.kunzisoft.keepass.view.strikeOut
 
 class BreadcrumbAdapter(val context: Context) :
@@ -32,6 +33,11 @@ class BreadcrumbAdapter(val context: Context) :
 
     private var mShowNumberEntries = false
     private var mIconColor: Int = 0
+
+    private val colorPrimary =
+        ColorUtils.getColorFromAttr(context, R.attr.colorPrimary, Color.WHITE)
+    private val colorTextSecondary =
+        ColorUtils.getColorFromAttr(context, android.R.attr.textColorSecondary, Color.WHITE)
 
     init {
         mShowNumberEntries = PreferencesUtil.showNumberEntries(context)
@@ -70,6 +76,10 @@ class BreadcrumbAdapter(val context: Context) :
         holder.groupNameView.apply {
             text = node?.title ?: ""
             strikeOut(node?.isCurrentlyExpires ?: false)
+            setTextColor(
+                if (position == mNodeBreadcrumb.size - 1 && position != 0)
+                    colorPrimary else colorTextSecondary
+            )
         }
 
         holder.groupHomeIcon.isVisible = position == 0
