@@ -5,18 +5,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.view.ActionMode
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.activities.dialogs.SortBottomSheetFragment
 import com.kunzisoft.keepass.activities.helpers.EntrySelectionHelper
 import com.kunzisoft.keepass.activities.helpers.SpecialMode
 import com.kunzisoft.keepass.adapters.NodesAdapter
@@ -28,15 +25,17 @@ import com.kunzisoft.keepass.database.element.node.Type
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.tasks.ActionRunnable
 import com.kunzisoft.keepass.utils.KeyboardUtil.hideKeyboard
+import com.kunzisoft.keepass.view.SortView
 import com.kunzisoft.keepass.viewmodels.GroupViewModel
 import java.util.LinkedList
 
-class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionListener {
+class GroupFragment : DatabaseFragment(), SortView.SortSelectionListener {
 
     private var nodeClickListener: NodeClickListener? = null
     private var onScrollListener: OnScrollListener? = null
     private var groupRefreshed: GroupRefreshedListener? = null
 
+    private var mSortView: SortView? = null
     private var mNodesRecyclerView: RecyclerView? = null
     private var mLayoutManager: LinearLayoutManager? = null
     private var mAdapter: NodesAdapter? = null
@@ -71,41 +70,6 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
             onScrollListener?.onScrolled(dy)
-        }
-    }
-
-    private val menuProvider: MenuProvider = object : MenuProvider {
-        override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-            menuInflater.inflate(R.menu.tree, menu)
-        }
-
-        override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-            return when (menuItem.itemId) {
-                R.id.menu_sort -> {
-                    context?.let { context ->
-                        val sortDialogFragment: SortBottomSheetFragment =
-                            if (mRecycleBinEnable) {
-                                SortBottomSheetFragment.getInstance(
-                                    PreferencesUtil.getListSort(context),
-                                    PreferencesUtil.getAscendingSort(context),
-                                    PreferencesUtil.getGroupsBeforeSort(context),
-                                    PreferencesUtil.getRecycleBinBottomSort(context)
-                                )
-                            } else {
-                                SortBottomSheetFragment.getInstance(
-                                    PreferencesUtil.getListSort(context),
-                                    PreferencesUtil.getAscendingSort(context),
-                                    PreferencesUtil.getGroupsBeforeSort(context)
-                                )
-                            }
-
-                        sortDialogFragment.show(childFragmentManager, "sortDialog")
-                    }
-                    true
-                }
-
-                else -> false
-            }
         }
     }
 
@@ -199,6 +163,7 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
                 mNodesRecyclerView?.adapter = mAdapter
             }
         }
+        mSortView?.setOnSortSelectionListener(this)
     }
 
     override fun onDatabaseActionFinished(
@@ -228,8 +193,7 @@ class GroupFragment : DatabaseFragment(), SortBottomSheetFragment.SortSelectionL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        activity?.addMenuProvider(menuProvider, viewLifecycleOwner)
-
+        mSortView = view.findViewById(R.id.sort_view)
         mNodesRecyclerView = view.findViewById(R.id.nodes_list)
         notFoundView = view.findViewById(R.id.not_found_container)
 

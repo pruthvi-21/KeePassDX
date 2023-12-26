@@ -41,7 +41,6 @@ import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.activities.dialogs.GroupDialogFragment
 import com.kunzisoft.keepass.activities.dialogs.GroupEditDialogFragment
 import com.kunzisoft.keepass.activities.dialogs.MainCredentialDialogFragment
-import com.kunzisoft.keepass.activities.dialogs.SortBottomSheetFragment
 import com.kunzisoft.keepass.activities.fragments.GroupFragment
 import com.kunzisoft.keepass.activities.helpers.EntrySelectionHelper
 import com.kunzisoft.keepass.activities.helpers.ExternalFileHelper
@@ -93,13 +92,11 @@ import com.kunzisoft.keepass.view.updateLockPaddingLeft
 import com.kunzisoft.keepass.viewmodels.GroupEditViewModel
 import com.kunzisoft.keepass.viewmodels.GroupViewModel
 
-
 class GroupActivity : DatabaseLockActivity(),
     GroupFragment.NodeClickListener,
     GroupFragment.NodesActionMenuListener,
     GroupFragment.OnScrollListener,
     GroupFragment.GroupRefreshedListener,
-    SortBottomSheetFragment.SortSelectionListener,
     MainCredentialDialogFragment.AskMainCredentialDialogListener {
 
     // Views
@@ -1310,13 +1307,6 @@ class GroupActivity : DatabaseLockActivity(),
                 return super.onOptionsItemSelected(item)
             }
         }
-    }
-
-    override fun onSortSelected(
-        sortNodeEnum: SortNodeEnum,
-        sortNodeParameters: SortNodeEnum.SortNodeParameters
-    ) {
-        mGroupFragment?.onSortSelected(sortNodeEnum, sortNodeParameters)
     }
 
     override fun onCancelSpecialMode() {

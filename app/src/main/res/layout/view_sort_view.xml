@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end|center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp">
+
+        <TextView
+            android:id="@+id/sort_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_sort_view"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:padding="10dp"
+            app:drawableStartCompat="@drawable/ic_sort_white"
+            app:drawableTint="?android:textColorSecondary"
+            tools:text="Name" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="3dp"
+            android:background="?colorDivider" />
+
+        <ImageView
+            android:id="@+id/sort_menu_order"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/background_sort_view"
+            android:gravity="center"
+            android:importantForAccessibility="no"
+            android:padding="7dp"
+            app:tint="?android:textColorSecondary"
+            tools:src="@drawable/ic_sort_order_ascending" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/colorDivider" />
+</LinearLayout>

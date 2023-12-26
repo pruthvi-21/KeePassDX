@@ -108,14 +108,17 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 
-            <FrameLayout
-                android:id="@+id/nodes_list_fragment_container"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/toolbar"
-                android:background="?android:attr/windowBackground"
-                android:orientation="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <FrameLayout
+                    android:id="@+id/nodes_list_fragment_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/windowBackground" />
+            </androidx.core.widget.NestedScrollView>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
