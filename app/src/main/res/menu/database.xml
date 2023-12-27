@@ -7,19 +7,19 @@
         android:orderInCategory="95"
         android:title="@string/menu_save_database"
         app:iconTint="?attr/colorControlNormal"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/menu_merge_database"
         android:icon="@drawable/ic_merge_white_24dp"
         android:orderInCategory="96"
         android:title="@string/menu_merge_database"
         app:iconTint="?attr/colorControlNormal"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/menu_reload_database"
         android:icon="@drawable/ic_refresh_white_24dp"
         android:orderInCategory="97"
         android:title="@string/menu_reload_database"
         app:iconTint="?attr/colorControlNormal"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 </menu>
