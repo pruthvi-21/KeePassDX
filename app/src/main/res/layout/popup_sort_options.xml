@@ -11,79 +11,83 @@
         app:cardBackgroundColor="?colorSurfaceVariant2"
         app:cardCornerRadius="@dimen/small_card_radius">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <RadioGroup
-                android:id="@+id/sort_options_group"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:id="@+id/sort_option_db"
-                    style="@style/Theme.Keepass.PopupWindow.Sort.Item"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sort_db" />
-
-                <RadioButton
-                    android:id="@+id/sort_option_title"
-                    style="@style/Theme.Keepass.PopupWindow.Sort.Item"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sort_title" />
-
-                <RadioButton
-                    android:id="@+id/sort_option_username"
-                    style="@style/Theme.Keepass.PopupWindow.Sort.Item"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sort_username" />
-
-                <RadioButton
-                    android:id="@+id/sort_option_creation_time"
-                    style="@style/Theme.Keepass.PopupWindow.Sort.Item"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sort_creation_time" />
-
-                <RadioButton
-                    android:id="@+id/sort_option_last_modify_time"
-                    style="@style/Theme.Keepass.PopupWindow.Sort.Item"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sort_last_modify_time" />
-
-                <RadioButton
-                    android:id="@+id/sort_option_last_access_time"
-                    style="@style/Theme.Keepass.PopupWindow.Sort.Item"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sort_last_access_time" />
-            </RadioGroup>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="3dp"
-                android:background="?colorDividerVariant" />
-
-            <CheckBox
-                android:id="@+id/menu_sort_groups_before"
-                style="@style/Theme.Keepass.PopupWindow.Sort.Item"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sort_groups_before" />
+                android:orientation="vertical">
 
-            <CheckBox
-                android:id="@+id/menu_sort_recycle_bin_bottom"
-                style="@style/Theme.Keepass.PopupWindow.Sort.Item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sort_recycle_bin_bottom" />
-        </LinearLayout>
+                <RadioGroup
+                    android:id="@+id/sort_options_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                    <RadioButton
+                        android:id="@+id/sort_option_db"
+                        style="@style/Theme.Keepass.PopupWindow.Sort.Item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sort_db" />
+
+                    <RadioButton
+                        android:id="@+id/sort_option_title"
+                        style="@style/Theme.Keepass.PopupWindow.Sort.Item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sort_title" />
+
+                    <RadioButton
+                        android:id="@+id/sort_option_username"
+                        style="@style/Theme.Keepass.PopupWindow.Sort.Item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sort_username" />
+
+                    <RadioButton
+                        android:id="@+id/sort_option_creation_time"
+                        style="@style/Theme.Keepass.PopupWindow.Sort.Item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sort_creation_time" />
+
+                    <RadioButton
+                        android:id="@+id/sort_option_last_modify_time"
+                        style="@style/Theme.Keepass.PopupWindow.Sort.Item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sort_last_modify_time" />
+
+                    <RadioButton
+                        android:id="@+id/sort_option_last_access_time"
+                        style="@style/Theme.Keepass.PopupWindow.Sort.Item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sort_last_access_time" />
+                </RadioGroup>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="3dp"
+                    android:background="?colorDividerVariant" />
+
+                <CheckBox
+                    android:id="@+id/menu_sort_groups_before"
+                    style="@style/Theme.Keepass.PopupWindow.Sort.Item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sort_groups_before" />
+
+                <CheckBox
+                    android:id="@+id/menu_sort_recycle_bin_bottom"
+                    style="@style/Theme.Keepass.PopupWindow.Sort.Item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sort_recycle_bin_bottom" />
+            </LinearLayout>
+        </ScrollView>
     </com.google.android.material.card.MaterialCardView>
 </FrameLayout>
