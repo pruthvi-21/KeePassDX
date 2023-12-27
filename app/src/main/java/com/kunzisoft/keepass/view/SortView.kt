@@ -86,6 +86,7 @@ class SortView @JvmOverloads constructor(
             width = LinearLayout.LayoutParams.WRAP_CONTENT
             height = LinearLayout.LayoutParams.WRAP_CONTENT
             isFocusable = true
+            animationStyle = R.style.Theme_LibX_Popup_Animation
             setBackgroundDrawable(ColorDrawable())
         }
 

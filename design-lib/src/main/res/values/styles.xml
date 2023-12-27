@@ -5,4 +5,9 @@
         <item name="android:button">@drawable/btn_check</item>
         <item name="buttonTint">@color/btn_check_tint</item>
     </style>
+
+    <style name="Theme.LibX.Popup.Animation" parent="">
+        <item name="android:windowEnterAnimation">@anim/popup_enter_anim</item>
+        <item name="android:windowExitAnimation">@anim/popup_exit_anim</item>
+    </style>
 </resources>
