@@ -44,7 +44,7 @@
                 android:layout_margin="3dp"
                 android:background="@drawable/background_palette_icon"
                 android:padding="5dp"
-                android:src="@drawable/ic_palette_white_24dp"
+                android:src="@drawable/prefs_color_lens_24dp"
                 app:tint="?android:textColorSecondary" />
         </FrameLayout>
 
