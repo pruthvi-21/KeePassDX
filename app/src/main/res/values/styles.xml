@@ -46,6 +46,11 @@
         <item name="android:textColorPrimary">?attr/colorOnPrimary</item>
         <item name="android:editTextColor">?attr/colorOnSurface</item>
 
+        <item name="android:actionOverflowMenuStyle">@style/Theme.Keepass.PopupMenu</item>
+        <item name="actionOverflowMenuStyle">@style/Theme.Keepass.PopupMenu</item>
+        <item name="android:popupMenuStyle">@style/Theme.Keepass.PopupMenu</item>
+        <item name="popupMenuStyle">@style/Theme.Keepass.PopupMenu</item>
+
         <!-- Dialog -->
         <item name="android:alertDialogTheme">@style/Theme.Keepass.Dialog</item>
         <item name="alertDialogTheme">@style/Theme.Keepass.Dialog</item>
@@ -98,6 +103,10 @@
 
         <item name="preferenceTitleColor">@color/on_surface_selector</item>
         <item name="preferenceSummaryColor">@color/on_surface_subtitle_selector</item>
+    </style>
+
+    <style name="Theme.Keepass.PopupMenu" parent="Widget.Material3.PopupMenu.Overflow">
+        <item name="android:popupBackground">@drawable/background_overflow_menu</item>
     </style>
 
     <!-- Toolbar Style -->
