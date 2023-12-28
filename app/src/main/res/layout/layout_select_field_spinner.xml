@@ -3,4 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerVertical="true"
-    android:background="@drawable/background_spinner" />
+    android:background="@drawable/background_spinner"
+    android:minHeight="@dimen/spinner_height"
+    android:paddingVertical="16dp" />

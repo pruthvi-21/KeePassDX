@@ -6,14 +6,15 @@ import android.util.TypedValue
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.BaseAdapter
+import android.widget.ArrayAdapter
+import android.widget.CheckedTextView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.view.isVisible
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.otp.OtpTokenType
 
 class TextSelectFieldView @JvmOverloads constructor(
     context: Context,
@@ -115,15 +116,19 @@ class TextSelectFieldView @JvmOverloads constructor(
             isVisible = value
         }
 
-    private class ValueSpinnerAdapter(context: Context) : BaseAdapter() {
+    private class ValueSpinnerAdapter(context: Context) :
+        ArrayAdapter<String>(context, android.R.layout.simple_spinner_item) {
 
-        private val inflater: LayoutInflater = LayoutInflater.from(context)
         private var listItems: MutableList<String> = mutableListOf<String>().apply {
             // Don't know why but must be init with at least one item, else no view
             add("")
         }
 
         var fontVisibility: Boolean = false
+
+        init {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
 
         override fun getCount(): Int {
             return listItems.size
@@ -147,35 +152,6 @@ class TextSelectFieldView @JvmOverloads constructor(
         fun setItems(items: List<String>) {
             listItems.clear()
             listItems.addAll(items)
-        }
-
-        fun clear() {
-            listItems.clear()
-        }
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val value: String = getItem(position)
-
-            val holder: ValueSelectorViewHolder
-            var valueView = convertView
-            if (valueView == null) {
-                holder = ValueSelectorViewHolder()
-                valueView = inflater.inflate(R.layout.item_select_field_value, parent, false)
-                holder.valueText = valueView?.findViewById(R.id.spinner_value)
-                if (fontVisibility)
-                    holder.valueText?.applyFontVisibility()
-                valueView?.tag = holder
-            } else {
-                holder = valueView.tag as ValueSelectorViewHolder
-            }
-
-            holder.valueText?.text = value
-
-            return valueView!!
-        }
-
-        inner class ValueSelectorViewHolder {
-            var valueText: TextView? = null
         }
     }
 }
