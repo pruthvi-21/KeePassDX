@@ -103,6 +103,11 @@
 
         <item name="preferenceTitleColor">@color/on_surface_selector</item>
         <item name="preferenceSummaryColor">@color/on_surface_subtitle_selector</item>
+
+        <item name="spinnerStyle">@style/Theme.LibX.SpinnerStyle</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemStyle</item>
+        <item name="spinnerDropDownItemStyle">@style/SpinnerDropDownItemStyle</item>
+        <item name="dropdownListPreferredItemHeight">@dimen/popup_menu_item_min_height</item>
     </style>
 
     <style name="Theme.Keepass.PopupMenu" parent="Widget.Material3.PopupMenu.Overflow">

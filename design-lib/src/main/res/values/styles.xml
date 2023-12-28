@@ -10,4 +10,31 @@
         <item name="android:windowEnterAnimation">@anim/popup_enter_anim</item>
         <item name="android:windowExitAnimation">@anim/popup_exit_anim</item>
     </style>
+
+    <!--Spinner-->
+    <style name="Theme.LibX.SpinnerStyle" parent="Widget.AppCompat.Spinner">
+        <item name="android:gravity">start|center</item>
+        <item name="paddingStart">10dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:popupBackground">@drawable/popup_menu_background</item>
+        <item name="android:popupAnimationStyle">@style/Theme.LibX.Popup.Animation</item>
+        <item name="android:dropDownHorizontalOffset">0dp</item>
+        <item name="android:dropDownVerticalOffset">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:popupElevation">@dimen/popup_menu_elevation</item>
+        <item name="overlapAnchor">true</item>
+    </style>
+
+    <style name="SpinnerDropDownItemStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:textSize">@dimen/popup_menu_item_text_size</item>
+        <item name="android:textColor">@color/spinner_dropdown_text_color</item>
+        <item name="android:checkMark">@drawable/spinner_item_checkmark</item>
+        <item name="android:minWidth">@dimen/popup_menu_item_min_width</item>
+        <item name="android:minHeight">@dimen/popup_menu_item_min_height</item>
+        <item name="android:paddingStart">@dimen/popup_menu_item_padding_horizontal</item>
+        <item name="android:paddingTop">@dimen/popup_menu_item_padding_vertical</item>
+        <item name="android:paddingEnd">@dimen/popup_menu_item_padding_horizontal</item>
+        <item name="android:paddingBottom">@dimen/popup_menu_item_padding_vertical</item>
+    </style>
 </resources>

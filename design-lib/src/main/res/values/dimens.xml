@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="disabled_color_alpha" type="dimen" format="float">0.38</item>
+
+    <!-- Spinner, PopupMenu -->
+    <dimen name="spinner_corner_radius">24dp</dimen>
+    <dimen name="spinner_height">48dp</dimen>
+    <dimen name="popup_menu_margin_vertical">6dp</dimen>
+    <dimen name="popup_menu_padding_vertical">6dp</dimen>
+    <dimen name="popup_menu_stroke_width">1px</dimen>
+    <dimen name="popup_menu_elevation">8dp</dimen>
+    <dimen name="popup_menu_corner_radius">@dimen/spinner_corner_radius</dimen>
+    <dimen name="popup_menu_item_min_width">168dp</dimen>
+    <dimen name="popup_menu_item_min_height">43dp</dimen>
+    <dimen name="popup_menu_item_padding_horizontal">24dp</dimen>
+    <dimen name="popup_menu_item_padding_vertical">13dp</dimen>
+    <dimen name="popup_menu_item_text_size">17sp</dimen>
+</resources>
