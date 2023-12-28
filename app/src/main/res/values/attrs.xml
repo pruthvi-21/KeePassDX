@@ -112,4 +112,9 @@
              requested keyboard mode, the key will be skipped. -->
         <attr name="keyboardMode" />
     </declare-styleable>
+
+    <declare-styleable name="HomePreference">
+        <attr name="icon" />
+        <attr name="backgroundColor" />
+    </declare-styleable>
 </resources>
