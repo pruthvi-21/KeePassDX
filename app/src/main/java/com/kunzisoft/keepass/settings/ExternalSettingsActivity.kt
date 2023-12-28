@@ -21,6 +21,7 @@ abstract class ExternalSettingsActivity : DatabaseModeActivity() {
         toolbar.setTitle(retrieveTitle())
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar?.setNavigationIcon(R.drawable.ic_toolbar_back_white_24dp)
 
         lockView = findViewById(R.id.lock_button)
         lockView?.hide()
