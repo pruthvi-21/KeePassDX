@@ -8,7 +8,7 @@
             android:title="@string/icon_pack_choose_title"
             app:layout="@layout/preference_material_top"
             app:useSimpleSummaryProvider="true" />
-        <DropDownPreference
+        <com.kunzisoft.keepass.settings.preference.DropDownPreference
             android:defaultValue="@string/app_theme_default_value"
             android:entries="@array/app_theme_options"
             android:entryValues="@array/app_theme_values"
@@ -24,7 +24,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_appearance_home_screen">
-        <DropDownPreference
+        <com.kunzisoft.keepass.settings.preference.DropDownPreference
             android:defaultValue="@string/list_item_subtitle_default_value"
             android:entries="@array/list_item_subtitle_options"
             android:entryValues="@array/list_item_subtitle_string_values"
@@ -42,7 +42,7 @@
             android:key="@string/show_otp_token_key"
             android:summary="@string/show_otp_token_summary"
             android:title="@string/show_otp_token_title" />
-        <DropDownPreference
+        <com.kunzisoft.keepass.settings.preference.DropDownPreference
             android:defaultValue="@string/list_size_string_medium"
             android:dialogTitle="@string/list_size_summary"
             android:entries="@array/list_size_options"
