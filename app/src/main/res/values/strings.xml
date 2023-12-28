@@ -196,7 +196,7 @@
     <string name="menu_change_key_settings">Change master key</string>
     <string name="copy_field">Copy of %1$s</string>
     <string name="settings">Settings</string>
-    <string name="menu_app_settings">App settings</string>
+    <string name="menu_app_settings">@string/general</string>
     <string name="menu_app_settings_summary">Search, lock, history, properties</string>
     <string name="menu_form_filling_settings">Form filling</string>
     <string name="menu_form_filling_settings_summary">Keyboard, autofill, clipboard</string>

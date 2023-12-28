@@ -2,52 +2,48 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/general">
-
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/allow_no_password_default"
-            android:key="@string/allow_no_password_key"
-            android:summary="@string/allow_no_password_summary"
-            android:title="@string/allow_no_password_title"
-            app:layout="@layout/preference_material_top" />
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/delete_entered_password_default"
-            android:key="@string/delete_entered_password_key"
-            android:summary="@string/delete_entered_password_summary"
-            android:title="@string/delete_entered_password_title" />
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/allow_hardware_key_default"
-            android:key="@string/allow_hardware_key_key"
-            android:summary="@string/allow_hardware_key_summary"
-            android:title="@string/allow_hardware_key_title" />
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/enable_read_only_default"
-            android:key="@string/enable_read_only_key"
-            android:summary="@string/enable_read_only_summary"
-            android:title="@string/enable_read_only_title" />
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/enable_auto_save_database_default"
-            android:key="@string/enable_auto_save_database_key"
-            android:summary="@string/enable_auto_save_database_summary"
-            android:title="@string/enable_auto_save_database_title" />
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/enable_keep_screen_on_default"
-            android:key="@string/enable_keep_screen_on_key"
-            android:summary="@string/enable_keep_screen_on_summary"
-            android:title="@string/enable_keep_screen_on_title" />
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/enable_screenshot_mode_key_default"
-            android:key="@string/enable_screenshot_mode_key"
-            android:summary="@string/enable_screenshot_mode_summary"
-            android:title="@string/enable_screenshot_mode_title" />
-        <com.kunzisoft.keepass.settings.preference.AttachmentPreviewPreference
-            android:defaultValue="@bool/enable_files_preview_key_default"
-            android:key="@string/enable_files_preview_key"
-            android:summary="@string/enable_files_preview_summary"
-            android:title="@string/enable_files_preview_title"
-            app:layout="@layout/preference_material_bottom" />
-
-    </PreferenceCategory>
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/allow_no_password_default"
+        android:key="@string/allow_no_password_key"
+        android:summary="@string/allow_no_password_summary"
+        android:title="@string/allow_no_password_title"
+        app:layout="@layout/preference_material_top" />
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/delete_entered_password_default"
+        android:key="@string/delete_entered_password_key"
+        android:summary="@string/delete_entered_password_summary"
+        android:title="@string/delete_entered_password_title" />
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/allow_hardware_key_default"
+        android:key="@string/allow_hardware_key_key"
+        android:summary="@string/allow_hardware_key_summary"
+        android:title="@string/allow_hardware_key_title" />
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/enable_read_only_default"
+        android:key="@string/enable_read_only_key"
+        android:summary="@string/enable_read_only_summary"
+        android:title="@string/enable_read_only_title" />
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/enable_auto_save_database_default"
+        android:key="@string/enable_auto_save_database_key"
+        android:summary="@string/enable_auto_save_database_summary"
+        android:title="@string/enable_auto_save_database_title" />
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/enable_keep_screen_on_default"
+        android:key="@string/enable_keep_screen_on_key"
+        android:summary="@string/enable_keep_screen_on_summary"
+        android:title="@string/enable_keep_screen_on_title" />
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/enable_screenshot_mode_key_default"
+        android:key="@string/enable_screenshot_mode_key"
+        android:summary="@string/enable_screenshot_mode_summary"
+        android:title="@string/enable_screenshot_mode_title" />
+    <com.kunzisoft.keepass.settings.preference.AttachmentPreviewPreference
+        android:defaultValue="@bool/enable_files_preview_key_default"
+        android:key="@string/enable_files_preview_key"
+        android:summary="@string/enable_files_preview_summary"
+        android:title="@string/enable_files_preview_title"
+        app:layout="@layout/preference_material_bottom" />
 
     <PreferenceCategory android:title="@string/search">
 
