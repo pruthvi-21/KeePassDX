@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="colorSurfaceVariant2" format="color" />
+    <attr name="preferenceColor" format="color" />
+    <attr name="preferenceCornerRadius" format="dimension" />
+    <attr name="preferenceTitleColor" format="color" />
+    <attr name="preferenceSummaryColor" format="color" />
+    <attr name="colorDivider" format="color" />
+    <attr name="colorDividerVariant" format="color" />
+    <attr name="dialogBackgroundColor" format="color" />
+
     <declare-styleable name="CollapsibleLinearLayout">
         <attr name="animationDuration" format="integer" />
         <attr name="expanded" format="boolean" />
