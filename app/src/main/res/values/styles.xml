@@ -76,6 +76,7 @@
         <!-- Preference -->
         <item name="preferenceStyle">@style/Theme.Keepass.Preference.Style</item>
         <item name="dialogPreferenceStyle">@style/Theme.Keepass.Preference.Dialog.Style</item>
+        <item name="dropdownPreferenceStyle">@style/Theme.Keepass.Preference.Dropdown.Style</item>
         <item name="preferenceCategoryStyle">@style/Theme.Keepass.Preference.Category.Style</item>
 
         <!-- Switch -->
@@ -207,6 +208,13 @@
     </style>
 
     <style name="Theme.Keepass.Preference.Dialog.Style" parent="@style/Preference.DialogPreference.Material">
+        <item name="layout">@layout/preference_material_middle</item>
+        <item name="allowDividerAbove">false</item>
+        <item name="allowDividerBelow">false</item>
+        <item name="iconSpaceReserved">false</item>
+    </style>
+
+    <style name="Theme.Keepass.Preference.Dropdown.Style" parent="Preference.DropDown.Material">
         <item name="layout">@layout/preference_material_middle</item>
         <item name="allowDividerAbove">false</item>
         <item name="allowDividerBelow">false</item>
