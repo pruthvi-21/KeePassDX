@@ -3,6 +3,7 @@ package com.kunzisoft.keepass.activities
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,6 +13,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.WindowManager.LayoutParams.FLAG_SECURE
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.settings.NestedAppSettingsFragment.Companion.DATABASE_PREFERENCE_CHANGED
@@ -54,6 +56,18 @@ abstract class StylishActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val currentMode = when (PreferencesUtil.getAppTheme(this)) {
+            getString(R.string.app_theme_light_value) -> AppCompatDelegate.MODE_NIGHT_NO
+
+            getString(R.string.app_theme_dark_value) -> AppCompatDelegate.MODE_NIGHT_YES
+
+            else -> {
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                else AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+            }
+        }
+        AppCompatDelegate.setDefaultNightMode(currentMode)
 
         PreferenceManager.getDefaultSharedPreferences(this)
             .registerOnSharedPreferenceChangeListener(onScreenshotModePrefListener)

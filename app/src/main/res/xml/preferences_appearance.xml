@@ -8,6 +8,13 @@
             android:title="@string/icon_pack_choose_title"
             app:layout="@layout/preference_material_top"
             app:useSimpleSummaryProvider="true" />
+        <DropDownPreference
+            android:defaultValue="@string/app_theme_default_value"
+            android:entries="@array/app_theme_options"
+            android:entryValues="@array/app_theme_values"
+            android:key="@string/setting_app_theme_key"
+            android:title="@string/app_theme_title"
+            app:useSimpleSummaryProvider="true" />
         <SwitchPreferenceCompat
             android:defaultValue="@bool/show_entry_colors_default"
             android:key="@string/show_entry_colors_key"

@@ -138,6 +138,14 @@ object PreferencesUtil {
         )
     }
 
+    fun getAppTheme(context: Context): String? {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getString(
+            context.getString(R.string.setting_app_theme_key),
+            context.getString(R.string.app_theme_default_value)
+        )
+    }
+
     fun getListItemSubtitle(context: Context): String? {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         return prefs.getString(

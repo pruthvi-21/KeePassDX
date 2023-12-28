@@ -150,6 +150,7 @@
     <!-- Appearance Settings -->
     <string name="settings_appearance_key" translatable="false">settings_appearance_key</string>
     <string name="setting_icon_pack_choose_key" translatable="false">setting_icon_pack_choose_key</string>
+    <string name="setting_app_theme_key" translatable="false">setting_app_theme_key</string>
     <string name="show_entry_colors_key" translatable="false">show_entry_colors_key</string>
     <bool name="show_entry_colors_default" translatable="false">true</bool>
     <string name="hide_password_key" translatable="false">hide_password_key</string>
@@ -283,6 +284,17 @@
     <string name="timeout_backup_key" translatable="false">timeout_backup_key</string>
     <string name="timeout_default" translatable="false">300000</string>
     <string name="timeout_screen_off" translatable="false">1500</string>
+
+    <!-- App theme -->
+    <string name="app_theme_default_value">@string/app_theme_follow_system_value</string>
+    <string name="app_theme_light_value">light</string>
+    <string name="app_theme_dark_value">dark</string>
+    <string name="app_theme_follow_system_value">follow_system</string>
+    <string-array name="app_theme_values">
+        <item translatable="false">@string/app_theme_light_value</item>
+        <item translatable="false">@string/app_theme_dark_value</item>
+        <item translatable="false">@string/app_theme_follow_system_value</item>
+    </string-array>
 
     <!-- List Item Subtitle -->
     <string name="list_item_subtitle_default_value" translatable="false">@string/list_item_subtitle_username_value</string>

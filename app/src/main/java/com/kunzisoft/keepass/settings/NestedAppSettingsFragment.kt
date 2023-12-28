@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
+import androidx.preference.DropDownPreference
 import androidx.preference.Preference
 import androidx.preference.TwoStatePreference
 import com.kunzisoft.keepass.R
@@ -417,6 +418,10 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
                 true
             }
 
+            findPreference<DropDownPreference>(getString(R.string.setting_app_theme_key))?.setOnPreferenceChangeListener { _, _ ->
+                activity.recreate()
+                true
+            }
         }
     }
 
@@ -424,6 +429,7 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
         // To reload group when appearance settings are modified
         when (preference.key) {
             getString(R.string.setting_icon_pack_choose_key),
+            getString(R.string.setting_app_theme_key),
             getString(R.string.show_entry_colors_key),
             getString(R.string.list_item_subtitle_key),
             getString(R.string.list_groups_show_number_entries_key),
