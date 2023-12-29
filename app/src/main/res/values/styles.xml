@@ -26,6 +26,7 @@
         <item name="colorSurface">@color/surface_color</item>
         <item name="colorSurfaceVariant">@color/surface_color_variant</item>
         <item name="colorSurfaceVariant2">@color/surface_color_variant2</item>
+        <item name="popupBackgroundColor">@color/popup_background_color</item>
 
         <item name="colorDivider">@color/divider_color</item>
         <item name="colorDividerVariant">@color/divider_color_variant</item>

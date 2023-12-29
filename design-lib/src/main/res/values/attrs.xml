@@ -8,6 +8,7 @@
     <attr name="colorDivider" format="color" />
     <attr name="colorDividerVariant" format="color" />
     <attr name="dialogBackgroundColor" format="color" />
+    <attr name="popupBackgroundColor" format="color" />
 
     <declare-styleable name="CollapsibleLinearLayout">
         <attr name="animationDuration" format="integer" />

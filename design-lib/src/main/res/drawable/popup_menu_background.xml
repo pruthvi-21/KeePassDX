@@ -11,7 +11,7 @@
                 android:bottom="@dimen/popup_menu_padding_vertical"
                 android:top="@dimen/popup_menu_padding_vertical" />
             <corners android:radius="@dimen/popup_menu_corner_radius" />
-            <solid android:color="?colorSurfaceVariant2" />
+            <solid android:color="?popupBackgroundColor" />
         </shape>
     </item>
 </layer-list>

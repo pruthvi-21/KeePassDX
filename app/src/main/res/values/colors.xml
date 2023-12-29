@@ -31,6 +31,7 @@
     <color name="surface_color">#FAF9FD</color>
     <color name="surface_color_variant">#EEEEEE</color>
     <color name="surface_color_variant2">#E5E5E5</color>
+    <color name="popup_background_color">#FBFBFB</color>
 
     <color name="magikeyboard_bg_color">#e2e2e2</color>
     <color name="magikeyboard_bg_variant_color">#f0f0f0</color>
