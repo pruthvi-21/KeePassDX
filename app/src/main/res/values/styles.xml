@@ -107,8 +107,8 @@
         <item name="preferenceSummaryColor">@color/on_surface_subtitle_selector</item>
 
         <item name="spinnerStyle">@style/Theme.LibX.SpinnerStyle</item>
-        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemStyle</item>
-        <item name="spinnerDropDownItemStyle">@style/SpinnerDropDownItemStyle</item>
+        <item name="android:spinnerDropDownItemStyle">@style/Theme.LibX.SpinnerDropDownItemStyle</item>
+        <item name="spinnerDropDownItemStyle">@style/Theme.LibX.SpinnerDropDownItemStyle</item>
         <item name="dropdownListPreferredItemHeight">@dimen/popup_menu_item_min_height</item>
     </style>
 
@@ -516,12 +516,10 @@
     <style name="Theme.Keepass.PopupWindow.Sort.Item" parent="">
         <item name="android:background">?selectableItemBackground</item>
         <item name="android:button">@null</item>
-        <item name="android:drawablePadding">10dp</item>
         <item name="android:paddingStart">20dp</item>
         <item name="android:paddingEnd">10dp</item>
-        <item name="android:textColor">@color/popup_sort_item_text_color</item>
-        <item name="android:textSize">15sp</item>
-        <item name="drawableEndCompat">@drawable/ic_tick_white_32dp</item>
-        <item name="drawableTint">@color/popup_sort_item_drawable_tint</item>
+        <item name="android:textColor">@color/spinner_dropdown_text_color</item>
+        <item name="android:textSize">@dimen/popup_menu_item_text_size</item>
+        <item name="drawableEndCompat">@drawable/spinner_item_checkmark</item>
     </style>
 </resources>
