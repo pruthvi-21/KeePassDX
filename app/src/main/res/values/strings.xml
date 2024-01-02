@@ -294,6 +294,7 @@
     <string name="sort_last_modify_time">Modification</string>
     <string name="sort_last_access_time">Access</string>
     <string name="search">Search</string>
+    <string name="search_bar_text">Search for a entry</string>
     <string name="unsupported_db_version">Unsupported database version.</string>
     <string name="warning">Warning</string>
     <string name="warning_password_encoding">Avoid password characters outside of text encoding format in database file (unrecognized chars are converted to the same letter).</string>

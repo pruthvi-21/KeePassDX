@@ -91,14 +91,44 @@
                     android:background="?colorSurfaceVariant"
                     app:layout_scrollFlags="scroll|snap|enterAlways">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/breadcrumb_list"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="15dp"
-                        android:paddingVertical="5dp"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                        android:orientation="vertical">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/custom_search_bar_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="16dp"
+                            android:layout_marginVertical="10dp"
+                            app:cardBackgroundColor="?colorSurfaceVariant2"
+                            app:cardCornerRadius="@dimen/card_radius">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:background="?selectableItemBackground"
+                                android:drawablePadding="10dp"
+                                android:gravity="center_vertical"
+                                android:minHeight="48dp"
+                                android:paddingHorizontal="15dp"
+                                android:text="@string/search_bar_text"
+                                android:textColor="?android:textColorSecondary"
+                                app:drawableStartCompat="@drawable/ic_search_white_22dp"
+                                app:drawableTint="?android:textColorSecondary" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/breadcrumb_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="15dp"
+                            android:paddingVertical="5dp"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    </LinearLayout>
 
                     <com.kunzisoft.keepass.view.SearchFiltersView
                         android:id="@+id/search_filters"

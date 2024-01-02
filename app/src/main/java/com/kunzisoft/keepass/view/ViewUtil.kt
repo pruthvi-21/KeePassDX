@@ -207,14 +207,14 @@ fun View.hideByFading() {
         })
 }
 
-fun View.showByFading() {
+fun View.showByFading(duration: Long = 140) {
     if (!isVisible) {
         isVisible = true
         // Trick to keep the focus
         alpha = 0.0001f
         animate()
             .alpha(1f)
-            .setDuration(140)
+            .setDuration(duration)
             .setListener(null)
     }
 }

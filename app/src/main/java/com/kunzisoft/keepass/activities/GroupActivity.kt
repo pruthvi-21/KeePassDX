@@ -88,6 +88,7 @@ import com.kunzisoft.keepass.view.applyWindowInsets
 import com.kunzisoft.keepass.view.hideByFading
 import com.kunzisoft.keepass.view.setTransparentNavigationBar
 import com.kunzisoft.keepass.view.showActionErrorIfNeeded
+import com.kunzisoft.keepass.view.showByFading
 import com.kunzisoft.keepass.view.updateLockPaddingLeft
 import com.kunzisoft.keepass.viewmodels.GroupEditViewModel
 import com.kunzisoft.keepass.viewmodels.GroupViewModel
@@ -109,6 +110,7 @@ class GroupActivity : DatabaseLockActivity(),
     private var coordinatorError: CoordinatorLayout? = null
     private var lockView: View? = null
     private var toolbar: Toolbar? = null
+    private var customSearchBarView: View? = null
     private var databaseModifiedView: ImageView? = null
     private var databaseColorView: ImageView? = null
     private var databaseNameView: TextView? = null
@@ -177,7 +179,9 @@ class GroupActivity : DatabaseLockActivity(),
     }
     private val mOnSearchActionExpandListener = object : MenuItem.OnActionExpandListener {
         override fun onMenuItemActionExpand(p0: MenuItem): Boolean {
-            searchFiltersView?.visibility = View.VISIBLE
+            searchFiltersView?.isVisible = true
+            breadcrumbListView?.isVisible = false
+            customSearchBarView?.isVisible = false
             searchView?.setOnQueryTextListener(mOnSearchQueryTextListener)
             searchFiltersView?.onParametersChangeListener = mOnSearchFiltersChangeListener
 
@@ -188,7 +192,9 @@ class GroupActivity : DatabaseLockActivity(),
         override fun onMenuItemActionCollapse(p0: MenuItem): Boolean {
             searchFiltersView?.onParametersChangeListener = null
             searchView?.setOnQueryTextListener(null)
-            searchFiltersView?.visibility = View.GONE
+            searchFiltersView?.isVisible = false
+            breadcrumbListView?.isVisible = true
+            customSearchBarView?.showByFading(500)
 
             removeSearch()
             loadGroup()
@@ -261,6 +267,7 @@ class GroupActivity : DatabaseLockActivity(),
         coordinatorError = findViewById(R.id.error_coordinator)
         addNodeButtonView = findViewById(R.id.add_node_button)
         toolbar = findViewById(R.id.toolbar)
+        customSearchBarView = findViewById(R.id.custom_search_bar_view)
         databaseModifiedView = findViewById(R.id.database_modified)
         databaseColorView = findViewById(R.id.database_color)
         databaseNameView = findViewById(R.id.database_name)
@@ -1261,15 +1268,12 @@ class GroupActivity : DatabaseLockActivity(),
                     searchFiltersView?.searchParameters = searchState.searchParameters
                 }
             }
-            if (it.isActionViewExpanded) {
-                breadcrumbListView?.visibility = View.GONE
-                searchFiltersView?.visibility = View.VISIBLE
-            } else {
-                searchFiltersView?.visibility = View.GONE
-                breadcrumbListView?.visibility = View.VISIBLE
-            }
             mLockSearchListeners = false
             mAutoSearch = false
+
+            customSearchBarView?.setOnClickListener {view->
+                it.expandActionView()
+            }
         }
 
         super.onCreateOptionsMenu(menu)
