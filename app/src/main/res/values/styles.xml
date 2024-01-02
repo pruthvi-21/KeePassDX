@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="GroupActivityTheme" parent="Theme.Keepass">
-        <item name="android:statusBarColor">?colorSurfaceVariant</item>
+        <item name="android:statusBarColor">?colorSurfaceVariant2</item>
     </style>
 
     <style name="FileDatabaseSelectActivityTheme" parent="Theme.Keepass">
@@ -107,9 +107,13 @@
         <item name="preferenceSummaryColor">@color/on_surface_subtitle_selector</item>
 
         <item name="spinnerStyle">@style/Theme.LibX.SpinnerStyle</item>
-        <item name="android:spinnerDropDownItemStyle">@style/Theme.LibX.SpinnerDropDownItemStyle</item>
+        <item name="android:spinnerDropDownItemStyle">@style/Theme.LibX.SpinnerDropDownItemStyle
+        </item>
         <item name="spinnerDropDownItemStyle">@style/Theme.LibX.SpinnerDropDownItemStyle</item>
         <item name="dropdownListPreferredItemHeight">@dimen/popup_menu_item_min_height</item>
+
+        <item name="searchViewStyle">@style/Theme.Keepass.SearchView</item>
+        <item name="android:searchViewStyle">@style/Theme.Keepass.SearchView</item>
     </style>
 
     <style name="Theme.Keepass.PopupMenu" parent="Widget.Material3.PopupMenu.Overflow">
@@ -517,5 +521,10 @@
         <item name="android:textColor">@color/spinner_dropdown_text_color</item>
         <item name="android:textSize">@dimen/popup_menu_item_text_size</item>
         <item name="drawableEndCompat">@drawable/spinner_item_checkmark</item>
+    </style>
+
+    <style name="Theme.Keepass.SearchView" parent="Widget.Material3.SearchView">
+        <item name="queryBackground">@android:color/transparent</item>
+        <item name="queryHint">@string/search</item>
     </style>
 </resources>

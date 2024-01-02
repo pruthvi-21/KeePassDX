@@ -29,7 +29,7 @@
                 style="?toolbarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?colorSurfaceVariant"
+                android:background="?colorSurfaceVariant2"
                 android:title="@string/app_name"
                 app:layout_constraintTop_toBottomOf="@+id/special_mode_view">
 
@@ -88,7 +88,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?colorSurfaceVariant"
+                    android:background="?colorSurfaceVariant2"
                     app:layout_scrollFlags="scroll|snap|enterAlways">
 
                     <LinearLayout
@@ -102,8 +102,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="16dp"
                             android:layout_marginVertical="10dp"
-                            app:cardBackgroundColor="?colorSurfaceVariant2"
-                            app:cardCornerRadius="@dimen/card_radius">
+                            app:cardBackgroundColor="?colorSurfaceVariant"
+                            app:cardCornerRadius="@dimen/card_radius"
+                            app:cardElevation="@dimen/cardview_default_elevation">
 
                             <TextView
                                 android:layout_width="match_parent"

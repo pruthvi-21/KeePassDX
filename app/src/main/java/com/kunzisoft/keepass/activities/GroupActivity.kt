@@ -54,7 +54,6 @@ import com.kunzisoft.keepass.database.MainCredential
 import com.kunzisoft.keepass.database.element.DateInstant
 import com.kunzisoft.keepass.database.element.Entry
 import com.kunzisoft.keepass.database.element.Group
-import com.kunzisoft.keepass.database.element.SortNodeEnum
 import com.kunzisoft.keepass.database.element.node.Node
 import com.kunzisoft.keepass.database.element.node.NodeId
 import com.kunzisoft.keepass.database.element.node.NodeIdUUID
@@ -88,7 +87,6 @@ import com.kunzisoft.keepass.view.applyWindowInsets
 import com.kunzisoft.keepass.view.hideByFading
 import com.kunzisoft.keepass.view.setTransparentNavigationBar
 import com.kunzisoft.keepass.view.showActionErrorIfNeeded
-import com.kunzisoft.keepass.view.showByFading
 import com.kunzisoft.keepass.view.updateLockPaddingLeft
 import com.kunzisoft.keepass.viewmodels.GroupEditViewModel
 import com.kunzisoft.keepass.viewmodels.GroupViewModel
@@ -179,22 +177,26 @@ class GroupActivity : DatabaseLockActivity(),
     }
     private val mOnSearchActionExpandListener = object : MenuItem.OnActionExpandListener {
         override fun onMenuItemActionExpand(p0: MenuItem): Boolean {
-            searchFiltersView?.isVisible = true
             breadcrumbListView?.isVisible = false
-            customSearchBarView?.isVisible = false
-            searchView?.setOnQueryTextListener(mOnSearchQueryTextListener)
+            databaseColorView?.isVisible = false
+            databaseModifiedView?.isVisible = false
+
+            searchFiltersView?.isVisible = true
             searchFiltersView?.onParametersChangeListener = mOnSearchFiltersChangeListener
+            searchView?.setOnQueryTextListener(mOnSearchQueryTextListener)
 
             addSearch()
             return true
         }
 
         override fun onMenuItemActionCollapse(p0: MenuItem): Boolean {
+            breadcrumbListView?.isVisible = true
+            databaseColorView?.isVisible = true
+            databaseModifiedView?.isVisible = mDatabase?.dataModifiedSinceLastLoading == true
+
+            searchFiltersView?.isVisible = false
             searchFiltersView?.onParametersChangeListener = null
             searchView?.setOnQueryTextListener(null)
-            searchFiltersView?.isVisible = false
-            breadcrumbListView?.isVisible = true
-            customSearchBarView?.showByFading(500)
 
             removeSearch()
             loadGroup()
@@ -1271,7 +1273,7 @@ class GroupActivity : DatabaseLockActivity(),
             mLockSearchListeners = false
             mAutoSearch = false
 
-            customSearchBarView?.setOnClickListener {view->
+            customSearchBarView?.setOnClickListener { view ->
                 it.expandActionView()
             }
         }

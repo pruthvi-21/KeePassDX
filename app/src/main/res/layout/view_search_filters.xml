@@ -11,9 +11,10 @@
         android:id="@+id/search_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurfaceVariant"
-        android:minHeight="64dp"
-        android:visibility="gone">
+        android:background="?attr/colorSurfaceVariant2"
+        android:minHeight="68dp"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/search_numbers"
@@ -73,8 +74,9 @@
         android:id="@+id/search_advance_filters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurfaceVariant"
-        android:orientation="vertical">
+        android:background="?attr/colorSurfaceVariant2"
+        android:orientation="vertical"
+        tools:visibility="gone">
 
         <com.google.android.material.chip.ChipGroup
             android:layout_width="match_parent"
