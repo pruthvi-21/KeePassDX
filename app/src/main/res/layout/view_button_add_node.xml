@@ -93,4 +93,13 @@
         android:src="@drawable/ic_add_white_24dp"
         app:useCompatPadding="true" />
 
+    <ImageView
+        android:id="@+id/scrim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/background_add_node_scrim"
+        android:elevation="-1dp"
+        android:importantForAccessibility="no"
+        android:visibility="gone" />
 </RelativeLayout>

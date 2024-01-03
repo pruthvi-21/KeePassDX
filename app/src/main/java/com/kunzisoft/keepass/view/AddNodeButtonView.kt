@@ -26,6 +26,7 @@ class AddNodeButtonView @JvmOverloads constructor(
     var addButtonView: FloatingActionButton? = null
     private lateinit var addEntryView: View
     private lateinit var addGroupView: View
+    private lateinit var backgroundScrimView: View
 
     private var addEntryEnable: Boolean = false
     private var addGroupEnable: Boolean = false
@@ -38,6 +39,7 @@ class AddNodeButtonView @JvmOverloads constructor(
     private var viewButtonMenuAnimation: AddButtonAnimation? = null
     private var viewMenuAnimationAddEntry: ViewMenuAnimation? = null
     private var viewMenuAnimationAddGroup: ViewMenuAnimation? = null
+    private var backgroundScrimAnimation: BackgroundScrimAnimation? = null
     private var animationDuration: Long = 0
 
     val isEnable: Boolean
@@ -61,18 +63,21 @@ class AddNodeButtonView @JvmOverloads constructor(
         addButtonView = findViewById(R.id.add_button)
         addEntryView = findViewById(R.id.add_entry_container)
         addGroupView = findViewById(R.id.add_group_container)
+        backgroundScrimView = findViewById(R.id.scrim)
 
         animationDuration = 300L
 
         viewButtonMenuAnimation = AddButtonAnimation(addButtonView)
         viewMenuAnimationAddEntry = ViewMenuAnimation(addEntryView, 150L, 0L)
         viewMenuAnimationAddGroup = ViewMenuAnimation(addGroupView, 0L, 150L)
+        backgroundScrimAnimation = BackgroundScrimAnimation(backgroundScrimView, 0L, 0L)
 
         allowAction = true
         state = State.CLOSE
 
         onAddButtonClickListener = OnClickListener { startGlobalAnimation() }
         addButtonView?.setOnClickListener(onAddButtonClickListener)
+        backgroundScrimView.setOnClickListener { closeButtonIfOpen() }
 
         onAddButtonVisibilityChangedListener =
             object : FloatingActionButton.OnVisibilityChangedListener() {
@@ -202,6 +207,7 @@ class AddNodeButtonView @JvmOverloads constructor(
             if (addGroupEnable) {
                 viewMenuAnimationAddGroup?.startAnimation()
             }
+            backgroundScrimAnimation?.startAnimation()
         }
     }
 
@@ -320,6 +326,77 @@ class AddNodeButtonView @JvmOverloads constructor(
                         .translationX(1f)
                         .alpha(1.0f)
                         .scaleX(1f)
+                        .setDuration(animationDuration - delayOut)
+                        .setInterpolator(interpolator)
+                        .setListener(this)
+                        .setStartDelay(delayOut)
+                        .start()
+                }
+            }
+        }
+    }
+
+    private inner class BackgroundScrimAnimation(
+        private val view: View?,
+        private val delayIn: Long,
+        private val delayOut: Long
+    ) : ViewPropertyAnimatorListener {
+
+        private val interpolator: Interpolator
+        private var translation: Float = 0.toFloat()
+        private var wasInvisible: Boolean = false
+
+        init {
+            this.interpolator = FastOutSlowInInterpolator()
+            this.wasInvisible = true
+            this.translation = 0f
+        }
+
+        override fun onAnimationStart(view: View) {}
+
+        override fun onAnimationEnd(view: View) {
+            if (wasInvisible) {
+                view.visibility = View.VISIBLE
+            } else {
+                view.visibility = View.INVISIBLE
+            }
+        }
+
+        override fun onAnimationCancel(view: View) {}
+
+        fun startAnimation() {
+            view?.let { view ->
+                if (view.visibility == View.VISIBLE) {
+                    // In
+                    wasInvisible = false
+                    ViewCompat.animate(view)
+                        .translationY(-translation)
+                        .alpha(0.0f)
+                        .setDuration(animationDuration - delayIn)
+                        .setInterpolator(interpolator)
+                        .setListener(this)
+                        .setStartDelay(delayIn)
+                        .start()
+                } else {
+
+                    // The first time
+                    if (translation == 0f) {
+                        if (addButtonView != null) {
+                            translation =
+                                view.y + view.height / 2 - addButtonView!!.y - (addButtonView!!.height / 2).toFloat()
+                            view.apply {
+                                translationY = -translation
+                                alpha = 0.0f
+                            }
+                        }
+                    }
+
+                    // Out
+                    view.visibility = View.VISIBLE
+                    wasInvisible = true
+                    ViewCompat.animate(view)
+                        .translationY(1f)
+                        .alpha(1.0f)
                         .setDuration(animationDuration - delayOut)
                         .setInterpolator(interpolator)
                         .setListener(this)
