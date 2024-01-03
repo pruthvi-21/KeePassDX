@@ -1,10 +1,14 @@
 package com.kunzisoft.keepass.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.SearchManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Build
@@ -29,6 +33,7 @@ import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -72,6 +77,7 @@ import com.kunzisoft.keepass.settings.SettingsActivity
 import com.kunzisoft.keepass.tasks.ActionRunnable
 import com.kunzisoft.keepass.timeout.TimeoutHelper
 import com.kunzisoft.keepass.utils.BACK_PREVIOUS_KEYBOARD_ACTION
+import com.kunzisoft.keepass.utils.ColorUtils
 import com.kunzisoft.keepass.utils.KeyboardUtil.showKeyboard
 import com.kunzisoft.keepass.utils.getParcelableCompat
 import com.kunzisoft.keepass.utils.getParcelableExtraCompat
@@ -292,6 +298,17 @@ class GroupActivity : DatabaseLockActivity(),
 
         toolbar?.title = ""
         setSupportActionBar(toolbar)
+        val colorPrimary = ColorUtils.getColorFromAttr(this, R.attr.colorPrimary, Color.WHITE)
+        val collapseIconDrawable =
+            ResourcesCompat.getDrawable(resources, R.drawable.ic_toolbar_back_white_24dp, theme)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            collapseIconDrawable?.colorFilter =
+                BlendModeColorFilter(colorPrimary, BlendMode.SRC_ATOP)
+        } else {
+            collapseIconDrawable?.setColorFilter(colorPrimary, PorterDuff.Mode.SRC_ATOP)
+        }
+        toolbar?.collapseIcon = collapseIconDrawable
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar,
