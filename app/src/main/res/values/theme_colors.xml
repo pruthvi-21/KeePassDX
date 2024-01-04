@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Green theme -->
+    <color name="green_light_color_primary">#346a22</color>
+    <color name="green_light_color_on_primary">#ffffff</color>
+    <color name="green_light_color_primary_container">#b5f39a</color>
+    <color name="green_light_color_on_primary_container">#042100</color>
+    <color name="green_light_color_secondary">#54624d</color>
+    <color name="green_light_color_on_secondary">#ffffff</color>
+    <color name="green_light_color_secondary_container">#d8e7cc</color>
+    <color name="green_light_color_on_secondary_container">#131f0e</color>
+    <color name="green_light_color_tertiary">#386667</color>
+    <color name="green_light_color_on_tertiary">#ffffff</color>
+    <color name="green_light_color_tertiary_container">#bcebed</color>
+    <color name="green_light_color_on_tertiary_container">#002021</color>
+
+    <color name="green_dark_color_primary">#99d680</color>
+    <color name="green_dark_color_on_primary">#0a3900</color>
+    <color name="green_dark_color_primary_container">#1c520a</color>
+    <color name="green_dark_color_on_primary_container">#b5f39a</color>
+    <color name="green_dark_color_secondary">#bccbb1</color>
+    <color name="green_dark_color_on_secondary">#273421</color>
+    <color name="green_dark_color_secondary_container">#3d4b36</color>
+    <color name="green_dark_color_on_secondary_container">#d8e7cc</color>
+    <color name="green_dark_color_tertiary">#a0cfd1</color>
+    <color name="green_dark_color_on_tertiary">#003738</color>
+    <color name="green_dark_color_tertiary_container">#1e4e4f</color>
+    <color name="green_dark_color_on_tertiary_container">#bcebed</color>
+
+
+    <!-- Red theme -->
+    <color name="red_light_color_primary">#a13e27</color>
+    <color name="red_light_color_on_primary">#ffffff</color>
+    <color name="red_light_color_primary_container">#ffdad2</color>
+    <color name="red_light_color_on_primary_container">#3d0600</color>
+    <color name="red_light_color_secondary">#77574f</color>
+    <color name="red_light_color_on_secondary">#ffffff</color>
+    <color name="red_light_color_secondary_container">#ffdad2</color>
+    <color name="red_light_color_on_secondary_container">#2c1510</color>
+    <color name="red_light_color_tertiary">#6d5d2e</color>
+    <color name="red_light_color_on_tertiary">#ffffff</color>
+    <color name="red_light_color_tertiary_container">#f8e1a6</color>
+    <color name="red_light_color_on_tertiary_container">#241a00</color>
+
+    <color name="red_dark_color_primary">#ffb4a3</color>
+    <color name="red_dark_color_on_primary">#621000</color>
+    <color name="red_dark_color_primary_container">#822712</color>
+    <color name="red_dark_color_on_primary_container">#ffdad2</color>
+    <color name="red_dark_color_secondary">#e7bdb3</color>
+    <color name="red_dark_color_on_secondary">#442a23</color>
+    <color name="red_dark_color_secondary_container">#5d3f39</color>
+    <color name="red_dark_color_on_secondary_container">#ffdad2</color>
+    <color name="red_dark_color_tertiary">#dbc58c</color>
+    <color name="red_dark_color_on_tertiary">#3c2f04</color>
+    <color name="red_dark_color_tertiary_container">#544519</color>
+    <color name="red_dark_color_on_tertiary_container">#f8e1a6</color>
+
+
+    <!-- Yellow theme -->
+    <color name="yellow_light_color_primary">#755b00</color>
+    <color name="yellow_light_color_on_primary">#ffffff</color>
+    <color name="yellow_light_color_primary_container">#ffe08f</color>
+    <color name="yellow_light_color_on_primary_container">#241a00</color>
+    <color name="yellow_light_color_secondary">#695d3f</color>
+    <color name="yellow_light_color_on_secondary">#ffffff</color>
+    <color name="yellow_light_color_secondary_container">#f2e1bb</color>
+    <color name="yellow_light_color_on_secondary_container">#231b04</color>
+    <color name="yellow_light_color_tertiary">#47664a</color>
+    <color name="yellow_light_color_on_tertiary">#ffffff</color>
+    <color name="yellow_light_color_tertiary_container">#c9ecc8</color>
+    <color name="yellow_light_color_on_tertiary_container">#04210b</color>
+
+    <color name="yellow_dark_color_primary">#ecc248</color>
+    <color name="yellow_dark_color_on_primary">#3d2e00</color>
+    <color name="yellow_dark_color_primary_container">#584400</color>
+    <color name="yellow_dark_color_on_primary_container">#ffe08f</color>
+    <color name="yellow_dark_color_secondary">#d5c5a0</color>
+    <color name="yellow_dark_color_on_secondary">#392f15</color>
+    <color name="yellow_dark_color_secondary_container">#51462a</color>
+    <color name="yellow_dark_color_on_secondary_container">#f2e1bb</color>
+    <color name="yellow_dark_color_tertiary">#adcfad</color>
+    <color name="yellow_dark_color_on_tertiary">#1a361e</color>
+    <color name="yellow_dark_color_tertiary_container">#304d33</color>
+    <color name="yellow_dark_color_on_tertiary_container">#c9ecc8</color>
+
+
+    <!-- Blue theme -->
+    <color name="blue_light_color_primary">#006685</color>
+    <color name="blue_light_color_on_primary">#ffffff</color>
+    <color name="blue_light_color_primary_container">#bfe9ff</color>
+    <color name="blue_light_color_on_primary_container">#001f2a</color>
+    <color name="blue_light_color_secondary">#4d616c</color>
+    <color name="blue_light_color_on_secondary">#ffffff</color>
+    <color name="blue_light_color_secondary_container">#d0e6f3</color>
+    <color name="blue_light_color_on_secondary_container">#081e27</color>
+    <color name="blue_light_color_tertiary">#5e5b7d</color>
+    <color name="blue_light_color_on_tertiary">#ffffff</color>
+    <color name="blue_light_color_tertiary_container">#e4dfff</color>
+    <color name="blue_light_color_on_tertiary_container">#1a1836</color>
+
+    <color name="blue_dark_color_primary">#6dd2ff</color>
+    <color name="blue_dark_color_on_primary">#003547</color>
+    <color name="blue_dark_color_primary_container">#004d65</color>
+    <color name="blue_dark_color_on_primary_container">#bfe9ff</color>
+    <color name="blue_dark_color_secondary">#b4cad6</color>
+    <color name="blue_dark_color_on_secondary">#1f333d</color>
+    <color name="blue_dark_color_secondary_container">#364954</color>
+    <color name="blue_dark_color_on_secondary_container">#d0e6f3</color>
+    <color name="blue_dark_color_tertiary">#c7c2ea</color>
+    <color name="blue_dark_color_on_tertiary">#2f2d4c</color>
+    <color name="blue_dark_color_tertiary_container">#464364</color>
+    <color name="blue_dark_color_on_tertiary_container">#e4dfff</color>
+</resources>

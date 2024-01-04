@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="25dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="25dp"
+    android:paddingBottom="10dp">
+
+    <com.google.android.material.materialswitch.MaterialSwitch
+        android:id="@+id/pref_palette_item_dynamic_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/color_palette_dynamic" />
+
+    <include layout="@layout/divider_variant" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <com.kunzisoft.keepass.view.PrefColorPaletteItem
+            android:id="@+id/pref_palette_item_green"
+            style="@style/Theme.Keepass.ColorPalette.Item"
+            app:cardBackgroundColor="@color/green_light_color_primary" />
+
+        <com.kunzisoft.keepass.view.PrefColorPaletteItem
+            android:id="@+id/pref_palette_item_red"
+            style="@style/Theme.Keepass.ColorPalette.Item"
+            app:cardBackgroundColor="@color/red_light_color_primary" />
+
+        <com.kunzisoft.keepass.view.PrefColorPaletteItem
+            android:id="@+id/pref_palette_item_yellow"
+            style="@style/Theme.Keepass.ColorPalette.Item"
+            app:cardBackgroundColor="@color/yellow_light_color_primary" />
+
+        <com.kunzisoft.keepass.view.PrefColorPaletteItem
+            android:id="@+id/pref_palette_item_blue"
+            style="@style/Theme.Keepass.ColorPalette.Item"
+            app:cardBackgroundColor="@color/blue_light_color_primary" />
+    </LinearLayout>
+
+</LinearLayout>

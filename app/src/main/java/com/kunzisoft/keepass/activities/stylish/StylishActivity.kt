@@ -1,8 +1,9 @@
-package com.kunzisoft.keepass.activities
+package com.kunzisoft.keepass.activities.stylish
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -13,7 +14,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.WindowManager.LayoutParams.FLAG_SECURE
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.settings.NestedAppSettingsFragment.Companion.DATABASE_PREFERENCE_CHANGED
@@ -28,6 +28,8 @@ abstract class StylishActivity : AppCompatActivity() {
     /* (non-Javadoc) Workaround for HTC Linkify issues
      * @see android.app.Activity#startActivity(android.content.Intent)
      */
+
+    private var currentlyAppliedThemeRes = R.style.Theme_Keepass_Dark
 
     override fun startActivity(intent: Intent) {
         try {
@@ -57,17 +59,13 @@ abstract class StylishActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val currentMode = when (PreferencesUtil.getAppTheme(this)) {
-            getString(R.string.app_theme_light_value) -> AppCompatDelegate.MODE_NIGHT_NO
-
-            getString(R.string.app_theme_dark_value) -> AppCompatDelegate.MODE_NIGHT_YES
-
-            else -> {
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-                else AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
-            }
+        val colorPalette = PreferencesUtil.getAppColorPalette(this)
+        currentlyAppliedThemeRes = when (Stylish.currentThemeMode(this)) {
+            Stylish.ThemeMode.LIGHT -> colorPalette.themeLightId
+            Stylish.ThemeMode.DARK -> colorPalette.themeDarkId
+            Stylish.ThemeMode.BLACK -> colorPalette.themeBlackId
         }
-        AppCompatDelegate.setDefaultNightMode(currentMode)
+        setTheme(currentlyAppliedThemeRes)
 
         PreferenceManager.getDefaultSharedPreferences(this)
             .registerOnSharedPreferenceChangeListener(onScreenshotModePrefListener)
@@ -93,11 +91,17 @@ abstract class StylishActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (DATABASE_PREFERENCE_CHANGED) {
+
+        val colorPalette = PreferencesUtil.getAppColorPalette(this)
+        val newTheme =
+            if (Stylish.isDarkTheme(this)) colorPalette.themeDarkId
+            else colorPalette.themeLightId
+        if (DATABASE_PREFERENCE_CHANGED || newTheme != currentlyAppliedThemeRes) {
             DATABASE_PREFERENCE_CHANGED = false
             Log.d(this.javaClass.name, "Theme change detected, restarting activity")
             recreateActivity()
         }
+
         setScreenshotMode(PreferencesUtil.isScreenshotModeEnabled(this))
     }
 

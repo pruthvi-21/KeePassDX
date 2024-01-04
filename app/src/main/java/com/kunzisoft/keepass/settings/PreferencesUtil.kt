@@ -9,6 +9,8 @@ import android.util.Log
 import androidx.preference.PreferenceManager
 import com.kunzisoft.keepass.BuildConfig
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.activities.stylish.Stylish
+import com.kunzisoft.keepass.activities.stylish.StylishActivity
 import com.kunzisoft.keepass.biometric.AdvancedUnlockManager
 import com.kunzisoft.keepass.database.element.SortNodeEnum
 import com.kunzisoft.keepass.database.search.SearchParameters
@@ -138,11 +140,39 @@ object PreferencesUtil {
         )
     }
 
+    fun setAppColorPalette(context: Context, colorPalette: Stylish.AppColorPalette) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        prefs
+            .edit()
+            .putString(
+                context.getString(R.string.setting_app_color_palette_key),
+                colorPalette.value
+            ).apply()
+    }
+
+    fun getAppColorPalette(context: Context): Stylish.AppColorPalette {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val value = prefs.getString(
+            context.getString(R.string.setting_app_color_palette_key),
+            Stylish.AppColorPalette.defaultPalette().value
+        )
+        return Stylish.AppColorPalette.fromValue(value)
+            ?: Stylish.AppColorPalette.defaultPalette()
+    }
+
     fun getAppTheme(context: Context): String? {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         return prefs.getString(
             context.getString(R.string.setting_app_theme_key),
             context.getString(R.string.app_theme_default_value)
+        )
+    }
+
+    fun getUseBlacksEnabled(context: Context): Boolean {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getBoolean(
+            context.getString(R.string.setting_app_use_black_key),
+            context.resources.getBoolean(R.bool.use_black_for_night_mode_default)
         )
     }
 

@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="text_color_secondary">#999999</color>
-    <color name="divider_color">#222222</color>
-    <color name="divider_color_variant">#303030</color>
-
     <color name="warning">#eed202</color>
 
-    <color name="surface_color">#111115</color>
-    <color name="surface_color_variant">#1B1B1F</color>
-    <color name="surface_color_variant2">#232325</color>
-    <color name="popup_background_color">#343434</color>
+    <color name="surface_color">@color/dark_surface_color</color>
+    <color name="surface_color_variant">@color/dark_surface_color_variant</color>
+    <color name="surface_color_variant2">@color/dark_surface_color_variant2</color>
+    <color name="text_color_secondary">@color/dark_text_color_secondary</color>
+    <color name="divider_color">@color/dark_divider_color</color>
+    <color name="divider_color_variant">@color/dark_divider_color_variant</color>
+    <color name="popup_background_color">@color/dark_popup_background_color</color>
 
     <color name="magikeyboard_bg_color">#0a0a0a</color>
     <color name="magikeyboard_bg_variant_color">#1b1b1b</color>

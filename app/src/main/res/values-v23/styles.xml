@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Keepass.v23" parent="Theme.Keepass.v21">
+    <style name="Theme.Keepass.Light.v23" parent="Theme.Keepass.Light.v21">
         <item name="android:statusBarColor">?colorSurface</item>
-        <item name="android:windowLightStatusBar">?isLightTheme</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="Theme.Keepass.Dark.v23" parent="Theme.Keepass.Dark.v21">
+        <item name="android:statusBarColor">?colorSurface</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 </resources>

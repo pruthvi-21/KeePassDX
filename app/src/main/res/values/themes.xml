@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="FileDatabaseSelectActivityTheme" parent="Theme.Keepass.Light">
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">
+            @drawable/ic_blank_32dp
+        </item>
+        <item name="android:navigationBarColor">?colorSurfaceVariant2</item>
+    </style>
+
+    <style name="Theme.Keepass.Light" parent="Theme.Keepass.Light.v27" />
+
+    <style name="Theme.Keepass.Light.v27" parent="Theme.Keepass.Light.v23" />
+
+    <style name="Theme.Keepass.Light.v23" parent="Theme.Keepass.Light.v21" />
+
+    <style name="Theme.Keepass.Light.v21" parent="Theme.Keepass.Light.Base" />
+
+    <style name="Theme.Keepass.Light.Base" parent="Theme.Material3.DynamicColors.Light">
+        <item name="android:windowBackground">@color/light_surface_color</item>
+        <item name="android:colorBackground">@color/light_surface_color</item>
+        <item name="colorSurface">@color/light_surface_color</item>
+        <item name="colorSurfaceVariant">@color/light_surface_color_variant</item>
+        <item name="colorSurfaceVariant2">@color/light_surface_color_variant2</item>
+        <item name="popupBackgroundColor">@color/light_popup_background_color</item>
+
+        <item name="colorDivider">@color/light_divider_color</item>
+        <item name="colorDividerVariant">@color/light_divider_color_variant</item>
+
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:fitsSystemWindows">false</item>
+
+        <item name="android:imageButtonStyle">@style/Theme.Keepass.ImageButton</item>
+        <item name="imageButtonStyle">@style/Theme.Keepass.ImageButton</item>
+
+        <item name="android:checkboxStyle">@style/Theme.Keepass.CheckBox</item>
+
+        <item name="android:textAppearance">@style/Theme.Keepass.Text</item>
+        <item name="android:textAppearanceMedium">@style/Theme.Keepass.Text</item>
+
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColorPrimary">?attr/colorOnPrimary</item>
+        <item name="android:editTextColor">?attr/colorOnSurface</item>
+
+        <item name="android:actionOverflowMenuStyle">@style/Theme.Keepass.PopupMenu</item>
+        <item name="actionOverflowMenuStyle">@style/Theme.Keepass.PopupMenu</item>
+        <item name="android:popupMenuStyle">@style/Theme.Keepass.PopupMenu</item>
+        <item name="popupMenuStyle">@style/Theme.Keepass.PopupMenu</item>
+
+        <!-- Dialog -->
+        <item name="android:alertDialogTheme">@style/Theme.Keepass.Dialog</item>
+        <item name="alertDialogTheme">@style/Theme.Keepass.Dialog</item>
+        <item name="dialogBackgroundColor">?colorSurfaceVariant2</item>
+
+        <!-- CardView -->
+        <item name="materialCardViewStyle">@style/Theme.Keepass.Cardview</item>
+        <item name="cardViewStyle">@style/Theme.Keepass.Cardview</item>
+
+        <!-- Toolbar -->
+        <item name="collapsingToolbarLayoutStyle">@style/Theme.Keepass.CollapsingLayout</item>
+        <item name="toolbarStyle">@style/Theme.Keepass.Toolbar</item>
+        <item name="toolbarSpecialStyle">@style/Theme.Keepass.Toolbar.Special</item>
+        <item name="toolbarActionStyle">@style/Theme.Keepass.Toolbar.Action</item>
+        <item name="expandedTitleTextAppearance">@style/Theme.Keepass.Title.Large.OnSurface</item>
+        <item name="collapsedTitleTextAppearance">@style/Theme.Keepass.Title.OnSurface</item>
+
+        <item name="navigationViewStyle">@style/Theme.Keepass.NavigationView</item>
+
+        <!-- Tab -->
+        <item name="tabStyle">@style/Theme.Keepass.TabLayout</item>
+
+        <!-- Preference -->
+        <item name="preferenceStyle">@style/Theme.Keepass.Preference.Style</item>
+        <item name="dialogPreferenceStyle">@style/Theme.Keepass.Preference.Dialog.Style</item>
+        <item name="dropdownPreferenceStyle">@style/Theme.Keepass.Preference.Dropdown.Style</item>
+        <item name="preferenceCategoryStyle">@style/Theme.Keepass.Preference.Category.Style</item>
+
+        <!-- Switch -->
+        <item name="android:switchPreferenceStyle">@style/Theme.Keepass.SwitchPreference</item>
+        <item name="switchPreferenceStyle">@style/Theme.Keepass.SwitchPreference</item>
+        <item name="switchPreferenceCompatStyle">@style/Theme.Keepass.SwitchPreference</item>
+
+        <item name="checkboxStyle">@style/Theme.LibX.Checkbox</item>
+
+        <!-- Edit Text -->
+        <item name="textInputStyle">@style/Theme.Keepass.TextInputLayout</item>
+        <item name="textInputOutlinedExposedDropdownMenuStyle">
+            @style/Theme.Keepass.TextInputLayout.ExposedMenu
+        </item>
+
+        <!-- Snackbar -->
+        <item name="snackbarStyle">@style/Theme.Keepass.SnackBar</item>
+
+        <!-- Button -->
+        <item name="materialButtonStyle">@style/Theme.Keepass.Button.Primary</item>
+        <item name="materialButtonOutlinedStyle">@style/Theme.Keepass.Button.Outlined</item>
+
+        <item name="preferenceColor">?colorSurfaceVariant</item>
+        <item name="preferenceCornerRadius">@dimen/preference_radius</item>
+
+        <item name="preferenceTitleColor">@color/on_surface_selector</item>
+        <item name="preferenceSummaryColor">@color/on_surface_subtitle_selector</item>
+
+        <item name="spinnerStyle">@style/Theme.LibX.SpinnerStyle</item>
+        <item name="android:spinnerDropDownItemStyle">@style/Theme.LibX.SpinnerDropDownItemStyle
+        </item>
+        <item name="spinnerDropDownItemStyle">@style/Theme.LibX.SpinnerDropDownItemStyle</item>
+        <item name="dropdownListPreferredItemHeight">@dimen/popup_menu_item_min_height</item>
+
+        <item name="searchViewStyle">@style/Theme.Keepass.SearchView</item>
+        <item name="android:searchViewStyle">@style/Theme.Keepass.SearchView</item>
+    </style>
+
+
+    <style name="Theme.Keepass.Dark" parent="Theme.Keepass.Dark.v27" />
+
+    <style name="Theme.Keepass.Dark.v27" parent="Theme.Keepass.Dark.v23" />
+
+    <style name="Theme.Keepass.Dark.v23" parent="Theme.Keepass.Dark.v21" />
+
+    <style name="Theme.Keepass.Dark.v21" parent="Theme.Keepass.Dark.Base" />
+
+    <style name="Theme.Keepass.Dark.Base" parent="Theme.Material3.DynamicColors.Dark">
+        <item name="android:windowBackground">@color/dark_surface_color</item>
+        <item name="android:colorBackground">@color/dark_surface_color</item>
+        <item name="colorSurface">@color/dark_surface_color</item>
+        <item name="colorSurfaceVariant">@color/dark_surface_color_variant</item>
+        <item name="colorSurfaceVariant2">@color/dark_surface_color_variant2</item>
+        <item name="popupBackgroundColor">@color/dark_popup_background_color</item>
+
+        <item name="colorDivider">@color/dark_divider_color</item>
+        <item name="colorDividerVariant">@color/dark_divider_color_variant</item>
+
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:fitsSystemWindows">false</item>
+
+        <item name="android:imageButtonStyle">@style/Theme.Keepass.ImageButton</item>
+        <item name="imageButtonStyle">@style/Theme.Keepass.ImageButton</item>
+
+        <item name="android:checkboxStyle">@style/Theme.Keepass.CheckBox</item>
+
+        <item name="android:textAppearance">@style/Theme.Keepass.Text</item>
+        <item name="android:textAppearanceMedium">@style/Theme.Keepass.Text</item>
+
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColorPrimary">?attr/colorOnPrimary</item>
+        <item name="android:editTextColor">?attr/colorOnSurface</item>
+
+        <item name="android:actionOverflowMenuStyle">@style/Theme.Keepass.PopupMenu</item>
+        <item name="actionOverflowMenuStyle">@style/Theme.Keepass.PopupMenu</item>
+        <item name="android:popupMenuStyle">@style/Theme.Keepass.PopupMenu</item>
+        <item name="popupMenuStyle">@style/Theme.Keepass.PopupMenu</item>
+
+        <!-- Dialog -->
+        <item name="android:alertDialogTheme">@style/Theme.Keepass.Dialog</item>
+        <item name="alertDialogTheme">@style/Theme.Keepass.Dialog</item>
+        <item name="dialogBackgroundColor">?colorSurfaceVariant2</item>
+
+        <!-- CardView -->
+        <item name="materialCardViewStyle">@style/Theme.Keepass.Cardview</item>
+        <item name="cardViewStyle">@style/Theme.Keepass.Cardview</item>
+
+        <!-- Toolbar -->
+        <item name="collapsingToolbarLayoutStyle">@style/Theme.Keepass.CollapsingLayout</item>
+        <item name="toolbarStyle">@style/Theme.Keepass.Toolbar</item>
+        <item name="toolbarSpecialStyle">@style/Theme.Keepass.Toolbar.Special</item>
+        <item name="toolbarActionStyle">@style/Theme.Keepass.Toolbar.Action</item>
+        <item name="expandedTitleTextAppearance">@style/Theme.Keepass.Title.Large.OnSurface</item>
+        <item name="collapsedTitleTextAppearance">@style/Theme.Keepass.Title.OnSurface</item>
+
+        <item name="navigationViewStyle">@style/Theme.Keepass.NavigationView</item>
+
+        <!-- Tab -->
+        <item name="tabStyle">@style/Theme.Keepass.TabLayout</item>
+
+        <!-- Preference -->
+        <item name="preferenceStyle">@style/Theme.Keepass.Preference.Style</item>
+        <item name="dialogPreferenceStyle">@style/Theme.Keepass.Preference.Dialog.Style</item>
+        <item name="dropdownPreferenceStyle">@style/Theme.Keepass.Preference.Dropdown.Style</item>
+        <item name="preferenceCategoryStyle">@style/Theme.Keepass.Preference.Category.Style</item>
+
+        <!-- Switch -->
+        <item name="android:switchPreferenceStyle">@style/Theme.Keepass.SwitchPreference</item>
+        <item name="switchPreferenceStyle">@style/Theme.Keepass.SwitchPreference</item>
+        <item name="switchPreferenceCompatStyle">@style/Theme.Keepass.SwitchPreference</item>
+
+        <item name="checkboxStyle">@style/Theme.LibX.Checkbox</item>
+
+        <!-- Edit Text -->
+        <item name="textInputStyle">@style/Theme.Keepass.TextInputLayout</item>
+        <item name="textInputOutlinedExposedDropdownMenuStyle">
+            @style/Theme.Keepass.TextInputLayout.ExposedMenu
+        </item>
+
+        <!-- Snackbar -->
+        <item name="snackbarStyle">@style/Theme.Keepass.SnackBar</item>
+
+        <!-- Button -->
+        <item name="materialButtonStyle">@style/Theme.Keepass.Button.Primary</item>
+        <item name="materialButtonOutlinedStyle">@style/Theme.Keepass.Button.Outlined</item>
+
+        <item name="preferenceColor">?colorSurfaceVariant</item>
+        <item name="preferenceCornerRadius">@dimen/preference_radius</item>
+
+        <item name="preferenceTitleColor">@color/on_surface_selector</item>
+        <item name="preferenceSummaryColor">@color/on_surface_subtitle_selector</item>
+
+        <item name="spinnerStyle">@style/Theme.LibX.SpinnerStyle</item>
+        <item name="android:spinnerDropDownItemStyle">@style/Theme.LibX.SpinnerDropDownItemStyle
+        </item>
+        <item name="spinnerDropDownItemStyle">@style/Theme.LibX.SpinnerDropDownItemStyle</item>
+        <item name="dropdownListPreferredItemHeight">@dimen/popup_menu_item_min_height</item>
+
+        <item name="searchViewStyle">@style/Theme.Keepass.SearchView</item>
+        <item name="android:searchViewStyle">@style/Theme.Keepass.SearchView</item>
+    </style>
+
+
+    <!-- Additional color themes -->
+    <!-- Light themes -->
+    <style name="Theme.Keepass.Green.Light" parent="Theme.Keepass.Light">
+        <item name="colorPrimary">@color/green_light_color_primary</item>
+        <item name="colorOnPrimary">@color/green_light_color_on_primary</item>
+        <item name="colorPrimaryContainer">@color/green_light_color_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/green_light_color_on_primary_container</item>
+        <item name="colorSecondary">@color/green_light_color_secondary</item>
+        <item name="colorOnSecondary">@color/green_light_color_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/green_light_color_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/green_light_color_on_secondary_container
+        </item>
+        <item name="colorTertiary">@color/green_light_color_tertiary</item>
+        <item name="colorOnTertiary">@color/green_light_color_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/green_light_color_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/green_light_color_on_tertiary_container</item>
+    </style>
+
+    <style name="Theme.Keepass.Red.Light" parent="Theme.Keepass.Light">
+        <item name="colorPrimary">@color/red_light_color_primary</item>
+        <item name="colorOnPrimary">@color/red_light_color_on_primary</item>
+        <item name="colorPrimaryContainer">@color/red_light_color_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/red_light_color_on_primary_container</item>
+        <item name="colorSecondary">@color/red_light_color_secondary</item>
+        <item name="colorOnSecondary">@color/red_light_color_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/red_light_color_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/red_light_color_on_secondary_container</item>
+        <item name="colorTertiary">@color/red_light_color_tertiary</item>
+        <item name="colorOnTertiary">@color/red_light_color_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/red_light_color_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/red_light_color_on_tertiary_container</item>
+    </style>
+
+    <style name="Theme.Keepass.Yellow.Light" parent="Theme.Keepass.Light">
+        <item name="colorPrimary">@color/yellow_light_color_primary</item>
+        <item name="colorOnPrimary">@color/yellow_light_color_on_primary</item>
+        <item name="colorPrimaryContainer">@color/yellow_light_color_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/yellow_light_color_on_primary_container</item>
+        <item name="colorSecondary">@color/yellow_light_color_secondary</item>
+        <item name="colorOnSecondary">@color/yellow_light_color_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/yellow_light_color_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/yellow_light_color_on_secondary_container
+        </item>
+        <item name="colorTertiary">@color/yellow_light_color_tertiary</item>
+        <item name="colorOnTertiary">@color/yellow_light_color_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/yellow_light_color_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/yellow_light_color_on_tertiary_container</item>
+    </style>
+
+    <style name="Theme.Keepass.Blue.Light" parent="Theme.Keepass.Light">
+        <item name="colorPrimary">@color/blue_light_color_primary</item>
+        <item name="colorOnPrimary">@color/blue_light_color_on_primary</item>
+        <item name="colorPrimaryContainer">@color/blue_light_color_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/blue_light_color_on_primary_container</item>
+        <item name="colorSecondary">@color/blue_light_color_secondary</item>
+        <item name="colorOnSecondary">@color/blue_light_color_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/blue_light_color_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/blue_light_color_on_secondary_container</item>
+        <item name="colorTertiary">@color/blue_light_color_tertiary</item>
+        <item name="colorOnTertiary">@color/blue_light_color_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/blue_light_color_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/blue_light_color_on_tertiary_container</item>
+    </style>
+
+
+    <!-- Dark themes -->
+    <style name="Theme.Keepass.Green.Dark" parent="Theme.Keepass.Dark">
+        <item name="colorPrimary">@color/green_dark_color_primary</item>
+        <item name="colorOnPrimary">@color/green_dark_color_on_primary</item>
+        <item name="colorPrimaryContainer">@color/green_dark_color_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/green_dark_color_on_primary_container</item>
+        <item name="colorSecondary">@color/green_dark_color_secondary</item>
+        <item name="colorOnSecondary">@color/green_dark_color_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/green_dark_color_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/green_dark_color_on_secondary_container</item>
+        <item name="colorTertiary">@color/green_dark_color_tertiary</item>
+        <item name="colorOnTertiary">@color/green_dark_color_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/green_dark_color_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/green_dark_color_on_tertiary_container</item>
+    </style>
+
+    <style name="Theme.Keepass.Red.Dark" parent="Theme.Keepass.Dark">
+        <item name="colorPrimary">@color/red_dark_color_primary</item>
+        <item name="colorOnPrimary">@color/red_dark_color_on_primary</item>
+        <item name="colorPrimaryContainer">@color/red_dark_color_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/red_dark_color_on_primary_container</item>
+        <item name="colorSecondary">@color/red_dark_color_secondary</item>
+        <item name="colorOnSecondary">@color/red_dark_color_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/red_dark_color_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/red_dark_color_on_secondary_container</item>
+        <item name="colorTertiary">@color/red_dark_color_tertiary</item>
+        <item name="colorOnTertiary">@color/red_dark_color_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/red_dark_color_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/red_dark_color_on_tertiary_container</item>
+    </style>
+
+    <style name="Theme.Keepass.Yellow.Dark" parent="Theme.Keepass.Dark">
+        <item name="colorPrimary">@color/yellow_dark_color_primary</item>
+        <item name="colorOnPrimary">@color/yellow_dark_color_on_primary</item>
+        <item name="colorPrimaryContainer">@color/yellow_dark_color_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/yellow_dark_color_on_primary_container</item>
+        <item name="colorSecondary">@color/yellow_dark_color_secondary</item>
+        <item name="colorOnSecondary">@color/yellow_dark_color_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/yellow_dark_color_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/yellow_dark_color_on_secondary_container
+        </item>
+        <item name="colorTertiary">@color/yellow_dark_color_tertiary</item>
+        <item name="colorOnTertiary">@color/yellow_dark_color_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/yellow_dark_color_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/yellow_dark_color_on_tertiary_container</item>
+    </style>
+
+    <style name="Theme.Keepass.Blue.Dark" parent="Theme.Keepass.Dark">
+        <item name="colorPrimary">@color/blue_dark_color_primary</item>
+        <item name="colorOnPrimary">@color/blue_dark_color_on_primary</item>
+        <item name="colorPrimaryContainer">@color/blue_dark_color_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/blue_dark_color_on_primary_container</item>
+        <item name="colorSecondary">@color/blue_dark_color_secondary</item>
+        <item name="colorOnSecondary">@color/blue_dark_color_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/blue_dark_color_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/blue_dark_color_on_secondary_container</item>
+        <item name="colorTertiary">@color/blue_dark_color_tertiary</item>
+        <item name="colorOnTertiary">@color/blue_dark_color_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/blue_dark_color_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/blue_dark_color_on_tertiary_container</item>
+    </style>
+
+
+    <!-- Black themes -->
+    <style name="Theme.Keepass.Black" parent="Theme.Keepass.Dark">
+        <item name="android:colorBackground">@color/black_surface_color</item>
+        <item name="android:windowBackground">@color/black_surface_color</item>
+        <item name="colorSurface">@color/black_surface_color</item>
+        <item name="colorSurfaceVariant">@color/black_surface_color_variant</item>
+        <item name="colorSurfaceVariant2">@color/black_surface_color_variant2</item>
+        <item name="colorDivider">@color/black_divider_color</item>
+        <item name="colorDividerVariant">@color/black_divider_color_variant</item>
+        <item name="popupBackgroundColor">@color/black_popup_background_color</item>
+    </style>
+
+    <style name="Theme.Keepass.Green.Black" parent="Theme.Keepass.Green.Dark">
+        <item name="android:colorBackground">@color/black_surface_color</item>
+        <item name="android:windowBackground">@color/black_surface_color</item>
+        <item name="colorSurface">@color/black_surface_color</item>
+        <item name="colorSurfaceVariant">@color/black_surface_color_variant</item>
+        <item name="colorSurfaceVariant2">@color/black_surface_color_variant2</item>
+        <item name="colorDivider">@color/black_divider_color</item>
+        <item name="colorDividerVariant">@color/black_divider_color_variant</item>
+        <item name="popupBackgroundColor">@color/black_popup_background_color</item>
+    </style>
+
+    <style name="Theme.Keepass.Red.Black" parent="Theme.Keepass.Red.Dark">
+        <item name="android:colorBackground">@color/black_surface_color</item>
+        <item name="android:windowBackground">@color/black_surface_color</item>
+        <item name="colorSurface">@color/black_surface_color</item>
+        <item name="colorSurfaceVariant">@color/black_surface_color_variant</item>
+        <item name="colorSurfaceVariant2">@color/black_surface_color_variant2</item>
+        <item name="colorDivider">@color/black_divider_color</item>
+        <item name="colorDividerVariant">@color/black_divider_color_variant</item>
+        <item name="popupBackgroundColor">@color/black_popup_background_color</item>
+    </style>
+
+    <style name="Theme.Keepass.Yellow.Black" parent="Theme.Keepass.Yellow.Dark">
+        <item name="android:colorBackground">@color/black_surface_color</item>
+        <item name="android:windowBackground">@color/black_surface_color</item>
+        <item name="colorSurface">@color/black_surface_color</item>
+        <item name="colorSurfaceVariant">@color/black_surface_color_variant</item>
+        <item name="colorSurfaceVariant2">@color/black_surface_color_variant2</item>
+        <item name="colorDivider">@color/black_divider_color</item>
+        <item name="colorDividerVariant">@color/black_divider_color_variant</item>
+        <item name="popupBackgroundColor">@color/black_popup_background_color</item>
+    </style>
+
+    <style name="Theme.Keepass.Blue.Black" parent="Theme.Keepass.Blue.Dark">
+        <item name="android:colorBackground">@color/black_surface_color</item>
+        <item name="android:windowBackground">@color/black_surface_color</item>
+        <item name="colorSurface">@color/black_surface_color</item>
+        <item name="colorSurfaceVariant">@color/black_surface_color_variant</item>
+        <item name="colorSurfaceVariant2">@color/black_surface_color_variant2</item>
+        <item name="colorDivider">@color/black_divider_color</item>
+        <item name="colorDividerVariant">@color/black_divider_color_variant</item>
+        <item name="popupBackgroundColor">@color/black_popup_background_color</item>
+    </style>
+</resources>

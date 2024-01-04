@@ -11,10 +11,11 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.activities.stylish.StylishActivity
 import com.kunzisoft.keepass.utils.getPackageInfoCompat
 
 
-class AboutActivity : com.kunzisoft.keepass.activities.StylishActivity() {
+class AboutActivity : StylishActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

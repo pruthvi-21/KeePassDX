@@ -1,6 +1,5 @@
 package com.kunzisoft.keepass.activities
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.SearchManager
 import android.content.ComponentName
@@ -96,6 +95,7 @@ import com.kunzisoft.keepass.view.showActionErrorIfNeeded
 import com.kunzisoft.keepass.view.updateLockPaddingLeft
 import com.kunzisoft.keepass.viewmodels.GroupEditViewModel
 import com.kunzisoft.keepass.viewmodels.GroupViewModel
+
 
 class GroupActivity : DatabaseLockActivity(),
     GroupFragment.NodeClickListener,
@@ -284,6 +284,9 @@ class GroupActivity : DatabaseLockActivity(),
         toolbarAction = findViewById(R.id.toolbar_action)
         lockView = findViewById(R.id.lock_button)
         loadingView = findViewById(R.id.loading)
+
+        window.statusBarColor =
+            ColorUtils.getColorFromAttr(this, R.attr.colorSurfaceVariant2, Color.BLACK)
 
         // To apply fit window with transparency
         setTransparentNavigationBar {

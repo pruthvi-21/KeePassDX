@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.view.autofill.AutofillManager
@@ -15,6 +17,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.DropDownPreference
 import androidx.preference.Preference
+import androidx.preference.SwitchPreferenceCompat
 import androidx.preference.TwoStatePreference
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.activities.dialogs.UnavailableFeatureDialogFragment
@@ -23,6 +26,7 @@ import com.kunzisoft.keepass.biometric.AdvancedUnlockManager
 import com.kunzisoft.keepass.icons.IconPackChooser
 import com.kunzisoft.keepass.services.ClipboardEntryNotificationService
 import com.kunzisoft.keepass.settings.preference.IconPackListPreference
+import com.kunzisoft.keepass.settings.preferencedialogfragment.AppColorPalettePreferenceDialogFragmentCompat
 import com.kunzisoft.keepass.settings.preferencedialogfragment.DurationDialogFragmentCompat
 import com.kunzisoft.keepass.utils.UriUtil.openUrl
 import com.kunzisoft.keepass.utils.UriUtil.releaseAllUnnecessaryPermissionUris
@@ -419,7 +423,14 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
             }
 
             findPreference<DropDownPreference>(getString(R.string.setting_app_theme_key))?.setOnPreferenceChangeListener { _, _ ->
-                activity.recreate()
+                //delaying just to finish the popup exit animation
+                Handler(Looper.getMainLooper()).postDelayed({ activity.recreate() }, 250)
+                true
+            }
+
+            findPreference<SwitchPreferenceCompat>(getString(R.string.setting_app_use_black_key))?.setOnPreferenceChangeListener { _, _ ->
+                //delaying just to finish the switch animation
+                Handler(Looper.getMainLooper()).postDelayed({ activity.recreate() }, 300)
                 true
             }
         }
@@ -450,6 +461,11 @@ class NestedAppSettingsFragment : NestedSettingsFragment() {
         var dialogFragment: DialogFragment? = null
         // Main Preferences
         when (preference.key) {
+            getString(R.string.setting_app_color_palette_key) -> {
+                dialogFragment =
+                    AppColorPalettePreferenceDialogFragmentCompat.newInstance(preference.key)
+            }
+
             getString(R.string.app_timeout_key),
             getString(R.string.clipboard_timeout_key),
             getString(R.string.temp_advanced_unlock_timeout_key) -> {

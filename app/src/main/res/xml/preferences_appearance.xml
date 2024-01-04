@@ -8,6 +8,9 @@
             android:title="@string/icon_pack_choose_title"
             app:layout="@layout/preference_material_top"
             app:useSimpleSummaryProvider="true" />
+        <com.kunzisoft.keepass.settings.preference.AppColorPalettePreference
+            android:key="@string/setting_app_color_palette_key"
+            android:title="@string/app_color_palette_title" />
         <com.kunzisoft.keepass.settings.preference.DropDownPreference
             android:defaultValue="@string/app_theme_default_value"
             android:entries="@array/app_theme_options"
@@ -15,6 +18,11 @@
             android:key="@string/setting_app_theme_key"
             android:title="@string/app_theme_title"
             app:useSimpleSummaryProvider="true" />
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/use_black_for_night_mode_default"
+            android:key="@string/setting_app_use_black_key"
+            android:title="@string/app_use_black_title"
+            android:summary="@string/app_use_black_summary"/>
         <SwitchPreferenceCompat
             android:defaultValue="@bool/show_entry_colors_default"
             android:key="@string/show_entry_colors_key"
