@@ -26,22 +26,22 @@
         <com.kunzisoft.keepass.view.PrefColorPaletteItem
             android:id="@+id/pref_palette_item_green"
             style="@style/Theme.Keepass.ColorPalette.Item"
-            app:cardBackgroundColor="@color/green_light_color_primary" />
+            app:cardBackgroundColor="@color/green_light_primary" />
 
         <com.kunzisoft.keepass.view.PrefColorPaletteItem
             android:id="@+id/pref_palette_item_red"
             style="@style/Theme.Keepass.ColorPalette.Item"
-            app:cardBackgroundColor="@color/red_light_color_primary" />
+            app:cardBackgroundColor="@color/red_light_primary" />
 
         <com.kunzisoft.keepass.view.PrefColorPaletteItem
             android:id="@+id/pref_palette_item_yellow"
             style="@style/Theme.Keepass.ColorPalette.Item"
-            app:cardBackgroundColor="@color/yellow_light_color_primary" />
+            app:cardBackgroundColor="@color/yellow_light_primary" />
 
         <com.kunzisoft.keepass.view.PrefColorPaletteItem
             android:id="@+id/pref_palette_item_blue"
             style="@style/Theme.Keepass.ColorPalette.Item"
-            app:cardBackgroundColor="@color/blue_light_color_primary" />
+            app:cardBackgroundColor="@color/blue_light_primary" />
     </LinearLayout>
 
     <LinearLayout
@@ -53,12 +53,12 @@
         <com.kunzisoft.keepass.view.PrefColorPaletteItem
             android:id="@+id/pref_palette_item_purple"
             style="@style/Theme.Keepass.ColorPalette.Item"
-            app:cardBackgroundColor="@color/purple_light_color_primary" />
+            app:cardBackgroundColor="@color/purple_light_primary" />
 
         <com.kunzisoft.keepass.view.PrefColorPaletteItem
             android:id="@+id/pref_palette_item_deep_purple"
             style="@style/Theme.Keepass.ColorPalette.Item"
-            app:cardBackgroundColor="@color/deep_purple_light_color_primary" />
+            app:cardBackgroundColor="@color/deep_purple_light_primary" />
 
         <View style="@style/Theme.Keepass.ColorPalette.Item" />
 

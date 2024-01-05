@@ -52,26 +52,22 @@ class AppColorPalettePreferenceDialogFragmentCompat : PreferenceDialogFragmentCo
         colorItemDeepPurple.init(Stylish.AppColorPalette.DEEP_PURPLE, onItemSelectedListener)
 
         colorItemGreen.darkView.setBackgroundColor(
-            ResourcesCompat.getColor(resources, R.color.green_dark_color_primary, activity?.theme)
+            ResourcesCompat.getColor(resources, R.color.green_dark_primary, activity?.theme)
         )
         colorItemRed.darkView.setBackgroundColor(
-            ResourcesCompat.getColor(resources, R.color.red_dark_color_primary, activity?.theme)
+            ResourcesCompat.getColor(resources, R.color.red_dark_primary, activity?.theme)
         )
         colorItemYellow.darkView.setBackgroundColor(
-            ResourcesCompat.getColor(resources, R.color.yellow_dark_color_primary, activity?.theme)
+            ResourcesCompat.getColor(resources, R.color.yellow_dark_primary, activity?.theme)
         )
         colorItemBlue.darkView.setBackgroundColor(
-            ResourcesCompat.getColor(resources, R.color.blue_dark_color_primary, activity?.theme)
+            ResourcesCompat.getColor(resources, R.color.blue_dark_primary, activity?.theme)
         )
         colorItemPurple.darkView.setBackgroundColor(
-            ResourcesCompat.getColor(resources, R.color.purple_dark_color_primary, activity?.theme)
+            ResourcesCompat.getColor(resources, R.color.purple_dark_primary, activity?.theme)
         )
         colorItemDeepPurple.darkView.setBackgroundColor(
-            ResourcesCompat.getColor(
-                resources,
-                R.color.deep_purple_dark_color_primary,
-                activity?.theme
-            )
+            ResourcesCompat.getColor(resources, R.color.deep_purple_dark_primary, activity?.theme)
         )
 
         dynamicSwitch.setOnCheckedChangeListener { buttonView, isChecked ->

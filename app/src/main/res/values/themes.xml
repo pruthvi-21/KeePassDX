@@ -221,198 +221,234 @@
     <!-- Additional color themes -->
     <!-- Light themes -->
     <style name="Theme.Keepass.Green.Light" parent="Theme.Keepass.Light">
-        <item name="colorPrimary">@color/green_light_color_primary</item>
-        <item name="colorOnPrimary">@color/green_light_color_on_primary</item>
-        <item name="colorPrimaryContainer">@color/green_light_color_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/green_light_color_on_primary_container</item>
-        <item name="colorSecondary">@color/green_light_color_secondary</item>
-        <item name="colorOnSecondary">@color/green_light_color_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/green_light_color_secondary_container</item>
-        <item name="colorOnSecondaryContainer">@color/green_light_color_on_secondary_container
-        </item>
-        <item name="colorTertiary">@color/green_light_color_tertiary</item>
-        <item name="colorOnTertiary">@color/green_light_color_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/green_light_color_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/green_light_color_on_tertiary_container</item>
+        <item name="colorPrimary">@color/green_light_primary</item>
+        <item name="colorOnPrimary">@color/green_light_on_primary</item>
+        <item name="colorPrimaryContainer">@color/green_light_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/green_light_on_primary_container</item>
+        <item name="colorSecondary">@color/green_light_secondary</item>
+        <item name="colorOnSecondary">@color/green_light_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/green_light_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/green_light_on_secondary_container</item>
+        <item name="colorTertiary">@color/green_light_tertiary</item>
+        <item name="colorOnTertiary">@color/green_light_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/green_light_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/green_light_on_tertiary_container</item>
+        <item name="colorOnBackground">@color/green_light_on_background</item>
+        <item name="colorOnSurface">@color/green_light_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/green_light_on_surface_variant</item>
+        <item name="colorOutline">@color/green_light_outline</item>
     </style>
 
     <style name="Theme.Keepass.Red.Light" parent="Theme.Keepass.Light">
-        <item name="colorPrimary">@color/red_light_color_primary</item>
-        <item name="colorOnPrimary">@color/red_light_color_on_primary</item>
-        <item name="colorPrimaryContainer">@color/red_light_color_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/red_light_color_on_primary_container</item>
-        <item name="colorSecondary">@color/red_light_color_secondary</item>
-        <item name="colorOnSecondary">@color/red_light_color_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/red_light_color_secondary_container</item>
-        <item name="colorOnSecondaryContainer">@color/red_light_color_on_secondary_container</item>
-        <item name="colorTertiary">@color/red_light_color_tertiary</item>
-        <item name="colorOnTertiary">@color/red_light_color_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/red_light_color_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/red_light_color_on_tertiary_container</item>
+        <item name="colorPrimary">@color/red_light_primary</item>
+        <item name="colorOnPrimary">@color/red_light_on_primary</item>
+        <item name="colorPrimaryContainer">@color/red_light_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/red_light_on_primary_container</item>
+        <item name="colorSecondary">@color/red_light_secondary</item>
+        <item name="colorOnSecondary">@color/red_light_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/red_light_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/red_light_on_secondary_container</item>
+        <item name="colorTertiary">@color/red_light_tertiary</item>
+        <item name="colorOnTertiary">@color/red_light_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/red_light_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/red_light_on_tertiary_container</item>
+        <item name="colorOnBackground">@color/red_light_on_background</item>
+        <item name="colorOnSurface">@color/red_light_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/red_light_on_surface_variant</item>
+        <item name="colorOutline">@color/red_light_outline</item>
     </style>
 
     <style name="Theme.Keepass.Yellow.Light" parent="Theme.Keepass.Light">
-        <item name="colorPrimary">@color/yellow_light_color_primary</item>
-        <item name="colorOnPrimary">@color/yellow_light_color_on_primary</item>
-        <item name="colorPrimaryContainer">@color/yellow_light_color_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/yellow_light_color_on_primary_container</item>
-        <item name="colorSecondary">@color/yellow_light_color_secondary</item>
-        <item name="colorOnSecondary">@color/yellow_light_color_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/yellow_light_color_secondary_container</item>
-        <item name="colorOnSecondaryContainer">@color/yellow_light_color_on_secondary_container
-        </item>
-        <item name="colorTertiary">@color/yellow_light_color_tertiary</item>
-        <item name="colorOnTertiary">@color/yellow_light_color_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/yellow_light_color_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/yellow_light_color_on_tertiary_container</item>
+        <item name="colorPrimary">@color/yellow_light_primary</item>
+        <item name="colorOnPrimary">@color/yellow_light_on_primary</item>
+        <item name="colorPrimaryContainer">@color/yellow_light_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/yellow_light_on_primary_container</item>
+        <item name="colorSecondary">@color/yellow_light_secondary</item>
+        <item name="colorOnSecondary">@color/yellow_light_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/yellow_light_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/yellow_light_on_secondary_container</item>
+        <item name="colorTertiary">@color/yellow_light_tertiary</item>
+        <item name="colorOnTertiary">@color/yellow_light_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/yellow_light_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/yellow_light_on_tertiary_container</item>
+        <item name="colorOnBackground">@color/yellow_light_on_background</item>
+        <item name="colorOnSurface">@color/yellow_light_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/yellow_light_on_surface_variant</item>
+        <item name="colorOutline">@color/yellow_light_outline</item>
     </style>
 
     <style name="Theme.Keepass.Blue.Light" parent="Theme.Keepass.Light">
-        <item name="colorPrimary">@color/blue_light_color_primary</item>
-        <item name="colorOnPrimary">@color/blue_light_color_on_primary</item>
-        <item name="colorPrimaryContainer">@color/blue_light_color_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/blue_light_color_on_primary_container</item>
-        <item name="colorSecondary">@color/blue_light_color_secondary</item>
-        <item name="colorOnSecondary">@color/blue_light_color_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/blue_light_color_secondary_container</item>
-        <item name="colorOnSecondaryContainer">@color/blue_light_color_on_secondary_container</item>
-        <item name="colorTertiary">@color/blue_light_color_tertiary</item>
-        <item name="colorOnTertiary">@color/blue_light_color_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/blue_light_color_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/blue_light_color_on_tertiary_container</item>
+        <item name="colorPrimary">@color/blue_light_primary</item>
+        <item name="colorOnPrimary">@color/blue_light_on_primary</item>
+        <item name="colorPrimaryContainer">@color/blue_light_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/blue_light_on_primary_container</item>
+        <item name="colorSecondary">@color/blue_light_secondary</item>
+        <item name="colorOnSecondary">@color/blue_light_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/blue_light_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/blue_light_on_secondary_container</item>
+        <item name="colorTertiary">@color/blue_light_tertiary</item>
+        <item name="colorOnTertiary">@color/blue_light_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/blue_light_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/blue_light_on_tertiary_container</item>
+        <item name="colorOnBackground">@color/blue_light_on_background</item>
+        <item name="colorOnSurface">@color/blue_light_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/blue_light_on_surface_variant</item>
+        <item name="colorOutline">@color/blue_light_outline</item>
     </style>
 
     <style name="Theme.Keepass.Purple.Light" parent="Theme.Keepass.Light">
-        <item name="colorPrimary">@color/purple_light_color_primary</item>
-        <item name="colorOnPrimary">@color/purple_light_color_on_primary</item>
-        <item name="colorPrimaryContainer">@color/purple_light_color_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/purple_light_color_on_primary_container</item>
-        <item name="colorSecondary">@color/purple_light_color_secondary</item>
-        <item name="colorOnSecondary">@color/purple_light_color_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/purple_light_color_secondary_container</item>
-        <item name="colorOnSecondaryContainer">@color/purple_light_color_on_secondary_container
-        </item>
-        <item name="colorTertiary">@color/purple_light_color_tertiary</item>
-        <item name="colorOnTertiary">@color/purple_light_color_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/purple_light_color_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/purple_light_color_on_tertiary_container</item>
+        <item name="colorPrimary">@color/purple_light_primary</item>
+        <item name="colorOnPrimary">@color/purple_light_on_primary</item>
+        <item name="colorPrimaryContainer">@color/purple_light_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/purple_light_on_primary_container</item>
+        <item name="colorSecondary">@color/purple_light_secondary</item>
+        <item name="colorOnSecondary">@color/purple_light_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/purple_light_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/purple_light_on_secondary_container</item>
+        <item name="colorTertiary">@color/purple_light_tertiary</item>
+        <item name="colorOnTertiary">@color/purple_light_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/purple_light_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/purple_light_on_tertiary_container</item>
+        <item name="colorOnBackground">@color/purple_light_on_background</item>
+        <item name="colorOnSurface">@color/purple_light_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/purple_light_on_surface_variant</item>
+        <item name="colorOutline">@color/purple_light_outline</item>
     </style>
 
     <style name="Theme.Keepass.DeepPurple.Light" parent="Theme.Keepass.Light">
-        <item name="colorPrimary">@color/deep_purple_light_color_primary</item>
-        <item name="colorOnPrimary">@color/deep_purple_light_color_on_primary</item>
-        <item name="colorPrimaryContainer">@color/deep_purple_light_color_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/deep_purple_light_color_on_primary_container
+        <item name="colorPrimary">@color/deep_purple_light_primary</item>
+        <item name="colorOnPrimary">@color/deep_purple_light_on_primary</item>
+        <item name="colorPrimaryContainer">@color/deep_purple_light_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/deep_purple_light_on_primary_container</item>
+        <item name="colorSecondary">@color/deep_purple_light_secondary</item>
+        <item name="colorOnSecondary">@color/deep_purple_light_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/deep_purple_light_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/deep_purple_light_on_secondary_container
         </item>
-        <item name="colorSecondary">@color/deep_purple_light_color_secondary</item>
-        <item name="colorOnSecondary">@color/deep_purple_light_color_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/deep_purple_light_color_secondary_container
-        </item>
-        <item name="colorOnSecondaryContainer">@color/deep_purple_light_color_on_secondary_container
-        </item>
-        <item name="colorTertiary">@color/deep_purple_light_color_tertiary</item>
-        <item name="colorOnTertiary">@color/deep_purple_light_color_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/deep_purple_light_color_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/deep_purple_light_color_on_tertiary_container
-        </item>
+        <item name="colorTertiary">@color/deep_purple_light_tertiary</item>
+        <item name="colorOnTertiary">@color/deep_purple_light_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/deep_purple_light_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/deep_purple_light_on_tertiary_container</item>
+        <item name="colorOnBackground">@color/deep_purple_light_on_background</item>
+        <item name="colorOnSurface">@color/deep_purple_light_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/deep_purple_light_on_surface_variant</item>
+        <item name="colorOutline">@color/deep_purple_light_outline</item>
     </style>
 
 
     <!-- Dark themes -->
     <style name="Theme.Keepass.Green.Dark" parent="Theme.Keepass.Dark">
-        <item name="colorPrimary">@color/green_dark_color_primary</item>
-        <item name="colorOnPrimary">@color/green_dark_color_on_primary</item>
-        <item name="colorPrimaryContainer">@color/green_dark_color_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/green_dark_color_on_primary_container</item>
-        <item name="colorSecondary">@color/green_dark_color_secondary</item>
-        <item name="colorOnSecondary">@color/green_dark_color_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/green_dark_color_secondary_container</item>
-        <item name="colorOnSecondaryContainer">@color/green_dark_color_on_secondary_container</item>
-        <item name="colorTertiary">@color/green_dark_color_tertiary</item>
-        <item name="colorOnTertiary">@color/green_dark_color_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/green_dark_color_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/green_dark_color_on_tertiary_container</item>
+        <item name="colorPrimary">@color/green_dark_primary</item>
+        <item name="colorOnPrimary">@color/green_dark_on_primary</item>
+        <item name="colorPrimaryContainer">@color/green_dark_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/green_dark_on_primary_container</item>
+        <item name="colorSecondary">@color/green_dark_secondary</item>
+        <item name="colorOnSecondary">@color/green_dark_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/green_dark_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/green_dark_on_secondary_container</item>
+        <item name="colorTertiary">@color/green_dark_tertiary</item>
+        <item name="colorOnTertiary">@color/green_dark_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/green_dark_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/green_dark_on_tertiary_container</item>
+        <item name="colorOnBackground">@color/green_dark_on_background</item>
+        <item name="colorOnSurface">@color/green_dark_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/green_dark_on_surface_variant</item>
+        <item name="colorOutline">@color/green_dark_outline</item>
     </style>
 
     <style name="Theme.Keepass.Red.Dark" parent="Theme.Keepass.Dark">
-        <item name="colorPrimary">@color/red_dark_color_primary</item>
-        <item name="colorOnPrimary">@color/red_dark_color_on_primary</item>
-        <item name="colorPrimaryContainer">@color/red_dark_color_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/red_dark_color_on_primary_container</item>
-        <item name="colorSecondary">@color/red_dark_color_secondary</item>
-        <item name="colorOnSecondary">@color/red_dark_color_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/red_dark_color_secondary_container</item>
-        <item name="colorOnSecondaryContainer">@color/red_dark_color_on_secondary_container</item>
-        <item name="colorTertiary">@color/red_dark_color_tertiary</item>
-        <item name="colorOnTertiary">@color/red_dark_color_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/red_dark_color_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/red_dark_color_on_tertiary_container</item>
+        <item name="colorPrimary">@color/red_dark_primary</item>
+        <item name="colorOnPrimary">@color/red_dark_on_primary</item>
+        <item name="colorPrimaryContainer">@color/red_dark_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/red_dark_on_primary_container</item>
+        <item name="colorSecondary">@color/red_dark_secondary</item>
+        <item name="colorOnSecondary">@color/red_dark_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/red_dark_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/red_dark_on_secondary_container</item>
+        <item name="colorTertiary">@color/red_dark_tertiary</item>
+        <item name="colorOnTertiary">@color/red_dark_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/red_dark_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/red_dark_on_tertiary_container</item>
+        <item name="colorOnBackground">@color/red_dark_on_background</item>
+        <item name="colorOnSurface">@color/red_dark_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/red_dark_on_surface_variant</item>
+        <item name="colorOutline">@color/red_dark_outline</item>
     </style>
 
     <style name="Theme.Keepass.Yellow.Dark" parent="Theme.Keepass.Dark">
-        <item name="colorPrimary">@color/yellow_dark_color_primary</item>
-        <item name="colorOnPrimary">@color/yellow_dark_color_on_primary</item>
-        <item name="colorPrimaryContainer">@color/yellow_dark_color_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/yellow_dark_color_on_primary_container</item>
-        <item name="colorSecondary">@color/yellow_dark_color_secondary</item>
-        <item name="colorOnSecondary">@color/yellow_dark_color_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/yellow_dark_color_secondary_container</item>
-        <item name="colorOnSecondaryContainer">@color/yellow_dark_color_on_secondary_container
-        </item>
-        <item name="colorTertiary">@color/yellow_dark_color_tertiary</item>
-        <item name="colorOnTertiary">@color/yellow_dark_color_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/yellow_dark_color_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/yellow_dark_color_on_tertiary_container</item>
+        <item name="colorPrimary">@color/yellow_dark_primary</item>
+        <item name="colorOnPrimary">@color/yellow_dark_on_primary</item>
+        <item name="colorPrimaryContainer">@color/yellow_dark_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/yellow_dark_on_primary_container</item>
+        <item name="colorSecondary">@color/yellow_dark_secondary</item>
+        <item name="colorOnSecondary">@color/yellow_dark_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/yellow_dark_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/yellow_dark_on_secondary_container</item>
+        <item name="colorTertiary">@color/yellow_dark_tertiary</item>
+        <item name="colorOnTertiary">@color/yellow_dark_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/yellow_dark_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/yellow_dark_on_tertiary_container</item>
+        <item name="colorOnBackground">@color/yellow_dark_on_background</item>
+        <item name="colorOnSurface">@color/yellow_dark_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/yellow_dark_on_surface_variant</item>
+        <item name="colorOutline">@color/yellow_dark_outline</item>
     </style>
 
     <style name="Theme.Keepass.Blue.Dark" parent="Theme.Keepass.Dark">
-        <item name="colorPrimary">@color/blue_dark_color_primary</item>
-        <item name="colorOnPrimary">@color/blue_dark_color_on_primary</item>
-        <item name="colorPrimaryContainer">@color/blue_dark_color_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/blue_dark_color_on_primary_container</item>
-        <item name="colorSecondary">@color/blue_dark_color_secondary</item>
-        <item name="colorOnSecondary">@color/blue_dark_color_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/blue_dark_color_secondary_container</item>
-        <item name="colorOnSecondaryContainer">@color/blue_dark_color_on_secondary_container</item>
-        <item name="colorTertiary">@color/blue_dark_color_tertiary</item>
-        <item name="colorOnTertiary">@color/blue_dark_color_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/blue_dark_color_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/blue_dark_color_on_tertiary_container</item>
+        <item name="colorPrimary">@color/blue_dark_primary</item>
+        <item name="colorOnPrimary">@color/blue_dark_on_primary</item>
+        <item name="colorPrimaryContainer">@color/blue_dark_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/blue_dark_on_primary_container</item>
+        <item name="colorSecondary">@color/blue_dark_secondary</item>
+        <item name="colorOnSecondary">@color/blue_dark_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/blue_dark_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/blue_dark_on_secondary_container</item>
+        <item name="colorTertiary">@color/blue_dark_tertiary</item>
+        <item name="colorOnTertiary">@color/blue_dark_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/blue_dark_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/blue_dark_on_tertiary_container</item>
+        <item name="colorOnBackground">@color/blue_dark_on_background</item>
+        <item name="colorOnSurface">@color/blue_dark_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/blue_dark_on_surface_variant</item>
+        <item name="colorOutline">@color/blue_dark_outline</item>
     </style>
 
     <style name="Theme.Keepass.Purple.Dark" parent="Theme.Keepass.Dark">
-        <item name="colorPrimary">@color/purple_dark_color_primary</item>
-        <item name="colorOnPrimary">@color/purple_dark_color_on_primary</item>
-        <item name="colorPrimaryContainer">@color/purple_dark_color_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/purple_dark_color_on_primary_container</item>
-        <item name="colorSecondary">@color/purple_dark_color_secondary</item>
-        <item name="colorOnSecondary">@color/purple_dark_color_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/purple_dark_color_secondary_container</item>
-        <item name="colorOnSecondaryContainer">@color/purple_dark_color_on_secondary_container
-        </item>
-        <item name="colorTertiary">@color/purple_dark_color_tertiary</item>
-        <item name="colorOnTertiary">@color/purple_dark_color_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/purple_dark_color_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/purple_dark_color_on_tertiary_container</item>
+        <item name="colorPrimary">@color/purple_dark_primary</item>
+        <item name="colorOnPrimary">@color/purple_dark_on_primary</item>
+        <item name="colorPrimaryContainer">@color/purple_dark_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/purple_dark_on_primary_container</item>
+        <item name="colorSecondary">@color/purple_dark_secondary</item>
+        <item name="colorOnSecondary">@color/purple_dark_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/purple_dark_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/purple_dark_on_secondary_container</item>
+        <item name="colorTertiary">@color/purple_dark_tertiary</item>
+        <item name="colorOnTertiary">@color/purple_dark_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/purple_dark_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/purple_dark_on_tertiary_container</item>
+        <item name="colorOnBackground">@color/purple_dark_on_background</item>
+        <item name="colorOnSurface">@color/purple_dark_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/purple_dark_on_surface_variant</item>
+        <item name="colorOutline">@color/purple_dark_outline</item>
     </style>
 
     <style name="Theme.Keepass.DeepPurple.Dark" parent="Theme.Keepass.Dark">
-        <item name="colorPrimary">@color/deep_purple_dark_color_primary</item>
-        <item name="colorOnPrimary">@color/deep_purple_dark_color_on_primary</item>
-        <item name="colorPrimaryContainer">@color/deep_purple_dark_color_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/deep_purple_dark_color_on_primary_container
-        </item>
-        <item name="colorSecondary">@color/deep_purple_dark_color_secondary</item>
-        <item name="colorOnSecondary">@color/deep_purple_dark_color_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/deep_purple_dark_color_secondary_container
-        </item>
-        <item name="colorOnSecondaryContainer">@color/deep_purple_dark_color_on_secondary_container
-        </item>
-        <item name="colorTertiary">@color/deep_purple_dark_color_tertiary</item>
-        <item name="colorOnTertiary">@color/deep_purple_dark_color_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/deep_purple_dark_color_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/deep_purple_dark_color_on_tertiary_container
-        </item>
+        <item name="colorPrimary">@color/deep_purple_dark_primary</item>
+        <item name="colorOnPrimary">@color/deep_purple_dark_on_primary</item>
+        <item name="colorPrimaryContainer">@color/deep_purple_dark_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/deep_purple_dark_on_primary_container</item>
+        <item name="colorSecondary">@color/deep_purple_dark_secondary</item>
+        <item name="colorOnSecondary">@color/deep_purple_dark_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/deep_purple_dark_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/deep_purple_dark_on_secondary_container</item>
+        <item name="colorTertiary">@color/deep_purple_dark_tertiary</item>
+        <item name="colorOnTertiary">@color/deep_purple_dark_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/deep_purple_dark_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/deep_purple_dark_on_tertiary_container</item>
+        <item name="colorOnBackground">@color/deep_purple_dark_on_background</item>
+        <item name="colorOnSurface">@color/deep_purple_dark_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/deep_purple_dark_on_surface_variant</item>
+        <item name="colorOutline">@color/deep_purple_dark_outline</item>
     </style>
 
 
