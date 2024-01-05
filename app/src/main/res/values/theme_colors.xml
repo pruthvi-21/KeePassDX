@@ -111,4 +111,60 @@
     <color name="blue_dark_color_on_tertiary">#2f2d4c</color>
     <color name="blue_dark_color_tertiary_container">#464364</color>
     <color name="blue_dark_color_on_tertiary_container">#e4dfff</color>
+
+
+    <!-- Purple 500 theme -->
+    <color name="purple_light_color_primary">#9a25ae</color>
+    <color name="purple_light_color_on_primary">#ffffff</color>
+    <color name="purple_light_color_primary_container">#ffd6fe</color>
+    <color name="purple_light_color_on_primary_container">#35003f</color>
+    <color name="purple_light_color_secondary">#6b586b</color>
+    <color name="purple_light_color_on_secondary">#ffffff</color>
+    <color name="purple_light_color_secondary_container">#f4dbf1</color>
+    <color name="purple_light_color_on_secondary_container">#251626</color>
+    <color name="purple_light_color_tertiary">#82524a</color>
+    <color name="purple_light_color_on_tertiary">#ffffff</color>
+    <color name="purple_light_color_tertiary_container">#ffdad4</color>
+    <color name="purple_light_color_on_tertiary_container">#33110c</color>
+
+    <color name="purple_dark_color_primary">#f9abff</color>
+    <color name="purple_dark_color_on_primary">#570066</color>
+    <color name="purple_dark_color_primary_container">#7b008f</color>
+    <color name="purple_dark_color_on_primary_container">#ffd6fe</color>
+    <color name="purple_dark_color_secondary">#d7bfd5</color>
+    <color name="purple_dark_color_on_secondary">#3b2b3c</color>
+    <color name="purple_dark_color_secondary_container">#534153</color>
+    <color name="purple_dark_color_on_secondary_container">#f4dbf1</color>
+    <color name="purple_dark_color_tertiary">#f6b8ad</color>
+    <color name="purple_dark_color_on_tertiary">#4c251f</color>
+    <color name="purple_dark_color_tertiary_container">#673b34</color>
+    <color name="purple_dark_color_on_tertiary_container">#ffdad4</color>
+
+
+    <!-- Deep purple theme -->
+    <color name="deep_purple_light_color_primary">#6f43c0</color>
+    <color name="deep_purple_light_color_on_primary">#ffffff</color>
+    <color name="deep_purple_light_color_primary_container">#ebddff</color>
+    <color name="deep_purple_light_color_on_primary_container">#250059</color>
+    <color name="deep_purple_light_color_secondary">#635b70</color>
+    <color name="deep_purple_light_color_on_secondary">#ffffff</color>
+    <color name="deep_purple_light_color_secondary_container">#e9def8</color>
+    <color name="deep_purple_light_color_on_secondary_container">#1f182b</color>
+    <color name="deep_purple_light_color_tertiary">#7e525d</color>
+    <color name="deep_purple_light_color_on_tertiary">#ffffff</color>
+    <color name="deep_purple_light_color_tertiary_container">#ffd9e1</color>
+    <color name="deep_purple_light_color_on_tertiary_container">#31101b</color>
+
+    <color name="deep_purple_dark_color_primary">#d3bbff</color>
+    <color name="deep_purple_dark_color_on_primary">#3f008d</color>
+    <color name="deep_purple_dark_color_primary_container">#5727a6</color>
+    <color name="deep_purple_dark_color_on_primary_container">#ebddff</color>
+    <color name="deep_purple_dark_color_secondary">#cdc2db</color>
+    <color name="deep_purple_dark_color_on_secondary">#342d40</color>
+    <color name="deep_purple_dark_color_secondary_container">#4b4358</color>
+    <color name="deep_purple_dark_color_on_secondary_container">#e9def8</color>
+    <color name="deep_purple_dark_color_tertiary">#f0b7c5</color>
+    <color name="deep_purple_dark_color_on_tertiary">#4a2530</color>
+    <color name="deep_purple_dark_color_tertiary_container">#643b46</color>
+    <color name="deep_purple_dark_color_on_tertiary_container">#ffd9e1</color>
 </resources>

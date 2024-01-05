@@ -44,4 +44,25 @@
             app:cardBackgroundColor="@color/blue_light_color_primary" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <com.kunzisoft.keepass.view.PrefColorPaletteItem
+            android:id="@+id/pref_palette_item_purple"
+            style="@style/Theme.Keepass.ColorPalette.Item"
+            app:cardBackgroundColor="@color/purple_light_color_primary" />
+
+        <com.kunzisoft.keepass.view.PrefColorPaletteItem
+            android:id="@+id/pref_palette_item_deep_purple"
+            style="@style/Theme.Keepass.ColorPalette.Item"
+            app:cardBackgroundColor="@color/deep_purple_light_color_primary" />
+
+        <View style="@style/Theme.Keepass.ColorPalette.Item" />
+
+        <View style="@style/Theme.Keepass.ColorPalette.Item" />
+    </LinearLayout>
+
 </LinearLayout>

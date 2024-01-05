@@ -37,6 +37,18 @@ object Stylish {
             R.style.Theme_Keepass_Blue_Dark,
             R.style.Theme_Keepass_Blue_Black
         ),
+        PURPLE(
+            "purple",
+            R.style.Theme_Keepass_Purple_Light,
+            R.style.Theme_Keepass_Purple_Dark,
+            R.style.Theme_Keepass_Purple_Black
+        ),
+        DEEP_PURPLE(
+            "deep_purple",
+            R.style.Theme_Keepass_DeepPurple_Light,
+            R.style.Theme_Keepass_DeepPurple_Dark,
+            R.style.Theme_Keepass_DeepPurple_Black
+        ),
         DYNAMIC(
             "dynamic",
             R.style.Theme_Keepass_Light,

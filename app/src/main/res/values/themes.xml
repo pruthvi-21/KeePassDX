@@ -282,6 +282,41 @@
         <item name="colorOnTertiaryContainer">@color/blue_light_color_on_tertiary_container</item>
     </style>
 
+    <style name="Theme.Keepass.Purple.Light" parent="Theme.Keepass.Light">
+        <item name="colorPrimary">@color/purple_light_color_primary</item>
+        <item name="colorOnPrimary">@color/purple_light_color_on_primary</item>
+        <item name="colorPrimaryContainer">@color/purple_light_color_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/purple_light_color_on_primary_container</item>
+        <item name="colorSecondary">@color/purple_light_color_secondary</item>
+        <item name="colorOnSecondary">@color/purple_light_color_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/purple_light_color_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/purple_light_color_on_secondary_container
+        </item>
+        <item name="colorTertiary">@color/purple_light_color_tertiary</item>
+        <item name="colorOnTertiary">@color/purple_light_color_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/purple_light_color_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/purple_light_color_on_tertiary_container</item>
+    </style>
+
+    <style name="Theme.Keepass.DeepPurple.Light" parent="Theme.Keepass.Light">
+        <item name="colorPrimary">@color/deep_purple_light_color_primary</item>
+        <item name="colorOnPrimary">@color/deep_purple_light_color_on_primary</item>
+        <item name="colorPrimaryContainer">@color/deep_purple_light_color_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/deep_purple_light_color_on_primary_container
+        </item>
+        <item name="colorSecondary">@color/deep_purple_light_color_secondary</item>
+        <item name="colorOnSecondary">@color/deep_purple_light_color_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/deep_purple_light_color_secondary_container
+        </item>
+        <item name="colorOnSecondaryContainer">@color/deep_purple_light_color_on_secondary_container
+        </item>
+        <item name="colorTertiary">@color/deep_purple_light_color_tertiary</item>
+        <item name="colorOnTertiary">@color/deep_purple_light_color_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/deep_purple_light_color_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/deep_purple_light_color_on_tertiary_container
+        </item>
+    </style>
+
 
     <!-- Dark themes -->
     <style name="Theme.Keepass.Green.Dark" parent="Theme.Keepass.Dark">
@@ -345,6 +380,41 @@
         <item name="colorOnTertiaryContainer">@color/blue_dark_color_on_tertiary_container</item>
     </style>
 
+    <style name="Theme.Keepass.Purple.Dark" parent="Theme.Keepass.Dark">
+        <item name="colorPrimary">@color/purple_dark_color_primary</item>
+        <item name="colorOnPrimary">@color/purple_dark_color_on_primary</item>
+        <item name="colorPrimaryContainer">@color/purple_dark_color_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/purple_dark_color_on_primary_container</item>
+        <item name="colorSecondary">@color/purple_dark_color_secondary</item>
+        <item name="colorOnSecondary">@color/purple_dark_color_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/purple_dark_color_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/purple_dark_color_on_secondary_container
+        </item>
+        <item name="colorTertiary">@color/purple_dark_color_tertiary</item>
+        <item name="colorOnTertiary">@color/purple_dark_color_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/purple_dark_color_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/purple_dark_color_on_tertiary_container</item>
+    </style>
+
+    <style name="Theme.Keepass.DeepPurple.Dark" parent="Theme.Keepass.Dark">
+        <item name="colorPrimary">@color/deep_purple_dark_color_primary</item>
+        <item name="colorOnPrimary">@color/deep_purple_dark_color_on_primary</item>
+        <item name="colorPrimaryContainer">@color/deep_purple_dark_color_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/deep_purple_dark_color_on_primary_container
+        </item>
+        <item name="colorSecondary">@color/deep_purple_dark_color_secondary</item>
+        <item name="colorOnSecondary">@color/deep_purple_dark_color_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/deep_purple_dark_color_secondary_container
+        </item>
+        <item name="colorOnSecondaryContainer">@color/deep_purple_dark_color_on_secondary_container
+        </item>
+        <item name="colorTertiary">@color/deep_purple_dark_color_tertiary</item>
+        <item name="colorOnTertiary">@color/deep_purple_dark_color_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/deep_purple_dark_color_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/deep_purple_dark_color_on_tertiary_container
+        </item>
+    </style>
+
 
     <!-- Black themes -->
     <style name="Theme.Keepass.Black" parent="Theme.Keepass.Dark">
@@ -392,6 +462,28 @@
     </style>
 
     <style name="Theme.Keepass.Blue.Black" parent="Theme.Keepass.Blue.Dark">
+        <item name="android:colorBackground">@color/black_surface_color</item>
+        <item name="android:windowBackground">@color/black_surface_color</item>
+        <item name="colorSurface">@color/black_surface_color</item>
+        <item name="colorSurfaceVariant">@color/black_surface_color_variant</item>
+        <item name="colorSurfaceVariant2">@color/black_surface_color_variant2</item>
+        <item name="colorDivider">@color/black_divider_color</item>
+        <item name="colorDividerVariant">@color/black_divider_color_variant</item>
+        <item name="popupBackgroundColor">@color/black_popup_background_color</item>
+    </style>
+
+    <style name="Theme.Keepass.Purple.Black" parent="Theme.Keepass.Purple.Dark">
+        <item name="android:colorBackground">@color/black_surface_color</item>
+        <item name="android:windowBackground">@color/black_surface_color</item>
+        <item name="colorSurface">@color/black_surface_color</item>
+        <item name="colorSurfaceVariant">@color/black_surface_color_variant</item>
+        <item name="colorSurfaceVariant2">@color/black_surface_color_variant2</item>
+        <item name="colorDivider">@color/black_divider_color</item>
+        <item name="colorDividerVariant">@color/black_divider_color_variant</item>
+        <item name="popupBackgroundColor">@color/black_popup_background_color</item>
+    </style>
+
+    <style name="Theme.Keepass.DeepPurple.Black" parent="Theme.Keepass.DeepPurple.Dark">
         <item name="android:colorBackground">@color/black_surface_color</item>
         <item name="android:windowBackground">@color/black_surface_color</item>
         <item name="colorSurface">@color/black_surface_color</item>
