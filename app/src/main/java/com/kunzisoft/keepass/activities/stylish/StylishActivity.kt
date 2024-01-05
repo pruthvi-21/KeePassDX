@@ -93,9 +93,11 @@ abstract class StylishActivity : AppCompatActivity() {
         super.onResume()
 
         val colorPalette = PreferencesUtil.getAppColorPalette(this)
-        val newTheme =
-            if (Stylish.isDarkTheme(this)) colorPalette.themeDarkId
-            else colorPalette.themeLightId
+        val newTheme = when (Stylish.currentThemeMode(this)) {
+            Stylish.ThemeMode.LIGHT -> colorPalette.themeLightId
+            Stylish.ThemeMode.DARK -> colorPalette.themeDarkId
+            Stylish.ThemeMode.BLACK -> colorPalette.themeBlackId
+        }
         if (DATABASE_PREFERENCE_CHANGED || newTheme != currentlyAppliedThemeRes) {
             DATABASE_PREFERENCE_CHANGED = false
             Log.d(this.javaClass.name, "Theme change detected, restarting activity")
