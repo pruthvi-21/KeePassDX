@@ -2,7 +2,12 @@ package com.kunzisoft.keepass.view
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
@@ -27,10 +32,8 @@ class PrefColorPaletteItem @JvmOverloads constructor(
                 LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT
             ).apply { gravity = Gravity.CENTER }
-            setImageResource(R.drawable.ic_check_white_24dp)
+            setImageResource(R.drawable.ic_check_dual_color_24dp)
             isVisible = false
-            imageTintList =
-                ColorStateList.valueOf(if (Stylish.isDarkTheme(context)) Color.WHITE else Color.BLACK)
         }
     }
 
@@ -80,10 +83,6 @@ class PrefColorPaletteItem @JvmOverloads constructor(
     override fun setSelected(selected: Boolean) {
         super.setSelected(selected)
         tickView.isVisible = selected
-        strokeColor =
-            if (selected)
-                if (Stylish.isDarkTheme(context)) Color.WHITE else Color.BLACK
-            else Color.TRANSPARENT
     }
 
     fun init(
