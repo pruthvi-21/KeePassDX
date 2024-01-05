@@ -188,16 +188,16 @@
 
 
     <!-- Blue theme -->
-    <color name="blue_light_primary">#006685</color>
+    <color name="blue_light_primary">#006497</color>
     <color name="blue_light_on_primary">#ffffff</color>
-    <color name="blue_light_primary_inverse">#6dd2ff</color>
+    <color name="blue_light_primary_inverse">#a6caec</color>
     <color name="blue_light_primary_container">#bfe9ff</color>
     <color name="blue_light_on_primary_container">#001f2a</color>
     <color name="blue_light_primary_fixed">#b6e8ff</color>
     <color name="blue_light_primary_fixed_dim">#71cef7</color>
     <color name="blue_light_on_primary_fixed">#001E28</color>
     <color name="blue_light_on_primary_fixed_variant">#004B62</color>
-    <color name="blue_light_secondary">#4d616c</color>
+    <color name="blue_light_secondary">#51606f</color>
     <color name="blue_light_on_secondary">#ffffff</color>
     <color name="blue_light_secondary_container">#d0e6f3</color>
     <color name="blue_light_on_secondary_container">#081e27</color>
@@ -205,7 +205,7 @@
     <color name="blue_light_secondary_fixed_dim">#B0CAD5</color>
     <color name="blue_light_on_secondary_fixed">#091D25</color>
     <color name="blue_light_on_secondary_fixed_variant">#364951</color>
-    <color name="blue_light_tertiary">#5e5b7d</color>
+    <color name="blue_light_tertiary">#66587a</color>
     <color name="blue_light_on_tertiary">#ffffff</color>
     <color name="blue_light_tertiary_container">#e4dfff</color>
     <color name="blue_light_on_tertiary_container">#1a1836</color>
@@ -218,16 +218,16 @@
     <color name="blue_light_on_surface_variant">#40484c</color>
     <color name="blue_light_outline">#70787d</color>
 
-    <color name="blue_dark_primary">#6dd2ff</color>
+    <color name="blue_dark_primary">#a6caec</color>
     <color name="blue_dark_on_primary">#003547</color>
-    <color name="blue_dark_primary_inverse">#006685</color>
+    <color name="blue_dark_primary_inverse">#006497</color>
     <color name="blue_dark_primary_container">#004d65</color>
     <color name="blue_dark_on_primary_container">#bfe9ff</color>
     <color name="blue_dark_primary_fixed">@color/blue_light_primary_fixed</color>
     <color name="blue_dark_primary_fixed_dim">@color/blue_light_primary_fixed_dim</color>
     <color name="blue_dark_on_primary_fixed">@color/blue_light_on_primary_fixed</color>
     <color name="blue_dark_on_primary_fixed_variant">@color/blue_light_on_primary_fixed_variant</color>
-    <color name="blue_dark_secondary">#b4cad6</color>
+    <color name="blue_dark_secondary">#b8c8da</color>
     <color name="blue_dark_on_secondary">#1f333d</color>
     <color name="blue_dark_secondary_container">#364954</color>
     <color name="blue_dark_on_secondary_container">#d0e6f3</color>
