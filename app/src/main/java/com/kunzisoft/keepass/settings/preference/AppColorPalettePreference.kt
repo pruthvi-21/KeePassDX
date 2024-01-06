@@ -20,9 +20,7 @@ class AppColorPalettePreference @JvmOverloads constructor(
 
     init {
         setSummaryProvider {
-            if (PreferencesUtil.getAppColorPalette(context) == Stylish.AppColorPalette.DYNAMIC)
-                context.getString(R.string.color_palette_dynamic)
-            else context.getString(R.string.icon_section_custom)
+            context.getString(PreferencesUtil.getAppColorPalette(context).label)
         }
     }
 

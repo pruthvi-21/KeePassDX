@@ -577,4 +577,12 @@
     <string name="passphrase_word_separator">Word separator</string>
     <string name="icon_picker_title">Icon picker</string>
     <string name="color_palette_dynamic">Dynamic</string>
+
+    <string name="theme_green_label">Green</string>
+    <string name="theme_red_label">Red</string>
+    <string name="theme_yellow_label">Yellow</string>
+    <string name="theme_blue_label">Blue</string>
+    <string name="theme_purple_label">Purple</string>
+    <string name="theme_lavender_label">Lavender</string>
+    <string name="theme_dynamic_label">Dynamic</string>
 </resources>
