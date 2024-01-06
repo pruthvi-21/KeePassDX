@@ -3,6 +3,7 @@ package com.kunzisoft.keepass.activities
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -42,6 +43,7 @@ import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService.Companion.DATABASE_URI_KEY
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.tasks.ActionRunnable
+import com.kunzisoft.keepass.utils.ColorUtils
 import com.kunzisoft.keepass.utils.DexUtil
 import com.kunzisoft.keepass.utils.MagikeyboardUtil
 import com.kunzisoft.keepass.utils.MenuUtil
@@ -89,6 +91,14 @@ class FileDatabaseSelectActivity : DatabaseModeActivity(),
         MagikeyboardUtil.setEnabled(this, !DexUtil.isDexMode(resources.configuration))
 
         mFileDatabaseHistoryAction = FileDatabaseHistoryAction.getInstance(applicationContext)
+
+        window.navigationBarColor =
+            ColorUtils.getColorFromAttr(this, R.attr.colorSurfaceVariant2, Color.BLACK)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            window.navigationBarDividerColor =
+                ColorUtils.getColorFromAttr(this, R.attr.colorDividerVariant, Color.BLACK)
+        }
 
         setContentView(R.layout.activity_file_selection)
         coordinatorLayout = findViewById(R.id.activity_file_selection_coordinator_layout)

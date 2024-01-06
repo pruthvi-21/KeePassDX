@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="FileDatabaseSelectActivityTheme" parent="Theme.Keepass.Light">
-        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">
-            @drawable/ic_blank_32dp
-        </item>
-        <item name="android:navigationBarColor">?colorSurfaceVariant2</item>
+    <!-- Only for splash screen. This will be overridden in StylishActivity -->
+    <style name="FileDatabaseSelectActivityTheme" parent="Theme.Material3.DayNight">
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/ic_blank_32dp</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/surface_color</item>
     </style>
 
     <style name="Theme.Keepass.Light" parent="Theme.Keepass.Light.v27" />
-
     <style name="Theme.Keepass.Light.v27" parent="Theme.Keepass.Light.v23" />
-
     <style name="Theme.Keepass.Light.v23" parent="Theme.Keepass.Light.v21" />
-
     <style name="Theme.Keepass.Light.v21" parent="Theme.Keepass.Light.Base" />
-
     <style name="Theme.Keepass.Light.Base" parent="Theme.Material3.DynamicColors.Light">
         <item name="android:windowBackground">@color/light_surface_color</item>
         <item name="android:colorBackground">@color/light_surface_color</item>
@@ -114,13 +109,9 @@
 
 
     <style name="Theme.Keepass.Dark" parent="Theme.Keepass.Dark.v27" />
-
     <style name="Theme.Keepass.Dark.v27" parent="Theme.Keepass.Dark.v23" />
-
     <style name="Theme.Keepass.Dark.v23" parent="Theme.Keepass.Dark.v21" />
-
     <style name="Theme.Keepass.Dark.v21" parent="Theme.Keepass.Dark.Base" />
-
     <style name="Theme.Keepass.Dark.Base" parent="Theme.Material3.DynamicColors.Dark">
         <item name="android:windowBackground">@color/dark_surface_color</item>
         <item name="android:colorBackground">@color/dark_surface_color</item>
