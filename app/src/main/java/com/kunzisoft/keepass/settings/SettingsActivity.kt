@@ -1,5 +1,6 @@
 package com.kunzisoft.keepass.settings
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.backup.BackupManager
 import android.content.Intent
@@ -11,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kunzisoft.keepass.R
@@ -19,6 +21,8 @@ import com.kunzisoft.keepass.activities.helpers.ExternalFileHelper
 import com.kunzisoft.keepass.activities.legacy.DatabaseLockActivity
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.MainCredential
+import com.kunzisoft.keepass.settings.fragments.MainPreferenceFragment
+import com.kunzisoft.keepass.settings.fragments.NestedSettingsFragment
 import com.kunzisoft.keepass.tasks.ActionRunnable
 import com.kunzisoft.keepass.timeout.TimeoutHelper
 import com.kunzisoft.keepass.view.showActionErrorIfNeeded
@@ -31,110 +35,42 @@ open class SettingsActivity
     SetMainCredentialDialogFragment.AssignMainCredentialDialogListener {
 
     private var backupManager: BackupManager? = null
-    private var mExternalFileHelper: ExternalFileHelper? = null
 
     private var coordinatorLayout: CoordinatorLayout? = null
-    private var toolbar: Toolbar? = null
     private var lockView: FloatingActionButton? = null
-    private var footer: TextView? = null
 
+    @SuppressLint("CommitTransaction")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_toolbar)
+        setContentView(R.layout.activity_settings)
 
         coordinatorLayout = findViewById(R.id.toolbar_coordinator)
-        toolbar = findViewById(R.id.toolbar)
         lockView = findViewById(R.id.lock_button)
-        footer = findViewById(R.id.screenshot_mode_banner)
+        lockView?.isVisible = false
 
-        // To apply navigation bar with background color
-        /* TODO Settings nav bar
-        setTransparentNavigationBar {
-            coordinatorLayout?.applyWindowInsets(WindowInsetPosition.TOP)
-            footer?.applyWindowInsets(WindowInsetPosition.BOTTOM)
-        }*/
-
-        mExternalFileHelper = ExternalFileHelper(this)
-        mExternalFileHelper?.buildOpenDocument { selectedFileUri ->
-            // Import app settings result
-            try {
-                selectedFileUri?.let { uri ->
-                    val appProperties = Properties()
-                    contentResolver?.openInputStream(uri)?.use { inputStream ->
-                        appProperties.load(inputStream)
-                    }
-                    PreferencesUtil.setAppProperties(this, appProperties)
-
-                    // Restart the current activity
-                    reloadActivity()
-                    Toast.makeText(this, R.string.success_import_app_properties, Toast.LENGTH_LONG)
-                        .show()
-                }
-            } catch (e: Exception) {
-                Toast.makeText(this, R.string.error_import_app_properties, Toast.LENGTH_LONG).show()
-                Log.e(TAG, "Unable to import app settings", e)
-            }
-        }
-        mExternalFileHelper?.buildCreateDocument { createdFileUri ->
-            // Export app settings result
-            try {
-                createdFileUri?.let { uri ->
-                    contentResolver?.openOutputStream(uri)?.use { outputStream ->
-                        PreferencesUtil
-                            .getAppProperties(this)
-                            .store(outputStream, getString(R.string.description_app_properties))
-                    }
-                    Toast.makeText(this, R.string.success_export_app_properties, Toast.LENGTH_LONG)
-                        .show()
-                }
-            } catch (e: Exception) {
-                Toast.makeText(this, R.string.error_export_app_properties, Toast.LENGTH_LONG).show()
-                Log.e(DatabaseLockActivity.TAG, "Unable to export app settings", e)
-            }
-        }
-
-        if (savedInstanceState?.getString(TITLE_KEY).isNullOrEmpty())
-            toolbar?.setTitle(R.string.settings)
-        else
-            toolbar?.title = savedInstanceState?.getString(TITLE_KEY)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        toolbar?.setNavigationIcon(R.drawable.ic_toolbar_back_white_24dp)
 
-        lockView?.setOnClickListener {
-            lockAndExit()
+        supportActionBar?.setTitle(R.string.settings)
+        var fragment: Fragment = MainPreferenceFragment()
+
+        val bundle = intent.extras
+        if (bundle?.containsKey(SCREEN_ARG) == true) {
+            val screen = NestedSettingsFragment.Screen.values()[bundle.getInt(SCREEN_ARG)]
+
+            supportActionBar?.setTitle(screen.titleRes)
+            fragment = NestedSettingsFragment.newInstance(screen)
         }
 
         if (savedInstanceState == null) {
-            lockView?.visibility = View.GONE
-            supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, retrieveMainFragment())
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
                 .commit()
-        } else {
-            if (savedInstanceState.getBoolean(SHOW_LOCK)) lockView?.show() else lockView?.hide()
         }
 
         backupManager = BackupManager(this)
-
-        // To reload the current screen
-        if (intent.extras?.containsKey(FRAGMENT_ARG) == true) {
-            intent.extras?.getString(FRAGMENT_ARG)?.let { fragmentScreenName ->
-                onNestedPreferenceSelected(
-                    NestedSettingsFragment.Screen.valueOf(fragmentScreenName),
-                    true
-                )
-            }
-            // Eat state
-            intent.removeExtra(FRAGMENT_ARG)
-        }
-    }
-
-    /**
-     * Retrieve the main fragment to show in first
-     * @return The main fragment
-     */
-    protected open fun retrieveMainFragment(): Fragment {
-        return MainPreferenceFragment()
     }
 
     override fun viewToInvalidateTimeout(): View? {
@@ -151,20 +87,13 @@ open class SettingsActivity
         result: ActionRunnable.Result
     ) {
         super.onDatabaseActionFinished(database, actionTask, result)
-
         coordinatorLayout?.showActionErrorIfNeeded(result)
-    }
-
-    override fun reloadActivity() {
-        keepCurrentScreen()
-        super.reloadActivity()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> onDatabaseBackPressed()
         }
-
         return super.onOptionsItemSelected(item)
     }
 
@@ -179,108 +108,22 @@ open class SettingsActivity
 
     override fun onAssignKeyDialogNegativeClick(mainCredential: MainCredential) {}
 
-    private fun hideOrShowLockButton(key: NestedSettingsFragment.Screen) {
-        if (PreferencesUtil.showLockDatabaseButton(this)) {
-            when (key) {
-                NestedSettingsFragment.Screen.DATABASE,
-                NestedSettingsFragment.Screen.DATABASE_MASTER_KEY,
-                NestedSettingsFragment.Screen.DATABASE_SECURITY -> {
-                    lockView?.show()
-                }
-
-                else -> {
-                    lockView?.hide()
-                }
-            }
-        } else {
-            lockView?.hide()
-        }
+    private fun startNestedActivity(key: NestedSettingsFragment.Screen) {
+        startActivity(Intent(this, SettingsActivity::class.java).apply {
+            putExtra(SCREEN_ARG, key.ordinal)
+        })
     }
 
-    override fun onDatabaseBackPressed() {
-        // this if statement is necessary to navigate through nested and main fragments
-        if (supportFragmentManager.backStackEntryCount == 0) {
-            super.onDatabaseBackPressed()
-        } else {
-            supportFragmentManager.popBackStack()
-        }
-        toolbar?.setTitle(R.string.settings)
-        hideOrShowLockButton(NestedSettingsFragment.Screen.APPLICATION)
-    }
-
-    private fun replaceFragment(key: NestedSettingsFragment.Screen, reload: Boolean) {
-        supportFragmentManager.beginTransaction().apply {
-            if (reload) {
-                setCustomAnimations(
-                    android.R.anim.fade_in, android.R.anim.fade_out,
-                    R.anim.slide_in_left, R.anim.slide_out_right
-                )
-            } else {
-                setCustomAnimations(
-                    R.anim.slide_in_right, R.anim.slide_out_left,
-                    R.anim.slide_in_left, R.anim.slide_out_right
-                )
-            }
-            replace(R.id.fragment_container, NestedSettingsFragment.newInstance(key), TAG_NESTED)
-            addToBackStack(TAG_NESTED)
-            commit()
-        }
-
-        setTitle(key)
-        hideOrShowLockButton(key)
-    }
-
-    protected fun setTitle(key: NestedSettingsFragment.Screen) {
-        toolbar?.title = NestedSettingsFragment.retrieveTitle(resources, key)
-    }
-
-    /**
-     * To keep the current screen when activity is reloaded
-     */
-    private fun keepCurrentScreen() {
-        (supportFragmentManager.findFragmentByTag(TAG_NESTED) as? NestedSettingsFragment?)
-            ?.getScreen()?.let { fragmentKey ->
-                intent.putExtra(FRAGMENT_ARG, fragmentKey.name)
-            }
-    }
-
-    override fun onNestedPreferenceSelected(key: NestedSettingsFragment.Screen, reload: Boolean) {
+    override fun onNestedPreferenceSelected(key: NestedSettingsFragment.Screen) {
         if (mTimeoutEnable)
             checkTimeAndLockIfTimeoutOrResetTimeout {
-                replaceFragment(key, reload)
+                startNestedActivity(key)
             }
-        else
-            replaceFragment(key, reload)
-    }
-
-    fun importAppProperties() {
-        mExternalFileHelper?.openDocument()
-    }
-
-    fun exportAppProperties() {
-        mExternalFileHelper?.createDocument(
-            getString(
-                R.string.app_properties_file_name,
-                DateTime.now().toLocalDateTime().toString("yyyy-MM-dd'_'HH-mm")
-            )
-        )
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        outState.putBoolean(SHOW_LOCK, lockView?.visibility == View.VISIBLE)
-        outState.putString(TITLE_KEY, toolbar?.title?.toString())
+        else startNestedActivity(key)
     }
 
     companion object {
-
-        private val TAG = SettingsActivity::class.java.name
-
-        private const val SHOW_LOCK = "SHOW_LOCK"
-        private const val TITLE_KEY = "TITLE_KEY"
-        private const val TAG_NESTED = "TAG_NESTED"
-        private const val FRAGMENT_ARG = "FRAGMENT_ARG"
+        private const val SCREEN_ARG = "screen_arg"
 
         fun launch(activity: Activity, timeoutEnable: Boolean) {
             val intent = Intent(activity, SettingsActivity::class.java)

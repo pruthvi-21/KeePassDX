@@ -3,8 +3,6 @@ package com.kunzisoft.keepass.activities.stylish
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
-import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,7 +14,7 @@ import android.view.WindowManager.LayoutParams.FLAG_SECURE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.settings.NestedAppSettingsFragment.Companion.DATABASE_PREFERENCE_CHANGED
+import com.kunzisoft.keepass.activities.GroupActivity
 import com.kunzisoft.keepass.settings.PreferencesUtil
 
 /**
@@ -67,14 +65,51 @@ abstract class StylishActivity : AppCompatActivity() {
         }
         setTheme(currentlyAppliedThemeRes)
 
-        PreferenceManager.getDefaultSharedPreferences(this)
-            .registerOnSharedPreferenceChangeListener(onScreenshotModePrefListener)
+        PreferenceManager.getDefaultSharedPreferences(this).apply {
+            registerOnSharedPreferenceChangeListener(onScreenshotModePrefListener)
+            registerOnSharedPreferenceChangeListener(onThemeChangePrefListener)
+        }
+
     }
 
     private val onScreenshotModePrefListener = OnSharedPreferenceChangeListener { _, key ->
         if (key != getString(R.string.enable_screenshot_mode_key)) return@OnSharedPreferenceChangeListener
 
         setScreenshotMode(PreferencesUtil.isScreenshotModeEnabled(this))
+    }
+
+    private val onThemeChangePrefListener = OnSharedPreferenceChangeListener { _, key ->
+        if (this !is GroupActivity) return@OnSharedPreferenceChangeListener
+        when (key) {
+            getString(R.string.setting_icon_pack_choose_key),
+            getString(R.string.setting_app_theme_key),
+            getString(R.string.show_entry_colors_key),
+            getString(R.string.list_item_subtitle_key),
+            getString(R.string.list_groups_show_number_entries_key),
+            getString(R.string.show_otp_token_key),
+            getString(R.string.list_size_key),
+            getString(R.string.monospace_font_fields_enable_key),
+            getString(R.string.hide_expired_entries_key),
+
+            getString(R.string.database_name_key),
+            getString(R.string.database_description_key),
+            getString(R.string.database_default_username_key),
+            getString(R.string.database_custom_color_key),
+            getString(R.string.database_data_compression_key),
+            getString(R.string.database_data_remove_unlinked_attachments_key),
+            getString(R.string.recycle_bin_enable_key),
+            getString(R.string.recycle_bin_group_key),
+            getString(R.string.templates_group_enable_key),
+            getString(R.string.templates_group_uuid_key),
+            getString(R.string.max_history_items_key),
+            getString(R.string.max_history_size_key)
+
+            -> {
+                Log.d(this.javaClass.name, "Settings change detected, restarting activity")
+                //delaying to just complete the preference animation (popup, switch, ...)
+                Handler(Looper.getMainLooper()).postDelayed({ recreate() }, 300)
+            }
+        }
     }
 
     private fun setScreenshotMode(isEnabled: Boolean) {
@@ -98,17 +133,11 @@ abstract class StylishActivity : AppCompatActivity() {
             Stylish.ThemeMode.DARK -> colorPalette.themeDarkId
             Stylish.ThemeMode.BLACK -> colorPalette.themeBlackId
         }
-        if (DATABASE_PREFERENCE_CHANGED || newTheme != currentlyAppliedThemeRes) {
-            DATABASE_PREFERENCE_CHANGED = false
+        if (newTheme != currentlyAppliedThemeRes) {
             Log.d(this.javaClass.name, "Theme change detected, restarting activity")
-            recreateActivity()
+            recreate()
         }
 
         setScreenshotMode(PreferencesUtil.isScreenshotModeEnabled(this))
-    }
-
-    private fun recreateActivity() {
-        // To prevent KitKat bugs
-        Handler(Looper.getMainLooper()).post { recreate() }
     }
 }

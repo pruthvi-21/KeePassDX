@@ -459,6 +459,7 @@ class GroupActivity : DatabaseLockActivity(),
                 mOldGroupToUpdate = savedInstanceState.getParcelableCompat(OLD_GROUP_TO_UPDATE_KEY)
                 savedInstanceState.remove(OLD_GROUP_TO_UPDATE_KEY)
             }
+            CLOSE_DRAWER = savedInstanceState.getBoolean(CLOSE_DRAWER_ARG, false)
         }
 
         // Retrieve previous groups
@@ -844,6 +845,7 @@ class GroupActivity : DatabaseLockActivity(),
             outState.putParcelable(OLD_GROUP_TO_UPDATE_KEY, it)
         }
         outState.putBoolean(REQUEST_STARTUP_SEARCH_KEY, mRequestStartupSearch)
+        outState.putBoolean(CLOSE_DRAWER_ARG, CLOSE_DRAWER)
         mainContainer?.translationX?.let {
             if (it > 0f) outState.putFloat(KEY_LAYOUT_POSITION, it)
         }
@@ -1460,6 +1462,7 @@ class GroupActivity : DatabaseLockActivity(),
         private const val OLD_GROUP_TO_UPDATE_KEY = "OLD_GROUP_TO_UPDATE_KEY"
         private const val AUTO_SEARCH_KEY = "AUTO_SEARCH_KEY"
         private const val KEY_LAYOUT_POSITION = "layout_position"
+        private const val CLOSE_DRAWER_ARG = "close_drawer"
 
         private fun buildIntent(
             context: Context,

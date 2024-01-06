@@ -1,4 +1,4 @@
-package com.kunzisoft.keepass.settings
+package com.kunzisoft.keepass.settings.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment

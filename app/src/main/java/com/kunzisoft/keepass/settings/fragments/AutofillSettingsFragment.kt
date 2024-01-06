@@ -1,4 +1,4 @@
-package com.kunzisoft.keepass.settings
+package com.kunzisoft.keepass.settings.fragments
 
 import android.os.Build
 import android.os.Bundle

@@ -163,9 +163,7 @@
             android:configChanges="keyboardHidden"
             android:excludeFromRecents="true"
             android:theme="@style/Theme.Transparent" />
-        <activity android:name=".settings.AdvancedUnlockSettingsActivity" />
         <activity android:name=".settings.AutofillSettingsActivity" />
-        <activity android:name=".settings.AppearanceSettingsActivity" />
         <activity
             android:name=".hardware.HardwareKeyActivity"
             android:theme="@style/Theme.Transparent" />

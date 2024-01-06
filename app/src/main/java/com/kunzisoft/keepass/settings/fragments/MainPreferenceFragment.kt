@@ -1,4 +1,4 @@
-package com.kunzisoft.keepass.settings
+package com.kunzisoft.keepass.settings.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -105,6 +105,6 @@ class MainPreferenceFragment : PreferenceFragmentCompat() {
     }
 
     interface Callback {
-        fun onNestedPreferenceSelected(key: NestedSettingsFragment.Screen, reload: Boolean = false)
+        fun onNestedPreferenceSelected(key: NestedSettingsFragment.Screen)
     }
 }

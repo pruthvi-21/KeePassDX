@@ -2,6 +2,7 @@ package com.kunzisoft.keepass.settings
 
 import androidx.preference.PreferenceFragmentCompat
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.settings.fragments.AutofillSettingsFragment
 
 class AutofillSettingsActivity : ExternalSettingsActivity() {
 
