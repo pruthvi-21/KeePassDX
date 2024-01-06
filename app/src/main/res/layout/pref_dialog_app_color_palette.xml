@@ -56,9 +56,9 @@
             app:cardBackgroundColor="@color/purple_light_primary" />
 
         <com.kunzisoft.keepass.view.PrefColorPaletteItem
-            android:id="@+id/pref_palette_item_deep_purple"
+            android:id="@+id/pref_palette_item_lavender"
             style="@style/Theme.Keepass.ColorPalette.Item"
-            app:cardBackgroundColor="@color/deep_purple_light_primary" />
+            app:cardBackgroundColor="@color/lavender_light_primary" />
 
         <View style="@style/Theme.Keepass.ColorPalette.Item" />
 

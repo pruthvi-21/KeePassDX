@@ -371,36 +371,36 @@
         <item name="colorOutline">@color/purple_light_outline</item>
     </style>
 
-    <style name="Theme.Keepass.DeepPurple.Light" parent="Theme.Keepass.Light">
-        <item name="colorPrimary">@color/deep_purple_light_primary</item>
-        <item name="colorOnPrimary">@color/deep_purple_light_on_primary</item>
-        <item name="colorPrimaryInverse">@color/deep_purple_light_primary_inverse</item>
-        <item name="colorPrimaryContainer">@color/deep_purple_light_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/deep_purple_light_on_primary_container</item>
-        <item name="colorPrimaryFixed">@color/deep_purple_light_primary_fixed</item>
-        <item name="colorPrimaryFixedDim">@color/deep_purple_light_primary_fixed_dim</item>
-        <item name="colorOnPrimaryFixed">@color/deep_purple_light_on_primary_fixed</item>
-        <item name="colorOnPrimaryFixedVariant">@color/deep_purple_light_on_primary_fixed_variant</item>
-        <item name="colorSecondary">@color/deep_purple_light_secondary</item>
-        <item name="colorOnSecondary">@color/deep_purple_light_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/deep_purple_light_secondary_container</item>
-        <item name="colorOnSecondaryContainer">@color/deep_purple_light_on_secondary_container</item>
-        <item name="colorSecondaryFixed">@color/deep_purple_light_secondary_fixed</item>
-        <item name="colorSecondaryFixedDim">@color/deep_purple_light_secondary_fixed_dim</item>
-        <item name="colorOnSecondaryFixed">@color/deep_purple_light_on_secondary_fixed</item>
-        <item name="colorOnSecondaryFixedVariant">@color/deep_purple_light_on_secondary_fixed_variant</item>
-        <item name="colorTertiary">@color/deep_purple_light_tertiary</item>
-        <item name="colorOnTertiary">@color/deep_purple_light_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/deep_purple_light_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/deep_purple_light_on_tertiary_container</item>
-        <item name="colorTertiaryFixed">@color/deep_purple_light_tertiary_fixed</item>
-        <item name="colorTertiaryFixedDim">@color/deep_purple_light_tertiary_fixed_dim</item>
-        <item name="colorOnTertiaryFixed">@color/deep_purple_light_on_tertiary_fixed</item>
-        <item name="colorOnTertiaryFixedVariant">@color/deep_purple_light_on_tertiary_fixed_variant</item>
-        <item name="colorOnBackground">@color/deep_purple_light_on_background</item>
-        <item name="colorOnSurface">@color/deep_purple_light_on_surface</item>
-        <item name="colorOnSurfaceVariant">@color/deep_purple_light_on_surface_variant</item>
-        <item name="colorOutline">@color/deep_purple_light_outline</item>
+    <style name="Theme.Keepass.Lavender.Light" parent="Theme.Keepass.Light">
+        <item name="colorPrimary">@color/lavender_light_primary</item>
+        <item name="colorOnPrimary">@color/lavender_light_on_primary</item>
+        <item name="colorPrimaryInverse">@color/lavender_light_primary_inverse</item>
+        <item name="colorPrimaryContainer">@color/lavender_light_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/lavender_light_on_primary_container</item>
+        <item name="colorPrimaryFixed">@color/lavender_light_primary_fixed</item>
+        <item name="colorPrimaryFixedDim">@color/lavender_light_primary_fixed_dim</item>
+        <item name="colorOnPrimaryFixed">@color/lavender_light_on_primary_fixed</item>
+        <item name="colorOnPrimaryFixedVariant">@color/lavender_light_on_primary_fixed_variant</item>
+        <item name="colorSecondary">@color/lavender_light_secondary</item>
+        <item name="colorOnSecondary">@color/lavender_light_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/lavender_light_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/lavender_light_on_secondary_container</item>
+        <item name="colorSecondaryFixed">@color/lavender_light_secondary_fixed</item>
+        <item name="colorSecondaryFixedDim">@color/lavender_light_secondary_fixed_dim</item>
+        <item name="colorOnSecondaryFixed">@color/lavender_light_on_secondary_fixed</item>
+        <item name="colorOnSecondaryFixedVariant">@color/lavender_light_on_secondary_fixed_variant</item>
+        <item name="colorTertiary">@color/lavender_light_tertiary</item>
+        <item name="colorOnTertiary">@color/lavender_light_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/lavender_light_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/lavender_light_on_tertiary_container</item>
+        <item name="colorTertiaryFixed">@color/lavender_light_tertiary_fixed</item>
+        <item name="colorTertiaryFixedDim">@color/lavender_light_tertiary_fixed_dim</item>
+        <item name="colorOnTertiaryFixed">@color/lavender_light_on_tertiary_fixed</item>
+        <item name="colorOnTertiaryFixedVariant">@color/lavender_light_on_tertiary_fixed_variant</item>
+        <item name="colorOnBackground">@color/lavender_light_on_background</item>
+        <item name="colorOnSurface">@color/lavender_light_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/lavender_light_on_surface_variant</item>
+        <item name="colorOutline">@color/lavender_light_outline</item>
     </style>
 
 
@@ -565,36 +565,36 @@
         <item name="colorOutline">@color/purple_dark_outline</item>
     </style>
 
-    <style name="Theme.Keepass.DeepPurple.Dark" parent="Theme.Keepass.Dark">
-        <item name="colorPrimary">@color/deep_purple_dark_primary</item>
-        <item name="colorOnPrimary">@color/deep_purple_dark_on_primary</item>
-        <item name="colorPrimaryInverse">@color/deep_purple_dark_primary_inverse</item>
-        <item name="colorPrimaryContainer">@color/deep_purple_dark_primary_container</item>
-        <item name="colorOnPrimaryContainer">@color/deep_purple_dark_on_primary_container</item>
-        <item name="colorPrimaryFixed">@color/deep_purple_dark_primary_fixed</item>
-        <item name="colorPrimaryFixedDim">@color/deep_purple_dark_primary_fixed_dim</item>
-        <item name="colorOnPrimaryFixed">@color/deep_purple_dark_on_primary_fixed</item>
-        <item name="colorOnPrimaryFixedVariant">@color/deep_purple_dark_on_primary_fixed_variant</item>
-        <item name="colorSecondary">@color/deep_purple_dark_secondary</item>
-        <item name="colorOnSecondary">@color/deep_purple_dark_on_secondary</item>
-        <item name="colorSecondaryContainer">@color/deep_purple_dark_secondary_container</item>
-        <item name="colorOnSecondaryContainer">@color/deep_purple_dark_on_secondary_container</item>
-        <item name="colorSecondaryFixed">@color/deep_purple_dark_secondary_fixed</item>
-        <item name="colorSecondaryFixedDim">@color/deep_purple_dark_secondary_fixed_dim</item>
-        <item name="colorOnSecondaryFixed">@color/deep_purple_dark_on_secondary_fixed</item>
-        <item name="colorOnSecondaryFixedVariant">@color/deep_purple_dark_on_secondary_fixed_variant</item>
-        <item name="colorTertiary">@color/deep_purple_dark_tertiary</item>
-        <item name="colorOnTertiary">@color/deep_purple_dark_on_tertiary</item>
-        <item name="colorTertiaryContainer">@color/deep_purple_dark_tertiary_container</item>
-        <item name="colorOnTertiaryContainer">@color/deep_purple_dark_on_tertiary_container</item>
-        <item name="colorTertiaryFixed">@color/deep_purple_dark_tertiary_fixed</item>
-        <item name="colorTertiaryFixedDim">@color/deep_purple_dark_tertiary_fixed_dim</item>
-        <item name="colorOnTertiaryFixed">@color/deep_purple_dark_on_tertiary_fixed</item>
-        <item name="colorOnTertiaryFixedVariant">@color/deep_purple_dark_on_tertiary_fixed_variant</item>
-        <item name="colorOnBackground">@color/deep_purple_dark_on_background</item>
-        <item name="colorOnSurface">@color/deep_purple_dark_on_surface</item>
-        <item name="colorOnSurfaceVariant">@color/deep_purple_dark_on_surface_variant</item>
-        <item name="colorOutline">@color/deep_purple_dark_outline</item>
+    <style name="Theme.Keepass.Lavender.Dark" parent="Theme.Keepass.Dark">
+        <item name="colorPrimary">@color/lavender_dark_primary</item>
+        <item name="colorOnPrimary">@color/lavender_dark_on_primary</item>
+        <item name="colorPrimaryInverse">@color/lavender_dark_primary_inverse</item>
+        <item name="colorPrimaryContainer">@color/lavender_dark_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/lavender_dark_on_primary_container</item>
+        <item name="colorPrimaryFixed">@color/lavender_dark_primary_fixed</item>
+        <item name="colorPrimaryFixedDim">@color/lavender_dark_primary_fixed_dim</item>
+        <item name="colorOnPrimaryFixed">@color/lavender_dark_on_primary_fixed</item>
+        <item name="colorOnPrimaryFixedVariant">@color/lavender_dark_on_primary_fixed_variant</item>
+        <item name="colorSecondary">@color/lavender_dark_secondary</item>
+        <item name="colorOnSecondary">@color/lavender_dark_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/lavender_dark_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/lavender_dark_on_secondary_container</item>
+        <item name="colorSecondaryFixed">@color/lavender_dark_secondary_fixed</item>
+        <item name="colorSecondaryFixedDim">@color/lavender_dark_secondary_fixed_dim</item>
+        <item name="colorOnSecondaryFixed">@color/lavender_dark_on_secondary_fixed</item>
+        <item name="colorOnSecondaryFixedVariant">@color/lavender_dark_on_secondary_fixed_variant</item>
+        <item name="colorTertiary">@color/lavender_dark_tertiary</item>
+        <item name="colorOnTertiary">@color/lavender_dark_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/lavender_dark_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/lavender_dark_on_tertiary_container</item>
+        <item name="colorTertiaryFixed">@color/lavender_dark_tertiary_fixed</item>
+        <item name="colorTertiaryFixedDim">@color/lavender_dark_tertiary_fixed_dim</item>
+        <item name="colorOnTertiaryFixed">@color/lavender_dark_on_tertiary_fixed</item>
+        <item name="colorOnTertiaryFixedVariant">@color/lavender_dark_on_tertiary_fixed_variant</item>
+        <item name="colorOnBackground">@color/lavender_dark_on_background</item>
+        <item name="colorOnSurface">@color/lavender_dark_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/lavender_dark_on_surface_variant</item>
+        <item name="colorOutline">@color/lavender_dark_outline</item>
     </style>
 
 
@@ -665,7 +665,7 @@
         <item name="popupBackgroundColor">@color/black_popup_background_color</item>
     </style>
 
-    <style name="Theme.Keepass.DeepPurple.Black" parent="Theme.Keepass.DeepPurple.Dark">
+    <style name="Theme.Keepass.Lavender.Black" parent="Theme.Keepass.Lavender.Dark">
         <item name="android:colorBackground">@color/black_surface_color</item>
         <item name="android:windowBackground">@color/black_surface_color</item>
         <item name="colorSurface">@color/black_surface_color</item>
