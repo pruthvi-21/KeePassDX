@@ -21,6 +21,7 @@ class AppColorPalettePreferenceDialogFragmentCompat : PreferenceDialogFragmentCo
     private lateinit var colorItemBlue: PrefColorPaletteItem
     private lateinit var colorItemPurple: PrefColorPaletteItem
     private lateinit var colorItemLavender: PrefColorPaletteItem
+    private lateinit var colorItemBerry: PrefColorPaletteItem
 
     private var selectedColorPalette = Stylish.AppColorPalette.defaultPalette()
 
@@ -43,6 +44,7 @@ class AppColorPalettePreferenceDialogFragmentCompat : PreferenceDialogFragmentCo
         colorItemPurple = view.findViewById(R.id.pref_palette_item_purple) as PrefColorPaletteItem
         colorItemLavender =
             view.findViewById(R.id.pref_palette_item_lavender) as PrefColorPaletteItem
+        colorItemBerry = view.findViewById(R.id.pref_palette_item_berry) as PrefColorPaletteItem
 
         colorItemGreen.init(Stylish.AppColorPalette.GREEN, onItemSelectedListener)
         colorItemRed.init(Stylish.AppColorPalette.RED, onItemSelectedListener)
@@ -50,6 +52,7 @@ class AppColorPalettePreferenceDialogFragmentCompat : PreferenceDialogFragmentCo
         colorItemBlue.init(Stylish.AppColorPalette.BLUE, onItemSelectedListener)
         colorItemPurple.init(Stylish.AppColorPalette.PURPLE, onItemSelectedListener)
         colorItemLavender.init(Stylish.AppColorPalette.LAVENDER, onItemSelectedListener)
+        colorItemBerry.init(Stylish.AppColorPalette.BERRY, onItemSelectedListener)
 
         colorItemGreen.darkView.setBackgroundColor(
             ResourcesCompat.getColor(resources, R.color.green_dark_primary, activity?.theme)
@@ -68,6 +71,9 @@ class AppColorPalettePreferenceDialogFragmentCompat : PreferenceDialogFragmentCo
         )
         colorItemLavender.darkView.setBackgroundColor(
             ResourcesCompat.getColor(resources, R.color.lavender_dark_primary, activity?.theme)
+        )
+        colorItemBerry.darkView.setBackgroundColor(
+            ResourcesCompat.getColor(resources, R.color.berry_dark_primary, activity?.theme)
         )
 
         dynamicSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -95,6 +101,7 @@ class AppColorPalettePreferenceDialogFragmentCompat : PreferenceDialogFragmentCo
         colorItemBlue.isSelected = false
         colorItemPurple.isSelected = false
         colorItemLavender.isSelected = false
+        colorItemBerry.isSelected = false
     }
 
     override fun onDialogClosed(positiveResult: Boolean) {
@@ -113,6 +120,7 @@ class AppColorPalettePreferenceDialogFragmentCompat : PreferenceDialogFragmentCo
             Stylish.AppColorPalette.PURPLE -> onItemSelectedListener.onItemSelected(colorItemPurple)
             Stylish.AppColorPalette.LAVENDER ->
                 onItemSelectedListener.onItemSelected(colorItemLavender)
+            Stylish.AppColorPalette.BERRY -> onItemSelectedListener.onItemSelected(colorItemBerry)
 
             Stylish.AppColorPalette.DYNAMIC -> {
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S) {

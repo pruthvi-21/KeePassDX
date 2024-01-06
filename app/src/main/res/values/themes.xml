@@ -403,6 +403,38 @@
         <item name="colorOutline">@color/lavender_light_outline</item>
     </style>
 
+    <style name="Theme.Keepass.Berry.Light" parent="Theme.Keepass.Light">
+        <item name="colorPrimary">@color/berry_light_primary</item>
+        <item name="colorOnPrimary">@color/berry_light_on_primary</item>
+        <item name="colorPrimaryInverse">@color/berry_light_primary_inverse</item>
+        <item name="colorPrimaryContainer">@color/berry_light_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/berry_light_on_primary_container</item>
+        <item name="colorPrimaryFixed">@color/berry_light_primary_fixed</item>
+        <item name="colorPrimaryFixedDim">@color/berry_light_primary_fixed_dim</item>
+        <item name="colorOnPrimaryFixed">@color/berry_light_on_primary_fixed</item>
+        <item name="colorOnPrimaryFixedVariant">@color/berry_light_on_primary_fixed_variant</item>
+        <item name="colorSecondary">@color/berry_light_secondary</item>
+        <item name="colorOnSecondary">@color/berry_light_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/berry_light_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/berry_light_on_secondary_container</item>
+        <item name="colorSecondaryFixed">@color/berry_light_secondary_fixed</item>
+        <item name="colorSecondaryFixedDim">@color/berry_light_secondary_fixed_dim</item>
+        <item name="colorOnSecondaryFixed">@color/berry_light_on_secondary_fixed</item>
+        <item name="colorOnSecondaryFixedVariant">@color/berry_light_on_secondary_fixed_variant</item>
+        <item name="colorTertiary">@color/berry_light_tertiary</item>
+        <item name="colorOnTertiary">@color/berry_light_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/berry_light_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/berry_light_on_tertiary_container</item>
+        <item name="colorTertiaryFixed">@color/berry_light_tertiary_fixed</item>
+        <item name="colorTertiaryFixedDim">@color/berry_light_tertiary_fixed_dim</item>
+        <item name="colorOnTertiaryFixed">@color/berry_light_on_tertiary_fixed</item>
+        <item name="colorOnTertiaryFixedVariant">@color/berry_light_on_tertiary_fixed_variant</item>
+        <item name="colorOnBackground">@color/berry_light_on_background</item>
+        <item name="colorOnSurface">@color/berry_light_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/berry_light_on_surface_variant</item>
+        <item name="colorOutline">@color/berry_light_outline</item>
+    </style>
+
 
     <!-- Dark themes -->
     <style name="Theme.Keepass.Green.Dark" parent="Theme.Keepass.Dark">
@@ -597,6 +629,38 @@
         <item name="colorOutline">@color/lavender_dark_outline</item>
     </style>
 
+    <style name="Theme.Keepass.Berry.Dark" parent="Theme.Keepass.Dark">
+        <item name="colorPrimary">@color/berry_dark_primary</item>
+        <item name="colorOnPrimary">@color/berry_dark_on_primary</item>
+        <item name="colorPrimaryInverse">@color/berry_dark_primary_inverse</item>
+        <item name="colorPrimaryContainer">@color/berry_dark_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/berry_dark_on_primary_container</item>
+        <item name="colorPrimaryFixed">@color/berry_dark_primary_fixed</item>
+        <item name="colorPrimaryFixedDim">@color/berry_dark_primary_fixed_dim</item>
+        <item name="colorOnPrimaryFixed">@color/berry_dark_on_primary_fixed</item>
+        <item name="colorOnPrimaryFixedVariant">@color/berry_dark_on_primary_fixed_variant</item>
+        <item name="colorSecondary">@color/berry_dark_secondary</item>
+        <item name="colorOnSecondary">@color/berry_dark_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/berry_dark_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/berry_dark_on_secondary_container</item>
+        <item name="colorSecondaryFixed">@color/berry_dark_secondary_fixed</item>
+        <item name="colorSecondaryFixedDim">@color/berry_dark_secondary_fixed_dim</item>
+        <item name="colorOnSecondaryFixed">@color/berry_dark_on_secondary_fixed</item>
+        <item name="colorOnSecondaryFixedVariant">@color/berry_dark_on_secondary_fixed_variant</item>
+        <item name="colorTertiary">@color/berry_dark_tertiary</item>
+        <item name="colorOnTertiary">@color/berry_dark_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/berry_dark_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/berry_dark_on_tertiary_container</item>
+        <item name="colorTertiaryFixed">@color/berry_dark_tertiary_fixed</item>
+        <item name="colorTertiaryFixedDim">@color/berry_dark_tertiary_fixed_dim</item>
+        <item name="colorOnTertiaryFixed">@color/berry_dark_on_tertiary_fixed</item>
+        <item name="colorOnTertiaryFixedVariant">@color/berry_dark_on_tertiary_fixed_variant</item>
+        <item name="colorOnBackground">@color/berry_dark_on_background</item>
+        <item name="colorOnSurface">@color/berry_dark_on_surface</item>
+        <item name="colorOnSurfaceVariant">@color/berry_dark_on_surface_variant</item>
+        <item name="colorOutline">@color/berry_dark_outline</item>
+    </style>
+
 
     <!-- Black themes -->
     <style name="Theme.Keepass.Black" parent="Theme.Keepass.Dark">
@@ -666,6 +730,17 @@
     </style>
 
     <style name="Theme.Keepass.Lavender.Black" parent="Theme.Keepass.Lavender.Dark">
+        <item name="android:colorBackground">@color/black_surface_color</item>
+        <item name="android:windowBackground">@color/black_surface_color</item>
+        <item name="colorSurface">@color/black_surface_color</item>
+        <item name="colorSurfaceVariant">@color/black_surface_color_variant</item>
+        <item name="colorSurfaceVariant2">@color/black_surface_color_variant2</item>
+        <item name="colorDivider">@color/black_divider_color</item>
+        <item name="colorDividerVariant">@color/black_divider_color_variant</item>
+        <item name="popupBackgroundColor">@color/black_popup_background_color</item>
+    </style>
+
+    <style name="Theme.Keepass.Berry.Black" parent="Theme.Keepass.Berry.Dark">
         <item name="android:colorBackground">@color/black_surface_color</item>
         <item name="android:windowBackground">@color/black_surface_color</item>
         <item name="colorSurface">@color/black_surface_color</item>

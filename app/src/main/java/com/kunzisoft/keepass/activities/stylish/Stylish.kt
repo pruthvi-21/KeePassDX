@@ -58,6 +58,13 @@ object Stylish {
             R.style.Theme_Keepass_Lavender_Dark,
             R.style.Theme_Keepass_Lavender_Black
         ),
+        BERRY(
+            "berry",
+            R.string.theme_berry_label,
+            R.style.Theme_Keepass_Berry_Light,
+            R.style.Theme_Keepass_Berry_Dark,
+            R.style.Theme_Keepass_Berry_Black
+        ),
         DYNAMIC(
             "dynamic",
             R.string.theme_dynamic_label,

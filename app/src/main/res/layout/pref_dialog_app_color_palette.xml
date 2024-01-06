@@ -60,7 +60,10 @@
             style="@style/Theme.Keepass.ColorPalette.Item"
             app:cardBackgroundColor="@color/lavender_light_primary" />
 
-        <View style="@style/Theme.Keepass.ColorPalette.Item" />
+        <com.kunzisoft.keepass.view.PrefColorPaletteItem
+            android:id="@+id/pref_palette_item_berry"
+            style="@style/Theme.Keepass.ColorPalette.Item"
+            app:cardBackgroundColor="@color/berry_light_primary" />
 
         <View style="@style/Theme.Keepass.ColorPalette.Item" />
     </LinearLayout>

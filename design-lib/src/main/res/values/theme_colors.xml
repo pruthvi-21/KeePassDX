@@ -371,4 +371,66 @@
     <color name="lavender_dark_on_surface">#e6e1e6</color>
     <color name="lavender_dark_on_surface_variant">#cbc4cf</color>
     <color name="lavender_dark_outline">#948f99</color>
+
+
+    <!-- Berry theme -->
+    <color name="berry_light_primary">#af255b</color>
+    <color name="berry_light_on_primary">#ffffff</color>
+    <color name="berry_light_primary_inverse">#ffb1c4</color>
+    <color name="berry_light_primary_container">#ffd9e0</color>
+    <color name="berry_light_on_primary_container">#3f001a</color>
+    <color name="berry_light_primary_fixed">#000</color>
+    <color name="berry_light_primary_fixed_dim">#000</color>
+    <color name="berry_light_on_primary_fixed">#000</color>
+    <color name="berry_light_on_primary_fixed_variant">#000</color>
+    <color name="berry_light_secondary">#75565d</color>
+    <color name="berry_light_on_secondary">#ffffff</color>
+    <color name="berry_light_secondary_container">#ffd9e0</color>
+    <color name="berry_light_on_secondary_container">#2b151b</color>
+    <color name="berry_light_secondary_fixed">#000000</color>
+    <color name="berry_light_secondary_fixed_dim">#000000</color>
+    <color name="berry_light_on_secondary_fixed">#000000</color>
+    <color name="berry_light_on_secondary_fixed_variant">#000000</color>
+    <color name="berry_light_tertiary">#7b5733</color>
+    <color name="berry_light_on_tertiary">#ffffff</color>
+    <color name="berry_light_tertiary_container">#ffdcbf</color>
+    <color name="berry_light_on_tertiary_container">#2d1600</color>
+    <color name="berry_light_tertiary_fixed">#000000</color>
+    <color name="berry_light_tertiary_fixed_dim">#000</color>
+    <color name="berry_light_on_tertiary_fixed">#000</color>
+    <color name="berry_light_on_tertiary_fixed_variant">#000</color>
+    <color name="berry_light_on_background">#201a1b</color>
+    <color name="berry_light_on_surface">#201a1b</color>
+    <color name="berry_light_on_surface_variant">#514346</color>
+    <color name="berry_light_outline">#847376</color>
+
+    <color name="berry_dark_primary">#ffb1c4</color>
+    <color name="berry_dark_on_primary">#65002e</color>
+    <color name="berry_dark_primary_inverse">#af255b</color>
+    <color name="berry_dark_primary_container">#8f0144</color>
+    <color name="berry_dark_on_primary_container">#ffd9e0</color>
+    <color name="berry_dark_primary_fixed">@color/berry_light_primary_fixed</color>
+    <color name="berry_dark_primary_fixed_dim">@color/berry_light_primary_fixed_dim</color>
+    <color name="berry_dark_on_primary_fixed">@color/berry_light_on_primary_fixed</color>
+    <color name="berry_dark_on_primary_fixed_variant">@color/berry_light_on_primary_fixed_variant</color>
+    <color name="berry_dark_secondary">#e3bdc5</color>
+    <color name="berry_dark_on_secondary">#422930</color>
+    <color name="berry_dark_secondary_container">#5b3f46</color>
+    <color name="berry_dark_on_secondary_container">#ffd9e0</color>
+    <color name="berry_dark_secondary_fixed">@color/berry_light_secondary_fixed</color>
+    <color name="berry_dark_secondary_fixed_dim">@color/berry_light_secondary_fixed_dim</color>
+    <color name="berry_dark_on_secondary_fixed">@color/berry_light_on_secondary_fixed</color>
+    <color name="berry_dark_on_secondary_fixed_variant">@color/berry_light_on_secondary_fixed_variant</color>
+    <color name="berry_dark_tertiary">#edbd92</color>
+    <color name="berry_dark_on_tertiary">#472a0a</color>
+    <color name="berry_dark_tertiary_container">#61401e</color>
+    <color name="berry_dark_on_tertiary_container">#ffdcbf</color>
+    <color name="berry_dark_tertiary_fixed">@color/berry_light_tertiary_fixed</color>
+    <color name="berry_dark_tertiary_fixed_dim">@color/berry_light_tertiary_fixed_dim</color>
+    <color name="berry_dark_on_tertiary_fixed">@color/berry_light_on_tertiary_fixed</color>
+    <color name="berry_dark_on_tertiary_fixed_variant">@color/berry_light_on_tertiary_fixed_variant</color>
+    <color name="berry_dark_on_background">#ece0e1</color>
+    <color name="berry_dark_on_surface">#ece0e1</color>
+    <color name="berry_dark_on_surface_variant">#d6c2c5</color>
+    <color name="berry_dark_outline">#9e8c8f</color>
 </resources>

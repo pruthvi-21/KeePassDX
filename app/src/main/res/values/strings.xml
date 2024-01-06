@@ -584,5 +584,6 @@
     <string name="theme_blue_label">Blue</string>
     <string name="theme_purple_label">Purple</string>
     <string name="theme_lavender_label">Lavender</string>
+    <string name="theme_berry_label">Berry</string>
     <string name="theme_dynamic_label">Dynamic</string>
 </resources>
