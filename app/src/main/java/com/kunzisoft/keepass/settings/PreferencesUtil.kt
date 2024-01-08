@@ -1038,6 +1038,11 @@ object PreferencesUtil {
                     value.toBoolean()
                 )
 
+                context.getString(R.string.enable_files_preview_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
+                )
+
                 context.getString(R.string.auto_focus_search_key) -> editor.putBoolean(
                     name,
                     value.toBoolean()
@@ -1241,6 +1246,18 @@ object PreferencesUtil {
                 context.getString(R.string.setting_icon_pack_choose_key) -> editor.putString(
                     name,
                     value
+                )
+
+                context.getString(R.string.setting_app_color_palette_key) -> editor.putString(
+                    name,
+                    value
+                )
+
+                context.getString(R.string.setting_app_theme_key) -> editor.putString(name, value)
+
+                context.getString(R.string.setting_app_use_black_key) -> editor.putBoolean(
+                    name,
+                    value.toBoolean()
                 )
 
                 context.getString(R.string.show_entry_colors_key) -> editor.putBoolean(
