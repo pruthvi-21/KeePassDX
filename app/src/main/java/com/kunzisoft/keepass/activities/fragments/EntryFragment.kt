@@ -2,21 +2,31 @@ package com.kunzisoft.keepass.activities.fragments
 
 import android.content.DialogInterface
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.google.android.material.tabs.TabLayout
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.adapters.EntryAttachmentsItemsAdapter
+import com.kunzisoft.keepass.adapters.TagsAdapter
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.Attachment
 import com.kunzisoft.keepass.database.element.template.TemplateField
@@ -33,28 +43,32 @@ import com.kunzisoft.keepass.view.TemplateView
 import com.kunzisoft.keepass.view.TextFieldView
 import com.kunzisoft.keepass.view.showByFading
 import com.kunzisoft.keepass.viewmodels.EntryViewModel
-import com.libx.ui.views.CollapsibleLinearLayout
 import com.kunzisoft.keepass.utils.AttachmentUtil
 import java.io.IOException
 
-class EntryFragment : DatabaseFragment() {
+class EntryFragment : DatabaseFragment(), TabLayout.OnTabSelectedListener {
 
     private lateinit var rootView: View
-    private lateinit var mainSection: View
 
+    private lateinit var contentView: View
+    private lateinit var tagsListView: RecyclerView
     private lateinit var templateView: TemplateView
-
-    private lateinit var attachmentsContainerView: View
+    private lateinit var tabLayout: TabLayout
     private lateinit var attachmentsListView: RecyclerView
+    private lateinit var metadataView: View
+    private lateinit var uuidReferenceView: TextFieldView
+    private lateinit var createdDateView: TextFieldView
+    private lateinit var modifiedDateView: TextFieldView
+    private lateinit var historyView: TextView
+
     private var attachmentsAdapter: EntryAttachmentsItemsAdapter? = null
+    private var tagsAdapter: TagsAdapter? = null
 
     private var mClipboardHelper: ClipboardHelper? = null
 
     private val mEntryViewModel: EntryViewModel by activityViewModels()
 
-    private var uuidReferenceView: TextFieldView? = null
-    private var createdDateView: TextFieldView? = null
-    private var modifiedDateView: TextFieldView? = null
+    private var tabPosition = -1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -82,25 +96,28 @@ class EntryFragment : DatabaseFragment() {
             view.isVisible = false
         }
 
-        mainSection = view.findViewById(R.id.entry_section_main)
-
+        contentView = view.findViewById(R.id.content_view)
+        tagsListView = view.findViewById(R.id.entry_tags_list_view)
         templateView = view.findViewById(R.id.entry_template)
         loadTemplateSettings()
 
-        attachmentsContainerView = view.findViewById(R.id.entry_attachments_container)
+        tabLayout = view.findViewById(R.id.content_tab_layout)
+
+        tagsAdapter = TagsAdapter(requireContext())
+        tagsListView.adapter = tagsAdapter
+
         attachmentsListView = view.findViewById(R.id.entry_attachments_list)
         attachmentsListView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
 
-        attachmentsListView.addItemDecoration(
-            com.kunzisoft.keepass.view.DividerItemDecorator(
-                ResourcesCompat.getDrawable(resources, R.drawable.divider, requireContext().theme)
-            )
-        )
-
+        metadataView = view.findViewById(R.id.metadata_view)
+        historyView = view.findViewById(R.id.history_count_view)
         setupMetadata(view)
+
+        tabLayout.addOnTabSelectedListener(this)
+        onTabSelected(tabLayout.getTabAt(0))
 
         val colorSecondary =
             ColorUtils.getColorFromAttr(requireContext(), R.attr.colorSecondary, Color.BLUE)
@@ -148,6 +165,20 @@ class EntryFragment : DatabaseFragment() {
                 }
             }
         }
+
+        mEntryViewModel.entryHistory.observe(viewLifecycleOwner) {
+            it?.size ?: return@observe
+
+            val historyCount = it.size
+            historyView.text = "$historyCount"
+            historyView.isEnabled = historyCount > 0
+            historyView.setOnClickListener {
+                activity?.supportFragmentManager?.let { it1 ->
+                    EntryHistoryBottomSheetFragment()
+                        .show(it1, "EntryHistoryBottomSheetFragment")
+                }
+            }
+        }
     }
 
     private fun setupMetadata(view: View) {
@@ -155,17 +186,17 @@ class EntryFragment : DatabaseFragment() {
         createdDateView = view.findViewById(R.id.created_view)
         modifiedDateView = view.findViewById(R.id.modified_view)
 
-        uuidReferenceView?.apply {
+        uuidReferenceView.apply {
             setLabel(R.string.entry_UUID)
             setProtection(false)
             setCopyButtonState(TextFieldView.ButtonState.GONE)
         }
-        createdDateView?.apply {
+        createdDateView.apply {
             setLabel(R.string.entry_created)
             setProtection(false)
             setCopyButtonState(TextFieldView.ButtonState.GONE)
         }
-        modifiedDateView?.apply {
+        modifiedDateView.apply {
             setLabel(R.string.entry_modified)
             setProtection(false)
             setCopyButtonState(TextFieldView.ButtonState.GONE)
@@ -227,24 +258,28 @@ class EntryFragment : DatabaseFragment() {
         val createdTime = entryInfo?.creationTime?.getDateTimeString(resources)
         val modifiedTime = entryInfo?.lastModificationTime?.getDateTimeString(resources)
 
-        createdDateView?.isVisible = if (createdTime != null) {
-            createdDateView?.value = createdTime
+        createdDateView.isVisible = if (createdTime != null) {
+            createdDateView.value = createdTime
             true
         } else false
 
-        modifiedDateView?.isVisible = if (modifiedTime != null) {
-            modifiedDateView?.value = modifiedTime
+        modifiedDateView.isVisible = if (modifiedTime != null) {
+            modifiedDateView.value = modifiedTime
             true
         } else false
-
-        // TODO Custom data
-        // customDataView.text = entryInfo?.customData?.toString()
 
         // Assign special data
         context?.let {
             com.kunzisoft.keepass.utils.UuidUtil.toHexString(entryInfo?.id)?.let {
-                uuidReferenceView?.value = it
+                uuidReferenceView.value = it
             }
+        }
+
+        // Assign tags
+        entryInfo?.let {
+            val tags = it.tags
+            tagsListView.visibility = if (tags.isEmpty()) View.GONE else View.VISIBLE
+            tagsAdapter?.setTags(tags)
         }
     }
 
@@ -283,28 +318,7 @@ class EntryFragment : DatabaseFragment() {
      */
 
     private fun assignAttachments(attachments: List<Attachment>) {
-        attachmentsContainerView.visibility = if (attachments.isEmpty()) View.GONE else View.VISIBLE
-        attachmentsContainerView.apply {
-            val attachmentsHeaderView = findViewById<View>(R.id.entry_show_attachments)
-            val attachmentsContentView =
-                findViewById<CollapsibleLinearLayout>(R.id.entry_attachments_content)
-            val arrow = findViewById<ImageView>(R.id.attachments_arrow)
-            attachmentsHeaderView.setOnClickListener {
-                if (attachmentsContentView.isExpanded) {
-                    attachmentsContentView.collapse()
-                    arrow.animate()
-                        .rotation(0f)
-                        .setDuration(200)
-                        .start()
-                } else {
-                    attachmentsContentView.expand()
-                    arrow.animate()
-                        .rotation(90f)
-                        .setDuration(200)
-                        .start()
-                }
-            }
-        }
+//        attachmentsListView.visibility = if (attachments.isEmpty()) View.GONE else View.VISIBLE
         attachmentsAdapter?.assignItems(attachments.map {
             EntryAttachmentState(it, StreamDirection.DOWNLOAD)
         })
@@ -336,4 +350,57 @@ class EntryFragment : DatabaseFragment() {
             }
         }
     }
+
+    private val fadeInSlideLeft by lazy {
+        AnimationUtils.loadAnimation(context, R.anim.fade_in_slide_left)
+    }
+
+    private val fadeInSlideRight by lazy {
+        AnimationUtils.loadAnimation(context, R.anim.fade_in_slide_right)
+    }
+
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        tab ?: return
+
+        var enterAnim: Animation? = null
+
+        if (tabPosition != -1) {
+            enterAnim = if (tabPosition < tab.position) fadeInSlideLeft
+            else fadeInSlideRight
+
+            contentView.clearAnimation()
+            attachmentsListView.clearAnimation()
+            metadataView.clearAnimation()
+        }
+
+        tabPosition = tab.position
+
+        when (tabPosition) {
+            0 -> {
+                if (enterAnim != null) contentView.startAnimation(enterAnim)
+                contentView.isVisible = true
+                attachmentsListView.isVisible = false
+                metadataView.isVisible = false
+            }
+
+            1 -> {
+                if (enterAnim != null) attachmentsListView.startAnimation(enterAnim)
+                contentView.isVisible = false
+                attachmentsListView.isVisible = true
+                metadataView.isVisible = false
+            }
+
+            2 -> {
+                if (enterAnim != null) metadataView.startAnimation(enterAnim)
+                contentView.isVisible = false
+                attachmentsListView.isVisible = false
+                metadataView.isVisible = true
+            }
+        }
+
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {}
 }

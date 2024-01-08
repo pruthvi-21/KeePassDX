@@ -2,21 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/item_attachment_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:focusable="false"
     android:orientation="vertical"
-    android:paddingVertical="2dp"
+    android:paddingStart="@dimen/default_margin"
+    android:paddingEnd="@dimen/default_margin"
     tools:targetApi="p">
 
     <RelativeLayout
         android:id="@+id/item_attachment_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_attachment_item"
+        android:background="?selectableItemBackground"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/item_attachment_logo"
@@ -109,4 +111,9 @@
             </FrameLayout>
         </FrameLayout>
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?colorDivider" />
 </LinearLayout>

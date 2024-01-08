@@ -18,7 +18,6 @@ import com.kunzisoft.keepass.viewmodels.EntryViewModel
 class EntryHistoryBottomSheetFragment : BottomSheetDialogFragment() {
 
     private lateinit var historyRecyclerView: RecyclerView
-    private lateinit var historyEmptyView: TextView
     private var historyAdapter: EntryHistoryAdapter? = null
 
     private val mEntryViewModel: EntryViewModel by activityViewModels()
@@ -41,7 +40,6 @@ class EntryHistoryBottomSheetFragment : BottomSheetDialogFragment() {
         }
 
         historyRecyclerView = view.findViewById(R.id.entry_history_list)
-        historyEmptyView = view.findViewById(R.id.entry_empty_history)
         historyRecyclerView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
             adapter = historyAdapter
@@ -62,7 +60,6 @@ class EntryHistoryBottomSheetFragment : BottomSheetDialogFragment() {
         }
         historyAdapter?.entryHistoryList?.isEmpty()?.apply {
             historyRecyclerView.isVisible = !this
-            historyEmptyView.isVisible = this
         }
         historyAdapter?.notifyDataSetChanged()
     }

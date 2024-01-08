@@ -1,33 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="5dp"
-    android:layout_marginLeft="5dp"
     android:layout_marginTop="1dp"
     android:layout_marginEnd="5dp"
-    android:layout_marginRight="5dp"
     android:layout_marginBottom="2dp"
-    android:orientation="horizontal"
-    android:paddingBottom="0dp">
+    app:strokeColor="?colorDividerVariant"
+    app:strokeWidth="1dp">
 
     <TextView
         android:id="@+id/tag_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:drawablePadding="2dp"
+        android:drawablePadding="5dp"
         android:gravity="center_vertical"
         android:minHeight="32dp"
-        android:paddingStart="8dp"
-        android:paddingLeft="8dp"
-        android:paddingEnd="8dp"
-        android:paddingRight="8dp"
-        android:textSize="12sp"
-        app:drawableLeftCompat="@drawable/ic_bookmark_white_12dp"
+        android:padding="7dp"
+        android:textSize="13sp"
         app:drawableStartCompat="@drawable/ic_bookmark_white_12dp"
-        app:drawableTint="?attr/colorSecondary"
-        tools:text="text" />
-</androidx.cardview.widget.CardView>
+        app:drawableTint="?colorSecondary"
+        tools:text="Shopping" />
+</com.google.android.material.card.MaterialCardView>

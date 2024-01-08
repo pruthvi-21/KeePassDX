@@ -66,8 +66,6 @@ class EntryActivity : DatabaseLockActivity() {
     private var appBarLayout: AppBarLayout? = null
     private var titleIconView: ImageView? = null
     private var historyView: View? = null
-    private var tagsListView: RecyclerView? = null
-    private var tagsAdapter: TagsAdapter? = null
     private var lockView: View? = null
     private var toolbar: Toolbar? = null
     private var loadingView: ProgressBar? = null
@@ -115,7 +113,6 @@ class EntryActivity : DatabaseLockActivity() {
         appBarLayout = findViewById(R.id.app_bar)
         titleIconView = findViewById(R.id.entry_icon)
         historyView = findViewById(R.id.history_container)
-        tagsListView = findViewById(R.id.entry_tags_list_view)
         lockView = findViewById(R.id.lock_button)
         loadingView = findViewById(R.id.loading)
 
@@ -145,13 +142,6 @@ class EntryActivity : DatabaseLockActivity() {
         taColorSurface.recycle()
         taColorOnSurface.recycle()
         taColorBackground.recycle()
-
-        // Init Tags adapter
-        tagsAdapter = TagsAdapter(this)
-        tagsListView?.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = tagsAdapter
-        }
 
         // Get Entry from UUID
         try {
@@ -219,10 +209,7 @@ class EntryActivity : DatabaseLockActivity() {
                     )
                 collapsingToolbarLayout?.title = entryTitle
                 toolbar?.title = entryTitle
-                // Assign tags
-                val tags = entryInfo.tags
-                tagsListView?.visibility = if (tags.isEmpty()) View.GONE else View.VISIBLE
-                tagsAdapter?.setTags(tags)
+
                 // Assign colors
                 val showEntryColors = PreferencesUtil.showEntryColors(this)
                 mBackgroundColor = if (showEntryColors) entryInfo.backgroundColor else null
@@ -395,11 +382,6 @@ class EntryActivity : DatabaseLockActivity() {
                     }
                 }
                 return true
-            }
-
-            R.id.menu_show_history -> {
-                EntryHistoryBottomSheetFragment()
-                    .show(supportFragmentManager, "EntryHistoryBottomSheetFragment")
             }
 
             R.id.menu_restore_entry_history -> {

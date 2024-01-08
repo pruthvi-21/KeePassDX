@@ -15,14 +15,6 @@
         app:title="@string/entry_history"
         app:titleCentered="true" />
 
-    <TextView
-        android:id="@+id/entry_empty_history"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:gravity="center"
-        android:text="@string/entry_no_history"
-        android:textColor="?android:textColorSecondary" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/entry_history_list"
         android:layout_width="match_parent"
