@@ -502,7 +502,7 @@
     <string name="enable_screenshot_mode_title">Screenshot mode</string>
     <string name="enable_screenshot_mode_summary">Allow third party apps to record or take screenshots of the app</string>
     <string name="enable_files_preview_title">Preview files</string>
-    <string name="enable_files_preview_summary">Supports PDF, Image and text files</string>
+    <string name="enable_files_preview_summary">Preview attachments using compatible app directly from the app.</string>
     <string name="html_text_ad_free">Unlike many password management apps, this one is &lt;strong&gt;ad-free&lt;/strong&gt;, &lt;strong&gt;copylefted libre software&lt;/strong&gt; and does not collect personal data on its servers, no matter what version you use.</string>
     <string name="html_text_buy_pro">By buying the pro version, you will have access to this &lt;strong&gt;visual style&lt;/strong&gt; and you will especially help &lt;strong&gt;the realization of community projects.&lt;/strong&gt;</string>
     <string name="html_text_dev_feature">This feature is &lt;strong&gt;under development&lt;/strong&gt; and requires your &lt;strong&gt;contribution&lt;/strong&gt; to be available soon.</string>
@@ -586,4 +586,7 @@
     <string name="theme_lavender_label">Lavender</string>
     <string name="theme_berry_label">Berry</string>
     <string name="theme_dynamic_label">Dynamic</string>
+
+    <string name="file_provider_authority">com.kunzisoft.keepass.fileprovider</string>
+    <string name="no_compatible_app_found">Compatible app not found</string>
 </resources>

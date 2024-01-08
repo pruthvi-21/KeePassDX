@@ -170,4 +170,7 @@ fun Context.closeDatabase(database: ContextualDatabase?) {
 
     // Release not useful URI permission
     applicationContext.releaseAllUnnecessaryPermissionUris()
+
+    // Remove attachments from cache
+    deleteAttachmentsFromCache()
 }

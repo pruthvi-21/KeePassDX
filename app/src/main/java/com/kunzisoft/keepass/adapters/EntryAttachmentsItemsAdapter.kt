@@ -29,17 +29,13 @@ class EntryAttachmentsItemsAdapter(context: Context) :
     ) {
 
     var database: ContextualDatabase? = null
-    var onItemClickListener: ((item: EntryAttachmentState, fileType: FileType, viewPreview: Boolean) -> Unit)? =
+    var onItemClickListener: ((item: EntryAttachmentState, viewPreview: Boolean) -> Unit)? =
         null
     var onBinaryPreviewLoaded: ((item: EntryAttachmentState) -> Unit)? = null
 
     private val imageExtensionList = arrayOf(".jpg", "jpeg", ".png", ".bmp", ".webp", ".gif")
     private val textFileExtensionList = arrayOf(".txt")
     private val pdfExtension = ".pdf"
-
-    enum class FileType {
-        IMAGE, PDF, TEXT, OTHER
-    }
 
     private var mTitleColor: Int
     private var colorError = ColorUtils.getColorFromAttr(context, R.attr.colorError, Color.RED)
@@ -64,26 +60,20 @@ class EntryAttachmentsItemsAdapter(context: Context) :
     override fun onBindViewHolder(holder: EntryBinariesViewHolder, position: Int) {
         val entryAttachmentState = itemsList[position]
 
-        var fileType = FileType.OTHER
-
         holder.itemView.visibility = View.VISIBLE
 
         holder.binaryFilePreviewIcon.apply {
             isVisible = true
             val fileName = entryAttachmentState.attachment.name
 
-            fileType = if (imageExtensionList.any { fileName.endsWith(it, true) }) {
+            if (imageExtensionList.any { fileName.endsWith(it, true) }) {
                 setImageResource(R.drawable.ic_thumb_image_24dp)
-                FileType.IMAGE
             } else if (fileName.endsWith(pdfExtension)) {
                 setImageResource(R.drawable.ic_thumb_pdf_24dp)
-                FileType.PDF
             } else if (textFileExtensionList.any { fileName.endsWith(it, true) }) {
                 setImageResource(R.drawable.ic_thumb_txt_24dp)
-                FileType.TEXT
             } else {
                 setImageResource(R.drawable.ic_thumb_file_24dp)
-                FileType.OTHER
             }
         }
 
@@ -163,13 +153,13 @@ class EntryAttachmentsItemsAdapter(context: Context) :
                 }
                 holder.binaryFileInfo.setOnClickListener {
                     onItemClickListener?.invoke(
-                        entryAttachmentState, fileType,
+                        entryAttachmentState,
                         !entryAttachmentState.attachment.binaryData.isCorrupted
                     )
                 }
 
                 holder.binaryFileProgressIcon.setOnClickListener {
-                    onItemClickListener?.invoke(entryAttachmentState, fileType, false)
+                    onItemClickListener?.invoke(entryAttachmentState, false)
                 }
             }
         }

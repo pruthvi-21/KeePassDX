@@ -135,19 +135,10 @@
             android:name=".activities.EntryActivity"
             android:configChanges="keyboardHidden" />
         <activity
-            android:name=".activities.PdfViewerActivity"
-            android:exported="true" />
-        <activity
             android:name=".activities.IconPickerActivity"
             android:configChanges="keyboardHidden" />
         <activity
             android:name=".activities.KeyGeneratorActivity"
-            android:configChanges="keyboardHidden" />
-        <activity
-            android:name=".activities.ImageViewerActivity"
-            android:configChanges="keyboardHidden" />
-        <activity
-            android:name=".activities.TextFileViewerActivity"
             android:configChanges="keyboardHidden" />
         <activity
             android:name=".activities.EntryEditActivity"
@@ -261,5 +252,15 @@
         <meta-data
             android:name="com.sec.android.support.multiwindow"
             android:value="true" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="@string/file_provider_authority"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 </manifest> 

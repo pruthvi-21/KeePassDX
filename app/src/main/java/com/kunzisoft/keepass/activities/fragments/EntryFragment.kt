@@ -1,16 +1,13 @@
 package com.kunzisoft.keepass.activities.fragments
 
-import android.app.Activity
 import android.content.DialogInterface
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
@@ -19,9 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.activities.ImageViewerActivity
-import com.kunzisoft.keepass.activities.PdfViewerActivity
-import com.kunzisoft.keepass.activities.TextFileViewerActivity
 import com.kunzisoft.keepass.adapters.EntryAttachmentsItemsAdapter
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.Attachment
@@ -35,14 +29,13 @@ import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.timeout.ClipboardHelper
 import com.kunzisoft.keepass.utils.ColorUtils
 import com.kunzisoft.keepass.utils.TimeUtil.getDateTimeString
-import com.kunzisoft.keepass.utils.UuidUtil
-import com.kunzisoft.keepass.utils.getParcelableExtraCompat
-import com.kunzisoft.keepass.view.DividerItemDecorator
 import com.kunzisoft.keepass.view.TemplateView
 import com.kunzisoft.keepass.view.TextFieldView
 import com.kunzisoft.keepass.view.showByFading
 import com.kunzisoft.keepass.viewmodels.EntryViewModel
 import com.libx.ui.views.CollapsibleLinearLayout
+import com.kunzisoft.keepass.utils.AttachmentUtil
+import java.io.IOException
 
 class EntryFragment : DatabaseFragment() {
 
@@ -317,36 +310,14 @@ class EntryFragment : DatabaseFragment() {
         })
 
         val isPreviewSettingEnabled = PreferencesUtil.isPreviewFilesEnabled(requireContext())
-        attachmentsAdapter?.onItemClickListener = { item, fileType, viewPreview ->
+        attachmentsAdapter?.onItemClickListener = { item, viewPreview ->
             if (isPreviewSettingEnabled && viewPreview) {
-                when (fileType) {
-                    EntryAttachmentsItemsAdapter.FileType.PDF -> {
-                        pdfAndImagePreviewLauncher.launch(
-                            Intent(requireContext(), PdfViewerActivity::class.java).apply {
-                                putExtra(EXTRA_ATTACHMENT_TAG, item.attachment)
-                            }
-                        )
+                try {
+                    mDatabase?.let {
+                        AttachmentUtil.previewAttachment(requireContext(), it, item.attachment)
                     }
-
-                    EntryAttachmentsItemsAdapter.FileType.IMAGE -> {
-                        pdfAndImagePreviewLauncher.launch(
-                            Intent(requireContext(), ImageViewerActivity::class.java).apply {
-                                putExtra(EXTRA_ATTACHMENT_TAG, item.attachment)
-                            }
-                        )
-                    }
-
-                    EntryAttachmentsItemsAdapter.FileType.TEXT -> {
-                        pdfAndImagePreviewLauncher.launch(
-                            Intent(requireContext(), TextFileViewerActivity::class.java).apply {
-                                putExtra(EXTRA_ATTACHMENT_TAG, item.attachment)
-                            }
-                        )
-                    }
-
-                    else -> {
-                        mEntryViewModel.onAttachmentSelected(item.attachment)
-                    }
+                } catch (e: IOException) {
+                    Log.e("TAG", "catch: exception occurred", e)
                 }
             } else {
                 mEntryViewModel.onAttachmentSelected(item.attachment)
@@ -358,37 +329,7 @@ class EntryFragment : DatabaseFragment() {
         attachmentsAdapter?.putItem(attachmentToDownload)
     }
 
-    //launcher for pdf preview
-    val pdfAndImagePreviewLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            when (result.resultCode) {
-                Activity.RESULT_OK -> {
-                    result.data?.let {
-                        val attachment =
-                            it.getParcelableExtraCompat<Attachment>(EXTRA_ATTACHMENT_TAG)
-                        val value = it.getBooleanExtra(EXTRA_ACTION_DOWNLOAD, false)
-                        if (value && attachment != null) {
-                            mEntryViewModel.onAttachmentSelected(attachment)
-                        }
-                    }
-                }
-
-                Activity.RESULT_CANCELED -> {
-                    result.data?.let {
-                        if (it.getBooleanExtra(EXTRA_PREVIEW_FAILED_TAG, false)) {
-                            Toast.makeText(context, "Unable to load", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            }
-        }
-
     companion object {
-
-        const val EXTRA_ACTION_DOWNLOAD = "extra_action_download"
-        const val EXTRA_ATTACHMENT_TAG = "extra_attachment_tag"
-        const val EXTRA_PREVIEW_FAILED_TAG = "extra_preview_failed_tag"
-
         fun getInstance(): EntryFragment {
             return EntryFragment().apply {
                 arguments = Bundle()

@@ -2,4 +2,6 @@
 <resources>
     <string name="keyboard_label">Magikeyboard (KeeTrunk-dev)</string>
     <string name="autofill_sign_in_prompt">Sign in with KeeTrunk-dev</string>
+
+    <string name="file_provider_authority">com.kunzisoft.keepass.dev.fileprovider</string>
 </resources>
