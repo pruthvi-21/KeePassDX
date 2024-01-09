@@ -21,7 +21,7 @@
             android:clipToPadding="false"
             android:contentDescription="@string/content_description_node_children"
             android:nestedScrollingEnabled="true"
-            android:paddingBottom="120dp"
+            android:paddingBottom="130dp"
             android:scrollbarStyle="insideOverlay"
             android:scrollbars="vertical" />
     </LinearLayout>
