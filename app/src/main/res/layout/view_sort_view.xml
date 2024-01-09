@@ -21,6 +21,7 @@
             android:drawablePadding="5dp"
             android:gravity="center"
             android:padding="10dp"
+            android:textColor="?android:textColorSecondary"
             app:drawableStartCompat="@drawable/ic_sort_white"
             app:drawableTint="?android:textColorSecondary"
             tools:text="Name" />
@@ -38,7 +39,7 @@
             android:background="@drawable/background_sort_view"
             android:gravity="center"
             android:importantForAccessibility="no"
-            android:padding="7dp"
+            android:padding="8dp"
             app:tint="?android:textColorSecondary"
             tools:src="@drawable/ic_sort_order_ascending" />
     </LinearLayout>

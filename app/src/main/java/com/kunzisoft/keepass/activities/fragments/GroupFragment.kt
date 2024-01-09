@@ -285,6 +285,7 @@ class GroupFragment : DatabaseFragment(), SortView.SortSelectionListener {
             override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
                 nodeActionSelectionMode = false
                 nodeActionPasteMode = PasteMode.UNDEFINED
+                mSortView?.isEnabled = false
                 return true
             }
 
@@ -375,6 +376,7 @@ class GroupFragment : DatabaseFragment(), SortView.SortSelectionListener {
                 mAdapter?.unselectActionNodes()
                 nodeActionPasteMode = PasteMode.UNDEFINED
                 nodeActionSelectionMode = false
+                mSortView?.isEnabled = true
                 onDestroyActionMode(mode)
             }
         }

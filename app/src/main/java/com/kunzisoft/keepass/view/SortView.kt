@@ -169,6 +169,12 @@ class SortView @JvmOverloads constructor(
         this.listener = listener
     }
 
+    override fun setEnabled(enabled: Boolean) {
+        super.setEnabled(enabled)
+        sortView.isEnabled = enabled
+        sortOrderView.isEnabled = enabled
+    }
+
     interface SortSelectionListener {
         fun onSortSelected(
             sortNodeEnum: SortNodeEnum,
