@@ -378,10 +378,7 @@ class NodesAdapter(
         // Assign icon colors
         var iconColor = if (holder.container.isSelected)
             mColorOnSurface
-        else when (subNode.type) {
-            Type.GROUP -> mTextColor
-            Type.ENTRY -> mColorSecondary
-        }
+        else mColorSecondary
 
         val subtitleType = PreferencesUtil.getListItemSubtitle(context)
 
