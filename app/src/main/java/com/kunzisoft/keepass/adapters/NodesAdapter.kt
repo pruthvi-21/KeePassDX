@@ -466,9 +466,10 @@ class NodesAdapter(
             assignBackgroundColor(holder.container, null)
             if (mShowNumberEntries) {
                 holder.numberChildren?.apply {
-                    text = (subNode as Group)
+                    val childCount = "(" + (subNode as Group)
                         .recursiveNumberOfChildEntries
-                        .toString()
+                        .toString() + ")"
+                    text = childCount
                     setTextSize(
                         mTextSizeUnit,
                         mNumberChildrenTextDefaultDimension,
