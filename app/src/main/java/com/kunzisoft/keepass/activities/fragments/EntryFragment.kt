@@ -54,7 +54,9 @@ class EntryFragment : DatabaseFragment() {
     private var contentView: View? = null
     private lateinit var tagsListView: RecyclerView
     private lateinit var templateView: TemplateView
-    private var attachmentsListView: RecyclerView? = null
+    private var attachmentsView: View? = null
+    private lateinit var attachmentsListView: RecyclerView
+    private lateinit var noAttachmentsView: View
     private var metadataView: View? = null
     private lateinit var uuidReferenceView: TextFieldView
     private lateinit var createdDateView: TextFieldView
@@ -105,8 +107,10 @@ class EntryFragment : DatabaseFragment() {
         tagsAdapter = TagsAdapter(requireContext())
         tagsListView.adapter = tagsAdapter
 
+        attachmentsView = view.findViewById(R.id.attachments_view)
+        noAttachmentsView = view.findViewById(R.id.no_attachments_view)
         attachmentsListView = view.findViewById(R.id.entry_attachments_list)
-        attachmentsListView?.apply {
+        attachmentsListView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
@@ -210,7 +214,7 @@ class EntryFragment : DatabaseFragment() {
             attachmentsAdapter?.database = database
         }
 
-        attachmentsListView?.adapter = attachmentsAdapter
+        attachmentsListView.adapter = attachmentsAdapter
     }
 
     private fun loadTemplateSettings() {
@@ -319,7 +323,8 @@ class EntryFragment : DatabaseFragment() {
      */
 
     private fun assignAttachments(attachments: List<Attachment>) {
-//        attachmentsListView.visibility = if (attachments.isEmpty()) View.GONE else View.VISIBLE
+        attachmentsListView.isVisible = attachments.isNotEmpty()
+        noAttachmentsView.isVisible = attachments.isEmpty()
         attachmentsAdapter?.assignItems(attachments.map {
             EntryAttachmentState(it, StreamDirection.DOWNLOAD)
         })
@@ -374,7 +379,7 @@ class EntryFragment : DatabaseFragment() {
             else fadeInSlideRight
 
             contentView?.clearAnimation()
-            attachmentsListView?.clearAnimation()
+            attachmentsView?.clearAnimation()
             metadataView?.clearAnimation()
         }
 
@@ -384,21 +389,21 @@ class EntryFragment : DatabaseFragment() {
             0 -> {
                 if (enterAnim != null) contentView?.startAnimation(enterAnim)
                 contentView?.isVisible = true
-                attachmentsListView?.isVisible = false
+                attachmentsView?.isVisible = false
                 metadataView?.isVisible = false
             }
 
             1 -> {
-                if (enterAnim != null) attachmentsListView?.startAnimation(enterAnim)
+                if (enterAnim != null) attachmentsView?.startAnimation(enterAnim)
                 contentView?.isVisible = false
-                attachmentsListView?.isVisible = true
+                attachmentsView?.isVisible = true
                 metadataView?.isVisible = false
             }
 
             2 -> {
                 if (enterAnim != null) metadataView?.startAnimation(enterAnim)
                 contentView?.isVisible = false
-                attachmentsListView?.isVisible = false
+                attachmentsView?.isVisible = false
                 metadataView?.isVisible = true
             }
         }

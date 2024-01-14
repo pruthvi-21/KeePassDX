@@ -66,12 +66,28 @@
             android:background="?colorDivider" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/entry_attachments_list"
+    <FrameLayout
+        android:id="@+id/attachments_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="true"
-        android:visibility="gone" />
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/entry_attachments_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="true" />
+
+        <TextView
+            android:id="@+id/no_attachments_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:minHeight="200dp"
+            android:text="@string/entry_no_attachments"
+            android:textColor="?android:textColorSecondary"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/content_view"
