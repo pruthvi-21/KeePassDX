@@ -57,6 +57,7 @@
     <string name="entry_UUID">UUID</string>
     <string name="entry_history">History</string>
     <string name="entry_attachments">Attachments</string>
+    <string name="no_details_text">No details added</string>
     <string name="entry_no_attachments">No attachments</string>
     <string name="additional_options">Additional Options</string>
     <string name="master_password">Master Password</string>

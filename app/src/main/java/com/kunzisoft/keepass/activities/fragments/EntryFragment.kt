@@ -52,6 +52,7 @@ class EntryFragment : DatabaseFragment() {
     private lateinit var rootView: View
 
     private var contentView: View? = null
+    private lateinit var noDetailsView: View
     private lateinit var tagsListView: RecyclerView
     private lateinit var templateView: TemplateView
     private var attachmentsView: View? = null
@@ -100,6 +101,7 @@ class EntryFragment : DatabaseFragment() {
         }
 
         contentView = view.findViewById(R.id.content_view)
+        noDetailsView = view.findViewById(R.id.no_details_view)
         tagsListView = view.findViewById(R.id.entry_tags_list_view)
         templateView = view.findViewById(R.id.entry_template)
         loadTemplateSettings()
@@ -283,8 +285,18 @@ class EntryFragment : DatabaseFragment() {
         // Assign tags
         entryInfo?.let {
             val tags = it.tags
-            tagsListView.visibility = if (tags.isEmpty()) View.GONE else View.VISIBLE
+            tagsListView.isVisible = tags.isNotEmpty()
             tagsAdapter?.setTags(tags)
+        }
+
+        entryInfo?.let {
+            noDetailsView.isVisible = it.customFields.isEmpty() &&
+                    it.tags.isEmpty() &&
+                    it.username.isEmpty() &&
+                    it.password.isEmpty() &&
+                    it.notes.isEmpty() &&
+                    !it.expires &&
+                    it.url.isEmpty()
         }
     }
 
