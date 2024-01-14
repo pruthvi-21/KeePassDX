@@ -60,6 +60,7 @@ class EntryFragment : DatabaseFragment() {
     private lateinit var createdDateView: TextFieldView
     private lateinit var modifiedDateView: TextFieldView
     private lateinit var historyView: TextView
+    private lateinit var historyViewContainer: View
 
     private var attachmentsAdapter: EntryAttachmentsItemsAdapter? = null
     private var tagsAdapter: TagsAdapter? = null
@@ -112,6 +113,7 @@ class EntryFragment : DatabaseFragment() {
 
         metadataView = view.findViewById(R.id.metadata_view)
         historyView = view.findViewById(R.id.history_count_view)
+        historyViewContainer = view.findViewById(R.id.history_count_container)
         setupMetadata(view)
 
         val tabPos = savedInstanceState?.getInt(EntryActivity.KEY_TAB_POSITION)
@@ -171,10 +173,10 @@ class EntryFragment : DatabaseFragment() {
             val historyCount = it.size
             historyView.text = "$historyCount"
             historyView.isEnabled = historyCount > 0
-            historyView.setOnClickListener {
+            historyViewContainer.setOnClickListener {
                 activity?.supportFragmentManager?.let { it1 ->
                     EntryHistoryBottomSheetFragment()
-                        .show(it1, "EntryHistoryBottomSheetFragment")
+                        .show(it1, TAG_ENTRY_HISTORY_BOTTOM_SHEET_FRAGMENT)
                 }
             }
         }
@@ -348,6 +350,7 @@ class EntryFragment : DatabaseFragment() {
     }
 
     companion object {
+        const val TAG_ENTRY_HISTORY_BOTTOM_SHEET_FRAGMENT = "EntryHistoryBottomSheetFragment"
         fun getInstance(): EntryFragment {
             return EntryFragment().apply {
                 arguments = Bundle()
