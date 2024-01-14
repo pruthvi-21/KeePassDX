@@ -76,6 +76,8 @@ class NodesAdapter(
         context.getString(R.string.list_item_subtitle_username_value)
     private val LIST_ITEM_SUBTITLE_UUID_SETTING_VALUE =
         context.getString(R.string.list_item_subtitle_uuid_value)
+    private val LIST_ITEM_SUBTITLE_TAGS_SETTING_VALUE =
+        context.getString(R.string.list_item_subtitle_tags_value)
     private val LIST_ITEM_SUBTITLE_DATE_CREATED_SETTING_VALUE =
         context.getString(R.string.list_item_subtitle_date_created_value)
     private val LIST_ITEM_SUBTITLE_DATE_MODIFIED_SETTING_VALUE =
@@ -402,6 +404,13 @@ class NodesAdapter(
                         isVisible = (nodeId != null) and (entry.getVisualTitle() != nodeId)
                     }
 
+                    LIST_ITEM_SUBTITLE_TAGS_SETTING_VALUE -> {
+                        val tagsList = database.getEntryById(subNode.nodeId)?.tags
+
+                        text = tagsList?.toList()?.joinToString(", ")
+                        isVisible = tagsList?.isNotEmpty() == true
+                    }
+
                     else -> {
                         isVisible = false
                     }
@@ -506,6 +515,15 @@ class NodesAdapter(
         //set subtitle
         holder.subText.apply {
             when (subtitleType) {
+
+                LIST_ITEM_SUBTITLE_TAGS_SETTING_VALUE -> {
+                    if (subNode.type == Type.GROUP && subNode.nodeId != null) {
+                        val tagsList = database.getGroupById(subNode.nodeId!!)?.tags
+
+                        text = tagsList?.toList()?.joinToString(", ")
+                        isVisible = tagsList?.isNotEmpty() == true
+                    }
+                }
 
                 LIST_ITEM_SUBTITLE_DATE_CREATED_SETTING_VALUE -> {
                     text = subNode.creationTime.getDateTimeString(resources)

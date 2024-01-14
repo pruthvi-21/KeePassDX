@@ -551,6 +551,7 @@
     <string-array name="list_item_subtitle_options">
         <item>Username</item>
         <item>UUID</item>
+        <item>Tags</item>
         <item>Date Created</item>
         <item>Date Modified</item>
         <item>Expiry</item>
