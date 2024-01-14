@@ -12,8 +12,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.animation.Animation
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
@@ -22,11 +24,14 @@ import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.tabs.TabLayout
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.activities.fragments.EntryFragment
 import com.kunzisoft.keepass.activities.fragments.EntryHistoryBottomSheetFragment
 import com.kunzisoft.keepass.activities.helpers.ExternalFileHelper
 import com.kunzisoft.keepass.activities.helpers.SpecialMode
@@ -46,7 +51,6 @@ import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.tasks.ActionRunnable
 import com.kunzisoft.keepass.tasks.AttachmentFileBinderManager
 import com.kunzisoft.keepass.timeout.TimeoutHelper
-import com.kunzisoft.keepass.utils.UuidUtil
 import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.view.WindowInsetPosition
 import com.kunzisoft.keepass.view.applyWindowInsets
@@ -58,7 +62,7 @@ import com.kunzisoft.keepass.view.showActionErrorIfNeeded
 import com.kunzisoft.keepass.viewmodels.EntryViewModel
 import java.util.UUID
 
-class EntryActivity : DatabaseLockActivity() {
+class EntryActivity : DatabaseLockActivity(), TabLayout.OnTabSelectedListener {
 
     private var footer: ViewGroup? = null
     private var coordinatorLayout: CoordinatorLayout? = null
@@ -69,6 +73,7 @@ class EntryActivity : DatabaseLockActivity() {
     private var lockView: View? = null
     private var toolbar: Toolbar? = null
     private var loadingView: ProgressBar? = null
+    private var tabLayout: TabLayout? = null
 
     private val mEntryViewModel: EntryViewModel by viewModels()
 
@@ -80,6 +85,7 @@ class EntryActivity : DatabaseLockActivity() {
     private var mAttachmentFileBinderManager: AttachmentFileBinderManager? = null
     private var mExternalFileHelper: ExternalFileHelper? = null
     private var mAttachmentSelected: Attachment? = null
+    private var mEntryFragment: EntryFragment? = null
 
     private var mEntryActivityResultLauncher = EntryEditActivity.registerForEntryResult(this) {
         // Reload the current id from database
@@ -115,6 +121,7 @@ class EntryActivity : DatabaseLockActivity() {
         historyView = findViewById(R.id.history_container)
         lockView = findViewById(R.id.lock_button)
         loadingView = findViewById(R.id.loading)
+        tabLayout = findViewById(R.id.content_tab_layout)
 
         // To apply fit window with transparency
         setTransparentNavigationBar {
@@ -170,9 +177,18 @@ class EntryActivity : DatabaseLockActivity() {
         // Init attachment service binder manager
         mAttachmentFileBinderManager = AttachmentFileBinderManager(this)
 
+        val fragment = supportFragmentManager.findFragmentById(R.id.entry_content)
+        if (fragment is EntryFragment?) {
+            mEntryFragment = fragment
+        }
+
         lockView?.setOnClickListener {
             lockAndExit()
         }
+
+        tabLayout?.addOnTabSelectedListener(this)
+        val tabPos = savedInstanceState?.getInt(KEY_TAB_POSITION) ?: DEFAULT_TAB_POSITION
+        tabLayout!!.getTabAt(tabPos)?.select()
 
         mEntryViewModel.entryInfoHistory.observe(this) { entryInfoHistory ->
             if (entryInfoHistory != null) {
@@ -419,6 +435,28 @@ class EntryActivity : DatabaseLockActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        tabLayout?.selectedTabPosition?.let {
+            outState.putInt(KEY_TAB_POSITION, it)
+        }
+    }
+
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        tab ?: return
+        mEntryFragment?.onTabSelected(tab.position)
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+    override fun onDatabaseBackPressed() {
+        if (tabLayout?.selectedTabPosition != 0) {
+            tabLayout?.getTabAt(0)?.select()
+        } else super.onDatabaseBackPressed()
+    }
+
     override fun finish() {
         // Transit data in previous Activity after an update
         Intent().apply {
@@ -434,7 +472,8 @@ class EntryActivity : DatabaseLockActivity() {
         const val KEY_ENTRY = "KEY_ENTRY"
         const val KEY_ENTRY_HISTORY_POSITION = "KEY_ENTRY_HISTORY_POSITION"
 
-        const val ENTRY_FRAGMENT_TAG = "ENTRY_FRAGMENT_TAG"
+        const val KEY_TAB_POSITION = "KEY_TAB_POSITION"
+        const val DEFAULT_TAB_POSITION = 0
 
         /**
          * Open standard Entry activity

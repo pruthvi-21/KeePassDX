@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.google.android.material.tabs.TabLayout
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.activities.EntryActivity
 import com.kunzisoft.keepass.adapters.EntryAttachmentsItemsAdapter
 import com.kunzisoft.keepass.adapters.TagsAdapter
 import com.kunzisoft.keepass.database.ContextualDatabase
@@ -46,16 +47,15 @@ import com.kunzisoft.keepass.viewmodels.EntryViewModel
 import com.kunzisoft.keepass.utils.AttachmentUtil
 import java.io.IOException
 
-class EntryFragment : DatabaseFragment(), TabLayout.OnTabSelectedListener {
+class EntryFragment : DatabaseFragment() {
 
     private lateinit var rootView: View
 
-    private lateinit var contentView: View
+    private var contentView: View? = null
     private lateinit var tagsListView: RecyclerView
     private lateinit var templateView: TemplateView
-    private lateinit var tabLayout: TabLayout
-    private lateinit var attachmentsListView: RecyclerView
-    private lateinit var metadataView: View
+    private var attachmentsListView: RecyclerView? = null
+    private var metadataView: View? = null
     private lateinit var uuidReferenceView: TextFieldView
     private lateinit var createdDateView: TextFieldView
     private lateinit var modifiedDateView: TextFieldView
@@ -101,13 +101,11 @@ class EntryFragment : DatabaseFragment(), TabLayout.OnTabSelectedListener {
         templateView = view.findViewById(R.id.entry_template)
         loadTemplateSettings()
 
-        tabLayout = view.findViewById(R.id.content_tab_layout)
-
         tagsAdapter = TagsAdapter(requireContext())
         tagsListView.adapter = tagsAdapter
 
         attachmentsListView = view.findViewById(R.id.entry_attachments_list)
-        attachmentsListView.apply {
+        attachmentsListView?.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
@@ -116,8 +114,9 @@ class EntryFragment : DatabaseFragment(), TabLayout.OnTabSelectedListener {
         historyView = view.findViewById(R.id.history_count_view)
         setupMetadata(view)
 
-        tabLayout.addOnTabSelectedListener(this)
-        onTabSelected(tabLayout.getTabAt(0))
+        val tabPos = savedInstanceState?.getInt(EntryActivity.KEY_TAB_POSITION)
+            ?: EntryActivity.DEFAULT_TAB_POSITION
+        onTabSelected(tabPos)
 
         val colorSecondary =
             ColorUtils.getColorFromAttr(requireContext(), R.attr.colorSecondary, Color.BLUE)
@@ -209,7 +208,7 @@ class EntryFragment : DatabaseFragment(), TabLayout.OnTabSelectedListener {
             attachmentsAdapter?.database = database
         }
 
-        attachmentsListView.adapter = attachmentsAdapter
+        attachmentsListView?.adapter = attachmentsAdapter
     }
 
     private fun loadTemplateSettings() {
@@ -343,6 +342,11 @@ class EntryFragment : DatabaseFragment(), TabLayout.OnTabSelectedListener {
         attachmentsAdapter?.putItem(attachmentToDownload)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt(EntryActivity.KEY_TAB_POSITION, tabPosition)
+        super.onSaveInstanceState(outState)
+    }
+
     companion object {
         fun getInstance(): EntryFragment {
             return EntryFragment().apply {
@@ -359,48 +363,42 @@ class EntryFragment : DatabaseFragment(), TabLayout.OnTabSelectedListener {
         AnimationUtils.loadAnimation(context, R.anim.fade_in_slide_right)
     }
 
-    override fun onTabSelected(tab: TabLayout.Tab?) {
-        tab ?: return
-
+    fun onTabSelected(tabAt: Int) {
         var enterAnim: Animation? = null
 
         if (tabPosition != -1) {
-            enterAnim = if (tabPosition < tab.position) fadeInSlideLeft
+            enterAnim = if (tabPosition < tabAt) fadeInSlideLeft
             else fadeInSlideRight
 
-            contentView.clearAnimation()
-            attachmentsListView.clearAnimation()
-            metadataView.clearAnimation()
+            contentView?.clearAnimation()
+            attachmentsListView?.clearAnimation()
+            metadataView?.clearAnimation()
         }
 
-        tabPosition = tab.position
+        tabPosition = tabAt
 
         when (tabPosition) {
             0 -> {
-                if (enterAnim != null) contentView.startAnimation(enterAnim)
-                contentView.isVisible = true
-                attachmentsListView.isVisible = false
-                metadataView.isVisible = false
+                if (enterAnim != null) contentView?.startAnimation(enterAnim)
+                contentView?.isVisible = true
+                attachmentsListView?.isVisible = false
+                metadataView?.isVisible = false
             }
 
             1 -> {
-                if (enterAnim != null) attachmentsListView.startAnimation(enterAnim)
-                contentView.isVisible = false
-                attachmentsListView.isVisible = true
-                metadataView.isVisible = false
+                if (enterAnim != null) attachmentsListView?.startAnimation(enterAnim)
+                contentView?.isVisible = false
+                attachmentsListView?.isVisible = true
+                metadataView?.isVisible = false
             }
 
             2 -> {
-                if (enterAnim != null) metadataView.startAnimation(enterAnim)
-                contentView.isVisible = false
-                attachmentsListView.isVisible = false
-                metadataView.isVisible = true
+                if (enterAnim != null) metadataView?.startAnimation(enterAnim)
+                contentView?.isVisible = false
+                attachmentsListView?.isVisible = false
+                metadataView?.isVisible = true
             }
         }
 
     }
-
-    override fun onTabUnselected(tab: TabLayout.Tab?) {}
-
-    override fun onTabReselected(tab: TabLayout.Tab?) {}
 }

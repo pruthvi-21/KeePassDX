@@ -1,132 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/entry_section_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:paddingTop="@dimen/card_view_margin_vertical"
     android:paddingBottom="24dp">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/content_tab_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
-        android:background="#0000"
-        android:minWidth="150dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/history_container">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_item_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_info_white_24dp" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_item_attachments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_attach_file_white_24dp" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_item_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_more_white_24dp" />
-    </com.google.android.material.tabs.TabLayout>
-
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/metadata_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.kunzisoft.keepass.view.TextFieldView
+            android:id="@+id/uuid_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.kunzisoft.keepass.view.TextFieldView
+            android:id="@+id/created_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.kunzisoft.keepass.view.TextFieldView
+            android:id="@+id/modified_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
-            android:id="@+id/metadata_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/default_margin"
+            android:paddingEnd="@dimen/default_margin">
 
-            <com.kunzisoft.keepass.view.TextFieldView
-                android:id="@+id/uuid_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.kunzisoft.keepass.view.TextFieldView
-                android:id="@+id/created_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.kunzisoft.keepass.view.TextFieldView
-                android:id="@+id/modified_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="@dimen/default_margin"
-                android:paddingEnd="@dimen/default_margin">
-
-                <TextView
-                    style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="History: " />
-
-                <TextView
-                    android:id="@+id/history_count_view"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="start|center_vertical"
-                    android:minWidth="20dp"
-                    android:padding="0dp"
-                    tools:text="5" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginEnd="@dimen/default_margin"
-                android:background="?colorDivider" />
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/entry_attachments_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="true"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:id="@+id/content_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/entry_tags_list_view"
+            <TextView
+                style="@style/Theme.Keepass.TextAppearance.LabelTextStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:orientation="horizontal"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                android:text="History: " />
 
-            <com.kunzisoft.keepass.view.TemplateView
-                android:id="@+id/entry_template"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/history_count_view"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start|center_vertical"
+                android:minWidth="20dp"
+                android:padding="0dp"
+                tools:text="5" />
         </LinearLayout>
-    </FrameLayout>
-</LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:background="?colorDivider" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/entry_attachments_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="true"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/content_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/entry_tags_list_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <com.kunzisoft.keepass.view.TemplateView
+            android:id="@+id/entry_template"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</FrameLayout>
