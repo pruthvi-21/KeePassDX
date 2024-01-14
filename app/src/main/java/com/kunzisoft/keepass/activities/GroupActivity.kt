@@ -349,11 +349,16 @@ class GroupActivity : DatabaseLockActivity(),
 
         // Menu in drawer
         databaseNavView?.apply {
+            inflateMenu(R.menu.tags)
             inflateMenu(R.menu.database_extra)
             inflateMenu(R.menu.about)
 
             setNavigationItemSelectedListener { menuItem ->
                 when (menuItem.itemId) {
+                    R.id.menu_tags -> {
+                        TagsActivity.launch(this@GroupActivity)
+                    }
+
                     R.id.menu_app_settings -> {
                         // To avoid flickering when launch settings in a LockingActivity
                         SettingsActivity.launch(this@GroupActivity, true)
