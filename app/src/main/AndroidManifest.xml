@@ -135,6 +135,9 @@
             android:name=".activities.EntryActivity"
             android:configChanges="keyboardHidden" />
         <activity
+            android:name=".activities.TagsActivity"
+            android:configChanges="keyboardHidden" />
+        <activity
             android:name=".activities.IconPickerActivity"
             android:configChanges="keyboardHidden" />
         <activity
