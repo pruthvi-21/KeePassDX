@@ -38,14 +38,18 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.activities.dialogs.GroupDialogFragment
 import com.kunzisoft.keepass.activities.dialogs.GroupEditDialogFragment
 import com.kunzisoft.keepass.activities.dialogs.MainCredentialDialogFragment
 import com.kunzisoft.keepass.activities.fragments.GroupFragment
+import com.kunzisoft.keepass.activities.fragments.TagsListFragment
 import com.kunzisoft.keepass.activities.helpers.EntrySelectionHelper
 import com.kunzisoft.keepass.activities.helpers.ExternalFileHelper
 import com.kunzisoft.keepass.activities.helpers.SpecialMode
@@ -102,6 +106,7 @@ class GroupActivity : DatabaseLockActivity(),
     GroupFragment.NodesActionMenuListener,
     GroupFragment.OnScrollListener,
     GroupFragment.GroupRefreshedListener,
+    NavigationView.OnNavigationItemSelectedListener,
     MainCredentialDialogFragment.AskMainCredentialDialogListener {
 
     // Views
@@ -124,6 +129,10 @@ class GroupActivity : DatabaseLockActivity(),
     private var addNodeButtonView: AddNodeButtonView? = null
     private var breadcrumbListView: RecyclerView? = null
     private var loadingView: ProgressBar? = null
+    private var tagsListFragmentContainer: ViewGroup? = null
+
+    private var allEntriesMenuItem: MenuItem? = null
+    private var tagsMenuItem: MenuItem? = null
 
     private val mGroupViewModel: GroupViewModel by viewModels()
     private val mGroupEditViewModel: GroupEditViewModel by viewModels()
@@ -131,6 +140,7 @@ class GroupActivity : DatabaseLockActivity(),
     private var mBreadcrumbAdapter: BreadcrumbAdapter? = null
 
     private var mGroupFragment: GroupFragment? = null
+    private var mTagsListFragment: TagsListFragment? = null
     private var mRecyclingBinEnabled = false
     private var mRecyclingBinIsCurrentGroup = false
     private var mRequestStartupSearch = true
@@ -186,6 +196,9 @@ class GroupActivity : DatabaseLockActivity(),
             breadcrumbListView?.isVisible = false
             databaseColorView?.isVisible = false
             databaseModifiedView?.isVisible = false
+            if (tagsMenuItem?.isChecked == true) {
+                tagsListFragmentContainer?.isVisible = false
+            }
 
             searchFiltersView?.isVisible = true
             searchFiltersView?.onParametersChangeListener = mOnSearchFiltersChangeListener
@@ -199,6 +212,9 @@ class GroupActivity : DatabaseLockActivity(),
             breadcrumbListView?.isVisible = true
             databaseColorView?.isVisible = true
             databaseModifiedView?.isVisible = mDatabase?.dataModifiedSinceLastLoading == true
+            if (tagsMenuItem?.isChecked == true) {
+                tagsListFragmentContainer?.isVisible = true
+            }
 
             searchFiltersView?.isVisible = false
             searchFiltersView?.onParametersChangeListener = null
@@ -284,6 +300,7 @@ class GroupActivity : DatabaseLockActivity(),
         toolbarAction = findViewById(R.id.toolbar_action)
         lockView = findViewById(R.id.lock_button)
         loadingView = findViewById(R.id.loading)
+        tagsListFragmentContainer = findViewById(R.id.tags_list_fragment_container)
 
         window.statusBarColor =
             ColorUtils.getColorFromAttr(this, R.attr.colorSurfaceVariant2, Color.BLACK)
@@ -353,63 +370,13 @@ class GroupActivity : DatabaseLockActivity(),
             inflateMenu(R.menu.database_extra)
             inflateMenu(R.menu.about)
 
-            setNavigationItemSelectedListener { menuItem ->
-                when (menuItem.itemId) {
-                    R.id.menu_tags -> {
-                        TagsActivity.launch(this@GroupActivity)
-                    }
+            allEntriesMenuItem = menu.findItem(R.id.menu_all_entries)
+            tagsMenuItem = menu.findItem(R.id.menu_tags)
 
-                    R.id.menu_app_settings -> {
-                        // To avoid flickering when launch settings in a LockingActivity
-                        SettingsActivity.launch(this@GroupActivity, true)
-                        CLOSE_DRAWER = true
-                    }
+            setNavigationItemSelectedListener(this@GroupActivity)
 
-                    R.id.menu_merge_from -> {
-                        mExternalFileHelper?.openDocument()
-                        CLOSE_DRAWER = true
-                    }
-
-                    R.id.menu_save_copy_to -> {
-                        mExternalFileHelper?.createDocument(
-                            getString(R.string.database_file_name_default) +
-                                    getString(R.string.database_file_name_copy) +
-                                    mDatabase?.defaultFileExtension
-                        )
-                        CLOSE_DRAWER = true
-                    }
-
-                    R.id.menu_lock_all -> {
-                        lockAndExit()
-                    }
-
-                    R.id.menu_about -> {
-                        startActivity(
-                            Intent(
-                                this@GroupActivity,
-                                com.kunzisoft.keepass.activities.AboutActivity::class.java
-                            )
-                        )
-                        CLOSE_DRAWER = true
-                    }
-
-                    R.id.menu_save_database -> {
-                        saveDatabase()
-                        drawerLayout?.close()
-                    }
-
-                    R.id.menu_merge_database -> {
-                        mergeDatabase()
-                        drawerLayout?.close()
-                    }
-
-                    R.id.menu_reload_database -> {
-                        reloadDatabase()
-                        drawerLayout?.close()
-                    }
-                }
-                false
-            }
+            //initial selection
+            onNavigationItemSelected(allEntriesMenuItem!!)
         }
 
         searchFiltersView?.closeAdvancedFilters()
@@ -484,11 +451,21 @@ class GroupActivity : DatabaseLockActivity(),
         if (mGroupFragment == null)
             mGroupFragment = GroupFragment()
 
-        // Attach fragment to content view
         supportFragmentManager.beginTransaction().replace(
             R.id.nodes_list_fragment_container,
             mGroupFragment!!,
             GROUP_FRAGMENT_TAG
+        ).commit()
+
+        mTagsListFragment =
+            supportFragmentManager.findFragmentByTag(TAGS_LIST_FRAGMENT_TAG) as TagsListFragment?
+        if (mTagsListFragment == null)
+            mTagsListFragment = TagsListFragment()
+
+        supportFragmentManager.beginTransaction().replace(
+            R.id.tags_list_fragment_container,
+            mTagsListFragment!!,
+            TAGS_LIST_FRAGMENT_TAG
         ).commit()
 
         // Observe main group
@@ -640,6 +617,97 @@ class GroupActivity : DatabaseLockActivity(),
         }
     }
 
+    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
+        when (menuItem.itemId) {
+            R.id.menu_all_entries -> {
+                tagsListFragmentContainer?.isVisible = false
+                selectNavigationItem(menuItem)
+                drawerLayout?.close()
+
+                breadcrumbListView?.isVisible = true
+                addNodeButtonView?.showButton()
+
+                refreshDatabaseViews()
+            }
+
+            R.id.menu_tags -> {
+                tagsListFragmentContainer?.isVisible = true
+                selectNavigationItem(menuItem)
+                drawerLayout?.close()
+
+                finishNodeAction()
+                breadcrumbListView?.isVisible = false
+                addNodeButtonView?.hideButton()
+
+                refreshDatabaseViews()
+            }
+
+            R.id.menu_app_settings -> {
+                // To avoid flickering when launch settings in a LockingActivity
+                SettingsActivity.launch(this@GroupActivity, true)
+                CLOSE_DRAWER = true
+            }
+
+            R.id.menu_merge_from -> {
+                mExternalFileHelper?.openDocument()
+                CLOSE_DRAWER = true
+            }
+
+            R.id.menu_save_copy_to -> {
+                mExternalFileHelper?.createDocument(
+                    getString(R.string.database_file_name_default) +
+                            getString(R.string.database_file_name_copy) +
+                            mDatabase?.defaultFileExtension
+                )
+                CLOSE_DRAWER = true
+            }
+
+            R.id.menu_lock_all -> {
+                lockAndExit()
+            }
+
+            R.id.menu_about -> {
+                startActivity(
+                    Intent(
+                        this@GroupActivity,
+                        com.kunzisoft.keepass.activities.AboutActivity::class.java
+                    )
+                )
+                CLOSE_DRAWER = true
+            }
+
+            R.id.menu_save_database -> {
+                saveDatabase()
+                drawerLayout?.close()
+            }
+
+            R.id.menu_merge_database -> {
+                mergeDatabase()
+                drawerLayout?.close()
+            }
+
+            R.id.menu_reload_database -> {
+                reloadDatabase()
+                drawerLayout?.close()
+            }
+        }
+        return false
+    }
+
+    private fun selectNavigationItem(item: MenuItem?) {
+        when (item?.itemId) {
+            allEntriesMenuItem?.itemId -> {
+                allEntriesMenuItem?.isChecked = true
+                tagsMenuItem?.isChecked = false
+            }
+
+            tagsMenuItem?.itemId -> {
+                allEntriesMenuItem?.isChecked = false
+                tagsMenuItem?.isChecked = true
+            }
+        }
+    }
+
     override fun viewToInvalidateTimeout(): View? {
         return drawerLayout
     }
@@ -716,7 +784,13 @@ class GroupActivity : DatabaseLockActivity(),
 
     private fun refreshDatabaseViews() {
         mDatabase?.let {
-            val databaseName = it.name.ifEmpty { getString(R.string.database) }
+            val databaseName =
+                if (databaseNavView?.menu?.findItem(R.id.menu_tags)?.isChecked == true) {
+                    getString(R.string.tags)
+                } else {
+                    it.name.ifEmpty { getString(R.string.database) }
+                }
+
             databaseNavView?.setDatabaseName(databaseName)
             databaseNameView?.text = databaseName
             databaseNavView?.setDatabasePath(it.fileUri?.toString())
@@ -1367,6 +1441,20 @@ class GroupActivity : DatabaseLockActivity(),
     override fun onDatabaseBackPressed() {
         if (mGroupFragment?.nodeActionSelectionMode == true) {
             finishNodeAction()
+        } else if (tagsMenuItem?.isChecked == true) {
+            when {
+                Intent.ACTION_SEARCH == intent.action -> {
+                    removeSearch()
+                    loadGroup()
+                }
+
+                else -> {
+                    allEntriesMenuItem?.let {
+                        onNavigationItemSelected(it)
+                        selectNavigationItem(it)
+                    }
+                }
+            }
         } else {
             // Normal way when we are not in root
             if (mRootGroup != null && mRootGroup != mCurrentGroup) {
@@ -1464,6 +1552,7 @@ class GroupActivity : DatabaseLockActivity(),
         private const val GROUP_STATE_KEY = "GROUP_STATE_KEY"
         private const val PREVIOUS_GROUPS_IDS_KEY = "PREVIOUS_GROUPS_IDS_KEY"
         private const val GROUP_FRAGMENT_TAG = "GROUP_FRAGMENT_TAG"
+        private const val TAGS_LIST_FRAGMENT_TAG = "TAGS_LIST_FRAGMENT_TAG"
         private const val OLD_GROUP_TO_UPDATE_KEY = "OLD_GROUP_TO_UPDATE_KEY"
         private const val AUTO_SEARCH_KEY = "AUTO_SEARCH_KEY"
         private const val KEY_LAYOUT_POSITION = "layout_position"

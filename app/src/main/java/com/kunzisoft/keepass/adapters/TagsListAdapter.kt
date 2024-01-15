@@ -2,7 +2,6 @@ package com.kunzisoft.keepass.adapters
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +11,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.color.MaterialColors
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.database.ContextualDatabase
-import com.kunzisoft.keepass.database.element.Tags
-import com.kunzisoft.keepass.database.element.node.Node
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.view.setTextSize
 

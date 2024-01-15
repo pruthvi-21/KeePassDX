@@ -69,6 +69,7 @@
     <string name="auto_type">Auto-Type</string>
     <string name="auto_type_sequence">Auto-Type sequence</string>
     <string name="entry_password">Password</string>
+    <string name="all_entries">All entries</string>
     <string name="tags">Tags</string>
     <string name="tags_count_one">1 item</string>
     <string name="tags_count_multiple">%d items</string>
