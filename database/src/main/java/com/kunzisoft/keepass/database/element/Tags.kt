@@ -4,13 +4,13 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.kunzisoft.keepass.utils.StringUtil.removeSpaceChars
 
-class Tags : Parcelable {
+class Tags: Parcelable {
 
     private val mTags = mutableListOf<String>()
 
     constructor()
 
-    constructor(values: String) : this() {
+    constructor(values: String): this() {
         mTags.addAll(values
             .split(DELIMITER, DELIMITER1)
             .filter { it.removeSpaceChars().isNotEmpty() }
@@ -32,10 +32,6 @@ class Tags : Parcelable {
     fun setTags(tags: Tags) {
         mTags.clear()
         mTags.addAll(tags.mTags)
-    }
-
-    fun contains(tag: String): Boolean {
-        return mTags.contains(tag)
     }
 
     fun get(position: Int): String {
@@ -78,8 +74,8 @@ class Tags : Parcelable {
     }
 
     companion object CREATOR : Parcelable.Creator<Tags> {
-        const val DELIMITER = ','
-        const val DELIMITER1 = ';'
+        const val DELIMITER= ','
+        const val DELIMITER1= ';'
         val DELIMITERS = listOf(',', ';')
 
         override fun createFromParcel(parcel: Parcel): Tags {
