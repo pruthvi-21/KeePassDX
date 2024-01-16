@@ -630,6 +630,7 @@ class GroupActivity : DatabaseLockActivity(),
 
             R.id.menu_entries -> {
                 entriesFragmentContainer?.isVisible = true
+                mEntriesFragment?.updateList()
                 selectNavigationItem(menuItem)
                 drawerLayout?.close()
 

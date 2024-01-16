@@ -89,6 +89,12 @@ class EntriesListFragment : DatabaseFragment(),
         sortView?.setOnSortSelectionListener(this)
     }
 
+    fun updateList() {
+        mDatabase?.getEntries()?.let {
+            adapter?.rebuildList(it)
+        }
+    }
+
     override fun onSortSelected(
         sortNodeEnum: SortNodeEnum,
         sortNodeParameters: SortNodeEnum.SortNodeParameters,
@@ -96,15 +102,18 @@ class EntriesListFragment : DatabaseFragment(),
     ) {
         // Save setting
         context?.let {
-            PreferencesUtil.saveNodeEntriesSort(it, sortNodeEnum, sortNodeParameters, showRecycleBinItems)
+            PreferencesUtil.saveNodeEntriesSort(
+                it,
+                sortNodeEnum,
+                sortNodeParameters,
+                showRecycleBinItems
+            )
         }
 
         // Tell the adapter to refresh it's list
         try {
             adapter?.notifyChangeSort(sortNodeEnum, sortNodeParameters, showRecycleBinItems)
-            mDatabase?.getEntries()?.let {
-                adapter?.rebuildList(it)
-            }
+            updateList()
         } catch (e: Exception) {
             Log.e(TAG, "Unable to sort the list", e)
         }
