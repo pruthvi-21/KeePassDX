@@ -280,6 +280,10 @@
     <string name="sort_recycle_bin_bottom_key" translatable="false">sort_recycle_bin_bottom_key</string>
     <bool name="sort_recycle_bin_bottom_default" translatable="false">true</bool>
 
+    <!-- for entries tab-->
+    <string name="sort_node_entries_key" translatable="false">sort_node_entries_key</string>
+    <string name="sort_ascending_entries_key" translatable="false">sort_ascending_entries_key</string>
+
     <string name="allow_copy_password_first_time_key" translatable="false">allow_copy_password_first_time_key</string>
     <bool name="allow_copy_password_first_time_default" translatable="false">true</bool>
 

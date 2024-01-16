@@ -60,6 +60,22 @@ object PreferencesUtil {
         }
     }
 
+    fun saveNodeEntriesSort(
+        context: Context,
+        sortNodeEnum: SortNodeEnum,
+        sortNodeParameters: SortNodeEnum.SortNodeParameters
+    ) {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        prefs?.edit()?.apply {
+            putString(context.getString(R.string.sort_node_entries_key), sortNodeEnum.name)
+            putBoolean(
+                context.getString(R.string.sort_ascending_entries_key),
+                sortNodeParameters.ascending
+            )
+            apply()
+        }
+    }
+
     fun rememberDatabaseLocations(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         return prefs.getBoolean(
@@ -679,6 +695,20 @@ object PreferencesUtil {
         return SortNodeEnum.DB
     }
 
+    fun getEntriesListSort(context: Context): SortNodeEnum {
+        try {
+            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+            prefs.getString(
+                context.getString(R.string.sort_node_entries_key),
+                SortNodeEnum.DB.name
+            )?.let {
+                return SortNodeEnum.valueOf(it)
+            }
+        } catch (e: Exception) {
+        }
+        return SortNodeEnum.TITLE
+    }
+
     fun getGroupsBeforeSort(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         return prefs.getBoolean(
@@ -691,6 +721,14 @@ object PreferencesUtil {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         return prefs.getBoolean(
             context.getString(R.string.sort_ascending_key),
+            context.resources.getBoolean(R.bool.sort_ascending_default)
+        )
+    }
+
+    fun getAscendingEntriesSort(context: Context): Boolean {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        return prefs.getBoolean(
+            context.getString(R.string.sort_ascending_entries_key),
             context.resources.getBoolean(R.bool.sort_ascending_default)
         )
     }

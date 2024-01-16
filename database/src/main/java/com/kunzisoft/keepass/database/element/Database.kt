@@ -1046,6 +1046,30 @@ open class Database {
         return null
     }
 
+    fun getEntries(): List<Entry>? {
+        return if (mDatabaseKDB != null) {
+            mDatabaseKDB?.getEntryIndexes()
+                ?.filter { !entryIsTemplate(Entry(it)) }
+                ?.map { Entry(it) }
+        } else {
+            mDatabaseKDBX?.getEntryIndexes()
+                ?.filter { !entryIsTemplate(Entry(it)) }
+                ?.map { Entry(it) }
+        }
+    }
+
+    fun getGroups(): List<Group>? {
+        return if (mDatabaseKDB != null) {
+            mDatabaseKDB?.getGroupIndexes()
+                ?.filter { !groupIsInTemplates(Group(it)) }
+                ?.map { Group(it) }
+        } else {
+            mDatabaseKDBX?.getGroupIndexes()
+                ?.filter { !groupIsInTemplates(Group(it)) }
+                ?.map { Group(it) }
+        }
+    }
+
     fun addEntryTo(entry: Entry, parent: Group) {
         dataModifiedSinceLastLoading = true
         entry.entryKDB?.let { entryKDB ->

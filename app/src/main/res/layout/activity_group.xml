@@ -145,10 +145,22 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <FrameLayout
-                    android:id="@+id/nodes_list_fragment_container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?android:attr/windowBackground" />
+                    android:layout_height="match_parent">
+
+                    <FrameLayout
+                        android:id="@+id/nodes_list_fragment_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/windowBackground" />
+
+                    <FrameLayout
+                        android:id="@+id/entries_fragment_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/windowBackground"
+                        android:visibility="gone" />
+                </FrameLayout>
             </androidx.core.widget.NestedScrollView>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

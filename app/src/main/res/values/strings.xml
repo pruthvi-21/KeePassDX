@@ -2,6 +2,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="add_entry">Add entry</string>
     <string name="add_group">Add group</string>
+    <string name="nav_groups">Groups</string>
+    <string name="nav_entries">Entries</string>
     <string name="master_key">Master key</string>
     <string name="security">Security</string>
     <string name="encryption">Encryption</string>
