@@ -1,13 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.kunzisoft.keepass.view.EntriesSortView
-        android:id="@+id/sort_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/default_margin"
+        android:paddingEnd="@dimen/default_margin">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.libx.ui.views.SpinnerX
+                android:id="@+id/tags_spinner"
+                android:layout_width="wrap_content"
+                android:background="#0000"
+                android:layout_height="1dp" />
+
+            <TextView
+                android:id="@+id/sort_tags_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_sort_view"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textColor="?android:textColorSecondary"
+                app:drawableStartCompat="@drawable/ic_tag_white"
+                app:drawableTint="?android:textColorSecondary"
+                tools:text="All" />
+        </FrameLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <com.kunzisoft.keepass.view.EntriesSortView
+            android:id="@+id/sort_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?colorDivider" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tags_list"

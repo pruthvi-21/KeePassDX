@@ -6,26 +6,35 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.libx.ui.views.SpinnerX
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.adapters.EntriesListAdapter
 import com.kunzisoft.keepass.adapters.NodesAdapter
 import com.kunzisoft.keepass.database.ContextualDatabase
-import com.kunzisoft.keepass.database.element.Entry
 import com.kunzisoft.keepass.database.element.SortNodeEnum
+import com.kunzisoft.keepass.database.element.Tags
 import com.kunzisoft.keepass.database.element.node.Node
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.view.EntriesSortView
 
 class EntriesListFragment : DatabaseFragment(),
-    EntriesSortView.SortSelectionListener {
+    EntriesSortView.SortSelectionListener,
+    AdapterView.OnItemSelectedListener,
+    EntriesListAdapter.NodeClickCallback {
 
+    private var tagsSpinner: SpinnerX? = null
+    private var tagsLabelView: TextView? = null
     private var recyclerView: RecyclerView? = null
     private var sortView: EntriesSortView? = null
 
-    private var adapter: EntriesListAdapter? = null
-    private var entriesList: List<Entry>? = null
+    private var entriesAdapter: EntriesListAdapter? = null
+    private var tagsAdapter: ArrayAdapter<String>? = null
+    private var tagsList = ArrayList<String>()
 
     private var nodeClickListener: GroupFragment.NodeClickListener? = null
 
@@ -54,46 +63,73 @@ class EntriesListFragment : DatabaseFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        tagsSpinner = view.findViewById(R.id.tags_spinner)
+        tagsLabelView = view.findViewById(R.id.sort_tags_view)
         sortView = view.findViewById(R.id.sort_view)
         recyclerView = view.findViewById(R.id.tags_list)
         recyclerView!!.layoutManager = LinearLayoutManager(context)
 
+        tagsAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, tagsList)
+        tagsAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
+        sortView?.setOnSortSelectionListener(this)
+        tagsSpinner?.onItemSelectedListener = this
+
+        tagsLabelView?.setOnClickListener {
+            tagsSpinner?.performClick()
+        }
     }
 
     override fun onDatabaseRetrieved(database: ContextualDatabase?) {
-        context?.let { context ->
-            database?.let {
-                entriesList = database.getEntries()
+        context ?: return
+        database ?: return
 
-                entriesList?.let {
-                    adapter = EntriesListAdapter(context, database).apply {
-                        setOnNodeClickListener(object : EntriesListAdapter.NodeClickCallback {
-                            override fun onNodeClick(database: ContextualDatabase, node: Node) {
-                                nodeClickListener?.onNodeClick(database, node)
-                            }
+        entriesAdapter = EntriesListAdapter(requireContext(), database)
+        entriesAdapter?.setOnNodeClickListener(this)
 
-                            override fun onNodeLongClick(
-                                database: ContextualDatabase,
-                                node: Node
-                            ): Boolean {
-                                return true
-                            }
-                        })
+        recyclerView?.adapter = entriesAdapter
+        tagsSpinner?.adapter = tagsAdapter
+        updateList()
+    }
+
+    fun updateList(updateTags: Boolean = true) {
+        val entries = mDatabase?.getEntries() ?: return
+        entriesAdapter?.rebuildList(entries)
+
+        if (updateTags) {
+            tagsList.apply {
+                clear()
+                add("All")
+
+                Tags().apply {
+                    entries.forEach {
+                        put(it.tags)
                     }
-                    recyclerView?.adapter = adapter
-                    adapter?.rebuildList(it)
+                    addAll(toList().sorted())
                 }
             }
+            tagsAdapter?.notifyDataSetChanged()
         }
-        sortView?.setOnSortSelectionListener(this)
     }
 
-    fun updateList() {
-        mDatabase?.getEntries()?.let {
-            adapter?.rebuildList(it)
-        }
+
+    override fun onNodeClick(database: ContextualDatabase, node: Node) {
+        nodeClickListener?.onNodeClick(database, node)
     }
+
+    override fun onNodeLongClick(database: ContextualDatabase, node: Node): Boolean {
+        return true
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        tagsLabelView?.text = tagsList[position]
+
+        val tag = if (position == 0) "" else tagsList[position]
+        entriesAdapter?.notifyCustomTagSelected(tag)
+        updateList(false)
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     override fun onSortSelected(
         sortNodeEnum: SortNodeEnum,
@@ -112,8 +148,8 @@ class EntriesListFragment : DatabaseFragment(),
 
         // Tell the adapter to refresh it's list
         try {
-            adapter?.notifyChangeSort(sortNodeEnum, sortNodeParameters, showRecycleBinItems)
-            updateList()
+            entriesAdapter?.notifyChangeSort(sortNodeEnum, sortNodeParameters, showRecycleBinItems)
+            updateList(false)
         } catch (e: Exception) {
             Log.e(TAG, "Unable to sort the list", e)
         }

@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
@@ -63,6 +62,7 @@ class EntriesListAdapter(
     private var mShowOTP: Boolean = false
     private var mEntryFilters = arrayOf<Group.ChildFilter>()
     private var mShowRecycleBinItems: Boolean = false
+    private var mTagFilter = ""
 
     private var mActionNodesList = LinkedList<Entry>()
     private var mNodeClickCallback: NodeClickCallback? = null
@@ -183,10 +183,16 @@ class EntriesListAdapter(
 
         searchChild(database.recycleBin)
 
-        mNodeSortedList.replaceAll(list.filter {
-            if (mShowRecycleBinItems) true
-            else !recycleBinChildrenIdList.contains(it.nodeId.toVisualString())
-        })
+        mNodeSortedList.replaceAll(
+            list
+                .filter {
+                    if (mTagFilter.isEmpty()) true
+                    else it.tags.contains(mTagFilter)
+                }
+                .filter {
+                    if (mShowRecycleBinItems) true
+                    else !recycleBinChildrenIdList.contains(it.nodeId.toVisualString())
+                })
     }
 
     private inner class NodeSortedListCallback : SortedListAdapterCallback<Entry>(this) {
@@ -229,6 +235,10 @@ class EntriesListAdapter(
     ) {
         this.mNodeComparator = sortNodeEnum.getNodeComparator(database, sortNodeParameters)
         mShowRecycleBinItems = showRecycleBinItems
+    }
+
+    fun notifyCustomTagSelected(tag: String) {
+        mTagFilter = tag
     }
 
     override fun getItemViewType(position: Int): Int {
