@@ -91,16 +91,17 @@ class EntriesListFragment : DatabaseFragment(),
 
     override fun onSortSelected(
         sortNodeEnum: SortNodeEnum,
-        sortNodeParameters: SortNodeEnum.SortNodeParameters
+        sortNodeParameters: SortNodeEnum.SortNodeParameters,
+        showRecycleBinItems: Boolean
     ) {
         // Save setting
         context?.let {
-            PreferencesUtil.saveNodeEntriesSort(it, sortNodeEnum, sortNodeParameters)
+            PreferencesUtil.saveNodeEntriesSort(it, sortNodeEnum, sortNodeParameters, showRecycleBinItems)
         }
 
         // Tell the adapter to refresh it's list
         try {
-            adapter?.notifyChangeSort(sortNodeEnum, sortNodeParameters)
+            adapter?.notifyChangeSort(sortNodeEnum, sortNodeParameters, showRecycleBinItems)
             mDatabase?.getEntries()?.let {
                 adapter?.rebuildList(it)
             }

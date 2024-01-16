@@ -36,6 +36,7 @@ import com.kunzisoft.keepass.utils.ColorUtils.getColorFromAttr
 import com.kunzisoft.keepass.utils.TimeUtil.getDateTimeString
 import com.kunzisoft.keepass.view.setTextSize
 import com.kunzisoft.keepass.view.strikeOut
+import java.util.ArrayList
 import java.util.LinkedList
 
 class EntriesListAdapter(
@@ -60,8 +61,7 @@ class EntriesListAdapter(
     private var mShowNumberEntries: Boolean = true
     private var mShowOTP: Boolean = false
     private var mEntryFilters = arrayOf<Group.ChildFilter>()
-    private var mOldVirtualGroup = false
-    private var mVirtualGroup = false
+    private var mShowRecycleBinItems: Boolean = false
 
     private var mActionNodesList = LinkedList<Entry>()
     private var mNodeClickCallback: NodeClickCallback? = null
@@ -142,7 +142,8 @@ class EntriesListAdapter(
                 PreferencesUtil.getAscendingEntriesSort(context),
                 groupsBefore = false,
                 recycleBinBottom = true
-            )
+            ),
+            PreferencesUtil.getRecycleBinEntriesSort(context)
         )
 
         this.mShowEntryColors = PreferencesUtil.showEntryColors(context)
@@ -161,7 +162,11 @@ class EntriesListAdapter(
 
     fun rebuildList(list: List<Entry>) {
         assignPreferences()
-        mNodeSortedList.replaceAll(list)
+
+        mNodeSortedList.replaceAll(list.filter {
+            if (!mShowRecycleBinItems) it.parent != database.recycleBin
+            else true
+        })
     }
 
     private inner class NodeSortedListCallback : SortedListAdapterCallback<Entry>(this) {
@@ -170,8 +175,6 @@ class EntriesListAdapter(
         }
 
         override fun areContentsTheSame(oldItem: Entry, newItem: Entry): Boolean {
-            if (mOldVirtualGroup != mVirtualGroup)
-                return false
             val typeContentTheSame = oldItem.getVisualTitle() == newItem.getVisualTitle()
                     && oldItem.username == newItem.username
                     && oldItem.backgroundColor == newItem.backgroundColor
@@ -201,9 +204,11 @@ class EntriesListAdapter(
 
     fun notifyChangeSort(
         sortNodeEnum: SortNodeEnum,
-        sortNodeParameters: SortNodeEnum.SortNodeParameters
+        sortNodeParameters: SortNodeEnum.SortNodeParameters,
+        showRecycleBinItems: Boolean
     ) {
         this.mNodeComparator = sortNodeEnum.getNodeComparator(database, sortNodeParameters)
+        mShowRecycleBinItems = showRecycleBinItems
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -239,15 +244,6 @@ class EntriesListAdapter(
         holder.subText.apply {
             setTextSize(mTextSizeUnit, mSubTextDefaultDimension, mPrefSizeMultiplier)
             strikeOut(subNode.isCurrentlyExpires)
-        }
-        // Add path to virtual group
-        if (mVirtualGroup) {
-            holder.path?.apply {
-                text = subNode.getPathString()
-                visibility = View.VISIBLE
-            }
-        } else {
-            holder.path?.visibility = View.GONE
         }
 
         // Assign icon colors
@@ -480,7 +476,6 @@ class EntriesListAdapter(
         var iconSelected: ImageView = itemView.findViewById(R.id.node_selected_icon)
         var text: TextView = itemView.findViewById(R.id.node_text)
         var subText: TextView = itemView.findViewById(R.id.node_subtext)
-        var path: TextView? = itemView.findViewById(R.id.node_path)
         var otpContainer: ViewGroup? = itemView.findViewById(R.id.node_otp_container)
         var otpProgress: LinearProgressIndicator? = itemView.findViewById(R.id.node_otp_progress)
         var otpToken: TextView? = itemView.findViewById(R.id.node_otp_token)

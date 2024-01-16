@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.CheckBox
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -28,11 +29,13 @@ class EntriesSortView @JvmOverloads constructor(
 
     private var sortNodeEnum: SortNodeEnum = SortNodeEnum.DB
     private var isAscending = true
+    private var showRecycleBinItems = false
 
     private val popupView: View
     private val sortView: TextView
     private val sortOrderView: ImageView
     private val sortOptionsGroup: RadioGroup
+    private val recycleBinCheckbox: CheckBox
 
     private var listener: SortSelectionListener? = null
 
@@ -46,18 +49,16 @@ class EntriesSortView @JvmOverloads constructor(
             .inflate(R.layout.popup_sort_options, null)
         sortOptionsGroup = popupView.findViewById(R.id.sort_options_group)
         val groupsBeforeView = popupView.findViewById<View>(R.id.menu_sort_groups_before)
-        val recycleBinAtBottomView = popupView.findViewById<View>(R.id.menu_sort_recycle_bin_bottom)
-        val divider = popupView.findViewById<View>(R.id.divider)
+        recycleBinCheckbox = popupView.findViewById(R.id.menu_sort_recycle_bin_bottom)
+        recycleBinCheckbox.setText(R.string.sort_show_recycle_bin_items)
 
         groupsBeforeView.isEnabled = false
         groupsBeforeView.isVisible = false
-        recycleBinAtBottomView.isEnabled = false
-        recycleBinAtBottomView.isVisible = false
-        divider.isVisible = false
 
         //initial state
-        setListOrder(PreferencesUtil.getListSort(context))
+        setListOrder(PreferencesUtil.getEntriesListSort(context))
         arrangeInAscending(PreferencesUtil.getAscendingSort(context))
+        setShowRecycleBinItems(PreferencesUtil.getRecycleBinEntriesSort(context))
 
         sortView.setOnClickListener {
             val location = IntArray(2)
@@ -77,7 +78,8 @@ class EntriesSortView @JvmOverloads constructor(
     private fun informListeners() {
         listener?.onSortSelected(
             sortNodeEnum,
-            SortNodeEnum.SortNodeParameters(isAscending, false, true)
+            SortNodeEnum.SortNodeParameters(isAscending, false, true),
+            showRecycleBinItems
         )
     }
 
@@ -94,6 +96,12 @@ class EntriesSortView @JvmOverloads constructor(
         sortOptionsGroup.setOnCheckedChangeListener { group, checkedId ->
             sortNodeEnum = retrieveSortEnumFromViewId(checkedId)
             sortView.text = group.findViewById<RadioButton>(checkedId).text
+            informListeners()
+            popupWindow.dismiss()
+        }
+
+        recycleBinCheckbox.setOnCheckedChangeListener { buttonView, isChecked ->
+            showRecycleBinItems = isChecked
             informListeners()
             popupWindow.dismiss()
         }
@@ -115,6 +123,11 @@ class EntriesSortView @JvmOverloads constructor(
             if (isAscending) R.drawable.ic_sort_order_ascending
             else R.drawable.ic_sort_order_descending
         )
+    }
+
+    fun setShowRecycleBinItems(showItems: Boolean) {
+        this.showRecycleBinItems = showItems
+        recycleBinCheckbox.isChecked = showItems
     }
 
     @IdRes
@@ -154,7 +167,8 @@ class EntriesSortView @JvmOverloads constructor(
     interface SortSelectionListener {
         fun onSortSelected(
             sortNodeEnum: SortNodeEnum,
-            sortNodeParameters: SortNodeEnum.SortNodeParameters
+            sortNodeParameters: SortNodeEnum.SortNodeParameters,
+            showRecycleBinItems: Boolean
         )
     }
 }

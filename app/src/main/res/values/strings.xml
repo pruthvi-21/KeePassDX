@@ -290,6 +290,7 @@
     <string name="sort_descending">Descending</string>
     <string name="sort_groups_before">Groups before</string>
     <string name="sort_recycle_bin_bottom">Recycle bin at the bottom</string>
+    <string name="sort_show_recycle_bin_items">Recycle bin items</string>
     <string name="sort_db">Natural order</string>
     <string name="sort_title">Title</string>
     <string name="sort_username">Username</string>

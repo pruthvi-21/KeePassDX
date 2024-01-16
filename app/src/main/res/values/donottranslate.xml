@@ -283,6 +283,8 @@
     <!-- for entries tab-->
     <string name="sort_node_entries_key" translatable="false">sort_node_entries_key</string>
     <string name="sort_ascending_entries_key" translatable="false">sort_ascending_entries_key</string>
+    <string name="sort_recycle_bin_entries_key" translatable="false">sort_recycle_bin_entries_key</string>
+    <bool name="sort_recycle_bin_entries_default" translatable="false">false</bool>
 
     <string name="allow_copy_password_first_time_key" translatable="false">allow_copy_password_first_time_key</string>
     <bool name="allow_copy_password_first_time_default" translatable="false">true</bool>
