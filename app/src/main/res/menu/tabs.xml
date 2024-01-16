@@ -6,7 +6,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/menu_groups"
-            android:icon="@drawable/ic_folder_white_24dp"
+            android:icon="@drawable/ic_folder_outlined_white_24dp"
             android:title="@string/nav_groups"
             app:iconTint="?attr/colorControlNormal" />
         <item

@@ -182,7 +182,7 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="@string/searchable"
-                app:closeIcon="@drawable/ic_folder_white_24dp" />
+                app:closeIcon="@drawable/ic_folder_outlined_white_24dp" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/search_chip_recycle_bin"
