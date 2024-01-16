@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
@@ -163,9 +164,28 @@ class EntriesListAdapter(
     fun rebuildList(list: List<Entry>) {
         assignPreferences()
 
+        val recycleBinChildrenIdList = ArrayList<String?>()
+
+        fun searchChild(node: Group?) {
+            node ?: return
+            val children = node.getChildren()
+
+            children.forEach { node ->
+                if (node is Entry) {
+                    recycleBinChildrenIdList.add(node.nodeId.toVisualString())
+                }
+
+                if (node is Group) {
+                    searchChild(node)
+                }
+            }
+        }
+
+        searchChild(database.recycleBin)
+
         mNodeSortedList.replaceAll(list.filter {
-            if (!mShowRecycleBinItems) it.parent != database.recycleBin
-            else true
+            if (mShowRecycleBinItems) true
+            else !recycleBinChildrenIdList.contains(it.nodeId.toVisualString())
         })
     }
 
