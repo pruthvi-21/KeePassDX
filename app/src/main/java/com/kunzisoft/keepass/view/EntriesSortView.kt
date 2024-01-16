@@ -35,6 +35,7 @@ class EntriesSortView @JvmOverloads constructor(
     private val sortView: TextView
     private val sortOrderView: ImageView
     private val sortOptionsGroup: RadioGroup
+    private val additionalOptions: LinearLayout
     private val recycleBinCheckbox: CheckBox
 
     private var listener: SortSelectionListener? = null
@@ -44,16 +45,15 @@ class EntriesSortView @JvmOverloads constructor(
         sortView = findViewById(R.id.sort_menu)
         sortOrderView = findViewById(R.id.sort_menu_order)
 
-        popupView = LayoutInflater
-            .from(context)
-            .inflate(R.layout.popup_sort_options, null)
+        val layoutInflater = LayoutInflater.from(context)
+        popupView = layoutInflater.inflate(R.layout.popup_sort_options, null)
         sortOptionsGroup = popupView.findViewById(R.id.sort_options_group)
-        val groupsBeforeView = popupView.findViewById<View>(R.id.menu_sort_groups_before)
-        recycleBinCheckbox = popupView.findViewById(R.id.menu_sort_recycle_bin_bottom)
+        additionalOptions = popupView.findViewById(R.id.additional_options)
+
+        recycleBinCheckbox = layoutInflater.inflate(R.layout.popup_item_checkbox, null) as CheckBox
         recycleBinCheckbox.setText(R.string.sort_show_recycle_bin_items)
 
-        groupsBeforeView.isEnabled = false
-        groupsBeforeView.isVisible = false
+        additionalOptions.addView(recycleBinCheckbox)
 
         //initial state
         setListOrder(PreferencesUtil.getEntriesListSort(context))

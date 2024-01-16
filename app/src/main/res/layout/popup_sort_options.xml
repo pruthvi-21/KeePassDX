@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="20dp"
@@ -70,27 +70,22 @@
                         android:text="@string/sort_last_access_time" />
                 </RadioGroup>
 
-                <View
-                    android:id="@+id/divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="3dp"
-                    android:alpha="0.1"
-                    android:background="?android:textColorSecondary" />
-
-                <CheckBox
-                    android:id="@+id/menu_sort_groups_before"
-                    style="@style/Theme.Keepass.PopupWindow.Sort.Item"
+                <LinearLayout
+                    android:id="@+id/additional_options"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/sort_groups_before" />
+                    android:background="?popupBackgroundColor"
+                    android:orientation="vertical">
 
-                <CheckBox
-                    android:id="@+id/menu_sort_recycle_bin_bottom"
-                    style="@style/Theme.Keepass.PopupWindow.Sort.Item"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sort_recycle_bin_bottom" />
+                    <FrameLayout
+                        android:id="@+id/divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/popup_divider_color"
+                        android:paddingTop="1dp" />
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </com.google.android.material.card.MaterialCardView>

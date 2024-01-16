@@ -16,6 +16,8 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.annotation.IdRes
+import androidx.appcompat.view.ContextThemeWrapper
+import androidx.core.view.isVisible
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.SortNodeEnum
 import com.kunzisoft.keepass.settings.PreferencesUtil
@@ -35,6 +37,7 @@ class SortView @JvmOverloads constructor(
     private val sortView: TextView
     private val sortOrderView: ImageView
     private val sortOptionsGroup: RadioGroup
+    private val additionalOptionsView: LinearLayout
     private val groupsBeforeView: CheckBox
     private val recycleBinAtBottomView: CheckBox
 
@@ -45,12 +48,21 @@ class SortView @JvmOverloads constructor(
         sortView = findViewById(R.id.sort_menu)
         sortOrderView = findViewById(R.id.sort_menu_order)
 
-        popupView = LayoutInflater
-            .from(context)
-            .inflate(R.layout.popup_sort_options, null)
+        val layoutInflater = LayoutInflater.from(context)
+
+        popupView = layoutInflater.inflate(R.layout.popup_sort_options, null)
         sortOptionsGroup = popupView.findViewById(R.id.sort_options_group)
-        groupsBeforeView = popupView.findViewById(R.id.menu_sort_groups_before)
-        recycleBinAtBottomView = popupView.findViewById(R.id.menu_sort_recycle_bin_bottom)
+        additionalOptionsView = popupView.findViewById(R.id.additional_options)
+
+        groupsBeforeView = layoutInflater.inflate(R.layout.popup_item_checkbox, null) as CheckBox
+        recycleBinAtBottomView =
+            layoutInflater.inflate(R.layout.popup_item_checkbox, null) as CheckBox
+
+        groupsBeforeView.setText(R.string.sort_groups_before)
+        recycleBinAtBottomView.setText(R.string.sort_recycle_bin_bottom)
+
+        additionalOptionsView.addView(groupsBeforeView)
+        additionalOptionsView.addView(recycleBinAtBottomView)
 
         //initial state
         setListOrder(PreferencesUtil.getListSort(context))
@@ -71,6 +83,8 @@ class SortView @JvmOverloads constructor(
             arrangeInAscending(!isAscending)
             informListeners()
         }
+
+        if (additionalOptionsView.childCount <= 1) additionalOptionsView.isVisible = false
     }
 
     private fun informListeners() {
@@ -89,9 +103,6 @@ class SortView @JvmOverloads constructor(
             animationStyle = R.style.Theme_LibX_Popup_Animation
             setBackgroundDrawable(ColorDrawable())
         }
-
-        //disable recycle bin bottom option if natural order
-        recycleBinAtBottomView.isEnabled = sortNodeEnum != SortNodeEnum.DB
 
         sortOptionsGroup.setOnCheckedChangeListener { group, checkedId ->
             sortNodeEnum = retrieveSortEnumFromViewId(checkedId)
