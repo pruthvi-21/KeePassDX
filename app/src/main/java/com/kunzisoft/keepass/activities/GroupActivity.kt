@@ -2,11 +2,8 @@ package com.kunzisoft.keepass.activities
 
 import android.app.Activity
 import android.app.SearchManager
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.net.Uri
@@ -29,13 +26,9 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
-import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -66,7 +59,6 @@ import com.kunzisoft.keepass.database.element.node.NodeId
 import com.kunzisoft.keepass.database.element.node.NodeIdUUID
 import com.kunzisoft.keepass.database.element.node.Type
 import com.kunzisoft.keepass.database.helper.SearchHelper
-import com.kunzisoft.keepass.database.search.SearchParameters
 import com.kunzisoft.keepass.magikeyboard.MagikeyboardService
 import com.kunzisoft.keepass.model.GroupInfo
 import com.kunzisoft.keepass.model.RegisterInfo
@@ -78,9 +70,7 @@ import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.settings.SettingsActivity
 import com.kunzisoft.keepass.tasks.ActionRunnable
 import com.kunzisoft.keepass.timeout.TimeoutHelper
-import com.kunzisoft.keepass.utils.BACK_PREVIOUS_KEYBOARD_ACTION
 import com.kunzisoft.keepass.utils.ColorUtils
-import com.kunzisoft.keepass.utils.KeyboardUtil.showKeyboard
 import com.kunzisoft.keepass.utils.getParcelableCompat
 import com.kunzisoft.keepass.utils.getParcelableExtraCompat
 import com.kunzisoft.keepass.utils.getParcelableList
@@ -88,7 +78,6 @@ import com.kunzisoft.keepass.utils.putParcelableList
 import com.kunzisoft.keepass.utils.readParcelableCompat
 import com.kunzisoft.keepass.view.AddNodeButtonView
 import com.kunzisoft.keepass.view.NavigationDatabaseView
-import com.kunzisoft.keepass.view.SearchFiltersView
 import com.kunzisoft.keepass.view.ToolbarAction
 import com.kunzisoft.keepass.view.WindowInsetPosition
 import com.kunzisoft.keepass.view.applyWindowInsets
@@ -328,7 +317,7 @@ class GroupActivity : DatabaseLockActivity(),
         }
 
         //initial selection
-        selectNavigationItem(groupsMenuItem)
+        selectNavigationItem(PreferencesUtil.getActiveHomeTab(this))
 
         // Observe main group
         mGroupViewModel.mainGroup.observe(this) {
@@ -496,28 +485,6 @@ class GroupActivity : DatabaseLockActivity(),
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
-            R.id.menu_groups -> {
-                selectNavigationItem(menuItem)
-                drawerLayout?.close()
-
-                breadcrumbListView?.isVisible = true
-                addNodeButtonView?.enableAddGroup(true)
-
-                refreshDatabaseViews()
-            }
-
-            R.id.menu_entries -> {
-                selectNavigationItem(menuItem)
-                mEntriesFragment.updateList()
-                drawerLayout?.close()
-
-                finishNodeAction()
-                breadcrumbListView?.isVisible = false
-                addNodeButtonView?.enableAddGroup(false)
-
-                refreshDatabaseViews()
-            }
-
             R.id.menu_app_settings -> {
                 // To avoid flickering when launch settings in a LockingActivity
                 SettingsActivity.launch(this@GroupActivity, true)
@@ -567,18 +534,40 @@ class GroupActivity : DatabaseLockActivity(),
         return false
     }
 
-    private fun selectNavigationItem(item: MenuItem?) {
-        when (item?.itemId) {
-            groupsMenuItem?.itemId -> {
+    fun onMenuItemClicked(item: MenuItem) {
+        when (item.itemId) {
+            R.id.menu_groups -> selectNavigationItem(NavigationItem.GROUPS)
+            R.id.menu_entries -> selectNavigationItem(NavigationItem.ENTRIES)
+        }
+    }
+
+    private fun selectNavigationItem(item: NavigationItem) {
+        when (item) {
+            NavigationItem.GROUPS -> {
                 groupsMenuItem?.isChecked = true
                 entriesMenuItem?.isChecked = false
                 showFragment(mGroupFragment, GROUP_FRAGMENT_TAG)
+
+                drawerLayout?.close()
+
+                finishNodeAction()
+                breadcrumbListView?.isVisible = true
+                addNodeButtonView?.enableAddGroup(true)
+                PreferencesUtil.setActiveHomeTab(this, NavigationItem.GROUPS)
             }
 
-            entriesMenuItem?.itemId -> {
+            NavigationItem.ENTRIES -> {
                 groupsMenuItem?.isChecked = false
                 entriesMenuItem?.isChecked = true
                 showFragment(mEntriesFragment, ENTRIES_FRAGMENT_TAG)
+
+                mEntriesFragment.updateList()
+                drawerLayout?.close()
+
+                finishNodeAction()
+                breadcrumbListView?.isVisible = false
+                addNodeButtonView?.enableAddGroup(false)
+                PreferencesUtil.setActiveHomeTab(this, NavigationItem.ENTRIES)
             }
         }
     }
@@ -1237,7 +1226,6 @@ class GroupActivity : DatabaseLockActivity(),
                 else -> {
                     groupsMenuItem?.let {
                         onNavigationItemSelected(it)
-                        selectNavigationItem(it)
                     }
                 }
             }
@@ -1298,6 +1286,10 @@ class GroupActivity : DatabaseLockActivity(),
                 return arrayOfNulls(size)
             }
         }
+    }
+
+    enum class NavigationItem {
+        GROUPS, ENTRIES
     }
 
     companion object {
