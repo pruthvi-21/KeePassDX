@@ -239,6 +239,7 @@ class GroupActivity : DatabaseLockActivity(),
             entryId?.let {
                 // Simply refresh the list when entry is updated
                 loadGroup()
+                mEntriesFragment?.updateList(true)
             } ?: Log.e(this.javaClass.name, "Entry cannot be retrieved in Activity Result")
         }
 
