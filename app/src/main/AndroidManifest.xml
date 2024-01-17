@@ -118,6 +118,12 @@
             android:name=".activities.GroupActivity"
             android:configChanges="keyboardHidden"
             android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".activities.SearchActivity"
+            android:configChanges="keyboardHidden"
+            android:exported="false"
             android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.app.default_searchable"

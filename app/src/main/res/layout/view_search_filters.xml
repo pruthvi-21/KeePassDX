@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorSurfaceVariant2"
         android:minHeight="68dp"
-        android:visibility="gone"
         tools:visibility="visible">
 
         <androidx.appcompat.widget.AppCompatTextView

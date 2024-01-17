@@ -130,11 +130,6 @@
                             android:paddingVertical="5dp"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
                     </LinearLayout>
-
-                    <com.kunzisoft.keepass.view.SearchFiltersView
-                        android:id="@+id/search_filters"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
                 </FrameLayout>
 
             </com.google.android.material.appbar.AppBarLayout>

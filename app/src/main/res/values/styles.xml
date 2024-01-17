@@ -411,6 +411,7 @@
     <style name="Theme.Keepass.SearchView" parent="Widget.Material3.SearchView">
         <item name="queryBackground">@android:color/transparent</item>
         <item name="queryHint">@string/search</item>
+        <item name="iconifiedByDefault">false</item>
     </style>
 
     <style name="Theme.Keepass.ColorPalette.Item" parent="Widget.Material3.CardView.Filled">
