@@ -38,6 +38,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.navigation.NavigationView
@@ -125,7 +126,6 @@ class GroupActivity : DatabaseLockActivity(),
     private var addNodeButtonView: AddNodeButtonView? = null
     private var breadcrumbListView: RecyclerView? = null
     private var loadingView: ProgressBar? = null
-    private var entriesFragmentContainer: ViewGroup? = null
 
     private var entriesMenuItem: MenuItem? = null
     private var groupsMenuItem: MenuItem? = null
@@ -135,8 +135,8 @@ class GroupActivity : DatabaseLockActivity(),
 
     private var mBreadcrumbAdapter: BreadcrumbAdapter? = null
 
-    private var mGroupFragment: GroupFragment? = null
-    private var mEntriesFragment: EntriesListFragment? = null
+    private var mGroupFragment = GroupFragment()
+    private var mEntriesFragment = EntriesListFragment()
     private var mRecyclingBinEnabled = false
     private var mRecyclingBinIsCurrentGroup = false
     private var mRequestStartupSearch = true
@@ -155,14 +155,12 @@ class GroupActivity : DatabaseLockActivity(),
     private var mPreviousGroupsIds = mutableListOf<GroupState>()
     private var mOldGroupToUpdate: Group? = null
 
-    private var mLockSearchListeners = false
-
     private val mEntryActivityResultLauncher =
         EntryEditActivity.registerForEntryResult(this) { entryId ->
             entryId?.let {
                 // Simply refresh the list when entry is updated
                 loadGroup()
-                mEntriesFragment?.updateList(true)
+                mEntriesFragment.updateList(true)
             } ?: Log.e(this.javaClass.name, "Entry cannot be retrieved in Activity Result")
         }
 
@@ -202,7 +200,6 @@ class GroupActivity : DatabaseLockActivity(),
         toolbarAction = findViewById(R.id.toolbar_action)
         lockView = findViewById(R.id.lock_button)
         loadingView = findViewById(R.id.loading)
-        entriesFragmentContainer = findViewById(R.id.entries_fragment_container)
 
         window.statusBarColor =
             ColorUtils.getColorFromAttr(this, R.attr.colorSurfaceVariant2, Color.BLACK)
@@ -264,9 +261,6 @@ class GroupActivity : DatabaseLockActivity(),
             groupsMenuItem = menu.findItem(R.id.menu_groups)
             entriesMenuItem = menu.findItem(R.id.menu_entries)
             setNavigationItemSelectedListener(this@GroupActivity)
-
-            //initial selection
-            selectNavigationItem(groupsMenuItem)
         }
 
         mBreadcrumbAdapter = BreadcrumbAdapter(this).apply {
@@ -281,7 +275,7 @@ class GroupActivity : DatabaseLockActivity(),
                     finishNodeAction()
                     launchDialogToShowGroupInfo(currentGroup)
                 } else {
-                    if (mGroupFragment?.nodeActionSelectionMode == true) {
+                    if (mGroupFragment.nodeActionSelectionMode) {
                         finishNodeAction()
                     }
                     mDatabase?.let { database ->
@@ -333,29 +327,8 @@ class GroupActivity : DatabaseLockActivity(),
             savedInstanceState.remove(PREVIOUS_GROUPS_IDS_KEY)
         }
 
-        // Initialize the fragment with the list
-        mGroupFragment =
-            supportFragmentManager.findFragmentByTag(GROUP_FRAGMENT_TAG) as GroupFragment?
-        if (mGroupFragment == null)
-            mGroupFragment = GroupFragment()
-
-        // Attach fragment to content view
-        supportFragmentManager.beginTransaction().replace(
-            R.id.nodes_list_fragment_container,
-            mGroupFragment!!,
-            GROUP_FRAGMENT_TAG
-        ).commit()
-
-        mEntriesFragment =
-            supportFragmentManager.findFragmentByTag(ENTRIES_FRAGMENT_TAG) as EntriesListFragment?
-        if (mEntriesFragment == null)
-            mEntriesFragment = EntriesListFragment()
-
-        supportFragmentManager.beginTransaction().replace(
-            R.id.entries_fragment_container,
-            mEntriesFragment!!,
-            ENTRIES_FRAGMENT_TAG
-        ).commit()
+        //initial selection
+        selectNavigationItem(groupsMenuItem)
 
         // Observe main group
         mGroupViewModel.mainGroup.observe(this) {
@@ -501,10 +474,29 @@ class GroupActivity : DatabaseLockActivity(),
         }
     }
 
+    private fun showFragment(fragment: Fragment, tag: String) {
+        val transaction = supportFragmentManager.beginTransaction()
+        val existingFragment = supportFragmentManager.findFragmentByTag(tag)
+
+        if (existingFragment == null) {
+            transaction.add(R.id.fragment_container, fragment, tag)
+        } else {
+            transaction.show(existingFragment)
+        }
+
+        //hide other fragments
+        for (frag in supportFragmentManager.fragments) {
+            if (frag != null && frag != existingFragment) {
+                transaction.hide(frag)
+            }
+        }
+
+        transaction.commit()
+    }
+
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.menu_groups -> {
-                entriesFragmentContainer?.isVisible = false
                 selectNavigationItem(menuItem)
                 drawerLayout?.close()
 
@@ -515,9 +507,8 @@ class GroupActivity : DatabaseLockActivity(),
             }
 
             R.id.menu_entries -> {
-                entriesFragmentContainer?.isVisible = true
-                mEntriesFragment?.updateList()
                 selectNavigationItem(menuItem)
+                mEntriesFragment.updateList()
                 drawerLayout?.close()
 
                 finishNodeAction()
@@ -581,11 +572,13 @@ class GroupActivity : DatabaseLockActivity(),
             groupsMenuItem?.itemId -> {
                 groupsMenuItem?.isChecked = true
                 entriesMenuItem?.isChecked = false
+                showFragment(mGroupFragment, GROUP_FRAGMENT_TAG)
             }
 
             entriesMenuItem?.itemId -> {
                 groupsMenuItem?.isChecked = false
                 entriesMenuItem?.isChecked = true
+                showFragment(mEntriesFragment, ENTRIES_FRAGMENT_TAG)
             }
         }
     }
@@ -990,14 +983,14 @@ class GroupActivity : DatabaseLockActivity(),
     ): Boolean {
         if (nodes.isNotEmpty()) {
             if (actionNodeMode == null || toolbarAction?.getSupportActionModeCallback() == null) {
-                mGroupFragment?.actionNodesCallback(
+                mGroupFragment.actionNodesCallback(
                     database,
                     nodes,
                     this
                 ) { _ ->
                     actionNodeMode = null
                     addNodeButtonView?.showButton()
-                }?.let {
+                }.let {
                     actionNodeMode = toolbarAction?.startSupportActionMode(it)
                 }
             } else {
@@ -1233,7 +1226,7 @@ class GroupActivity : DatabaseLockActivity(),
     }
 
     override fun onDatabaseBackPressed() {
-        if (mGroupFragment?.nodeActionSelectionMode == true) {
+        if (mGroupFragment.nodeActionSelectionMode) {
             finishNodeAction()
         } else if (entriesMenuItem?.isChecked == true) {
             when {
