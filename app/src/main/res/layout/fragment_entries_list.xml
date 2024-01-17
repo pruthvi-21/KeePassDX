@@ -20,8 +20,8 @@
             <com.libx.ui.views.SpinnerX
                 android:id="@+id/tags_spinner"
                 android:layout_width="wrap_content"
-                android:background="#0000"
-                android:layout_height="1dp" />
+                android:layout_height="1dp"
+                android:background="#0000" />
 
             <TextView
                 android:id="@+id/sort_tags_view"
@@ -57,5 +57,10 @@
         android:id="@+id/tags_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:nestedScrollingEnabled="true"
+        android:paddingBottom="130dp"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical" />
 </LinearLayout>
