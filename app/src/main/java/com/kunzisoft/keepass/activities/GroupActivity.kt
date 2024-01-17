@@ -546,23 +546,25 @@ class GroupActivity : DatabaseLockActivity(),
 
         // Add listeners to the add buttons
         addNodeButtonView?.setAddGroupClickListener {
-            mMainGroup?.let { currentGroup ->
+            val selectedGroup = if (groupsMenuItem?.isChecked == true) mMainGroup
+            else mRootGroup
+            selectedGroup?.let { currentGroup ->
                 launchDialogForGroupCreation(currentGroup)
             }
         }
         addNodeButtonView?.setAddEntryClickListener {
             mDatabase?.let { database ->
-                mMainGroup?.let { currentGroup ->
+                val selectedGroup = if (groupsMenuItem?.isChecked == true) mMainGroup
+                else mRootGroup
+                selectedGroup?.let { currentGroup ->
                     EntrySelectionHelper.doSpecialAction(intent,
                         {
-                            mMainGroup?.nodeId?.let { currentParentGroupId ->
-                                EntryEditActivity.launchToCreate(
-                                    this@GroupActivity,
-                                    database,
-                                    currentParentGroupId,
-                                    mEntryActivityResultLauncher
-                                )
-                            }
+                            EntryEditActivity.launchToCreate(
+                                this@GroupActivity,
+                                database,
+                                currentGroup.nodeId,
+                                mEntryActivityResultLauncher
+                            )
                         },
                         {
                             // Search not used
@@ -623,7 +625,7 @@ class GroupActivity : DatabaseLockActivity(),
                 drawerLayout?.close()
 
                 breadcrumbListView?.isVisible = true
-                addNodeButtonView?.showButton()
+                addNodeButtonView?.enableAddGroup(true)
 
                 refreshDatabaseViews()
             }
@@ -636,7 +638,7 @@ class GroupActivity : DatabaseLockActivity(),
 
                 finishNodeAction()
                 breadcrumbListView?.isVisible = false
-                addNodeButtonView?.hideButton()
+                addNodeButtonView?.enableAddGroup(false)
 
                 refreshDatabaseViews()
             }
