@@ -68,8 +68,8 @@ class AddNodeButtonView @JvmOverloads constructor(
         animationDuration = 300L
 
         viewButtonMenuAnimation = AddButtonAnimation(addButtonView)
-        viewMenuAnimationAddEntry = ViewMenuAnimation(addEntryView, 150L, 0L)
-        viewMenuAnimationAddGroup = ViewMenuAnimation(addGroupView, 0L, 150L)
+        viewMenuAnimationAddGroup = ViewMenuAnimation(addGroupView, 150L, 0L)
+        viewMenuAnimationAddEntry = ViewMenuAnimation(addEntryView, 0L, 150L)
         backgroundScrimAnimation = BackgroundScrimAnimation(backgroundScrimView, 0L, 0L)
 
         allowAction = true
