@@ -7,14 +7,14 @@
         <item
             android:id="@+id/menu_groups"
             android:checkable="true"
-            android:icon="@drawable/ic_folder_outlined_white_24dp"
+            android:icon="@drawable/selector_tab_groups"
             android:onClick="onMenuItemClicked"
             android:title="@string/nav_groups"
             app:iconTint="?attr/colorControlNormal" />
         <item
             android:id="@+id/menu_entries"
             android:checkable="true"
-            android:icon="@drawable/ic_keyboard_list_24dp"
+            android:icon="@drawable/selector_tab_entries"
             android:onClick="onMenuItemClicked"
             android:title="@string/nav_entries"
             app:iconTint="?attr/colorControlNormal" />
