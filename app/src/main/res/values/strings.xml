@@ -288,7 +288,7 @@
     <string name="sort_menu">Sort</string>
     <string name="sort_ascending">Ascending</string>
     <string name="sort_descending">Descending</string>
-    <string name="sort_groups_before">Groups before</string>
+    <string name="sort_groups_before">Groups on top</string>
     <string name="sort_recycle_bin_bottom">Recycle bin at bottom</string>
     <string name="sort_show_recycle_bin_items">Recycle bin items</string>
     <string name="sort_db">Natural order</string>
