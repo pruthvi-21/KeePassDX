@@ -261,8 +261,8 @@
     </style>
 
     <style name="Theme.Keepass.Meta.Entry" parent="Theme.Keepass.Text.Tiny">
-        <item name="android:textColor">@color/text_primary_color</item>
-        <item name="android:tint">@color/text_primary_color</item>
+        <item name="android:textColor">?colorOnSurface</item>
+        <item name="android:tint">?colorOnSurface</item>
         <item name="android:textSize">11sp</item>
     </style>
 
