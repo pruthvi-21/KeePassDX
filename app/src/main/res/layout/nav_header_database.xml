@@ -117,6 +117,14 @@
         android:layout_marginVertical="10dp"
         android:background="?android:listDivider" />
 
+    <TextView
+        android:id="@+id/nav_item_lock"
+        style="@style/Theme.Keepass.NavigationItem.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lock"
+        app:drawableStartCompat="@drawable/ic_lock_white_24dp" />
+
     <CheckBox
         android:id="@+id/nav_item_more"
         style="@style/Theme.Keepass.NavigationItem.Item"
@@ -185,14 +193,6 @@
         android:layout_height="1dp"
         android:layout_marginVertical="10dp"
         android:background="?android:listDivider" />
-
-    <TextView
-        android:id="@+id/nav_item_lock"
-        style="@style/Theme.Keepass.NavigationItem.Item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/lock"
-        app:drawableStartCompat="@drawable/ic_lock_white_24dp" />
 
     <TextView
         android:id="@+id/nav_item_settings"
