@@ -220,7 +220,7 @@ class SearchActivity : DatabaseLockActivity(),
         mGroupFragment =
             supportFragmentManager.findFragmentByTag(GROUP_FRAGMENT_TAG) as GroupFragment?
         if (mGroupFragment == null)
-            mGroupFragment = GroupFragment()
+            mGroupFragment = GroupFragment.create(true)
 
         // Attach fragment to content view
         supportFragmentManager.beginTransaction().replace(

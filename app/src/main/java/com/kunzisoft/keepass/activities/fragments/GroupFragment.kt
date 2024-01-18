@@ -59,6 +59,8 @@ class GroupFragment : DatabaseFragment(), SortView.SortSelectionListener {
     private var mRecycleBinEnable: Boolean = false
     private var mRecycleBin: Group? = null
 
+    private var fromSearch = false
+
     private var mRecycleViewScrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
@@ -119,6 +121,8 @@ class GroupFragment : DatabaseFragment(), SortView.SortSelectionListener {
     override fun onDatabaseRetrieved(database: ContextualDatabase?) {
         mRecycleBinEnable = database?.isRecycleBinEnabled == true
         mRecycleBin = database?.recycleBin
+
+        fromSearch = arguments?.getBoolean(FROM_SEARCH) == true
 
         context?.let { context ->
             database?.let { database ->
@@ -328,6 +332,11 @@ class GroupFragment : DatabaseFragment(), SortView.SortSelectionListener {
                     ) {
                         menu?.removeItem(R.id.menu_delete)
                     }
+
+                    if(fromSearch) {
+                        menu?.removeItem(R.id.menu_move)
+                        menu?.removeItem(R.id.menu_copy)
+                    }
                 }
 
                 // Add the number of items selected in title
@@ -427,5 +436,15 @@ class GroupFragment : DatabaseFragment(), SortView.SortSelectionListener {
 
     companion object {
         private val TAG = GroupFragment::class.java.name
+        private const val FROM_SEARCH = "FROM_SEARCH"
+
+        fun create(fromSearch: Boolean = false): GroupFragment {
+            val fragment = GroupFragment()
+            val bundle = Bundle()
+            bundle.putBoolean(FROM_SEARCH, fromSearch)
+
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 }
