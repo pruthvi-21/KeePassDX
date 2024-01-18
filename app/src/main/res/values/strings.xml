@@ -360,6 +360,7 @@
     <string name="clipboard_notifications_summary">Show clipboard notifications to copy fields when viewing an entry</string>
     <string name="clipboard_warning">If automatic deletion of clipboard fails, delete its history manually.</string>
     <string name="lock">Lock</string>
+    <string name="more">More</string>
     <string name="lock_database_screen_off_title">Screen lock</string>
     <string name="lock_database_screen_off_summary">Lock the database after a few seconds once the screen is off</string>
     <string name="lock_database_back_root_title">Press \'Back\' to lock</string>

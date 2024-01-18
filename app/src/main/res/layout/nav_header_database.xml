@@ -132,7 +132,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/background_nav_item_no_ripple"
         android:backgroundTint="@color/nav_item_more_background_color"
-        android:text="More"
+        android:text="@string/more"
         app:drawableStartCompat="@drawable/ic_more_white_24dp"
         app:drawableTint="?colorOutline" />
 
