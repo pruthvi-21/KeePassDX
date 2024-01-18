@@ -228,6 +228,26 @@ class EntriesListAdapter(
         return mNodeSortedList.indexOf(node)
     }
 
+    fun notifyNodeChanged(node: Entry) {
+        notifyItemChanged(mNodeSortedList.indexOf(node))
+    }
+
+    fun setActionNodes(actionNodes: List<Entry>) {
+        this.mActionNodesList.apply {
+            clear()
+            addAll(actionNodes)
+        }
+    }
+
+    fun unselectActionNodes() {
+        mActionNodesList.forEach {
+            notifyItemChanged(mNodeSortedList.indexOf(it))
+        }
+        this.mActionNodesList.apply {
+            clear()
+        }
+    }
+
     fun notifyChangeSort(
         sortNodeEnum: SortNodeEnum,
         sortNodeParameters: SortNodeEnum.SortNodeParameters,
@@ -264,6 +284,7 @@ class EntriesListAdapter(
             isSelected = mActionNodesList.contains(subNode)
         }
         holder.iconSelected.isVisible = holder.container.isSelected
+        holder.icon.alpha = if (holder.container.isSelected) 0.5f else 1f
 
         // Assign text
         holder.text.apply {

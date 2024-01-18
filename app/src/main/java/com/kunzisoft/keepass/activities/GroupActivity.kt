@@ -938,15 +938,30 @@ class GroupActivity : DatabaseLockActivity(),
     ): Boolean {
         if (nodes.isNotEmpty()) {
             if (actionNodeMode == null || toolbarAction?.getSupportActionModeCallback() == null) {
-                mGroupFragment.actionNodesCallback(
-                    database,
-                    nodes,
-                    this
-                ) { _ ->
-                    actionNodeMode = null
-                    addNodeButtonView?.showButton()
-                }.let {
-                    actionNodeMode = toolbarAction?.startSupportActionMode(it)
+                if(databaseNavView?.navItemGroups?.isChecked == true) {
+                    mGroupFragment.actionNodesCallback(
+                        database,
+                        nodes,
+                        this
+                    ) { _ ->
+                        actionNodeMode = null
+                        addNodeButtonView?.showButton()
+                    }.let {
+                        actionNodeMode = toolbarAction?.startSupportActionMode(it)
+                    }
+                }
+
+                if(databaseNavView?.navItemEntries?.isChecked == true) {
+                    mEntriesFragment.actionNodesCallback(
+                        database,
+                        nodes,
+                        this
+                    ) { _ ->
+                        actionNodeMode = null
+                        addNodeButtonView?.showButton()
+                    }.let {
+                        actionNodeMode = toolbarAction?.startSupportActionMode(it)
+                    }
                 }
             } else {
                 actionNodeMode?.invalidate()
@@ -1177,7 +1192,7 @@ class GroupActivity : DatabaseLockActivity(),
     }
 
     override fun onDatabaseBackPressed() {
-        if (mGroupFragment.nodeActionSelectionMode) {
+        if (mGroupFragment.nodeActionSelectionMode || mEntriesFragment.nodeActionSelectionMode) {
             finishNodeAction()
         } else if (databaseNavView?.navItemEntries?.isChecked == true) {
             databaseNavView?.navItemGroups?.let {
