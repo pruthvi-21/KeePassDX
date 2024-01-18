@@ -9,7 +9,6 @@ import android.util.Log
 import androidx.preference.PreferenceManager
 import com.kunzisoft.keepass.BuildConfig
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.activities.GroupActivity
 import com.kunzisoft.keepass.activities.stylish.Stylish
 import com.kunzisoft.keepass.biometric.AdvancedUnlockManager
 import com.kunzisoft.keepass.database.element.SortNodeEnum
@@ -74,23 +73,6 @@ object PreferencesUtil {
             )
             apply()
         }
-    }
-
-    fun setActiveHomeTab(context: Context, tab: GroupActivity.NavigationItem) {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        prefs?.edit()
-            ?.putInt(context.getString(R.string.active_tab_home), tab.ordinal)
-            ?.apply()
-    }
-
-    fun getActiveHomeTab(context: Context): GroupActivity.NavigationItem {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return GroupActivity.NavigationItem.values().find {
-            it.ordinal == prefs.getInt(
-                context.getString(R.string.active_tab_home),
-                GroupActivity.NavigationItem.GROUPS.ordinal
-            )
-        } ?: GroupActivity.NavigationItem.GROUPS
     }
 
     fun rememberDatabaseLocations(context: Context): Boolean {

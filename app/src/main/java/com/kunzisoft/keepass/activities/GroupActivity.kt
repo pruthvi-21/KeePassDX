@@ -140,6 +140,8 @@ class GroupActivity : DatabaseLockActivity(),
     private var mPreviousGroupsIds = mutableListOf<GroupState>()
     private var mOldGroupToUpdate: Group? = null
 
+    private var activeNavItem = NavigationItem.GROUPS
+
     private val mEntryActivityResultLauncher =
         EntryEditActivity.registerForEntryResult(this) { entryId ->
             entryId?.let {
@@ -292,7 +294,10 @@ class GroupActivity : DatabaseLockActivity(),
         }
 
         //initial selection
-        selectNavigationItem(PreferencesUtil.getActiveHomeTab(this))
+        val active = savedInstanceState?.getInt(ACTIVE_NAV_ITEM) ?: NavigationItem.GROUPS.ordinal
+        selectNavigationItem(
+            NavigationItem.values().getOrNull(active) ?: NavigationItem.GROUPS
+        )
 
         // Observe main group
         mGroupViewModel.mainGroup.observe(this) {
@@ -512,6 +517,7 @@ class GroupActivity : DatabaseLockActivity(),
     }
 
     private fun selectNavigationItem(item: NavigationItem) {
+        activeNavItem = item
         when (item) {
             NavigationItem.GROUPS -> {
                 databaseNavView?.navItemGroups?.isChecked = true
@@ -523,7 +529,6 @@ class GroupActivity : DatabaseLockActivity(),
                 finishNodeAction()
                 breadcrumbListView?.isVisible = true
                 addNodeButtonView?.enableAddGroup(true)
-                PreferencesUtil.setActiveHomeTab(this, NavigationItem.GROUPS)
             }
 
             NavigationItem.ENTRIES -> {
@@ -537,7 +542,6 @@ class GroupActivity : DatabaseLockActivity(),
                 finishNodeAction()
                 breadcrumbListView?.isVisible = false
                 addNodeButtonView?.enableAddGroup(false)
-                PreferencesUtil.setActiveHomeTab(this, NavigationItem.ENTRIES)
             }
         }
     }
@@ -739,6 +743,7 @@ class GroupActivity : DatabaseLockActivity(),
             outState.putParcelable(OLD_GROUP_TO_UPDATE_KEY, it)
         }
         outState.putBoolean(REQUEST_STARTUP_SEARCH_KEY, mRequestStartupSearch)
+        outState.putInt(ACTIVE_NAV_ITEM, activeNavItem.ordinal)
         outState.putBoolean(CLOSE_DRAWER_ARG, CLOSE_DRAWER)
         super.onSaveInstanceState(outState)
     }
@@ -1273,6 +1278,7 @@ class GroupActivity : DatabaseLockActivity(),
         private const val ENTRIES_FRAGMENT_TAG = "ENTRIES_FRAGMENT_TAG"
         private const val OLD_GROUP_TO_UPDATE_KEY = "OLD_GROUP_TO_UPDATE_KEY"
         private const val AUTO_SEARCH_KEY = "AUTO_SEARCH_KEY"
+        private const val ACTIVE_NAV_ITEM = "ACTIVE_NAV_ITEM"
         private const val CLOSE_DRAWER_ARG = "close_drawer"
 
         private fun buildIntent(
