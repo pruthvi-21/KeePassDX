@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -175,6 +176,9 @@ class SearchActivity : DatabaseLockActivity(),
         toolbar?.title = " "
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        window.statusBarColor =
+            ColorUtils.getColorFromAttr(this, R.attr.colorSurfaceVariant2, Color.BLACK)
 
         // To apply fit window with transparency
         setTransparentNavigationBar {

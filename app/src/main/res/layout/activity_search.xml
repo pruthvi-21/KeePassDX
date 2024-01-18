@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_group_container_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,14 +23,15 @@
             style="?toolbarStyle"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
+            android:background="?colorSurfaceVariant2"
             android:title="@string/app_name"
             app:layout_constraintTop_toBottomOf="@+id/special_mode_view"
             app:navigationIcon="@drawable/ic_toolbar_back_white_24dp">
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search_view"
-                android:layout_width="match_parent"
                 style="@style/Theme.Keepass.SearchView"
+                android:layout_width="match_parent"
                 android:layout_height="?actionBarSize" />
         </com.google.android.material.appbar.MaterialToolbar>
 
