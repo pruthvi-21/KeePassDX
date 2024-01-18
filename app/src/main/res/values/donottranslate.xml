@@ -283,8 +283,6 @@
     <!-- for entries tab-->
     <string name="sort_node_entries_key" translatable="false">sort_node_entries_key</string>
     <string name="sort_ascending_entries_key" translatable="false">sort_ascending_entries_key</string>
-    <string name="sort_recycle_bin_entries_key" translatable="false">sort_recycle_bin_entries_key</string>
-    <bool name="sort_recycle_bin_entries_default" translatable="false">false</bool>
 
     <string name="active_tab_home" translatable="false">active_tab_home</string>
 

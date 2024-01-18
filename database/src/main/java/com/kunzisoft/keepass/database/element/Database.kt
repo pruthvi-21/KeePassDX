@@ -32,6 +32,7 @@ import com.kunzisoft.keepass.database.element.icon.IconImageCustom
 import com.kunzisoft.keepass.database.element.icon.IconImageStandard
 import com.kunzisoft.keepass.database.element.icon.IconImageStandard.Companion.NUMBER_STANDARD_ICONS
 import com.kunzisoft.keepass.database.element.icon.IconsManager
+import com.kunzisoft.keepass.database.element.node.Node
 import com.kunzisoft.keepass.database.element.node.NodeHandler
 import com.kunzisoft.keepass.database.element.node.NodeId
 import com.kunzisoft.keepass.database.element.node.NodeIdInt
@@ -178,16 +179,21 @@ open class Database {
     fun decodeEntryWithTemplateConfiguration(entry: Entry, lastEntryVersion: Entry? = null): Entry {
         entry.entryKDBX?.let {
             val lastEntry = lastEntryVersion ?: entry
-            mDatabaseKDBX?.decodeEntryWithTemplateConfiguration(it, entryIsTemplate(lastEntry))?.let { decode ->
-                return Entry(decode)
-            }
+            mDatabaseKDBX?.decodeEntryWithTemplateConfiguration(it, entryIsTemplate(lastEntry))
+                ?.let { decode ->
+                    return Entry(decode)
+                }
         }
         return entry
     }
 
     fun encodeEntryWithTemplateConfiguration(entry: Entry, template: Template): Entry {
         entry.entryKDBX?.let {
-            mDatabaseKDBX?.encodeEntryWithTemplateConfiguration(it, entryIsTemplate(entry), template)?.let { encode ->
+            mDatabaseKDBX?.encodeEntryWithTemplateConfiguration(
+                it,
+                entryIsTemplate(entry),
+                template
+            )?.let { encode ->
                 return Entry(encode)
             }
         }
@@ -237,7 +243,8 @@ open class Database {
             mDatabaseKDBX?.color?.let {
                 try {
                     colorInt = it.toFormattedColorInt()
-                } catch (_: Exception) {}
+                } catch (_: Exception) {
+                }
             }
             return mDatabaseKDB?.color ?: colorInt
         }
@@ -293,8 +300,9 @@ open class Database {
         return false
     }
 
-    fun updateDataBinaryCompression(oldCompression: CompressionAlgorithm,
-                                    newCompression: CompressionAlgorithm
+    fun updateDataBinaryCompression(
+        oldCompression: CompressionAlgorithm,
+        newCompression: CompressionAlgorithm
     ) {
         mDatabaseKDBX?.changeBinaryCompression(oldCompression, newCompression)
         dataModifiedSinceLastLoading = true
@@ -305,12 +313,13 @@ open class Database {
 
     fun getEncryptionAlgorithmName(): String {
         return mDatabaseKDB?.encryptionAlgorithm?.toString()
-                ?: mDatabaseKDBX?.encryptionAlgorithm?.toString()
-                ?: ""
+            ?: mDatabaseKDBX?.encryptionAlgorithm?.toString()
+            ?: ""
     }
 
     val availableEncryptionAlgorithms: List<EncryptionAlgorithm>
-        get() = mDatabaseKDB?.availableEncryptionAlgorithms ?: mDatabaseKDBX?.availableEncryptionAlgorithms ?: ArrayList()
+        get() = mDatabaseKDB?.availableEncryptionAlgorithms
+            ?: mDatabaseKDBX?.availableEncryptionAlgorithms ?: ArrayList()
 
     var encryptionAlgorithm: EncryptionAlgorithm?
         get() = mDatabaseKDB?.encryptionAlgorithm ?: mDatabaseKDBX?.encryptionAlgorithm
@@ -340,7 +349,8 @@ open class Database {
     }
 
     var numberKeyEncryptionRounds: Long
-        get() = mDatabaseKDB?.numberKeyEncryptionRounds ?: mDatabaseKDBX?.numberKeyEncryptionRounds ?: 0
+        get() = mDatabaseKDB?.numberKeyEncryptionRounds ?: mDatabaseKDBX?.numberKeyEncryptionRounds
+        ?: 0
         set(numberRounds) {
             mDatabaseKDB?.numberKeyEncryptionRounds = numberRounds
             mDatabaseKDBX?.numberKeyEncryptionRounds = numberRounds
@@ -485,6 +495,28 @@ open class Database {
         dataModifiedSinceLastLoading = true
     }
 
+    fun recycleBinEntriesIds(): ArrayList<String?> {
+        val recycleBinChildrenIdList = ArrayList<String?>()
+
+        fun searchChild(node: Group?) {
+            node ?: return
+            val children = node.getChildren()
+
+            children.forEach { item ->
+                if (item is Entry) {
+                    recycleBinChildrenIdList.add(item.nodeId.toVisualString())
+                }
+
+                if (item is Group) {
+                    searchChild(item)
+                }
+            }
+        }
+
+        searchChild(recycleBin)
+        return recycleBinChildrenIdList
+    }
+
     /**
      * Determine if a configurable templates group is available or not for this version of database
      * @return true if a configurable templates group available
@@ -563,38 +595,41 @@ open class Database {
         try {
             // Read database stream for the first time
             readDatabaseStream(databaseStream,
-                    { databaseInputStream ->
-                        val databaseKDB = DatabaseKDB().apply {
-                            binaryCache.cacheDirectory = cacheDirectory
-                            changeDuplicateId = fixDuplicateUUID
-                        }
-                        DatabaseInputKDB(databaseKDB)
-                            .openDatabase(databaseInputStream,
-                                progressTaskUpdater
-                            ) {
-                                 databaseKDB.deriveMasterKey(
-                                     masterCredential
-                                 )
-                            }
-                        setDatabaseKDB(databaseKDB)
-                    },
-                    { databaseInputStream ->
-                        val databaseKDBX = DatabaseKDBX().apply {
-                            binaryCache.cacheDirectory = cacheDirectory
-                            changeDuplicateId = fixDuplicateUUID
-                        }
-                        DatabaseInputKDBX(databaseKDBX).apply {
-                            setMethodToCheckIfRAMIsSufficient(isRAMSufficient)
-                            openDatabase(databaseInputStream,
-                                progressTaskUpdater) {
-                                databaseKDBX.deriveMasterKey(
-                                    masterCredential,
-                                    challengeResponseRetriever
-                                )
-                            }
-                        }
-                        setDatabaseKDBX(databaseKDBX)
+                { databaseInputStream ->
+                    val databaseKDB = DatabaseKDB().apply {
+                        binaryCache.cacheDirectory = cacheDirectory
+                        changeDuplicateId = fixDuplicateUUID
                     }
+                    DatabaseInputKDB(databaseKDB)
+                        .openDatabase(
+                            databaseInputStream,
+                            progressTaskUpdater
+                        ) {
+                            databaseKDB.deriveMasterKey(
+                                masterCredential
+                            )
+                        }
+                    setDatabaseKDB(databaseKDB)
+                },
+                { databaseInputStream ->
+                    val databaseKDBX = DatabaseKDBX().apply {
+                        binaryCache.cacheDirectory = cacheDirectory
+                        changeDuplicateId = fixDuplicateUUID
+                    }
+                    DatabaseInputKDBX(databaseKDBX).apply {
+                        setMethodToCheckIfRAMIsSufficient(isRAMSufficient)
+                        openDatabase(
+                            databaseInputStream,
+                            progressTaskUpdater
+                        ) {
+                            databaseKDBX.deriveMasterKey(
+                                masterCredential,
+                                challengeResponseRetriever
+                            )
+                        }
+                    }
+                    setDatabaseKDBX(databaseKDBX)
+                }
             )
             loaded = true
         } catch (e: Exception) {
@@ -771,7 +806,7 @@ open class Database {
                     else -> throw SignatureDatabaseException()
                 }
             }
-        } catch (fileNotFoundException : FileNotFoundException) {
+        } catch (fileNotFoundException: FileNotFoundException) {
             throw FileNotFoundDatabaseException()
         }
     }
@@ -800,24 +835,24 @@ open class Database {
                         }
                     }
                 }
-                ?: mDatabaseKDBX?.let { databaseKDBX ->
-                    DatabaseOutputKDBX(databaseKDBX).apply {
-                        writeDatabase(outputStream) {
-                            if (masterCredential != null) {
-                                // Build new master key from MainCredential
-                                databaseKDBX.deriveMasterKey(
-                                    masterCredential,
-                                    challengeResponseRetriever
-                                )
-                            } else {
-                                // Reuse composite key parts
-                                databaseKDBX.deriveCompositeKey(
-                                    challengeResponseRetriever
-                                )
+                    ?: mDatabaseKDBX?.let { databaseKDBX ->
+                        DatabaseOutputKDBX(databaseKDBX).apply {
+                            writeDatabase(outputStream) {
+                                if (masterCredential != null) {
+                                    // Build new master key from MainCredential
+                                    databaseKDBX.deriveMasterKey(
+                                        masterCredential,
+                                        challengeResponseRetriever
+                                    )
+                                } else {
+                                    // Reuse composite key parts
+                                    databaseKDBX.deriveCompositeKey(
+                                        challengeResponseRetriever
+                                    )
+                                }
                             }
                         }
                     }
-                }
             }
             // Copy from the cache to the final stream
             databaseOutputStream?.use { outputStream ->
@@ -866,11 +901,13 @@ open class Database {
 
     fun createVirtualGroupFromSearch(
         searchParameters: SearchParameters,
-         fromGroup: NodeId<*>? = null,
-         max: Int = Integer.MAX_VALUE
+        fromGroup: NodeId<*>? = null,
+        max: Int = Integer.MAX_VALUE
     ): Group? {
-        return mSearchHelper.createVirtualGroupWithSearchResult(this,
-            searchParameters, fromGroup, max)
+        return mSearchHelper.createVirtualGroupWithSearchResult(
+            this,
+            searchParameters, fromGroup, max
+        )
     }
 
     fun createVirtualGroupFromSearchInfo(
@@ -878,22 +915,23 @@ open class Database {
         max: Int = Integer.MAX_VALUE
     ): Group? {
         return mSearchHelper.createVirtualGroupWithSearchResult(this,
-                SearchParameters().apply {
-                    searchQuery = searchInfoString
-                    searchInTitles = true
-                    searchInUsernames = false
-                    searchInPasswords = false
-                    searchInUrls = true
-                    searchInNotes = true
-                    searchInOTP = false
-                    searchInOther = true
-                    searchInUUIDs = false
-                    searchInTags = false
-                    searchInCurrentGroup = false
-                    searchInSearchableGroup = true
-                    searchInRecycleBin = false
-                    searchInTemplates = false
-                }, null, max)
+            SearchParameters().apply {
+                searchQuery = searchInfoString
+                searchInTitles = true
+                searchInUsernames = false
+                searchInPasswords = false
+                searchInUrls = true
+                searchInNotes = true
+                searchInOTP = false
+                searchInOther = true
+                searchInUUIDs = false
+                searchInTags = false
+                searchInCurrentGroup = false
+                searchInSearchableGroup = true
+                searchInRecycleBin = false
+                searchInTemplates = false
+            }, null, max
+        )
     }
 
     val tagPool: Tags
@@ -917,9 +955,11 @@ open class Database {
 
     fun buildNewBinaryAttachment(): BinaryData? {
         return mDatabaseKDB?.buildNewBinaryAttachment()
-                ?: mDatabaseKDBX?.buildNewBinaryAttachment( false,
-                        compressionForNewEntry(),
-                        false)
+            ?: mDatabaseKDBX?.buildNewBinaryAttachment(
+                false,
+                compressionForNewEntry(),
+                false
+            )
     }
 
     fun removeAttachmentIfNotUsed(attachment: Attachment) {
@@ -979,12 +1019,13 @@ open class Database {
         val password = masterCredential.password
         val containsKeyFile = masterCredential.keyFileData != null
         return mDatabaseKDB?.isValidCredential(password, containsKeyFile)
-                ?: mDatabaseKDBX?.isValidCredential(password, containsKeyFile)
-                ?: false
+            ?: mDatabaseKDBX?.isValidCredential(password, containsKeyFile)
+            ?: false
     }
 
     fun rootCanContainsEntry(): Boolean {
-        return mDatabaseKDB?.rootCanContainsEntry() ?: mDatabaseKDBX?.rootCanContainsEntry() ?: false
+        return mDatabaseKDB?.rootCanContainsEntry() ?: mDatabaseKDBX?.rootCanContainsEntry()
+        ?: false
     }
 
     fun createEntry(): Entry? {
@@ -1046,7 +1087,7 @@ open class Database {
         return null
     }
 
-    fun getEntries(): List<Entry>? {
+    fun getEntries(): List<Node>? {
         return if (mDatabaseKDB != null) {
             mDatabaseKDB?.getEntryIndexes()
                 ?.filter { !entryIsTemplate(Entry(it)) }
@@ -1141,7 +1182,8 @@ open class Database {
      */
     fun copyEntryTo(entryToCopy: Entry, newParent: Group): Entry {
         val entryCopied = Entry(entryToCopy, false)
-        entryCopied.nodeId = mDatabaseKDB?.newEntryId() ?: mDatabaseKDBX?.newEntryId() ?: NodeIdUUID()
+        entryCopied.nodeId =
+            mDatabaseKDB?.newEntryId() ?: mDatabaseKDBX?.newEntryId() ?: NodeIdUUID()
         entryCopied.parent = newParent
         entryCopied.title += " (~)"
         addEntryTo(entryCopied, newParent)
@@ -1175,23 +1217,23 @@ open class Database {
     fun deleteGroup(group: Group) {
         dataModifiedSinceLastLoading = true
         group.doForEachChildAndForIt(
-                object : NodeHandler<Entry>() {
-                    override fun operate(node: Entry): Boolean {
-                        deleteEntry(node)
-                        return true
+            object : NodeHandler<Entry>() {
+                override fun operate(node: Entry): Boolean {
+                    deleteEntry(node)
+                    return true
+                }
+            },
+            object : NodeHandler<Group>() {
+                override fun operate(node: Group): Boolean {
+                    node.groupKDBX?.id?.let { groupId ->
+                        mDatabaseKDBX?.addDeletedObject(groupId)
                     }
-                },
-                object : NodeHandler<Group>() {
-                    override fun operate(node: Group): Boolean {
-                        node.groupKDBX?.id?.let { groupId ->
-                            mDatabaseKDBX?.addDeletedObject(groupId)
-                        }
-                        node.parent?.let {
-                            removeGroupFrom(node, it)
-                        }
-                        return true
+                    node.parent?.let {
+                        removeGroupFrom(node, it)
                     }
-                })
+                    return true
+                }
+            })
     }
 
     fun ensureRecycleBinExists(recyclerBinTitle: String) {
@@ -1295,17 +1337,17 @@ open class Database {
      */
     fun removeOldestHistoryForEachEntry() {
         rootGroup?.doForEachChildAndForIt(
-                object : NodeHandler<Entry>() {
-                    override fun operate(node: Entry): Boolean {
-                        removeOldestEntryHistory(node, attachmentPool)
-                        return true
-                    }
-                },
-                object : NodeHandler<Group>() {
-                    override fun operate(node: Group): Boolean {
-                        return true
-                    }
+            object : NodeHandler<Entry>() {
+                override fun operate(node: Entry): Boolean {
+                    removeOldestEntryHistory(node, attachmentPool)
+                    return true
                 }
+            },
+            object : NodeHandler<Group>() {
+                override fun operate(node: Group): Boolean {
+                    return true
+                }
+            }
         )
     }
 

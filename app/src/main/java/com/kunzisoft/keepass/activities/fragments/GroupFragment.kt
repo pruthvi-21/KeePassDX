@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.activities.GroupActivity
 import com.kunzisoft.keepass.activities.helpers.EntrySelectionHelper
 import com.kunzisoft.keepass.activities.helpers.SpecialMode
 import com.kunzisoft.keepass.adapters.NodesAdapter
@@ -126,44 +127,45 @@ class GroupFragment : DatabaseFragment(), SortView.SortSelectionListener {
 
         context?.let { context ->
             database?.let { database ->
-                mAdapter = NodesAdapter(context, database).apply {
-                    setOnNodeClickListener(object : NodesAdapter.NodeClickCallback {
-                        override fun onNodeClick(database: ContextualDatabase, node: Node) {
-                            if (nodeActionSelectionMode) {
-                                if (listActionNodes.contains(node)) {
-                                    // Remove selected item if already selected
-                                    listActionNodes.remove(node)
+                mAdapter =
+                    NodesAdapter(context, database, GroupActivity.NavigationItem.GROUPS).apply {
+                        setOnNodeClickListener(object : NodesAdapter.NodeClickCallback {
+                            override fun onNodeClick(database: ContextualDatabase, node: Node) {
+                                if (nodeActionSelectionMode) {
+                                    if (listActionNodes.contains(node)) {
+                                        // Remove selected item if already selected
+                                        listActionNodes.remove(node)
+                                    } else {
+                                        // Add selected item if not already selected
+                                        listActionNodes.add(node)
+                                    }
+                                    nodeClickListener?.onNodeSelected(database, listActionNodes)
+                                    setActionNodes(listActionNodes)
+                                    notifyNodeChanged(node)
                                 } else {
-                                    // Add selected item if not already selected
-                                    listActionNodes.add(node)
+                                    nodeClickListener?.onNodeClick(database, node)
                                 }
-                                nodeClickListener?.onNodeSelected(database, listActionNodes)
-                                setActionNodes(listActionNodes)
-                                notifyNodeChanged(node)
-                            } else {
-                                nodeClickListener?.onNodeClick(database, node)
                             }
-                        }
 
-                        override fun onNodeLongClick(
-                            database: ContextualDatabase,
-                            node: Node
-                        ): Boolean {
-                            if (nodeActionPasteMode == PasteMode.UNDEFINED) {
-                                // Select the first item after a long click
-                                if (!listActionNodes.contains(node))
-                                    listActionNodes.add(node)
+                            override fun onNodeLongClick(
+                                database: ContextualDatabase,
+                                node: Node
+                            ): Boolean {
+                                if (nodeActionPasteMode == PasteMode.UNDEFINED) {
+                                    // Select the first item after a long click
+                                    if (!listActionNodes.contains(node))
+                                        listActionNodes.add(node)
 
-                                nodeClickListener?.onNodeSelected(database, listActionNodes)
+                                    nodeClickListener?.onNodeSelected(database, listActionNodes)
 
-                                setActionNodes(listActionNodes)
-                                notifyNodeChanged(node)
-                                activity?.hideKeyboard()
+                                    setActionNodes(listActionNodes)
+                                    notifyNodeChanged(node)
+                                    activity?.hideKeyboard()
+                                }
+                                return true
                             }
-                            return true
-                        }
-                    })
-                }
+                        })
+                    }
                 mNodesRecyclerView?.adapter = mAdapter
             }
         }
@@ -208,6 +210,13 @@ class GroupFragment : DatabaseFragment(), SortView.SortSelectionListener {
             adapter = mAdapter
         }
         resetAppTimeoutWhenViewFocusedOrChanged(view)
+
+        context?.let { context ->
+            mSortView?.setListOrder(PreferencesUtil.getListSort(context))
+            mSortView?.arrangeInAscending(PreferencesUtil.getAscendingSort(context))
+            mSortView?.setGroupsBefore(PreferencesUtil.getGroupsBeforeSort(context))
+            mSortView?.setRecycleBinAtBottom(PreferencesUtil.getRecycleBinBottomSort(context))
+        }
 
         mGroupViewModel.group.observe(viewLifecycleOwner) {
             mCurrentGroup = it.group
@@ -333,7 +342,7 @@ class GroupFragment : DatabaseFragment(), SortView.SortSelectionListener {
                         menu?.removeItem(R.id.menu_delete)
                     }
 
-                    if(fromSearch) {
+                    if (fromSearch) {
                         menu?.removeItem(R.id.menu_move)
                         menu?.removeItem(R.id.menu_copy)
                     }

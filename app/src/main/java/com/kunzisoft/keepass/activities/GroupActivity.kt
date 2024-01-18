@@ -145,7 +145,8 @@ class GroupActivity : DatabaseLockActivity(),
             entryId?.let {
                 // Simply refresh the list when entry is updated
                 loadGroup()
-                mEntriesFragment.updateList(true)
+                mEntriesFragment.updateList()
+                mEntriesFragment.updateTags()
             } ?: Log.e(this.javaClass.name, "Entry cannot be retrieved in Activity Result")
         }
 
@@ -938,7 +939,7 @@ class GroupActivity : DatabaseLockActivity(),
     ): Boolean {
         if (nodes.isNotEmpty()) {
             if (actionNodeMode == null || toolbarAction?.getSupportActionModeCallback() == null) {
-                if(databaseNavView?.navItemGroups?.isChecked == true) {
+                if (databaseNavView?.navItemGroups?.isChecked == true) {
                     mGroupFragment.actionNodesCallback(
                         database,
                         nodes,
@@ -951,7 +952,7 @@ class GroupActivity : DatabaseLockActivity(),
                     }
                 }
 
-                if(databaseNavView?.navItemEntries?.isChecked == true) {
+                if (databaseNavView?.navItemEntries?.isChecked == true) {
                     mEntriesFragment.actionNodesCallback(
                         database,
                         nodes,

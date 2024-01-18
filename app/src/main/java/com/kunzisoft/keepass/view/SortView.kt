@@ -16,11 +16,9 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.annotation.IdRes
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.view.isVisible
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.SortNodeEnum
-import com.kunzisoft.keepass.settings.PreferencesUtil
 
 class SortView @JvmOverloads constructor(
     context: Context,
@@ -63,12 +61,6 @@ class SortView @JvmOverloads constructor(
 
         additionalOptionsView.addView(groupsBeforeView)
         additionalOptionsView.addView(recycleBinAtBottomView)
-
-        //initial state
-        setListOrder(PreferencesUtil.getListSort(context))
-        arrangeInAscending(PreferencesUtil.getAscendingSort(context))
-        setGroupsBefore(PreferencesUtil.getGroupsBeforeSort(context))
-        setRecycleBinAtBottom(PreferencesUtil.getRecycleBinBottomSort(context))
 
         sortView.setOnClickListener {
             val location = IntArray(2)
@@ -150,6 +142,10 @@ class SortView @JvmOverloads constructor(
     fun setRecycleBinAtBottom(recycleBinAtBottom: Boolean) {
         isRecycleBinAtBottom = recycleBinAtBottom
         recycleBinAtBottomView.isChecked = recycleBinAtBottom
+    }
+
+    fun showMoreOptions(show: Boolean) {
+        additionalOptionsView.isVisible = show
     }
 
     @IdRes

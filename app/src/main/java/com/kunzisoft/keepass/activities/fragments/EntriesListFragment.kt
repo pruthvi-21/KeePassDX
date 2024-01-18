@@ -11,39 +11,39 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.view.ActionMode
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.libx.ui.views.SpinnerX
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.adapters.EntriesListAdapter
+import com.kunzisoft.keepass.activities.GroupActivity
 import com.kunzisoft.keepass.adapters.NodesAdapter
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.Entry
 import com.kunzisoft.keepass.database.element.SortNodeEnum
 import com.kunzisoft.keepass.database.element.Tags
 import com.kunzisoft.keepass.database.element.node.Node
-import com.kunzisoft.keepass.database.element.node.Type
 import com.kunzisoft.keepass.settings.PreferencesUtil
 import com.kunzisoft.keepass.utils.KeyboardUtil.hideKeyboard
-import com.kunzisoft.keepass.view.EntriesSortView
+import com.kunzisoft.keepass.view.SortView
 import java.util.LinkedList
 
 class EntriesListFragment : DatabaseFragment(),
-    EntriesSortView.SortSelectionListener,
+    SortView.SortSelectionListener,
     AdapterView.OnItemSelectedListener,
-    EntriesListAdapter.NodeClickCallback {
+    NodesAdapter.NodeClickCallback {
 
     private var tagsSpinner: SpinnerX? = null
     private var tagsLabelView: TextView? = null
     private var recyclerView: RecyclerView? = null
-    private var sortView: EntriesSortView? = null
+    private var sortView: SortView? = null
 
-    private var entriesAdapter: EntriesListAdapter? = null
+    private var entriesAdapter: NodesAdapter? = null
     private var tagsAdapter: ArrayAdapter<String>? = null
     private var tagsList = ArrayList<String>()
 
-    private val listActionNodes = LinkedList<Entry>()
+    private val listActionNodes = LinkedList<Node>()
 
     var nodeActionSelectionMode = false
         private set
@@ -87,7 +87,12 @@ class EntriesListFragment : DatabaseFragment(),
         tagsAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, tagsList)
         tagsAdapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
-        sortView?.setOnSortSelectionListener(this)
+        sortView?.let {
+            it.showMoreOptions(false)
+            it.setOnSortSelectionListener(this)
+            it.setListOrder(PreferencesUtil.getEntriesListSort(requireContext()))
+            it.arrangeInAscending(PreferencesUtil.getAscendingEntriesSort(requireContext()))
+        }
         tagsSpinner?.onItemSelectedListener = this
 
         tagsLabelView?.setOnClickListener {
@@ -99,26 +104,31 @@ class EntriesListFragment : DatabaseFragment(),
         context ?: return
         database ?: return
 
-        entriesAdapter = EntriesListAdapter(requireContext(), database)
+        entriesAdapter =
+            NodesAdapter(requireContext(), database, GroupActivity.NavigationItem.ENTRIES)
         entriesAdapter?.setOnNodeClickListener(this)
 
         recyclerView?.adapter = entriesAdapter
         tagsSpinner?.adapter = tagsAdapter
         updateList()
+        updateTags()
     }
 
-    fun updateList(updateTags: Boolean = true) {
-        val entries = mDatabase?.getEntries() ?: return
-        entriesAdapter?.rebuildList(entries)
+    fun updateList() {
+        mDatabase?.getEntries()?.let { entries ->
+            entriesAdapter?.rebuildList(entries)
+        }
+    }
 
-        if (updateTags) {
+    fun updateTags() {
+        mDatabase?.getEntries()?.let { entries ->
             tagsList.apply {
                 clear()
                 add("All")
 
                 Tags().apply {
                     entries.forEach {
-                        put(it.tags)
+                        if (it is Entry) put(it.tags)
                     }
                     addAll(toList().sorted())
                 }
@@ -127,9 +137,7 @@ class EntriesListFragment : DatabaseFragment(),
         }
     }
 
-
     override fun onNodeClick(database: ContextualDatabase, node: Node) {
-        if (node !is Entry) return
         if (nodeActionSelectionMode) {
             if (listActionNodes.contains(node)) {
                 // Remove selected item if already selected
@@ -167,7 +175,7 @@ class EntriesListFragment : DatabaseFragment(),
 
         val tag = if (position == 0) "" else tagsList[position]
         entriesAdapter?.notifyCustomTagSelected(tag)
-        updateList(false)
+        updateList()
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -247,23 +255,21 @@ class EntriesListFragment : DatabaseFragment(),
 
     override fun onSortSelected(
         sortNodeEnum: SortNodeEnum,
-        sortNodeParameters: SortNodeEnum.SortNodeParameters,
-        showRecycleBinItems: Boolean
+        sortNodeParameters: SortNodeEnum.SortNodeParameters
     ) {
         // Save setting
         context?.let {
             PreferencesUtil.saveNodeEntriesSort(
                 it,
                 sortNodeEnum,
-                sortNodeParameters,
-                showRecycleBinItems
+                sortNodeParameters
             )
         }
 
         // Tell the adapter to refresh it's list
         try {
-            entriesAdapter?.notifyChangeSort(sortNodeEnum, sortNodeParameters, showRecycleBinItems)
-            updateList(false)
+            entriesAdapter?.notifyChangeSort(SortNodeEnum.TITLE, sortNodeParameters)
+            updateList()
         } catch (e: Exception) {
             Log.e(TAG, "Unable to sort the list", e)
         }

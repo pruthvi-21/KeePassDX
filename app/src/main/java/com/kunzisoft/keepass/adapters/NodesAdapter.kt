@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.SortedList
 import androidx.recyclerview.widget.SortedListAdapterCallback
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.activities.GroupActivity
 import com.kunzisoft.keepass.database.ContextualDatabase
 import com.kunzisoft.keepass.database.element.Entry
 import com.kunzisoft.keepass.database.element.Group
@@ -44,7 +45,8 @@ import java.util.LinkedList
  */
 class NodesAdapter(
     private val context: Context,
-    private val database: ContextualDatabase
+    private val database: ContextualDatabase,
+    private val tab: GroupActivity.NavigationItem
 ) : RecyclerView.Adapter<NodesAdapter.NodeViewHolder>() {
 
     private var mNodeComparator: Comparator<NodeVersionedInterface<Group>>? = null
@@ -67,6 +69,7 @@ class NodesAdapter(
     private var mEntryFilters = arrayOf<Group.ChildFilter>()
     private var mOldVirtualGroup = false
     private var mVirtualGroup = false
+    private var mTagFilter = ""
 
     private var mActionNodesList = LinkedList<Node>()
     private var mNodeClickCallback: NodeClickCallback? = null
@@ -141,14 +144,27 @@ class NodesAdapter(
     private fun assignPreferences() {
         this.mPrefSizeMultiplier = PreferencesUtil.getListTextSize(context)
 
-        notifyChangeSort(
-            PreferencesUtil.getListSort(context),
-            SortNodeEnum.SortNodeParameters(
-                PreferencesUtil.getAscendingSort(context),
-                PreferencesUtil.getGroupsBeforeSort(context),
-                PreferencesUtil.getRecycleBinBottomSort(context)
-            )
-        )
+        when (tab) {
+            GroupActivity.NavigationItem.GROUPS -> {
+                notifyChangeSort(
+                    PreferencesUtil.getListSort(context),
+                    SortNodeEnum.SortNodeParameters(
+                        PreferencesUtil.getAscendingSort(context),
+                        PreferencesUtil.getGroupsBeforeSort(context),
+                        PreferencesUtil.getRecycleBinBottomSort(context)
+                    )
+                )
+            }
+
+            GroupActivity.NavigationItem.ENTRIES -> {
+                notifyChangeSort(
+                    PreferencesUtil.getEntriesListSort(context),
+                    SortNodeEnum.SortNodeParameters(
+                        PreferencesUtil.getAscendingEntriesSort(context)
+                    )
+                )
+            }
+        }
 
         this.mShowEntryColors = PreferencesUtil.showEntryColors(context)
         this.mShowNumberEntries = PreferencesUtil.showNumberEntries(context)
@@ -172,6 +188,22 @@ class NodesAdapter(
         mVirtualGroup = group.isVirtual
         assignPreferences()
         mNodeSortedList.replaceAll(group.getFilteredChildren(mEntryFilters))
+    }
+
+    fun rebuildList(list: List<Node>) {
+        assignPreferences()
+        val binIds = database.recycleBinEntriesIds()
+
+        mNodeSortedList.replaceAll(
+            list
+                .filter {
+                    if (it is Entry) {
+                        if (mTagFilter.isEmpty()) true
+                        else it.tags.contains(mTagFilter)
+                    } else false
+                }
+                .filter { !binIds.contains(it.nodeId?.toVisualString()) }
+        )
     }
 
     private inner class NodeSortedListCallback : SortedListAdapterCallback<Node>(this) {
@@ -325,6 +357,10 @@ class NodesAdapter(
         sortNodeParameters: SortNodeEnum.SortNodeParameters
     ) {
         this.mNodeComparator = sortNodeEnum.getNodeComparator(database, sortNodeParameters)
+    }
+
+    fun notifyCustomTagSelected(tag: String) {
+        mTagFilter = tag
     }
 
     override fun getItemViewType(position: Int): Int {

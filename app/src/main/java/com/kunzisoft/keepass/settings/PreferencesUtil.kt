@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import android.net.Uri
 import android.util.Log
-import android.widget.Toast
 import androidx.preference.PreferenceManager
 import com.kunzisoft.keepass.BuildConfig
 import com.kunzisoft.keepass.R
@@ -64,8 +63,7 @@ object PreferencesUtil {
     fun saveNodeEntriesSort(
         context: Context,
         sortNodeEnum: SortNodeEnum,
-        sortNodeParameters: SortNodeEnum.SortNodeParameters,
-        showRecycleBinItems: Boolean
+        sortNodeParameters: SortNodeEnum.SortNodeParameters
     ) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         prefs?.edit()?.apply {
@@ -73,10 +71,6 @@ object PreferencesUtil {
             putBoolean(
                 context.getString(R.string.sort_ascending_entries_key),
                 sortNodeParameters.ascending
-            )
-            putBoolean(
-                context.getString(R.string.sort_recycle_bin_entries_key),
-                showRecycleBinItems
             )
             apply()
         }
@@ -753,14 +747,6 @@ object PreferencesUtil {
         return prefs.getBoolean(
             context.getString(R.string.sort_ascending_entries_key),
             context.resources.getBoolean(R.bool.sort_ascending_default)
-        )
-    }
-
-    fun getRecycleBinEntriesSort(context: Context): Boolean {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(
-            context.getString(R.string.sort_recycle_bin_entries_key),
-            context.resources.getBoolean(R.bool.sort_recycle_bin_entries_default)
         )
     }
 
