@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="16dp"
+        android:background="?colorSurfaceVariant2"
         android:gravity="bottom"
         android:orientation="vertical"
         android:paddingStart="@dimen/default_margin"
@@ -93,8 +95,118 @@
             app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <CheckBox
+        android:id="@+id/nav_item_groups"
+        style="@style/Theme.Keepass.NavigationItem.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nav_groups"
+        app:drawableStartCompat="@drawable/selector_tab_groups" />
+
+    <CheckBox
+        android:id="@+id/nav_item_entries"
+        style="@style/Theme.Keepass.NavigationItem.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nav_entries"
+        app:drawableStartCompat="@drawable/selector_tab_entries" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginVertical="10dp"
         android:background="?android:listDivider" />
+
+    <CheckBox
+        android:id="@+id/nav_item_more"
+        style="@style/Theme.Keepass.NavigationItem.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_nav_item_no_ripple"
+        android:backgroundTint="@color/nav_item_more_background_color"
+        android:text="More"
+        app:drawableStartCompat="@drawable/ic_more_white_24dp"
+        app:drawableTint="?colorOutline" />
+
+    <com.libx.ui.views.CollapsibleLinearLayout
+        android:id="@+id/more_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nav_item_save_database"
+                style="@style/Theme.Keepass.NavigationItem.Item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_save_database"
+                app:drawableStartCompat="@drawable/ic_save_white_24dp" />
+
+            <TextView
+                android:id="@+id/nav_item_merge_database"
+                style="@style/Theme.Keepass.NavigationItem.Item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_merge_database"
+                app:drawableStartCompat="@drawable/ic_merge_white_24dp" />
+
+            <TextView
+                android:id="@+id/nav_item_reload_database"
+                style="@style/Theme.Keepass.NavigationItem.Item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_reload_database"
+                app:drawableStartCompat="@drawable/ic_refresh_white_24dp" />
+
+            <TextView
+                android:id="@+id/nav_item_merge_from"
+                style="@style/Theme.Keepass.NavigationItem.Item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_merge_from"
+                app:drawableStartCompat="@drawable/ic_merge_from_white_24dp" />
+
+            <TextView
+                android:id="@+id/nav_item_save_copy_to"
+                style="@style/Theme.Keepass.NavigationItem.Item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_save_copy_to"
+                app:drawableStartCompat="@drawable/ic_save_copy_to_white_24dp" />
+        </LinearLayout>
+    </com.libx.ui.views.CollapsibleLinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="10dp"
+        android:background="?android:listDivider" />
+
+    <TextView
+        android:id="@+id/nav_item_lock"
+        style="@style/Theme.Keepass.NavigationItem.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lock"
+        app:drawableStartCompat="@drawable/ic_lock_white_24dp" />
+
+    <TextView
+        android:id="@+id/nav_item_settings"
+        style="@style/Theme.Keepass.NavigationItem.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings"
+        app:drawableStartCompat="@drawable/ic_settings_white_24dp" />
+
+    <TextView
+        android:id="@+id/nav_item_about"
+        style="@style/Theme.Keepass.NavigationItem.Item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/about"
+        app:drawableStartCompat="@drawable/ic_help_white_24dp" />
 </LinearLayout>

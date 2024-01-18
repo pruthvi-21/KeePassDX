@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Theme.Keepass.PopupMenu" parent="Widget.Material3.PopupMenu.Overflow">
         <item name="android:popupBackground">@drawable/background_overflow_menu</item>
@@ -49,6 +49,7 @@
         <item name="android:background">?colorSurfaceVariant</item>
         <item name="dividerInsetStart">0dp</item>
         <item name="dividerInsetEnd">0dp</item>
+        <item name="drawerLayoutCornerSize">0dp</item>
     </style>
 
     <style name="ThemeOverlay.Keepass.NavigationView" parent="">
@@ -420,5 +421,23 @@
         <item name="android:layout_weight">1</item>
         <item name="android:layout_marginStart">3dp</item>
         <item name="android:layout_marginEnd">3dp</item>
+    </style>
+
+    <style name="Theme.Keepass.NavigationItem.Item" parent="">
+        <item name="android:drawablePadding">12dp</item>
+        <item name="android:paddingStart">28dp</item>
+        <item name="android:paddingEnd">28dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:layout_marginEnd">15dp</item>
+        <item name="android:background">@drawable/background_nav_item</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="drawableTint" tools:ignore="PrivateResource">
+            @color/m3_navigation_item_icon_tint
+        </item>
+        <item name="android:textColor" tools:ignore="PrivateResource">
+            @color/m3_navigation_item_text_color
+        </item>
     </style>
 </resources>

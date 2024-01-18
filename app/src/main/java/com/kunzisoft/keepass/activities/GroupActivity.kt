@@ -30,11 +30,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.activities.dialogs.GroupDialogFragment
@@ -77,6 +75,7 @@ import com.kunzisoft.keepass.utils.getParcelableList
 import com.kunzisoft.keepass.utils.putParcelableList
 import com.kunzisoft.keepass.utils.readParcelableCompat
 import com.kunzisoft.keepass.view.AddNodeButtonView
+import com.kunzisoft.keepass.view.DrawerLayout
 import com.kunzisoft.keepass.view.NavigationDatabaseView
 import com.kunzisoft.keepass.view.ToolbarAction
 import com.kunzisoft.keepass.view.WindowInsetPosition
@@ -94,7 +93,7 @@ class GroupActivity : DatabaseLockActivity(),
     GroupFragment.NodesActionMenuListener,
     GroupFragment.OnScrollListener,
     GroupFragment.GroupRefreshedListener,
-    NavigationView.OnNavigationItemSelectedListener,
+    NavigationDatabaseView.OnNavItemClickedListener,
     MainCredentialDialogFragment.AskMainCredentialDialogListener {
 
     // Views
@@ -115,9 +114,6 @@ class GroupActivity : DatabaseLockActivity(),
     private var addNodeButtonView: AddNodeButtonView? = null
     private var breadcrumbListView: RecyclerView? = null
     private var loadingView: ProgressBar? = null
-
-    private var entriesMenuItem: MenuItem? = null
-    private var groupsMenuItem: MenuItem? = null
 
     private val mGroupViewModel: GroupViewModel by viewModels()
     private val mGroupEditViewModel: GroupEditViewModel by viewModels()
@@ -215,20 +211,9 @@ class GroupActivity : DatabaseLockActivity(),
         toggle.syncState()
 
         mainContainer = findViewById(R.id.activity_group_container_view)
-        if (savedInstanceState?.containsKey(KEY_LAYOUT_POSITION) == true) {
-            mainContainer?.translationX = savedInstanceState.getFloat(KEY_LAYOUT_POSITION, 0f)
-        }
 
-        drawerLayout?.addDrawerListener(object : DrawerLayout.DrawerListener {
-            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-                val slideX = drawerView.width * slideOffset
-                mainContainer?.translationX = slideX
-            }
-
-            override fun onDrawerOpened(drawerView: View) {}
-            override fun onDrawerClosed(drawerView: View) {}
-            override fun onDrawerStateChanged(newState: Int) {}
-        })
+        drawerLayout?.attachContainer(mainContainer)
+        drawerLayout?.setNavigationView(databaseNavView)
 
         // Manage 'merge from" and "save to"
         mExternalFileHelper = ExternalFileHelper(this)
@@ -239,17 +224,6 @@ class GroupActivity : DatabaseLockActivity(),
             uri?.let {
                 saveDatabaseTo(it)
             }
-        }
-
-        // Menu in drawer
-        databaseNavView?.apply {
-            inflateMenu(R.menu.tabs)
-            inflateMenu(R.menu.database_extra)
-            inflateMenu(R.menu.about)
-
-            groupsMenuItem = menu.findItem(R.id.menu_groups)
-            entriesMenuItem = menu.findItem(R.id.menu_entries)
-            setNavigationItemSelectedListener(this@GroupActivity)
         }
 
         mBreadcrumbAdapter = BreadcrumbAdapter(this).apply {
@@ -390,9 +364,11 @@ class GroupActivity : DatabaseLockActivity(),
             }
         }
 
+        databaseNavView?.onNavItemClickedListener = this
+
         // Add listeners to the add buttons
         addNodeButtonView?.setAddGroupClickListener {
-            val selectedGroup = if (groupsMenuItem?.isChecked == true) mMainGroup
+            val selectedGroup = if (databaseNavView?.navItemGroups?.isChecked == true) mMainGroup
             else mRootGroup
             selectedGroup?.let { currentGroup ->
                 launchDialogForGroupCreation(currentGroup)
@@ -400,8 +376,9 @@ class GroupActivity : DatabaseLockActivity(),
         }
         addNodeButtonView?.setAddEntryClickListener {
             mDatabase?.let { database ->
-                val selectedGroup = if (groupsMenuItem?.isChecked == true) mMainGroup
-                else mRootGroup
+                val selectedGroup =
+                    if (databaseNavView?.navItemGroups?.isChecked == true) mMainGroup
+                    else mRootGroup
                 selectedGroup?.let { currentGroup ->
                     EntrySelectionHelper.doSpecialAction(intent,
                         {
@@ -483,20 +460,46 @@ class GroupActivity : DatabaseLockActivity(),
         transaction.commit()
     }
 
-    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
-        when (menuItem.itemId) {
-            R.id.menu_app_settings -> {
+    override fun onNavItemClicked(itemId: Int) {
+        when (itemId) {
+            R.id.nav_item_groups -> selectNavigationItem(NavigationItem.GROUPS)
+            R.id.nav_item_entries -> selectNavigationItem(NavigationItem.ENTRIES)
+
+            R.id.nav_item_lock -> lockAndExit()
+            R.id.nav_item_settings -> {
                 // To avoid flickering when launch settings in a LockingActivity
                 SettingsActivity.launch(this@GroupActivity, true)
                 CLOSE_DRAWER = true
             }
 
-            R.id.menu_merge_from -> {
+            R.id.nav_item_about -> {
+                startActivity(
+                    Intent(this@GroupActivity, AboutActivity::class.java)
+                )
+                CLOSE_DRAWER = true
+            }
+
+            R.id.nav_item_save_database -> {
+                saveDatabase()
+                drawerLayout?.close()
+            }
+
+            R.id.nav_item_merge_database -> {
+                mergeDatabase()
+                drawerLayout?.close()
+            }
+
+            R.id.nav_item_reload_database -> {
+                reloadDatabase()
+                drawerLayout?.close()
+            }
+
+            R.id.nav_item_merge_from -> {
                 mExternalFileHelper?.openDocument()
                 CLOSE_DRAWER = true
             }
 
-            R.id.menu_save_copy_to -> {
+            R.id.nav_item_save_copy_to -> {
                 mExternalFileHelper?.createDocument(
                     getString(R.string.database_file_name_default) +
                             getString(R.string.database_file_name_copy) +
@@ -504,48 +507,14 @@ class GroupActivity : DatabaseLockActivity(),
                 )
                 CLOSE_DRAWER = true
             }
-
-            R.id.menu_lock_all -> {
-                lockAndExit()
-            }
-
-            R.id.menu_about -> {
-                startActivity(
-                    Intent(this@GroupActivity, AboutActivity::class.java)
-                )
-                CLOSE_DRAWER = true
-            }
-
-            R.id.menu_save_database -> {
-                saveDatabase()
-                drawerLayout?.close()
-            }
-
-            R.id.menu_merge_database -> {
-                mergeDatabase()
-                drawerLayout?.close()
-            }
-
-            R.id.menu_reload_database -> {
-                reloadDatabase()
-                drawerLayout?.close()
-            }
-        }
-        return false
-    }
-
-    fun onMenuItemClicked(item: MenuItem) {
-        when (item.itemId) {
-            R.id.menu_groups -> selectNavigationItem(NavigationItem.GROUPS)
-            R.id.menu_entries -> selectNavigationItem(NavigationItem.ENTRIES)
         }
     }
 
     private fun selectNavigationItem(item: NavigationItem) {
         when (item) {
             NavigationItem.GROUPS -> {
-                groupsMenuItem?.isChecked = true
-                entriesMenuItem?.isChecked = false
+                databaseNavView?.navItemGroups?.isChecked = true
+                databaseNavView?.navItemEntries?.isChecked = false
                 showFragment(mGroupFragment, GROUP_FRAGMENT_TAG)
 
                 drawerLayout?.close()
@@ -557,8 +526,8 @@ class GroupActivity : DatabaseLockActivity(),
             }
 
             NavigationItem.ENTRIES -> {
-                groupsMenuItem?.isChecked = false
-                entriesMenuItem?.isChecked = true
+                databaseNavView?.navItemGroups?.isChecked = false
+                databaseNavView?.navItemEntries?.isChecked = true
                 showFragment(mEntriesFragment, ENTRIES_FRAGMENT_TAG)
 
                 mEntriesFragment.updateList()
@@ -616,17 +585,17 @@ class GroupActivity : DatabaseLockActivity(),
         invalidateOptionsMenu()
 
         //invalidate navView menu
-        databaseNavView?.menu?.let {
+        databaseNavView?.let {
             if (mDatabaseReadOnly) {
-                it.findItem(R.id.menu_save_database)?.isVisible = false
-                it.findItem(R.id.menu_merge_database)?.isVisible = false
+                it.navItemSaveDb?.isVisible = false
+                it.navItemMergeDb?.isVisible = false
             }
             if (!mMergeDataAllowed) {
-                it.findItem(R.id.menu_merge_database)?.isVisible = false
+                it.navItemMergeDb?.isVisible = false
             }
             if (mSpecialMode != SpecialMode.DEFAULT) {
-                it.findItem(R.id.menu_merge_database)?.isVisible = false
-                it.findItem(R.id.menu_reload_database)?.isVisible = false
+                it.navItemMergeDb?.isVisible = false
+                it.navItemReloadDb?.isVisible = false
             }
         }
 
@@ -770,9 +739,6 @@ class GroupActivity : DatabaseLockActivity(),
         }
         outState.putBoolean(REQUEST_STARTUP_SEARCH_KEY, mRequestStartupSearch)
         outState.putBoolean(CLOSE_DRAWER_ARG, CLOSE_DRAWER)
-        mainContainer?.translationX?.let {
-            if (it > 0f) outState.putFloat(KEY_LAYOUT_POSITION, it)
-        }
         super.onSaveInstanceState(outState)
     }
 
@@ -1132,7 +1098,7 @@ class GroupActivity : DatabaseLockActivity(),
 
         //close drawer and reset mainLayout position
         if (CLOSE_DRAWER) {
-            drawerLayout!!.closeDrawer(GravityCompat.START, false)
+            drawerLayout?.closeDrawer(GravityCompat.START, false)
             mainContainer?.translationX = 0f
             CLOSE_DRAWER = false
         }
@@ -1145,20 +1111,16 @@ class GroupActivity : DatabaseLockActivity(),
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        prepareDatabaseNavMenu()
-        return true
-    }
-
-    private fun prepareDatabaseNavMenu() {
         // hide or show nav menu
         databaseNavView?.apply {
             //  depending on current mode
             val modeCondition = mSpecialMode == SpecialMode.DEFAULT
-            menu.findItem(R.id.menu_app_settings)?.isVisible = modeCondition
-            menu.findItem(R.id.menu_merge_from)?.isVisible = mMergeDataAllowed && modeCondition
-            menu.findItem(R.id.menu_save_copy_to)?.isVisible = modeCondition
-            menu.findItem(R.id.menu_about)?.isVisible = modeCondition
+            navItemSettings?.isVisible = modeCondition
+            navItemMergeFrom?.isVisible = mMergeDataAllowed && modeCondition
+            navItemSaveCopyTo?.isVisible = modeCondition
+            navItemAbout?.isVisible = modeCondition
         }
+        return true
     }
 
     override fun hideHomeButtonIfModeIsNotDefault(): Boolean {
@@ -1217,17 +1179,9 @@ class GroupActivity : DatabaseLockActivity(),
     override fun onDatabaseBackPressed() {
         if (mGroupFragment.nodeActionSelectionMode) {
             finishNodeAction()
-        } else if (entriesMenuItem?.isChecked == true) {
-            when {
-                Intent.ACTION_SEARCH == intent.action -> {
-                    loadGroup()
-                }
-
-                else -> {
-                    groupsMenuItem?.let {
-                        onNavigationItemSelected(it)
-                    }
-                }
+        } else if (databaseNavView?.navItemEntries?.isChecked == true) {
+            databaseNavView?.navItemGroups?.let {
+                selectNavigationItem(NavigationItem.GROUPS)
             }
         } else {
             // Normal way when we are not in root
@@ -1303,7 +1257,6 @@ class GroupActivity : DatabaseLockActivity(),
         private const val ENTRIES_FRAGMENT_TAG = "ENTRIES_FRAGMENT_TAG"
         private const val OLD_GROUP_TO_UPDATE_KEY = "OLD_GROUP_TO_UPDATE_KEY"
         private const val AUTO_SEARCH_KEY = "AUTO_SEARCH_KEY"
-        private const val KEY_LAYOUT_POSITION = "layout_position"
         private const val CLOSE_DRAWER_ARG = "close_drawer"
 
         private fun buildIntent(
