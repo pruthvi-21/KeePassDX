@@ -191,6 +191,9 @@ class SearchActivity : DatabaseLockActivity(),
             lockAndExit()
         }
 
+        searchView?.requestFocus()
+        searchView?.showKeyboard()
+
         mSearchState = SearchState(
             searchFiltersView?.searchParameters
                 ?: PreferencesUtil.getDefaultSearchParameters(this), 0
