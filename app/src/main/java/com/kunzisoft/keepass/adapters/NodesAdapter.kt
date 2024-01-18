@@ -356,6 +356,7 @@ class NodesAdapter(
             isSelected = mActionNodesList.contains(subNode)
         }
         holder.iconSelected.isVisible = holder.container.isSelected
+        holder.icon.alpha = if (holder.container.isSelected) 0.5f else 1f
 
         // Assign text
         holder.text.apply {
