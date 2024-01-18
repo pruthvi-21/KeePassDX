@@ -1,5 +1,6 @@
 package com.kunzisoft.keepass.activities
 
+import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.ComponentName
 import android.content.Context
@@ -19,6 +20,7 @@ import android.widget.ProgressBar
 import androidx.activity.viewModels
 import androidx.appcompat.view.ActionMode
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SearchView.SearchAutoComplete
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.res.ResourcesCompat
@@ -190,6 +192,8 @@ class SearchActivity : DatabaseLockActivity(),
             lockAndExit()
         }
 
+        fixSearchViewHintColor()
+
         searchView?.requestFocus()
         searchView?.showKeyboard()
 
@@ -242,6 +246,18 @@ class SearchActivity : DatabaseLockActivity(),
         mGroupViewModel.firstPositionVisible.observe(this) { firstPositionVisible ->
             mSearchState?.firstVisibleItem = firstPositionVisible
         }
+    }
+
+    @SuppressLint("PrivateResource", "RestrictedApi")
+    private fun fixSearchViewHintColor() {
+        val searchAutoComplete = searchView?.findViewById<SearchAutoComplete>(R.id.search_src_text)
+        searchAutoComplete?.setHintTextColor(
+            ResourcesCompat.getColor(
+                resources,
+                R.color.m3_textfield_label_color,
+                theme
+            )
+        )
     }
 
     override fun viewToInvalidateTimeout(): View? {

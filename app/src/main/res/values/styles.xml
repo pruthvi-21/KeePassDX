@@ -410,7 +410,7 @@
     </style>
 
     <style name="Theme.Keepass.SearchView" parent="Widget.Material3.SearchView">
-        <item name="queryBackground">@android:color/transparent</item>
+        <item name="android:textColorHint">?android:textColorSecondary</item>
         <item name="queryHint">@string/search</item>
         <item name="iconifiedByDefault">false</item>
     </style>
