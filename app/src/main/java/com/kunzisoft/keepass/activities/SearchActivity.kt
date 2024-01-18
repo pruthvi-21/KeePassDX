@@ -95,7 +95,6 @@ class SearchActivity : DatabaseLockActivity(),
     // Manage group
     private var mSearchState: SearchState? = null
     private var mAutoSearch: Boolean = false // To mainly manage keyboard
-    private var mMainGroupState: GroupState? = null // Group state, not a search
 
     private var mMainGroup: Group? = null // Main group currently in memory
     private var mCurrentGroup: Group? = null // Group currently visible (search or main group)
@@ -242,7 +241,6 @@ class SearchActivity : DatabaseLockActivity(),
 
         mGroupViewModel.firstPositionVisible.observe(this) { firstPositionVisible ->
             mSearchState?.firstVisibleItem = firstPositionVisible
-            mMainGroupState?.firstVisibleItem = firstPositionVisible
         }
     }
 
@@ -262,22 +260,17 @@ class SearchActivity : DatabaseLockActivity(),
         mGroupViewModel.loadSearchGroup(
             mDatabase,
             searchState.searchParameters,
-            mMainGroupState?.groupId,
+            mMainGroup?.nodeId,
             searchState.firstVisibleItem
         )
     }
 
     private fun loadGroup() {
         val searchState = mSearchState
-        val currentGroupState = mMainGroupState
         when {
             searchState != null -> {
                 finishNodeAction()
                 loadSearchGroup(searchState)
-            }
-
-            currentGroupState != null -> {
-                loadMainGroup(currentGroupState)
             }
 
             else -> {
