@@ -38,7 +38,8 @@
             android:dialogTitle="@string/advanced_unlock_timeout"
             android:key="@string/temp_advanced_unlock_timeout_key"
             android:summary="@string/temp_advanced_unlock_timeout_summary"
-            android:title="@string/temp_advanced_unlock_timeout_title" />
+            android:title="@string/temp_advanced_unlock_timeout_title"
+            app:isPreferenceVisible="false" />
         <Preference
             android:key="@string/biometric_delete_all_key_key"
             android:summary="@string/biometric_delete_all_key_summary"

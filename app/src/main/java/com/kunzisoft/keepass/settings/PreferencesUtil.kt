@@ -564,21 +564,23 @@ object PreferencesUtil {
     }
 
     fun getClipboardTimeout(context: Context): Long {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getString(
-            context.getString(R.string.clipboard_timeout_key),
-            context.getString(R.string.clipboard_timeout_default)
-        )?.toLong()
-            ?: TimeoutHelper.DEFAULT_TIMEOUT
+//        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+//        return prefs.getString(
+//            context.getString(R.string.clipboard_timeout_key),
+//            context.getString(R.string.clipboard_timeout_default)
+//        )?.toLong()
+//            ?: TimeoutHelper.DEFAULT_TIMEOUT
+        return TimeoutHelper.NEVER
     }
 
     fun getAdvancedUnlockTimeout(context: Context): Long {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getString(
-            context.getString(R.string.temp_advanced_unlock_timeout_key),
-            context.getString(R.string.temp_advanced_unlock_timeout_default)
-        )?.toLong()
-            ?: TimeoutHelper.DEFAULT_TIMEOUT
+//        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+//        return prefs.getString(
+//            context.getString(R.string.temp_advanced_unlock_timeout_key),
+//            context.getString(R.string.temp_advanced_unlock_timeout_default)
+//        )?.toLong()
+//            ?: TimeoutHelper.DEFAULT_TIMEOUT
+        return TimeoutHelper.NEVER
     }
 
     fun isLockDatabaseWhenScreenShutOffEnable(context: Context): Boolean {
@@ -773,11 +775,12 @@ object PreferencesUtil {
     }
 
     fun isClearKeyboardNotificationEnable(context: Context): Boolean {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(
-            context.getString(R.string.keyboard_notification_entry_clear_close_key),
-            context.resources.getBoolean(R.bool.keyboard_notification_entry_clear_close_default)
-        )
+//        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+//        return prefs.getBoolean(
+//            context.getString(R.string.keyboard_notification_entry_clear_close_key),
+//            context.resources.getBoolean(R.bool.keyboard_notification_entry_clear_close_default)
+//        )
+        return false
     }
 
     fun setAllowCopyPasswordAndProtectedFields(context: Context, allowCopy: Boolean) {

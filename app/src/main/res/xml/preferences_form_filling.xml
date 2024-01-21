@@ -47,7 +47,8 @@
             android:dialogTitle="@string/clipboard_timeout"
             android:key="@string/clipboard_timeout_key"
             android:summary="@string/clipboard_timeout_summary"
-            android:title="@string/clipboard_timeout" />
+            android:title="@string/clipboard_timeout"
+            app:isPreferenceVisible="false" />
         <SwitchPreferenceCompat
             android:defaultValue="@bool/allow_copy_password_default"
             android:key="@string/allow_copy_password_key"
