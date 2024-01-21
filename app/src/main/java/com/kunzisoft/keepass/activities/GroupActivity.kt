@@ -518,6 +518,7 @@ class GroupActivity : DatabaseLockActivity(),
 
     private fun selectNavigationItem(item: NavigationItem) {
         activeNavItem = item
+        invalidateOptionsMenu()
         when (item) {
             NavigationItem.GROUPS -> {
                 databaseNavView?.navItemGroups?.isChecked = true
@@ -1132,6 +1133,15 @@ class GroupActivity : DatabaseLockActivity(),
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        // Menu for recycle bin
+        if (mRecyclingBinEnabled &&
+            mRecyclingBinIsCurrentGroup &&
+            activeNavItem == NavigationItem.GROUPS
+        ) {
+            menuInflater.inflate(R.menu.recycle_bin, menu)
+        }
+
         // hide or show nav menu
         databaseNavView?.apply {
             //  depending on current mode
