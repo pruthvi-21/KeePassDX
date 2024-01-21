@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?android:attr/windowBackground"
-    android:minHeight="48dp"
+    android:layout_height="wrap_content"
+    android:background="@color/autofill_item_bg"
+    android:minHeight="56dp"
     android:orientation="horizontal">
 
     <ImageView
@@ -12,9 +12,7 @@
         android:layout_height="24dp"
         android:layout_gravity="center"
         android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
         android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
         android:contentDescription="@string/content_description_entry_icon"
         android:src="@drawable/ic_arrow_right_green_24dp" />
 
@@ -27,5 +25,5 @@
         android:maxLines="2"
         android:paddingStart="0dp"
         android:paddingEnd="12dp"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+        android:textColor="@color/autofill_item_text_color" />
 </LinearLayout>

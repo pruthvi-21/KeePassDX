@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/windowBackground"
+    android:background="@color/autofill_item_bg"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:orientation="horizontal">
 
@@ -20,9 +20,8 @@
         android:layout_gravity="center"
         android:gravity="center_vertical"
         android:paddingStart="12dp"
-        android:paddingLeft="12dp"
         android:paddingEnd="12dp"
-        android:paddingRight="12dp"
         android:text="@string/autofill_sign_in_prompt"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:textColor="@color/autofill_item_text_color" />
 </LinearLayout>

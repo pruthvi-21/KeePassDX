@@ -89,7 +89,7 @@ object AutofillHelper {
             try {
                 database.iconDrawableFactory.getBitmapFromIcon(
                     context,
-                    remoteViewsIcon, ContextCompat.getColor(context, R.color.green)
+                    remoteViewsIcon, ContextCompat.getColor(context, R.color.autofill_primary)
                 )?.let { bitmap ->
                     remoteViews.setImageViewBitmap(R.id.autofill_entry_icon, bitmap)
                 }

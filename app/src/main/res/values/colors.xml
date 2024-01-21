@@ -62,4 +62,10 @@
     <color name="magikeyboard_text_color">#010101</color>
     <color name="magikeyboard_subtext_color">#5a5a5a</color>
     <color name="magikeyboard_icon_color">#404040</color>
+
+    <color name="autofill_header_bg">#E5E5E5</color>
+    <color name="autofill_item_bg">#FAF9FD</color>
+    <color name="autofill_header_text_color">#252525</color>
+    <color name="autofill_item_text_color">#252525</color>
+    <color name="autofill_primary">#669900</color>
 </resources>
